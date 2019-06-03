@@ -5,29 +5,43 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
-
+	
 <h:head>
+<meta charset="utf-8"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" 
+		href="css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" 
+		href="css/style.css" />
 </h:head>
+<title>Login</title>
 <h:body style="text-align:center">
-<p:growl id="mensajes" showDetail="true" life="2000" />
-<h:outputLabel id = "R" value="#{hello.resultado}" />
-  <h:form>
-    <p:panel header="Login" style="width:400px">
-      <h:panelGrid columns="2" cellpadding="5">
-        <h:outputLabel for="username" value="Usuario:" />
-        <p:inputText value="#{hello.nombre}" id="username"
-           required="true" label="username" />
-        <h:outputLabel for="password" value="Clave:" />
-        <p:password value="#{hello.contrasenia}" id="password" required="true"
-           label="password" />
-          <p:commandButton value="registro" id="registro" action="registro"></p:commandButton>
-           <p:commandButton id="loginButton" value="Login"
-             actionListener="#{hello.muestra}" update=":R"
-             onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"/>
-      
-      </h:panelGrid>
-    </p:panel>
+<h1>Login</h1>
+	<div class="clear-loading spinner">
+		<span></span>
+	</div>
+	
+  <h:form name="form1" action="login.php" method="post" class="login100-form validate-form p-b-33 p-t-5">
+   <div class="agile-field-txt">
+				<label><i class="fa fa-user" aria-hidden="true"></i> Usuario </label>
+				<input type="text" name="txtCuenta" placeholder="Ingrese el usuario" required="" class="top-up" />
+   </div>
+   <div class="agile-field-txt">
+				<label><i class="fa fa-unlock-alt" aria-hidden="true"></i> Contraseña </label>
+				<input type="password" name="txtContrasenia" placeholder="Ingrese la Contraseña" required="" id="myInput" />
+   </div>
+   
+   
+  <div class="agile-field-txt">
+          <a href="registroCuenta.php" class="boton_personalizado">Registrarse</a>
+  </div>
   </h:form>
-
+<!--copyright-->
+	<div class="copy-wthree">
+		<p align="right"> ©  2019  .   All Rights Reserved    |   Design by vision artificial ESIMECU</p>
+	</div>
+<!--//copyright-->
 </h:body>
 </html>
