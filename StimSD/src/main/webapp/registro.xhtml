@@ -10,145 +10,120 @@
 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	>
- 
+ <meta charset="utf-8"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" 
+		href="css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" 
+		href="css/style.css" />
 <h:head>
 
 <title>REGISTRAR </title>
 </h:head>
-<style type="text/css">
-    .label {
-        width:20%;
-        padding:4px;
-    }
- 
-    .value {
-        width:80%;
-        padding:4px;
-    }
- 
-    .grid {
-        width:100%;
-    }
- 
-    .error {
-        color: red;
-    }
- 
-    .outputLabel {
-        font-weight: bold;
-    }
- 
-    .grid {
-        width:33%;
-        padding:4px;
-    }
-</style>
-<h:body>
 
-<h:form>
-         
-    <p:growl id="growl" sticky="true" showDetail="true"/>
- 
-    <p:wizard flowListener="#{userWizard.onFlowProcess}">
-        <p:tab id="personal" title="Personal">
-            <p:panel header="Personal Details">
-                <p:messages />
-                <h:panelGrid columns="2" columnClasses="label, value">
-                    <h:outputText value="Firstname: *" />
-                    <p:inputText value="#{userWizard.user.firstname}" required="true" label="Firstname"/>
- 
-                    <h:outputText value="Lastname: *" />
-                    <p:inputText value="#{userWizard.user.lastname}" required="true" label="Lastname"/>
- 
-                    <h:outputText value="Age: " />
-                    <p:inputText value="#{userWizard.user.age}" />
- 
-                    <h:outputText value="Skip to last: " />
-                    <h:selectBooleanCheckbox value="#{userWizard.skip}" />
-                </h:panelGrid>
-            </p:panel>
-        </p:tab>
- 
-        <p:tab id="address" title="Address">
-            <p:panel header="Address Details">
-                <p:messages />
-                <h:panelGrid columns="2" columnClasses="label, value">
-                    <h:outputText value="Street: " />
-                    <p:inputText value="#{userWizard.user.street}" />
- 
-                    <h:outputText value="Postal Code: " />
-                    <p:inputText value="#{userWizard.user.postalCode}" />
- 
-                    <h:outputText value="City: " />
-                    <p:inputText value="#{userWizard.user.city}" />
- 
-                    <h:outputText value="Skip to last: " />
-                    <h:selectBooleanCheckbox value="#{userWizard.skip}" />
-                </h:panelGrid>
-            </p:panel>
-        </p:tab>
- 
-        <p:tab id="contact" title="Contact">
-            <p:panel header="Contact Information">
-                <p:messages />
-                <h:panelGrid columns="2" columnClasses="label, value">
-                    <h:outputText value="Email: *" />
-                    <p:inputText value="#{userWizard.user.email}" required="true" label="Email"/>
- 
-                    <h:outputText value="Phone: " />
-                    <p:inputText value="#{userWizard.user.phone}"/>
- 
-                    <h:outputText value="Additional Info: " />
-                    <p:inputText value="#{userWizard.user.info}"/>
-                </h:panelGrid>
-            </p:panel>
-        </p:tab>
- 
-        <p:tab id="confirm" title="Confirmation">
-            <p:panel header="Confirmation">
-                <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
-                    <h:panelGrid columns="2" columnClasses="label, value">
-                        <h:outputText value="Firstname: " />
-                        <h:outputText value="#{userWizard.user.firstname}" styleClass="outputLabel"/>
- 
-                        <h:outputText value="Lastname: " />
-                        <h:outputText value="#{userWizard.user.lastname}" styleClass="outputLabel"/>
- 
-                        <h:outputText value="Age: " />
-                        <h:outputText value="#{userWizard.user.age}" styleClass="outputLabel"/>
-                    </h:panelGrid>
- 
-                    <h:panelGrid columns="2" columnClasses="label, value">
-                        <h:outputText value="Street: " />
-                        <h:outputText value="#{userWizard.user.street}" styleClass="outputLabel"/>
- 
-                        <h:outputText value="Postal: " />
-                        <h:outputText value="#{userWizard.user.postalCode}" styleClass="outputLabel"/>
- 
-                        <h:outputText value="City: " />
-                        <h:outputText value="#{userWizard.user.city}" styleClass="outputLabel"/>
-                    </h:panelGrid>
- 
-                    <h:panelGrid columns="2" columnClasses="label, value">
-                        <h:outputText value="Email: " />
-                        <h:outputText value="#{userWizard.user.email}" styleClass="outputLabel"/>
- 
-                        <h:outputText value="Phone " />
-                        <h:outputText value="#{userWizard.user.phone}" styleClass="outputLabel"/>
- 
-                        <h:outputText value="Info: " />
-                        <h:outputText value="#{userWizard.user.info}" styleClass="outputLabel"/>
- 
-                        <h:outputText />
-                        <h:outputText />
-                    </h:panelGrid>
-                </h:panelGrid>
- 
-                <p:commandButton value="Submit" action="#{userWizard.save}" update="growl" process="@this"/>
-            </p:panel>
-        </p:tab>
-    </p:wizard>
- 
-</h:form>
+<h:body>
+<h1 class="header-w3ls">Registro Usuario</h1>
+<form id="formulario" method="post" action="guardarCuenta.php">
+
+          <div class="main">
+            <div class="form-left-w3l">
+              
+              <input placeholder="Nombre" required="" type="text" name="txtNombre" id="myInput" >
+              <i class="fa fa-user input-icon"></i>
+            </div>
+            <div class="form-right-w3ls ">
+              <input type="text" class="top-up" name="txtApe1" placeholder="Apellido Materno" required="">
+              <div class="clearfix"></div>
+            </div>
+            <div class="form-right-w3ls ">
+              <input type="text" class="top-up" name="txtApe2" placeholder="Apellido Paterno" required="">
+              <div class="clearfix"></div>
+            </div>
+          </div>
+          
+          
+          <div class="main">
+            <div class="form-left-w3l">
+             <input type="text" name="txtCalle" placeholder="Calle" required="" id="myInput1">
+              <i class="fa fa-address-book input-icon1" style="width: 1%"></i>
+            </div>
+            <div class="form-right-w3ls ">
+              <input type="text" name="txtNum" placeholder="Numero" required="" id="myInput2">	
+              <i class="fa fa-hashtag input-icon2"></i>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+          <div class="main">
+            <div class="form-left-w3l">
+              <input type="text" name="txtCol" placeholder="Colonia" required="" id="myInput3">
+              <i class="fa fa-road input-icon3"></i>
+            </div>
+            <div class="form-right-w3ls ">
+              <input type="text" name="txtCP" placeholder="Codigo Postal" required="" id="myInput4">
+             	
+              <i class="fa fa-envelope input-icon4"></i>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+          <div class="main">
+              <div class="form-right-w3ls">
+              <select class="form-control buttom" size="1" name="cmbEdo">
+                <option value="">
+                  Seleccione el Estado 
+                </option>
+					
+              </select>
+              </div>
+             <div class="form-left-w3l">	
+              <input type="text" name="txtTel" placeholder="Telefono" required="" id="myInput5">
+              <i class="fa fa-at input-icon5"></i>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+          <div class="main">
+            <div class="form-left-w3l">
+              <input type="email" name="txtEmail" placeholder="Email" required="" id="myInput6">
+              <i class="fa fa-phone-square input-icon6"></i>
+            </div>
+            <div class="form-right-w3ls ">
+             <select class="form-control buttom" size="1" name="cmbTipo">
+                <option value="">
+                  Tipo de Usuario
+                </option>
+					
+              </select>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+          <div class="main">
+            <div class="form-left-w3l">
+              <input type="text" name="txtCuenta" placeholder="Cuenta" required="" id="myInput7">
+              <i class="fa fa-address-card input-icon7"></i>
+            </div>
+            <div class="form-right-w3ls ">
+              <input class="text" type="text" name="txtPass" placeholder="Contraseña" required="" id="myInput8">
+              <i class="fa fa-unlock input-icon8"></i>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+          
+          
+		<div class="row">
+          <div class="col-md-9">
+            <input type="submit" value="Registrar" >
+            <br>
+            <br> 
+            <input type="reset" value="BORRAR" class="boton_personalizado1">
+            <br>
+            <br>
+            
+
+        <a href="login.php"><input type="button" value="Regresar" class="boton_personalizado">
+        </a>
+          </div>
+</div>
+        </form>
 </h:body>
 </html>

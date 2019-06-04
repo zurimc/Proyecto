@@ -19,6 +19,9 @@
 <title>Login</title>
 <h:body style="text-align:center">
 <h1>Login</h1>
+
+
+<div class="w3ls-login box box--big">
 	<div class="clear-loading spinner">
 		<span></span>
 	</div>
@@ -26,21 +29,24 @@
   <h:form name="form1" action="login.php" method="post" class="login100-form validate-form p-b-33 p-t-5">
    <div class="agile-field-txt">
 				<label><i class="fa fa-user" aria-hidden="true"></i> Usuario </label>
-				<input type="text" name="txtCuenta" placeholder="Ingrese el usuario" required="" class="top-up" />
+				
+				<p:inputText styleClass="form-control"	style="text-align:center;" value="#{hello.nombre}" />
    </div>
    <div class="agile-field-txt">
 				<label><i class="fa fa-unlock-alt" aria-hidden="true"></i> Contraseña </label>
-				<input type="password" name="txtContrasenia" placeholder="Ingrese la Contraseña" required="" id="myInput" />
+				
+   				<p:inputText styleClass="form-control"	style="text-align:center;" value="#{hello.contrasenia}" />
    </div>
-   
-   
+
+
   <div class="agile-field-txt">
-          <a href="registroCuenta.php" class="boton_personalizado">Registrarse</a>
+        <p:commandButton value="INGRESAR" action="#{hello.muestra()}" />
   </div>
   </h:form>
 <!--copyright-->
 	<div class="copy-wthree">
 		<p align="right"> ©  2019  .   All Rights Reserved    |   Design by vision artificial ESIMECU</p>
+	</div>
 	</div>
 <!--//copyright-->
 </h:body>
