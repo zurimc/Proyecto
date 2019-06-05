@@ -10,7 +10,7 @@
 <meta charset="utf-8"></meta>
 	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<!--  <h:outputStylesheet library="css" name="bootstrap.min.css" />-->
 	<link rel="stylesheet" type="text/css" 
 		href="css/font-awesome.min.css" />
 		<link rel="stylesheet" type="text/css" 
@@ -39,8 +39,10 @@
    </div>
 
 
-  <div class="agile-field-txt">
-        <p:commandButton value="INGRESAR" action="#{hello.muestra()}" />
+  <div >
+       <p:commandButton id="loginButton" value="Login"
+             actionListener="#{hello.muestra}" update=":R"
+onclick="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
   </div>
   </h:form>
 <!--copyright-->
