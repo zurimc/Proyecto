@@ -5,50 +5,56 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
-	
+
 <h:head>
-<meta charset="utf-8"></meta>
+<title>Generador de Funciones</title>
+	<meta charset="utf-8"></meta>
 	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-	<!--  <h:outputStylesheet library="css" name="bootstrap.min.css" />-->
-	<link rel="stylesheet" type="text/css" 
-		href="css/font-awesome.min.css" />
-		<link rel="stylesheet" type="text/css" 
-		href="css/style.css" />
+	
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+	<link href="css/style.css" rel='stylesheet' type='text/css' />
+	
 </h:head>
-<title>Login</title>
-<h:body style="text-align:center">
 <h1>Login</h1>
 
+<h:body style="text-align:center">
 
-<div class="w3ls-login box box--big">
-	<div class="clear-loading spinner">
-		<span></span>
-	</div>
-	
-  <h:form name="form1" action="login.php" method="post" class="login100-form validate-form p-b-33 p-t-5">
-   <div class="agile-field-txt">
-				<label><i class="fa fa-user" aria-hidden="true"></i> Usuario </label>
-				
-				<p:inputText styleClass="form-control"	style="text-align:center;" value="#{hello.nombre}" />
-   </div>
-   <div class="agile-field-txt">
-				<label><i class="fa fa-unlock-alt" aria-hidden="true"></i> Contraseña </label>
-				
-   				<p:inputText styleClass="form-control"	style="text-align:center;" value="#{hello.contrasenia}" />
-   </div>
+<div class="clear-loading spinner">
+<span></span>
+</div>
 
+<p:growl id="mensajes" showDetail="true" life="2000" />
+<h:outputLabel id = "R" value="#{hello.resultado}" />
 
-  <div >
-       <p:commandButton id="loginButton" value="Login"
+<!-- FORMULARIO PARA INGRESAR USUARIO Y CONTRASEÑA -->
+  <h:form class="login100-form validate-form p-b-33 p-t-5">
+    
+    <div class="w3ls-login box box--big">
+     	<div class="agile-field-txt">
+        <h:outputLabel for="username" value="Usuario:" />
+        <p:inputText value="#{hello.nombre}" id="username"
+           required="true" label="username" />
+         </div>
+         
+        <div class="agile-field-txt">
+        <h:outputLabel for="password" value="Clave:" />
+        <p:password value="#{hello.contrasenia}" id="password" required="true"
+           label="password" />
+        </div>
+        
+        <div class="agile-field-txt">
+          <p:commandButton id="loginButton" value="Login"
              actionListener="#{hello.muestra}" update=":R"
-onclick="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
-  </div>
+             onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" class="boton_personalizado"/>
+       </div>
+     </div>
+    
   </h:form>
+  <!-- FORMULARIO PARA INGRESAR USUARIO Y CONTRASEÑA -->
 <!--copyright-->
 	<div class="copy-wthree">
 		<p align="right"> ©  2019  .   All Rights Reserved    |   Design by vision artificial ESIMECU</p>
-	</div>
 	</div>
 <!--//copyright-->
 </h:body>
