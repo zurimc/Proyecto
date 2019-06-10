@@ -2,7 +2,33 @@ package com.lab.sdt.view;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+
+import com.lab.sdt.service.ConsultaUsuarios;
+import com.lab.sdt.util.MensajeG;
+
+
+
+@ManagedBean
+@ViewScoped
 public class RegistroUsuario implements Serializable {
+	private static final long serialVersionUID = 1L;	
+	
+	@ManagedProperty("#{consultaUsuarios}")
+	private ConsultaUsuarios consultaUsuarios;
+	
+	
+
+	public ConsultaUsuarios getConsultaUsuarios() {
+		return consultaUsuarios;
+	}
+	public void setConsultaUsuarios(ConsultaUsuarios consultaUsuarios) {
+		this.consultaUsuarios = consultaUsuarios;
+	}
 
 	private String nombre;
 	private String apellido1;
@@ -18,6 +44,8 @@ public class RegistroUsuario implements Serializable {
 	private String cuenta;
 	private String contrasenia;
 	private char estatus;
+	
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -103,6 +131,23 @@ public class RegistroUsuario implements Serializable {
 		this.estatus = estatus;
 	}
 	
+	@PostConstruct
+	public void init(){
+		
+	}
+	public void muestra() {
+		try {
+		//consultaUsuarios.insertarUsuario("pedro");
+		MensajeG.mostrar(consultaUsuarios.insertarUsuario("pedro"), FacesMessage.SEVERITY_WARN);
+		}catch(Exception e) {
+			MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
+		}
+		
+		//setResultado("Prueba base de datos");
+		
+		
+	}
+
 	
 	
 }

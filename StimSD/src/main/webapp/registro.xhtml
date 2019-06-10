@@ -1,129 +1,121 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	>
- <meta charset="utf-8"></meta>
-	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-	<h:outputStylesheet library="css" name="bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" 
-		href="css/font-awesome.min.css" />
-		<link rel="stylesheet" type="text/css" 
-		href="css/style.css" />
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+ 
 <h:head>
 
 <title>REGISTRAR </title>
+<meta charset="utf-8"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+	
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+	<link href="css/style.css" rel='stylesheet' type='text/css' />
 </h:head>
 
 <h:body>
 <h1 class="header-w3ls">Registro Usuario</h1>
-<form id="formulario" method="post" action="guardarCuenta.php">
-
-          <div class="main">
+	
+<form >
+<div class="online-w3l-form">
+     
+      <div class="appointment-w3">
+      <div class="main">
             <div class="form-left-w3l">
-              
-              <input placeholder="Nombre" required="" type="text" name="txtNombre" id="myInput" >
-              <i class="fa fa-user input-icon"></i>
+              <h:outputLabel for="nombre" value="Nombre:" />
+        		<p:inputText  id="nombre"
+           		required="true" label="nombre" />
             </div>
             <div class="form-right-w3ls ">
-              <input type="text" class="top-up" name="txtApe1" placeholder="Apellido Materno" required="">
+              <h:outputLabel for="apellido1" value="Apellido Paterno:" />
+        		<p:inputText  id="apellido1"
+           		required="true" label="apellido1" />
               <div class="clearfix"></div>
             </div>
             <div class="form-right-w3ls ">
-              <input type="text" class="top-up" name="txtApe2" placeholder="Apellido Paterno" required="">
+              <h:outputLabel for="apellido2" value="Apellido Materno:" />
+        		<p:inputText  id="apellido2"
+           		required="true" label="apellido2" />
               <div class="clearfix"></div>
             </div>
           </div>
           
+          <div class="main">
+            <div class="form-left-w3l">
+             <h:outputLabel for="calle" value="Calle:" />
+        		<p:inputText  id="calle"
+           		required="true" label="calle" />
+            </div>
+            <div class="form-right-w3ls ">
+             <h:outputLabel for="numero" value="Numero:" />
+        		<p:inputText  id="numero"
+           		required="true" label="numero" />
+              <div class="clearfix"></div>
+            </div>
+          </div>
           
           <div class="main">
             <div class="form-left-w3l">
-             <input type="text" name="txtCalle" placeholder="Calle" required="" id="myInput1">
-              <i class="fa fa-address-book input-icon1" style="width: 1%"></i>
+              <h:outputLabel for="colonia" value="Colonia:" />
+        		<p:inputText  id="colonia"
+           		required="true" label="colonia" />
             </div>
             <div class="form-right-w3ls ">
-              <input type="text" name="txtNum" placeholder="Numero" required="" id="myInput2">	
-              <i class="fa fa-hashtag input-icon2"></i>
+              <h:outputLabel for="cp" value="Codigo Postal:" />
+        		<p:inputText  id="cp"
+           		required="true" label="cp" />
               <div class="clearfix"></div>
             </div>
           </div>
-          <div class="main">
-            <div class="form-left-w3l">
-              <input type="text" name="txtCol" placeholder="Colonia" required="" id="myInput3">
-              <i class="fa fa-road input-icon3"></i>
-            </div>
-            <div class="form-right-w3ls ">
-              <input type="text" name="txtCP" placeholder="Codigo Postal" required="" id="myInput4">
-             	
-              <i class="fa fa-envelope input-icon4"></i>
-              <div class="clearfix"></div>
-            </div>
-          </div>
-          <div class="main">
+          
+         <div class="main">
               <div class="form-right-w3ls">
-              <select class="form-control buttom" size="1" name="cmbEdo">
-                <option value="">
-                  Seleccione el Estado 
-                </option>
-					
-              </select>
+              <h:outputLabel for="estado" value="Estado:" />
+        		<p:inputText  id="estado"
+           		required="true" label="estado" />
               </div>
              <div class="form-left-w3l">	
-              <input type="text" name="txtTel" placeholder="Telefono" required="" id="myInput5">
-              <i class="fa fa-at input-icon5"></i>
-              <div class="clearfix"></div>
-            </div>
-          </div>
-          <div class="main">
-            <div class="form-left-w3l">
-              <input type="email" name="txtEmail" placeholder="Email" required="" id="myInput6">
-              <i class="fa fa-phone-square input-icon6"></i>
-            </div>
-            <div class="form-right-w3ls ">
-             <select class="form-control buttom" size="1" name="cmbTipo">
-                <option value="">
-                  Tipo de Usuario
-                </option>
-					
-              </select>
-              <div class="clearfix"></div>
-            </div>
-          </div>
-          <div class="main">
-            <div class="form-left-w3l">
-              <input type="text" name="txtCuenta" placeholder="Cuenta" required="" id="myInput7">
-              <i class="fa fa-address-card input-icon7"></i>
-            </div>
-            <div class="form-right-w3ls ">
-              <input class="text" type="text" name="txtPass" placeholder="Contraseña" required="" id="myInput8">
-              <i class="fa fa-unlock input-icon8"></i>
+              <h:outputLabel for="telefono" value="Telefono:" />
+        		<p:inputText  id="telefono"
+           		required="true" label="username" />
               <div class="clearfix"></div>
             </div>
           </div>
           
+        <div class="main">
+            <div class="form-left-w3l">
+              <h:outputLabel for="email" value="Email:" />
+        		<p:inputText  id="email"
+           		required="true" label="email" />
+            </div>
+            <div class="form-right-w3ls ">
+            <h:outputLabel for="tipo" value="Tipo Usuario:" />
+        		<p:inputText  id="tipo"
+           		required="true" label="tipo" />
+              <div class="clearfix"></div>
+            </div>
+          </div>  
           
-		<div class="row">
-          <div class="col-md-9">
-            <input type="submit" value="Registrar" >
-            <br>
-            <br> 
-            <input type="reset" value="BORRAR" class="boton_personalizado1">
-            <br>
-            <br>
-            
-
-        <a href="login.php"><input type="button" value="Regresar" class="boton_personalizado">
-        </a>
+          <div class="main">
+            <div class="form-left-w3l">
+              <h:outputLabel for="cuenta" value="Cuenta:" />
+        		<p:inputText  id="cuenta"
+           		required="true" label="cuenta" />
+            </div>
+            <div class="form-right-w3ls ">
+             <h:outputLabel for="contrasenia" value="Contraseña :" />
+        		<p:inputText  id="contrasenia"
+           		required="true" label="contrasenia" />
+              <div class="clearfix"></div>
+            </div>
           </div>
-</div>
-        </form>
+          
+      </div>
+ </div>
+</form>
 </h:body>
 </html>
