@@ -16,20 +16,8 @@ import com.lab.sdt.util.MensajeG;
 @ManagedBean
 @ViewScoped
 public class RegistroUsuario implements Serializable {
+	
 	private static final long serialVersionUID = 1L;	
-	
-	@ManagedProperty("#{consultaUsuarios}")
-	private ConsultaUsuarios consultaUsuarios;
-	
-	
-
-	public ConsultaUsuarios getConsultaUsuarios() {
-		return consultaUsuarios;
-	}
-	public void setConsultaUsuarios(ConsultaUsuarios consultaUsuarios) {
-		this.consultaUsuarios = consultaUsuarios;
-	}
-
 	private String nombre;
 	private String apellido1;
 	private String apellido2;
@@ -44,108 +32,157 @@ public class RegistroUsuario implements Serializable {
 	private String cuenta;
 	private String contrasenia;
 	private char estatus;
+	private String resultado="";
 	
 	
-	public String getNombre() {
-		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	public String getApellido1() {
-		return apellido1;
-	}
-	public void setApellido1(String apellido1) {
-		this.apellido1 = apellido1;
-	}
-	public String getApellido2() {
-		return apellido2;
-	}
-	public void setApellido2(String apellido2) {
-		this.apellido2 = apellido2;
-	}
-	public String getCalle() {
-		return calle;
-	}
-	public void setCalle(String calle) {
-		this.calle = calle;
-	}
-	public String getNum() {
-		return num;
-	}
-	public void setNum(String num) {
-		this.num = num;
-	}
-	public String getColonia() {
-		return colonia;
-	}
-	public void setColonia(String colonia) {
-		this.colonia = colonia;
-	}
-	public String getCodigoPostal() {
-		return codigoPostal;
-	}
-	public void setCodigoPostal(String codigoPostal) {
-		this.codigoPostal = codigoPostal;
-	}
-	public int getIdEstado() {
-		return idEstado;
-	}
-	public void setIdEstado(int idEstado) {
-		this.idEstado = idEstado;
-	}
-	public String getTelefono() {
-		return telefono;
-	}
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public int getIdTipo() {
-		return idTipo;
-	}
-	public void setIdTipo(int idTipo) {
-		this.idTipo = idTipo;
-	}
-	public String getCuenta() {
-		return cuenta;
-	}
-	public void setCuenta(String cuenta) {
-		this.cuenta = cuenta;
-	}
-	public String getContrasenia() {
-		return contrasenia;
-	}
-	public void setContrasenia(String contrasenia) {
-		this.contrasenia = contrasenia;
-	}
-	public char getEstatus() {
-		return estatus;
-	}
-	public void setEstatus(char estatus) {
-		this.estatus = estatus;
-	}
+	@ManagedProperty("#{consultaUsuarios}")
+	private ConsultaUsuarios consultaUsuarios;
 	
 	@PostConstruct
 	public void init(){
 		
 	}
-	public void muestra() {
+	
+	public void muestrar() {
 		try {
 		//consultaUsuarios.insertarUsuario("pedro");
-		MensajeG.mostrar(consultaUsuarios.insertarUsuario("pedro"), FacesMessage.SEVERITY_WARN);
+		MensajeG.mostrar("hola", FacesMessage.SEVERITY_WARN);
 		}catch(Exception e) {
 			MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
-		}
+		}	
+
 		
-		//setResultado("Prueba base de datos");
-		
-		
+	}
+
+	private String getNombre() {
+		return nombre;
+	}
+
+	private void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	private String getApellido1() {
+		return apellido1;
+	}
+
+	private void setApellido1(String apellido1) {
+		this.apellido1 = apellido1;
+	}
+
+	private String getApellido2() {
+		return apellido2;
+	}
+
+	private void setApellido2(String apellido2) {
+		this.apellido2 = apellido2;
+	}
+
+	private String getCalle() {
+		return calle;
+	}
+
+	private void setCalle(String calle) {
+		this.calle = calle;
+	}
+
+	private String getNum() {
+		return num;
+	}
+
+	private void setNum(String num) {
+		this.num = num;
+	}
+
+	private String getColonia() {
+		return colonia;
+	}
+
+	private void setColonia(String colonia) {
+		this.colonia = colonia;
+	}
+
+	private String getCodigoPostal() {
+		return codigoPostal;
+	}
+
+	private void setCodigoPostal(String codigoPostal) {
+		this.codigoPostal = codigoPostal;
+	}
+
+	private int getIdEstado() {
+		return idEstado;
+	}
+
+	private void setIdEstado(int idEstado) {
+		this.idEstado = idEstado;
+	}
+
+	private String getTelefono() {
+		return telefono;
+	}
+
+	private void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	private String getEmail() {
+		return email;
+	}
+
+	private void setEmail(String email) {
+		this.email = email;
+	}
+
+	private int getIdTipo() {
+		return idTipo;
+	}
+
+	private void setIdTipo(int idTipo) {
+		this.idTipo = idTipo;
+	}
+
+	private String getCuenta() {
+		return cuenta;
+	}
+
+	private void setCuenta(String cuenta) {
+		this.cuenta = cuenta;
+	}
+
+	private String getContrasenia() {
+		return contrasenia;
+	}
+
+	private void setContrasenia(String contrasenia) {
+		this.contrasenia = contrasenia;
+	}
+
+	private char getEstatus() {
+		return estatus;
+	}
+
+	private void setEstatus(char estatus) {
+		this.estatus = estatus;
+	}
+
+	private ConsultaUsuarios getConsultaUsuarios() {
+		return consultaUsuarios;
+	}
+	public String getResultado() {
+		return resultado;
+	}
+
+	public void setResultado(String resultado) {
+		this.resultado = resultado;
+	}
+
+	private void setConsultaUsuarios(ConsultaUsuarios consultaUsuarios) {
+		this.consultaUsuarios = consultaUsuarios;
+	}
+
+	private static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	

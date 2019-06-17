@@ -5,11 +5,12 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
  
 <h:head>
 
 <title>REGISTRAR </title>
-<meta charset="utf-8"></meta>
+	<meta charset="utf-8"></meta>
 	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
 	
@@ -17,10 +18,14 @@
 	<link href="css/style.css" rel='stylesheet' type='text/css' />
 </h:head>
 
-<h:body>
+<h:body style="text-align:center">
 <h1 class="header-w3ls">Registro Usuario</h1>
-	
-<form >
+
+
+<p:growl id="mensajes" showDetail="true" life="2000" />
+<h:outputLabel id = "R" />
+
+<h:form>
 <div class="online-w3l-form">
      
       <div class="appointment-w3">
@@ -115,7 +120,11 @@
           </div>
           
       </div>
+       <p:commandButton id="regresar" value="regresar" class="boton_personalizado1"
+       onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"  actionListener="#{registroUsuario.muestrar}" update=":R"></p:commandButton>
  </div>
-</form>
+ 
+   
+</h:form>
 </h:body>
 </html>
