@@ -23,7 +23,7 @@
 
 
 <p:growl id="mensajes" showDetail="true" life="2000" />
-<h:outputLabel id = "R" />
+<h:outputLabel id = "R" value="#{RegistroUsuario.resultado}" />
 
 <h:form>
 <div class="online-w3l-form">
@@ -31,8 +31,8 @@
       <div class="appointment-w3">
       <div class="main">
             <div class="form-left-w3l">
-              <h:outputLabel for="nombre" value="Nombre:" />
-        		<p:inputText  id="nombre"
+              <h:outputLabel for="nombre" value="nombre:" />
+        		<p:inputText  id="nombre" 
            		required="true" label="nombre" />
             </div>
             <div class="form-right-w3ls ">
@@ -121,7 +121,8 @@
           
       </div>
        <p:commandButton id="regresar" value="regresar" class="boton_personalizado1"
-       onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"  actionListener="#{registroUsuario.muestrar}" update=":R"></p:commandButton>
+        actionListener="#{RegistroUsuario.muestrar}" 
+             onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton>
  </div>
  
    

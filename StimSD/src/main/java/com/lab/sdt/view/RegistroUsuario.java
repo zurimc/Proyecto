@@ -1,15 +1,24 @@
 package com.lab.sdt.view;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.context.RequestContext;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.lab.sdt.model.Usuario;
+import com.lab.sdt.util.MensajeG;
 
 import com.lab.sdt.service.ConsultaUsuarios;
-import com.lab.sdt.util.MensajeG;
 
 
 
@@ -17,8 +26,9 @@ import com.lab.sdt.util.MensajeG;
 @ViewScoped
 public class RegistroUsuario implements Serializable {
 	
-	private static final long serialVersionUID = 1L;	
-	private String nombre;
+	private static final long serialVersionUID = 1L;
+	
+	/*private String nombre;
 	private String apellido1;
 	private String apellido2;
 	private String calle;
@@ -32,7 +42,7 @@ public class RegistroUsuario implements Serializable {
 	private String cuenta;
 	private String contrasenia;
 	private char estatus;
-	private String resultado="";
+	private String resultado="";*/
 	
 	
 	@ManagedProperty("#{consultaUsuarios}")
@@ -48,12 +58,12 @@ public class RegistroUsuario implements Serializable {
 		//consultaUsuarios.insertarUsuario("pedro");
 		MensajeG.mostrar("hola", FacesMessage.SEVERITY_WARN);
 		}catch(Exception e) {
-			MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
+		//	MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
 		}	
 
 		
 	}
-
+/*
 	private String getNombre() {
 		return nombre;
 	}
@@ -165,18 +175,18 @@ public class RegistroUsuario implements Serializable {
 	private void setEstatus(char estatus) {
 		this.estatus = estatus;
 	}
-
+*/
 	private ConsultaUsuarios getConsultaUsuarios() {
 		return consultaUsuarios;
 	}
-	public String getResultado() {
+	/*public String getResultado() {
 		return resultado;
 	}
 
 	public void setResultado(String resultado) {
 		this.resultado = resultado;
 	}
-
+*/
 	private void setConsultaUsuarios(ConsultaUsuarios consultaUsuarios) {
 		this.consultaUsuarios = consultaUsuarios;
 	}
