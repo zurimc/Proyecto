@@ -23,7 +23,7 @@
 
 
 <p:growl id="mensajes" showDetail="true" life="2000" />
-<h:outputLabel id = "R" value="#{RegistroUsuario.resultado}" />
+<h:outputLabel id = "R" value="#{registroUsuario.resultado}" />
 
 <h:form>
 <div class="online-w3l-form">
@@ -32,18 +32,18 @@
       <div class="main">
             <div class="form-left-w3l">
               <h:outputLabel for="nombre" value="nombre:" />
-        		<p:inputText  id="nombre" 
+        		<p:inputText  id="nombre" value="#{RegistroUsuario.nombre}"
            		required="true" label="nombre" />
             </div>
             <div class="form-right-w3ls ">
               <h:outputLabel for="apellido1" value="Apellido Paterno:" />
-        		<p:inputText  id="apellido1"
+        		<p:inputText  id="apellido1" value="#{}"
            		required="true" label="apellido1" />
               <div class="clearfix"></div>
             </div>
             <div class="form-right-w3ls ">
               <h:outputLabel for="apellido2" value="Apellido Materno:" />
-        		<p:inputText  id="apellido2"
+        		<p:inputText  id="apellido2" 
            		required="true" label="apellido2" />
               <div class="clearfix"></div>
             </div>
@@ -120,9 +120,9 @@
           </div>
           
       </div>
-       <p:commandButton id="regresar" value="regresar" class="boton_personalizado1"
-        actionListener="#{RegistroUsuario.muestrar}" 
-             onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton>
+       <p:commandButton id="loginButton" value="Login"
+             actionListener="#{registroUsuario.muestra}" update=":R"
+             onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" class="boton_personalizado"/>
  </div>
  
    

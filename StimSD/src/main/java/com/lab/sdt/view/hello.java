@@ -57,7 +57,7 @@ public void muestra() {
 
 	try {
 	//consultaUsuarios.insertarUsuario("pedro");
-	MensajeG.mostrar("holla", FacesMessage.SEVERITY_WARN);
+	MensajeG.mostrar("hola", FacesMessage.SEVERITY_WARN);
 	}catch(Exception e) {
 		MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
 	}
