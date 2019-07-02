@@ -12,52 +12,50 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
 	
-	<link rel="stylesheet" href="css/font-awesome.min.css" />
+	<link rel="stylesheet" href="css/font-awesome.css" />
 	<link href="css/style.css" rel='stylesheet' type='text/css' />
+		
 	
 </h:head>
-<h1>Login</h1>
-
-<h:body style="text-align:center">
-
-<div class="clear-loading spinner">
-<span></span>
-</div>
+<h:body class="signup-body">
 
 <p:growl id="mensajes" showDetail="true" life="2000" />
 <h:outputLabel id = "R" value="#{hello.resultado}" />
 
 <!-- FORMULARIO PARA INGRESAR USUARIO Y CONTRASEÑA -->
-  <h:form class="login100-form validate-form p-b-33 p-t-5">
-    
-    <div class="w3ls-login box box--big">
-     	<div class="agile-field-txt">
+  <h:form>
+<div class="agile-signup">
+     <div class="content2">
+     		<div class="grids-heading  signup-heading">
+					<h2>Login</h2>
+			</div>
         <h:outputLabel for="username" value="Usuario:" />
-        <p:inputText value="#{hello.nombre}" id="username"
-           required="true" label="username" />
-         </div>
-         
-        <div class="agile-field-txt">
+        <p:inputText value="#{hello.nombre}" id="username" required="true" label="username" />
         <h:outputLabel for="password" value="Clave:" />
-        <p:password value="#{hello.contrasenia}" id="password" required="true"
-           label="password" />
-        </div>
-        
-        <div class="agile-field-txt">
-          <p:commandButton id="loginButton" value="Login"
+        <p:password value="#{hello.contrasenia}" id="password" required="true"  label="password" />
+        <p:commandButton id="loginButton" value="Login"
              actionListener="#{hello.muestra}" update=":R"
-             onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" class="boton_personalizado"/>
-       	<p:commandButton id="submit" value="Registro" action="registro" class="boton_personalizado2"></p:commandButton>	 
-       	<p:commandButton id="reset" value="clear" type="reset" class="boton_personalizado2"></p:commandButton>
-       </div>
-     </div>
+             onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" class="register"/>
+       	<p:commandButton id="submit" value="Registro" action="registro" class="register"></p:commandButton>   
+         
+          <div class="signin-text">
+					<div class="text-left">
+						<p><a href="#"> Olvido su Contraseña </a></p>
+					</div>
+					
+					<div class="clearfix"> </div>
+				</div>
+	</div>
+<!-- footer -->
+	<div class="copyright">
+		<p>© Vision Artificial</p>
+	</div>
+<!-- //footer -->
+       
+</div>
     
   </h:form>
   <!-- FORMULARIO PARA INGRESAR USUARIO Y CONTRASEÑA -->
-<!--copyright-->
-	<div class="copy-wthree">
-		<p align="right"> ©  2019  .   All Rights Reserved    |   Design by vision artificial ESIMECU</p>
-	</div>
-<!--//copyright-->
+
 </h:body>
 </html>

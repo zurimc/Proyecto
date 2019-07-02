@@ -75,4 +75,7 @@ public class ConsultaUsuarios {
 	public void insertarUsuario(Usuario usuario)throws Exception{
 		usuarioMapper.insert(usuario);
 	}
+	
+	//METODO PARA EL COMBOBOX DE ESTADOS
+	
 }

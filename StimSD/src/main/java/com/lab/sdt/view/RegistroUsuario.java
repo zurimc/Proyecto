@@ -39,29 +39,26 @@ public ConsultaUsuarios getConsultaUsuarios() {
 public void setConsultaUsuarios(ConsultaUsuarios consultaUsuarios) {
 	this.consultaUsuarios = consultaUsuarios;
 }
-private String nombre;
-private String apellido1;
-private String apellido2;
-private String calle;
-private String num;
-private String colonia;
-private String codigoPostal;
-private int idEstado;
-private String telefono;
-private String email;
-private int idTipo;
-private String cuenta;
-private String contrasenia;
-private char estatus;
-
-
-private String resultado ="";
+public String nombre;
+public String apellido1;
+public String apellido2;
+public String calle;
+public String num;
+public String colonia;
+public String codigoPostal;
+public int idEstado;
+public String telefono;
+public String email;
+public int idTipo;
+public String cuenta;
+public String contrasenia;
+public char estatus;
+public String resultado ="";
 
 @PostConstruct
 public void init(){
 	
 }
-
 public void muestra() {
 
 	try {
@@ -84,14 +81,14 @@ public void registroUsuario(){
 	User.setCalle(calle);
 	User.setNum(num);
 	User.setColonia(colonia);
-	User.setCodigopostal("codigopostal");
+	User.setCodigopostal(codigoPostal);
 	User.setIdestado(idEstado);
 	User.setTelefono(telefono);
 	User.setEmail(email);
 	User.setIdtipo(idTipo);
 	User.setCuenta(cuenta);
 	User.setContrasenia(contrasenia);
-	User.setEstatus("a");
+	User.setEstatus("");
 	try {
 		consultaUsuarios.registroUsuario(User);
 	} catch (Exception e) {
@@ -100,122 +97,116 @@ public void registroUsuario(){
 	}
 }
 
-
-
-private String getNombre() {
+public String getNombre() {
 	return nombre;
 }
 
-private void setNombre(String nombre) {
+public void setNombre(String nombre) {
 	this.nombre = nombre;
 }
 
-private String getApellido1() {
+public String getApellido1() {
 	return apellido1;
 }
 
-private void setApellido1(String apellido1) {
+public void setApellido1(String apellido1) {
 	this.apellido1 = apellido1;
 }
 
-private String getApellido2() {
+public String getApellido2() {
 	return apellido2;
 }
 
-private void setApellido2(String apellido2) {
+public void setApellido2(String apellido2) {
 	this.apellido2 = apellido2;
 }
 
-private String getCalle() {
+public String getCalle() {
 	return calle;
 }
 
-private void setCalle(String calle) {
+public void setCalle(String calle) {
 	this.calle = calle;
 }
 
-private String getNum() {
+public String getNum() {
 	return num;
 }
 
-private void setNum(String num) {
+public void setNum(String num) {
 	this.num = num;
 }
 
-private String getColonia() {
+public String getColonia() {
 	return colonia;
 }
 
-private void setColonia(String colonia) {
+public void setColonia(String colonia) {
 	this.colonia = colonia;
 }
 
-private String getCodigoPostal() {
+public String getCodigoPostal() {
 	return codigoPostal;
 }
 
-private void setCodigoPostal(String codigoPostal) {
+public void setCodigoPostal(String codigoPostal) {
 	this.codigoPostal = codigoPostal;
 }
 
-private int getIdEstado() {
+public int getIdEstado() {
 	return idEstado;
 }
 
-private void setIdEstado(int idEstado) {
+public void setIdEstado(int idEstado) {
 	this.idEstado = idEstado;
 }
 
-private String getTelefono() {
+public String getTelefono() {
 	return telefono;
 }
 
-private void setTelefono(String telefono) {
+public void setTelefono(String telefono) {
 	this.telefono = telefono;
 }
 
-private String getEmail() {
+public String getEmail() {
 	return email;
 }
 
-private void setEmail(String email) {
+public void setEmail(String email) {
 	this.email = email;
 }
 
-private int getIdTipo() {
+public int getIdTipo() {
 	return idTipo;
 }
 
-private void setIdTipo(int idTipo) {
+public void setIdTipo(int idTipo) {
 	this.idTipo = idTipo;
 }
 
-private String getCuenta() {
+public String getCuenta() {
 	return cuenta;
 }
 
-private void setCuenta(String cuenta) {
+public void setCuenta(String cuenta) {
 	this.cuenta = cuenta;
 }
 
-private String getContrasenia() {
+public String getContrasenia() {
 	return contrasenia;
 }
 
-private void setContrasenia(String contrasenia) {
+public void setContrasenia(String contrasenia) {
 	this.contrasenia = contrasenia;
 }
 
-private char getEstatus() {
+public char getEstatus() {
 	return estatus;
 }
 
-private void setEstatus(char estatus) {
+public void setEstatus(char estatus) {
 	this.estatus = estatus;
-}
-
-private static long getSerialversionuid() {
-	return serialVersionUID;
 }
 
 public String getResultado() {
@@ -225,6 +216,9 @@ public String getResultado() {
 public void setResultado(String resultado) {
 	this.resultado = resultado;
 }
+
+
+
 
 
 }

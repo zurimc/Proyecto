@@ -21,7 +21,6 @@ import com.lab.sdt.util.MensajeG;
 import com.lab.sdt.service.ConsultaUsuarios;
 
 
-
 @ManagedBean
 @ViewScoped
 public class hello implements Serializable {
@@ -44,8 +43,6 @@ private String nombre;
 
 private String contrasenia;
 
-
-
 private String resultado ="";
 
 @PostConstruct
@@ -57,7 +54,7 @@ public void muestra() {
 
 	try {
 	//consultaUsuarios.insertarUsuario("pedro");
-	MensajeG.mostrar("hola", FacesMessage.SEVERITY_WARN);
+	MensajeG.mostrar(consultaUsuarios.login(nombre, contrasenia), FacesMessage.SEVERITY_WARN);
 	}catch(Exception e) {
 		MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
 	}
@@ -66,8 +63,6 @@ public void muestra() {
 	
 	
 }
-
-
 
 public String getNombre() {
 	return nombre;
