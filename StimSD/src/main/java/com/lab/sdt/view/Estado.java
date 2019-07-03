@@ -1,55 +1,60 @@
 package com.lab.sdt.view;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.context.RequestContext;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import com.sun.xml.bind.v2.runtime.reflect.opt.Const;
+import com.lab.sdt.dto.EstadoDTO;
+import com.lab.sdt.service.EstadoUnidad;
+import com.lab.sdt.util.MensajeG;
 
 @ManagedBean
-
+@ViewScoped
 public class Estado implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	private List<Estado> estados;
-	private String estado;
+	
+	@ManagedProperty("#{estadoUnidad}")
+	private EstadoUnidad estadoUnidad;
+	
+	
+	public EstadoUnidad getEstadoUnidad() {
+		return estadoUnidad;
+	}
+
+	public void setEstadoUnidad(EstadoUnidad estadoUnidad) {
+		this.estadoUnidad = estadoUnidad;
+	}
+
+	//public List<EstadoDTO> estados;
+	public List<String> listaestados;
+	//private int idEstado;
 	
 	@PostConstruct
 	public void init(){
-		estados = unidadService.obtenerUnidadesPorIdCliente(usuarioDTO.getIdCliente());
-		if(estados.isEmpty()){
-			estados.add(generarUnidadVacia());
+		//EstadoDTO j = new EstadoDTO();
+		for(int i = 0; i >= estadoUnidad.selectEstado_v().size()-1; i++){
+			listaestados.set(i, estadoUnidad.selectEstado_v().get(i).getEstado()); 
+			//j.setEstado(estadoUnidad.selectEstado_v().get(i).getEstado());
+			//j.setIdEstado(estadoUnidad.selectEstado_v().get(i).getIdestado());
+			//estados.add(j);
 		}
 	}
-	public void generarEstados(){
-		Estado estado = obtenerUnidadPorId();
-		if(estado == null){
-			MensajeGrowl.mostrar("Debe seleccionar una unidad", FacesMessage.SEVERITY_WARN);
-			return;
-		}
+
+	public List<String> getListaestados() {
+		return listaestados;
 	}
-	private List<Estado> getEstados() {
-		return estados;
+
+	public void setListaestados(List<String> listaestados) {
+		this.listaestados = listaestados;
 	}
-	private void setEstados(List<Estado> estados) {
-		this.estados = estados;
-	}
-	private String getEstado() {
-		return estado;
-	}
-	private void setEstado(String estado) {
-		this.estado = estado;
-	}
-	
 	
 	
 }
