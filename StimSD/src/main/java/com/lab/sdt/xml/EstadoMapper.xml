@@ -112,8 +112,9 @@
       This element was generated on Mon May 20 14:45:29 CDT 2019.
     -->
     select 
-    <include refid="Base_Column_List" />
+      <include refid="Base_Column_List" />
     from estado
+    where 1
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--
