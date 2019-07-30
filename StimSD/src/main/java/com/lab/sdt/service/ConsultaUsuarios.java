@@ -13,6 +13,7 @@ import com.lab.sdt.model.Tipousuario;
 import com.lab.sdt.model.Usuario;
 
 
+
 @Service
 @Transactional
 public class ConsultaUsuarios {
@@ -30,41 +31,36 @@ public class ConsultaUsuarios {
 		
 	}
 	
-	public String insertarUsuario(String username) throws Exception{
-		Usuario user_1 = new Usuario();
-		user_1.setNombre("erwin");
-		user_1.setApellido1("davila");
-		user_1.setApellido2("iniesta");
-		user_1.setCalle("flor");
-		user_1.setNum("11");
-		user_1.setColonia("coyoacan");
-		user_1.setCodigopostal("57820");
-		user_1.setIdestado(2);
-		user_1.setTelefono("584686695");
-		user_1.setEmail("erwin@gmail.com");
-		user_1.setIdtipo(1);
-		user_1.setCuenta("erwin");
-		user_1.setContrasenia("9876");
-		user_1.setEstatus("");
+	public Usuario validarusuario(String cuenta, String contrasenia) throws Exception{
+		Usuario user = new Usuario();
 		
-		insertarUsuario(user_1);
-		return "ok";
+		if(cuenta_registro(cuenta) == null) {
+			throw new Exception("contraseña o usuario no valido");
+		}else {
+			user = obterusuarioporcuenta(cuenta);
+		}
+		
+		if(user.getEstatus().equals("D") || user.getEstatus().equals("") ) {
+			throw new Exception("Su cuenta esta deshabilitada. Por favor consulte a su proveedor");
+		} if(!user.getContrasenia().contentEquals(contrasenia)){
+			throw new Exception("contraseña o usuario no valido");
+		}
+		return user;
 	}
+	
 	//METODO PARA PONER NOMBRE Y CONTRASEÑA Y TE DICE QUE TIPO DE USUARIO ES
 	public String login(String nombre, String contrasenia) {
-		String resultado= "" ;
+		String resultado=null ;
 		Tipousuario tipo_usuario = new Tipousuario();
-		List<Usuario> contenedor_usuario = usuarioMapper.selectByNombre(nombre);
-		if(contenedor_usuario.size() >=0) {
-			if(contenedor_usuario.get(0).getContrasenia().equals(contrasenia)) {
-				
-				tipo_usuario = tipousuarioMapper.selectByPrimaryKey(contenedor_usuario.get(0).getIdtipo());
-				resultado = tipo_usuario.getTipousuario();
+		try {
+			   if(obterusuarioporcuenta(nombre).getContrasenia().equals(contrasenia)) {
+			   tipo_usuario = tipousuarioMapper.selectByPrimaryKey(obterusuarioporcuenta(nombre).getIdtipo());
+			   resultado = tipo_usuario.getTipousuario();
 			}else {
-				resultado = "error";
+				resultado = "contraseña o usuario no valido ";
 			} 
-		}else {
-			resultado = null;
+		}catch(Exception e) {
+			resultado = "contraseña o usuario no valido ";
 		}
 		
 		return resultado;
@@ -76,6 +72,18 @@ public class ConsultaUsuarios {
 		usuarioMapper.insert(usuario);
 	}
 	
-	//METODO PARA EL COMBOBOX DE ESTADOS
+	public Usuario obterusuarioporcuenta(String cuenta1) {
+		List<Usuario> contenedor_usuario = usuarioMapper.selectByCuenta(cuenta1);
+		return contenedor_usuario.get(0);
+	}
 	
+	public String cuenta_registro(String cuenta2) {
+		String res= null;
+		try {
+			res = obterusuarioporcuenta(cuenta2).getCuenta();
+		}catch(Exception e) {
+			res=null;
+		}
+		return res;
+	}
 }

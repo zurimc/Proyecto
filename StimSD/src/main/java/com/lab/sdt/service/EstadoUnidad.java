@@ -1,23 +1,25 @@
 package com.lab.sdt.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 
 import javax.faces.model.SelectItem;
-import javax.faces.model.SelectItemGroup;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lab.sdt.dao.EstadoMapper;
-import com.lab.sdt.dto.EstadoDTO;
 import com.lab.sdt.model.Estado;
+
 import com.lab.sdt.model.EstadoExample;
 
-import com.lab.sdt.model.EstadoExample.Criteria;
+
+
+
 
 
 
@@ -28,24 +30,27 @@ public class EstadoUnidad {
 	@Autowired
 	private EstadoMapper estadoMapper;
 	
-	public List<String> selectEstado_v(){
-		SelectItemGroup g1 = new SelectItemGroup("estado");
-		List<Estado> todos_los_estados  = new ArrayList<Estado>();
-		List<String> listaestados = new ArrayList<String>();
-		/*listaestados.add(""+0);
-		listaestados.add(""+1);
-		listaestados.add(estadoMapper.selectByPrimaryKey(2).getEstado());
-		listaestados.add(""+3);
-		listaestados.add(""+4);
-		*/
-		for(int ii = 1; ii<= 33; ii++) {
+	public List<SelectItem> lista_estados;
+       	
+
+	public List<Estado> estados1;
+	
+	public List<SelectItem> getLista_estados() {
+		this.lista_estados = new ArrayList<SelectItem>();
+		EstadoExample exEst = new EstadoExample();
+		
+		for(int ii = 1; ii<= estadoMapper.countByExample(exEst); ii++) {
 			//estadoMapper.selectByPrimaryKey(2).getEstado()
 		//listaestados.add(""+0);
-			listaestados.add(estadoMapper.selectByPrimaryKey(ii).getEstado());
+			SelectItem estados = new SelectItem(ii,estadoMapper.selectByPrimaryKey(ii).getEstado());
+			this.lista_estados.add(estados);
+			//listaestados.add(estadoMapper.selectByPrimaryKey(ii).getEstado());
 		}
-		return listaestados;
+		return lista_estados;
 	}
-	
 
-	
+
+	public void setLista_estados(List<SelectItem> lista_estados) {
+		this.lista_estados = lista_estados;
+	}
 }

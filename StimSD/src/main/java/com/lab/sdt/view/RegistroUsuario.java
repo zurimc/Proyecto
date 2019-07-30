@@ -1,6 +1,8 @@
 package com.lab.sdt.view;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -10,11 +12,14 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FlowEvent;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.lab.sdt.service.EstadoUnidad;
 import com.lab.sdt.model.Usuario;
 import com.lab.sdt.util.MensajeG;
 
@@ -31,14 +36,11 @@ private static final long serialVersionUID = 1L;
 private ConsultaUsuarios consultaUsuarios;
 
 
+@ManagedProperty("#{estadoUnidad}")
+public EstadoUnidad estadoUnidad;
 
-public ConsultaUsuarios getConsultaUsuarios() {
-	return consultaUsuarios;
-}
 
-public void setConsultaUsuarios(ConsultaUsuarios consultaUsuarios) {
-	this.consultaUsuarios = consultaUsuarios;
-}
+
 public String nombre;
 public String apellido1;
 public String apellido2;
@@ -55,13 +57,27 @@ public String contrasenia;
 public char estatus;
 public String resultado ="";
 
+public String estado;
+private boolean skip;
+
+
+
+
+public List<SelectItem> estados;
+
 @PostConstruct
 public void init(){
-	
+	estados = new ArrayList<SelectItem>();
+	try {
+		estados = estadoUnidad.getLista_estados();
+	}catch(Exception e) {
+		MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
+	}
 }
 public void muestra() {
 
 	try {
+
 	//consultaUsuarios.insertarUsuario("prueba");
 	MensajeG.mostrar("", FacesMessage.SEVERITY_WARN);
 	}catch(Exception e) {
@@ -72,7 +88,31 @@ public void muestra() {
 	
 	
 }
+public void carga_Estados() {
 
+	
+	//setResultado("Prueba base de datos");
+	
+	
+}
+
+public boolean isSkip() {
+    return skip;
+}
+
+public void setSkip(boolean skip) {
+    this.skip = skip;
+}
+
+public String onFlowProcess(FlowEvent event) {
+    if(skip) {
+        skip = false;   //reset in case user goes back
+        return "confirm";
+    }
+    else {
+        return event.getNewStep();
+    }
+}
 public void registroUsuario(){
 	Usuario User = new Usuario();
 	User.setNombre(nombre);
@@ -85,16 +125,54 @@ public void registroUsuario(){
 	User.setIdestado(idEstado);
 	User.setTelefono(telefono);
 	User.setEmail(email);
-	User.setIdtipo(idTipo);
+	User.setIdtipo(4);/* paciente*/
 	User.setCuenta(cuenta);
 	User.setContrasenia(contrasenia);
-	User.setEstatus("");
+	User.setEstatus("D");
 	try {
-		consultaUsuarios.registroUsuario(User);
+		 if(consultaUsuarios.cuenta_registro(cuenta)==null) {
+			 consultaUsuarios.registroUsuario(User);
+			
+				ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+				externalContext.redirect("login.xhtml");
+				 MensajeG.mostrar("Registro exitoso", FacesMessage.SEVERITY_INFO);
+		 }else {
+			 MensajeG.mostrar("ya existe un usuario con esta cuenta", FacesMessage.SEVERITY_WARN);
+		 }
+		
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
+		MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_ERROR);
 	}
+}
+
+public void ini_login() {
+	
+	try {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		externalContext.redirect("login.xhtml");
+	}catch(Exception e) {
+		
+	}
+}
+
+public String getEstado() {
+	estado = estados.get(idEstado-1).getLabel();
+	return estado;
+}
+
+public void setEstado(String estado) {
+	this.estado = estado;
+}
+
+public List<SelectItem> getEstados() {
+	
+	return estados;
+}
+
+public void setEstados(List<SelectItem> estados) {
+	this.estados = estados;
 }
 
 public String getNombre() {
@@ -218,7 +296,23 @@ public void setResultado(String resultado) {
 }
 
 
+public EstadoUnidad getEstadoUnidad() {
+	return estadoUnidad;
+}
 
+public void setEstadoUnidad(EstadoUnidad estadoUnidad) {
+	this.estadoUnidad = estadoUnidad;
+}
+
+
+
+public ConsultaUsuarios getConsultaUsuarios() {
+	return consultaUsuarios;
+}
+
+public void setConsultaUsuarios(ConsultaUsuarios consultaUsuarios) {
+	this.consultaUsuarios = consultaUsuarios;
+}
 
 
 }

@@ -5,9 +5,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
-
- 
 <h:head>
+
 
 <title>REGISTRAR </title>
 	<meta charset="utf-8"></meta>
@@ -16,89 +15,165 @@
 	
 	<link rel="stylesheet" href="css/font-awesome.min.css" />
 	<link href="css/style.css" rel='stylesheet' type='text/css' />
-</h:head>
-
-<h:body class="signup-body" >
-
-<p:growl id="mensajes" showDetail="true" life="2000" />
-<h:outputLabel id = "R" value="#{registroUsuario.resultado}" />
-
+</h:head> 
+<h:body class="signup-body" > 
 <h:form>
-
-<div class="agile-signup">
+         
+<p:growl id="mensajes" showDetail="true" life="2000" sticky="true" />
+<h:outputLabel id = "R" value="#{registroUsuario.resultado}" />
 <div class="content2">
-     <div class="grids-heading signup-heading">
+<div class="grids-heading signup-heading">
 		<h2>Registro</h2>
-	</div>
-	
-              <h:outputLabel for="nombre" value="nombre:" />
-        		<p:inputText  id="nombre" value="#{registroUsuario.nombre}"
-           		required="true" label="nombre" />
-            
-              <h:outputLabel for="apellido1" value="Apellido Paterno:" />
-        		<p:inputText  id="apellido1"  value="#{registroUsuario.apellido1}"
-           		required="true" label="apellido1" />
-             
-              <h:outputLabel for="apellido2" value="Apellido Materno:" />
-        		<p:inputText  id="apellido2"  value="#{registroUsuario.apellido2}"
-           		required="true" label="apellido2" />
-         
-             <h:outputLabel for="calle" value="Calle:" />
-        		<p:inputText  id="calle"  value="#{registroUsuario.calle}"
-           		required="true" label="calle" />
-            
-             <h:outputLabel for="numero" value="Numero:" />
-        		<p:inputText  id="numero"  value="#{registroUsuario.num}"
-           		required="true" label="numero" />
-             
-              <h:outputLabel for="colonia" value="Colonia:" />
-        		<p:inputText  id="colonia"  value="#{registroUsuario.colonia}"
-           		required="true" label="colonia" />
-         
-              <h:outputLabel for="cp" value="Codigo Postal:" />
-        		<p:inputText  id="cp"  value="#{registroUsuario.codigoPostal}"
-           		required="true" label="cp" />
-             
-             <div>
-               <h:outputLabel for="estado" value="Estado: " />
-              	<h:selectOneMenu  id="estado" style="width:95%;" >
-              			<f:selectItem itemLabel="seleccione uno" itemValue="" />
-						<f:selectItems value="#{estadoView.listaestados}" />
-				</h:selectOneMenu>
-              	</div> 
-              	
-              <div>
-              <h:outputLabel for="telefono" value="Telefono:" />
-        		<p:inputText  id="telefono"  value="#{registroUsuario.telefono}"
-           		required="true" label="username" />
-             
-              <h:outputLabel for="email" value="Email:" />
-        		<p:inputText  id="email"  value="#{registroUsuario.email}"
-           		required="true" label="email" />
-           
-                     
-               <h:outputLabel for="cuenta" value="Cuenta:" />
-        		<p:inputText  id="cuenta"  value="#{registroUsuario.cuenta}"
-           		required="true" label="cuenta" />
-           </div>
-             <h:outputLabel for="contrasenia" value="Contraseña :" />
-        		<p:inputText  id="contrasenia"  value="#{registroUsuario.contrasenia}"
-           		required="true" label="contrasenia" />
-             
+</div > 
+    <p:wizard flowListener="#{registroUsuario.onFlowProcess}">
+        <p:tab id="Personal" title="Personal">
+            <p:panel header="Detalles Personales">
+                <p:messages />
+                <h:panelGrid columns="2" columnClasses="label, value">
+                    <h:outputLabel for="Nombre" value="Nombre:" />
+        			<p:inputText  id="nombre" value="#{registroUsuario.nombre}" required="true" label="nombre" >
+        			 <p:keyFilter regEx="/[a-z_]/i"/>  
+        			</p:inputText>	
+  
+		 			<h:outputLabel for="apellido1" value="A.Paterno:" />
+         			<p:inputText  id="apellido1"  value="#{registroUsuario.apellido1}"  label="apellido1">
+         			 <p:keyFilter regEx="/[a-z_]/i"/>  
+        			</p:inputText>     								 	
+	  
+             		 <h:outputLabel for="apellido2" value="A.Materno:" />
+        			 <p:inputText  id="apellido2"  value="#{registroUsuario.apellido2}"
+           				required="true" label="apellido2">
+           			 <p:keyFilter regEx="/[a-z_]/i"/>  
+        			</p:inputText>	
+           		
+           	 		 <h:outputLabel for="cuenta" value="Cuenta:" />
+        			 <p:inputText  id="cuenta"  value="#{registroUsuario.cuenta}"
+           				required="true" label="cuenta">
+           			 <p:keyFilter regEx="/[a-z_]/i"/>  
+        			</p:inputText>	
+           		
+           	  		 <h:outputLabel  for="pwd1" value="Contraseña: *"/>
+        			<p:password id="pwd1" value="#{registroUsuario.contrasenia}" match="pwd2" label="Password 1" required="true" />
+           			 <h:outputLabel for="pwd2" value="Confirme Contraseña: *" />
+        			<p:password id="pwd2" value="#{registroUsuario.contrasenia}" label="Password 2" required="true" />		   
+           			
+                </h:panelGrid>
+            </p:panel>
+        </p:tab>
+ 
+        <p:tab id="Direccion" title="Direccion">
+            <p:panel header="Direccion">
+                <p:messages />
+                <h:panelGrid columns="2" columnClasses="label, value">
+                    <h:outputLabel for="calle" value="Calle:" />
+       				<p:inputText  id="calle"  value="#{registroUsuario.calle}" required="true" label="calle" />
+             		<h:outputLabel for="numero" value="Numero:" />
+        			<p:inputText  id="numero"  value="#{registroUsuario.num}" required="true" label="numero">
+        			<p:keyFilter regEx="/[\d\-\.]/"/>  
+        			</p:inputText>
+    
+              		<h:outputLabel for="colonia" value="Colonia:" />
+        			<p:inputText  id="colonia"  value="#{registroUsuario.colonia}"
+           			required="true" label="colonia" />
       
-       <p:commandButton id="registro" value="registro" update=":R"
-             actionListener="#{estadoView.muestra()}" 
-             onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" class="register"/>
-        	<p:commandButton id="submit" value="index" action="index" class="register"></p:commandButton>   
+              		<h:outputLabel for="cp" value="CP:" />
+        			<p:inputText  id="cp"  value="#{registroUsuario.codigoPostal}"
+           			required="true" label="cp">
+           			<p:keyFilter regEx="/[\d\-\.]/"/>  
+        			</p:inputText>
+    
+               		<h:outputLabel for="estado" value="Estado: " />
+                  <h:selectOneMenu  id="estado" style="width:95%;"  value="#{registroUsuario.idEstado}">
+                    <f:selectItem itemLabel="seleccione uno" itemValue="" />
+            <f:selectItems value="#{registroUsuario.estados}" />
+          </h:selectOneMenu>
+                  
+                </h:panelGrid>
+            </p:panel>
+        </p:tab>
+ 
+        <p:tab id="Contacto" title="Contacto">
+            <p:panel header="Contacto">
+                <p:messages />
+                <h:panelGrid columns="2" columnClasses="label, value">
+                     <h:outputLabel for="telefono" value="Telefono:" />
+        			 <p:inputText  id="telefono"  value="#{registroUsuario.telefono}"
+           				required="true" label="username">
+           			<p:keyFilter regEx="/[\d\-\.]/"/>  
+        			</p:inputText>	
+            
+              		<h:outputLabel for="email" value="Email:" />
+        			<p:inputText  id="email"  value="#{registroUsuario.email}"
+           			required="true" label="email">
+           			<p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/>  
+        			</p:inputText>
+                      
+                </h:panelGrid>
+            </p:panel>
+        </p:tab>
+ 
+        <p:tab id="Confirmacion" title="Confirmacion">
+            <p:panel header="Confirmacion">
+                <h:panelGrid id="confirmation" columns="4" columnClasses="grid,grid,grid">
+                    <h:panelGrid columns="2" columnClasses="label, value">
+                        <h:outputText value="Nombre: " />
+                        <h:outputText value="#{registroUsuario.nombre}" styleClass="outputLabel"/>
+ 
+                        <h:outputText value="Apellido P: " />
+                        <h:outputText value="#{registroUsuario.apellido1}" styleClass="outputLabel"/>
+ 
+                        <h:outputText value="Apellido M: " />
+                        <h:outputText value="#{registroUsuario.apellido2}" styleClass="outputLabel"/>
+                       <h:outputText value="Cuenta: " />
+                        <h:outputText value="#{registroUsuario.cuenta}" styleClass="outputLabel"/>
+                        <h:outputText value="Contraseña: " />
+                        <h:outputText value="#{registroUsuario.contrasenia}" styleClass="outputLabel"/>
+                        
+                    </h:panelGrid>
+ 
+                    <h:panelGrid columns="2" columnClasses="label, value">
+                        <h:outputText value="Calle: " />
+                        <h:outputText value="#{registroUsuario.calle}" styleClass="outputLabel"/>
+ 
+                        <h:outputText value="Num.: " />
+                        <h:outputText value="#{registroUsuario.num}" styleClass="outputLabel"/>
+ 
+                        <h:outputText value="Colonia: " />
+                        <h:outputText value="#{registroUsuario.colonia}" styleClass="outputLabel"/>
+                        <h:outputText value="C.P: " />
+                        <h:outputText value="#{registroUsuario.codigoPostal}" styleClass="outputLabel"/>
+                        <h:outputText value="Estado: " />
+                        <h:outputText value="#{registroUsuario.estado}" styleClass="outputLabel"/>
+                    </h:panelGrid>
+ 
+                </h:panelGrid>
+                <br></br>
+ 				<h:panelGrid columns="2" columnClasses="label, value">
+                        <h:outputText value="Email: " />
+                        <h:outputText value="#{registroUsuario.email}" styleClass="outputLabel"/>
+ 
+                        <h:outputText value="Telefono " />
+                        <h:outputText value="#{registroUsuario.telefono}" styleClass="outputLabel"/>
+ 
+                    </h:panelGrid>
            
-             
+ 			<p:commandButton id="submit" value="login" actionListener="#{registroUsuario.ini_login}" 
+            onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton>  
+ 			<p:commandButton  value="ok"  actionListener="#{registroUsuario.registroUsuario}" 
+            onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton>  				 	
+            </p:panel>
+        </p:tab>    
+               	    
+    </p:wizard>
+    
+ </div>
+ 
+</h:form>
 <!-- footer -->
 	<div class="copyright">
 		<p>© Vision Artificial</p>
 	</div>
- </div>
- </div>
-   
-</h:form>
+<!-- //footer -->
+       
 </h:body>
 </html>

@@ -7,11 +7,11 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
-<title>Generador de Funciones</title>
+<title>StimSD</title>
 	<meta charset="utf-8"></meta>
 	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-	
+
 	<link rel="stylesheet" href="css/font-awesome.css" />
 	<link href="css/style.css" rel='stylesheet' type='text/css' />
 	<link rel="stylesheet" href="css/font.css" type="text/css"/>
@@ -38,92 +38,31 @@
 <nav class="main-menu">
 		<ul>
 			<li>
-				<a href="index.html">
-					<i class="fa fa-home nav_icon"></i>
-					<span class="nav-text">
-					Dashboard
-					</span>
-				</a>
+			<ui:insert name = "menu_inicio"></ui:insert>
+			</li>
+
+			<li class="has-subnav">
+				<ui:insert name = "menu_configuracion"></ui:insert>
 			</li>
 			<li class="has-subnav">
-				<a href="javascript:;">
-				<i class="fa fa-cogs" aria-hidden="true"></i>
-				<span class="nav-text">
-					UI Components
-				</span>
-				<i class="icon-angle-right"></i><i class="icon-angle-down"></i>
-				</a>
-				<ul>
-					<li>
-					<a class="subnav-text" href="buttons.html">
-					Buttons
-					</a>
-					</li>
-					<li>
-					<a class="subnav-text" href="grids.html">
-					Grids
-					</a>
-					</li>
-				</ul>
+			 <ui:insert name = "menu_usuario"> </ui:insert>
+			
 			</li>
 			<li class="has-subnav">
-				<a href="javascript:;">
-				<i class="fa fa-check-square-o nav_icon"></i>
-				<span class="nav-text">
-				Forms
-				</span>
-				<i class="icon-angle-right"></i><i class="icon-angle-down"></i>
-				</a>
-				<ul>
-					<li>
-						<a class="subnav-text" href="inputs.html">Inputs</a>
-					</li>
-					<li>
-						<a class="subnav-text" href="validation.html">Form Validation</a>
-					</li>
-				</ul>
+			 <ui:insert name = "menu_historico">  </ui:insert>		
 			</li>
-			<li class="has-subnav">
-				<a href="javascript:;">
-					<i class="fa fa-file-text-o nav_icon"></i>
-						<span class="nav-text">Pages</span>
-					<i class="icon-angle-right"></i><i class="icon-angle-down"></i>
-				</a>
-				<ul>
-					<li>
-						<a class="subnav-text" href="gallery.html">
-							Image Gallery
-						</a>
-					</li>
-					<li>
-						<a class="subnav-text" href="calendar.html">
-							Calendar
-						</a>
-					</li>
-					<li>
-						<a class="subnav-text" href="signup.html">
-							Sign Up Page
-						</a>
-					</li>
-					<li>
-						<a class="subnav-text" href="login.html">
-							Login Page
-						</a>
-					</li>
-				</ul>
-			</li>
-			
-			
-			
-			
 		</ul>
 		<ul class="logout">
 			<li>
-			<a href="login.html">
-			<i class="icon-off nav-icon"></i>
-			<span class="nav-text">
-			Logout
-			</span>
+			<a >
+			<!-- <i class="icon-off nav-icon"></i>-->
+				 <h:form>
+					<p:commandLink id="ajax" action="#{gestiondeSeccionView.cerrarSesionUsuario}" 
+             				class="nav-text icon-off nav-icon">
+             				
+							 <h:outputText value="  Salir  " />
+   					 </p:commandLink>
+				</h:form>
 			</a>
 			</li>
 		</ul>
@@ -137,12 +76,14 @@
 		</nav>
 		<section class="title-bar">
 			<div class="logo">
-				<h1><a href="index.html"><img src="images/logo.png" alt="" />Inicio</a></h1>
+				<ui:insert name = "top">
+
+				</ui:insert>
 			</div>
 			
 			<div class="clearfix"> </div>
 		</section>
-		
+	      <ui:insert name = "content"> NO CONTENT</ui:insert>
 		<!-- footer -->
 		<div class="footer">
 			<p>© Vision Artificial</p>

@@ -1,0 +1,85 @@
+<ui:composition template="index.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="menu_inicio">
+		<a href="Administrador.xhtml">
+		<i class="fa fa-home nav_icon"></i>
+			<span class="nav-text">
+					Inicio
+			</span>
+		</a>
+	 </ui:define>
+	
+	 <ui:define name="menu_configuracion">
+	 	<a href="javascript:;">
+				<i class="fa fa-cogs" aria-hidden="true"></i>
+		<span class="nav-text">
+			 Configuración
+		</span>
+			<i class="icon-angle-right"></i><i class="icon-angle-down"></i>
+			</a>
+			<ul>
+				<li>
+					<a class="subnav-text" href="buttons.html">
+						Generar Bioponencial 
+					</a>
+				</li>
+			</ul>
+	 </ui:define>
+	 
+	  <ui:define name="menu_usuario">
+	  		 	<a href="javascript:;">
+				<i class="fa fa-check-square-o nav_icon"></i>
+				<span class="nav-text">
+				Usuarios
+				</span>
+				<i class="icon-angle-right"></i><i class="icon-angle-down"></i>
+				</a>
+				<ul>
+					<li>
+						<a class="subnav-text" href="">Tecnico</a>
+					</li>
+					<li>
+						<a class="subnav-text" href="">Paciente</a>
+					</li>
+					<li>
+						<a class="subnav-text" href="">Operador</a>
+					</li>
+					<li>
+						<a class="subnav-text" href="">Por Definir</a>
+					</li>
+				</ul>
+	  </ui:define>
+	  
+	  <ui:define name="menu_historico">
+	  			<a href="javascript:;">
+					<i class="fa fa-file-text-o nav_icon"></i>
+						<span class="nav-text">Historico</span>
+					<i class="icon-angle-right"></i><i class="icon-angle-down"></i>
+				</a>
+				<ul>
+					<li>
+						<a class="subnav-text" href="">Estimuladores</a>
+					</li>
+					<li>
+						<a class="subnav-text" href="">Pacientes</a>
+					</li>
+				</ul>
+	  </ui:define>
+	 
+	 	<ui:define name="content"> 
+	 	<div style="text-align: center">
+	 	   <iframe src="VistaOperador.xhtml" height="480" width="900"></iframe> 
+		</div>
+	 	</ui:define>
+	<ui:define name="top"> 
+		<h1><a href="index.html"><img src="images/logo.png" alt="" />
+			<h:outputLabel id = "tipo_usuario" value="#{administrador.inicio}" />
+		</a></h1> 
+	</ui:define>
+
+</ui:composition>

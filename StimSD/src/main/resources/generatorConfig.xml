@@ -3,7 +3,7 @@
 <generatorConfiguration >
  
   <context id="context1" >
-    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/B_lab_V_1.0" userId="root" password="" />
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/base_stimsd" userId="root" password="" />
     <javaModelGenerator targetPackage="com.lab.sdt.model" targetProject="StimSD" />
     <sqlMapGenerator targetPackage="com.lab.sdt.xml" targetProject="StimSD" />
     <javaClientGenerator targetPackage="com.lab.sdt.dao" targetProject="StimSD" type="XMLMAPPER" />
