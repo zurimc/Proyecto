@@ -13,26 +13,26 @@
 	
 	<link rel="stylesheet" href="css/font-awesome.min.css" />
 	<link href="css/style_grafica.css" rel='stylesheet' type='text/css' />
+
 <ui:define name="muestra">
 	<h:form>
+	<c:if test="#{gestiondeSeccionView.userDTO.getIdtipo()==1}">
+	<p:growl id="mensajes" showDetail="true" life="2000" />
+		<p:menubar>
 	
-	<br></br>
-<div class="estilo1">
-	<div class="estilo2">
-
-		<p:outputLabel for="ondas" value="Agrupacion: " />
-		        <p:selectOneMenu id="ondas" value="#{potencialesAccion.idTipoOnda}" >
-		            
-		            <f:selectItems  value="#{potencialesAccion.general}" />
-		            <p:ajax event="change" listener="#{potencialesAccion.valores_a_graficas}" update="grafica_ondas"  />
-		        </p:selectOneMenu>
-	        
-	 </div>       
-	<div  class="estilo3">
+			  <f:facet name="options">
+			   <p:selectOneMenu id="ondas" value="#{potencialesAccion.idTipoOnda}" >
+					            <f:selectItem itemLabel="Potenciales" itemValue="0"/>
+					            <f:selectItems  value="#{potencialesAccion.general}" />
+					            <p:ajax event="change" listener="#{potencialesAccion.valores_a_graficas}" update="grafica_ondas"  />
+					        </p:selectOneMenu>
+			  </f:facet>
+		</p:menubar>
+		<br></br>
 		<p:chart type="line" id ="grafica_ondas" model="#{potencialesAccion.lineModel}"  />
-	</div>
-</div>
-	        
+	
+
+	</c:if>        
 	</h:form>
 </ui:define>
 

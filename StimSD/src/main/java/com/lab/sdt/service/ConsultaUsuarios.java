@@ -3,13 +3,19 @@ package com.lab.sdt.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.model.SelectItem;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lab.sdt.dao.TipousuarioMapper;
 import com.lab.sdt.dao.UsuarioMapper;
+import com.lab.sdt.model.Equipo;
+import com.lab.sdt.model.EquipoExample;
 import com.lab.sdt.model.Tipousuario;
+import com.lab.sdt.model.TipousuarioExample;
+import com.lab.sdt.model.UsuarioExample;
 import com.lab.sdt.model.Usuario;
 
 
@@ -23,6 +29,11 @@ public class ConsultaUsuarios {
 	
 	@Autowired
 	private TipousuarioMapper tipousuarioMapper;
+	
+	public List<SelectItem> lista_tipousuario;
+	public List<Tipousuario> tusuarios1;
+	
+
 	
 	public void registroUsuario(Usuario U) throws Exception{
 		
@@ -86,4 +97,44 @@ public class ConsultaUsuarios {
 		}
 		return res;
 	}
+	public List<SelectItem> getLista_tipousuarios() {
+		this.lista_tipousuario = new ArrayList<SelectItem>();
+		TipousuarioExample exTUs = new TipousuarioExample();
+		
+		for(int ii = 1; ii<= tipousuarioMapper.countByExample(exTUs); ii++) {
+			//estadoMapper.selectByPrimaryKey(2).getEstado()
+		//listaestados.add(""+0);
+			SelectItem estados = new SelectItem(ii,tipousuarioMapper.selectByPrimaryKey(ii).getTipousuario());
+			this.lista_tipousuario.add(estados);
+			//listaestados.add(estadoMapper.selectByPrimaryKey(ii).getEstado());
+		}
+		return lista_tipousuario;
+}
+
+	public void setLista_tipousuario(List<SelectItem> lista_tipousuario) {
+		this.lista_tipousuario = lista_tipousuario;
+	}
+	
+	//buscar la cuenta y el estatus
+	public Usuario encuentra_cuenta(String cuenta) {
+		Usuario cuenta1 = new Usuario();
+		cuenta1 = usuarioMapper.selectByCu(cuenta);
+		return cuenta1;
+	}
+	public String cuenta (String cuenta) {
+		try {
+			return usuarioMapper.selectByCu(cuenta).getCuenta();
+		}catch(Exception e) {
+			return "";
+		}
+	}
+	
+	public List<Usuario> lista_cuentas() {
+        List<Usuario> list_cu = new ArrayList<Usuario>();
+        UsuarioExample UsuarioEx = new UsuarioExample();
+        list_cu = usuarioMapper.selectByExample(UsuarioEx);
+        return list_cu;
+    }
+	
+	
 }

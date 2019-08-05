@@ -15,7 +15,6 @@ public class ConsultaDTO implements Serializable{
 	private int tipo_consulta;
 	private String peticion;
 	
-	
 	public String getPeticion() {
 		return peticion;
 	}

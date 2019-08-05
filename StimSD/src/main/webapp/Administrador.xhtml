@@ -46,12 +46,6 @@
 					<li>
 						<a class="subnav-text" href="">Paciente</a>
 					</li>
-					<li>
-						<a class="subnav-text" href="">Operador</a>
-					</li>
-					<li>
-						<a class="subnav-text" href="">Por Definir</a>
-					</li>
 				</ul>
 	  </ui:define>
 	  
@@ -70,16 +64,22 @@
 					</li>
 				</ul>
 	  </ui:define>
+	  <ui:define name="dock">
+	 <p:stack icon="/resources/images/stack.png" expanded="true"  position="left">
+    <p:menuitem value="Home" icon="/resources/images/home3.jpeg" url="#"/>
+    <p:menuitem value="Music" icon="/resources/images/music.png" url="#"/>
+    <p:menuitem value="Video" icon="/resources/images/video.png" url="#"/>
+    <p:menuitem value="Email" icon="/resources/images/email.png" url="#"/>
+    <p:menuitem value="Portfolio" icon="/resources/images/portfolio.png" url="#"/>
+</p:stack>
+	  </ui:define>
 	 
 	 	<ui:define name="content"> 
-	 	<div style="text-align: center">
-	 	   <iframe src="VistaOperador.xhtml" height="480" width="900"></iframe> 
-		</div>
+	 		<div style="text-align: center">
+	 			<iframe src="VistaOperador.xhtml" height="480" width="900"></iframe> 
+	 	  </div>
+
 	 	</ui:define>
-	<ui:define name="top"> 
-		<h1><a href="index.html"><img src="images/logo.png" alt="" />
-			<h:outputLabel id = "tipo_usuario" value="#{administrador.inicio}" />
-		</a></h1> 
-	</ui:define>
+	
 
 </ui:composition>

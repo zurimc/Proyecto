@@ -20,6 +20,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lab.sdt.service.EstadoUnidad;
+import com.lab.sdt.model.Equipo;
 import com.lab.sdt.model.Usuario;
 import com.lab.sdt.util.MensajeG;
 
@@ -59,17 +60,29 @@ public String resultado ="";
 
 public String estado;
 private boolean skip;
-
+public String tipoUsuario;
 
 
 
 public List<SelectItem> estados;
+public List<SelectItem> tipoUsuarios;
+private List<Usuario> cuentas1;
+
+private Usuario seleccion_user;
 
 @PostConstruct
 public void init(){
+	cuentas1 = new ArrayList<Usuario>();
+	cuentas1 = consultaUsuarios.lista_cuentas();
+	
+	
 	estados = new ArrayList<SelectItem>();
+	tipoUsuarios = new ArrayList<SelectItem>();
+	
 	try {
 		estados = estadoUnidad.getLista_estados();
+		tipoUsuarios = consultaUsuarios.getLista_tipousuarios();
+		
 	}catch(Exception e) {
 		MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
 	}
@@ -312,6 +325,32 @@ public ConsultaUsuarios getConsultaUsuarios() {
 
 public void setConsultaUsuarios(ConsultaUsuarios consultaUsuarios) {
 	this.consultaUsuarios = consultaUsuarios;
+}
+
+public String getTipoUsuario() {
+	return tipoUsuario;
+}
+public void setTipoUsuario(String tipoUsuario) {
+	this.tipoUsuario = tipoUsuario;
+}
+public List<SelectItem> getTipoUsuarios() {
+	return tipoUsuarios;
+}
+public void setTipoUsuarios(List<SelectItem> tipoUsuarios) {
+	this.tipoUsuarios = tipoUsuarios;
+}
+public List<Usuario> getCuentas1() {
+	return cuentas1;
+}
+public void setCuentas1(List<Usuario> cuentas1) {
+	this.cuentas1 = cuentas1;
+}
+
+public Usuario getSeleccion_user() {
+	return seleccion_user;
+}
+public void setSeleccion_user(Usuario seleccion_user) {
+	this.seleccion_user = seleccion_user;
 }
 
 

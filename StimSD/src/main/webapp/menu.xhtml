@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+<title>Login</title>
+	<meta charset="utf-8"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+	
+	<link rel="stylesheet" href="css/font-awesome.css" />
+	<link href="css/style.css" rel='stylesheet' type='text/css' />
+
+<div style="text-align: center">
+ <ui:insert name = "muestra"> NO CONTENT</ui:insert>
+</div>
+  </h:head>
+  
+  
+<style type="text/css">
+    .ui-stack {
+        z-index: 1000;
+    }
+</style>
+	<h:form>
+<p:dock position="bottom">
+<p:menuitem value="Cerrar" icon="/images/apagado.jpeg" action="#{gestiondeSeccionView.cerrarSesionUsuario}"/>
+<p:menuitem value="Señales" icon="/images/Onda.jpeg" url="VistaOnda.xhtml"/>
+<p:menuitem value="Usuarios" icon="/images/Usuario.jpg" url="adminusuario.xhtml"/>
+<p:menuitem value="Inicio" icon="/images/home.png" url="Administrador.xhtml"/>
+    <p:menuitem value="Estimuladores" icon="/images/portfolio.png" url="estimuladores.xhtml"/>
+</p:dock>
+</h:form>
+<!-- 
+<p:stack icon="/images/stack.png" expanded="true">
+ 
+    <p:menuitem value="Inicio" icon="images/home.png" url="#"/>
+    <p:menuitem value="Registros" icon="/images/portfolio.png" url="#"/>
+</p:stack>-->
+</html>

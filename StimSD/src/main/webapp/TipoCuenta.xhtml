@@ -1,70 +1,98 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="menu.xhtml"
+  xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-<h:head>
-<title>Cambiar Tipo de Cuenta </title>
-	<meta charset="utf-8"></meta>
-	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<ui:define name="muestra">
 	
-	<link rel="stylesheet" href="css/font-awesome.min.css" />
-	<link href="css/style.css" rel='stylesheet' type='text/css' />
-</h:head> 	
-<h:body class="signup-body" > 
-<h:form>
-<div class="grids-heading signup-heading">
-		<h2>Cambiar Cuenta</h2>
-</div > 
-<br></br>
- <p:outputLabel for="TipoUsuario" value="Tipo de Usuario: " />
-        <p:selectOneMenu id="TipoUsuario" value="#{registroUsuario.tipoUsuario}">
-            <f:selectItem itemLabel="Seleccione un Usuario" itemValue="" />
-            <f:selectItems value="#{registroUsuario.tipoUsuarios}" />
-        </p:selectOneMenu>
-        
- <p:dataTable value="#{registroUsuario.c}" var="d">
-    <p:column headerText="Nombre">
-        <h:outputText value="#{d.nombre}" />
-    </p:column>
- 
-    <p:column headerText="Apellido Paterno">
-        <h:outputText value="#{d.apellidoP}" />
-    </p:column>
- 
-    <p:column headerText="Apellido Materno">
-        <h:outputText value="#{d.apellidoM}" />
-    </p:column>
- 
-    <p:column headerText="Cuenta">
-        <h:outputText value="#{d.cuenta}" />
-    </p:column>
-    
-    <p:column headerText="Editar TipoUsuario">
-        <h:outputText value="#{d.idTipo}" />
-    </p:column>
-</p:dataTable>
-</h:form>
-</h:body>
- <!--  
-<p:dialog>
-	<h:form>
-		<h:panelGrid columns="2">
-			<p:outputLabel for="tipousuario" value="TipoUsuario"></p:outputLabel>
-			<p:inputMask></p:inputMask>
-			<p:commandButton value="Guardar"></p:commandButton>
-			<p:commandButton value="Cancelar"></p:commandButton>
-		</h:panelGrid>
-	</h:form>
-</p:dialog>  -->     
-<!-- footer -->
-	<div class="copyright">
-		<p>© Vision Artificial</p>
-	</div>
-<!-- //footer -->
+	
+<style type="text/css">
+    .alineacion{
+        margin:auto;
+		align-items:center;
+		padding: auto;
+		width:400px;
+    }
+    .tamana_ancho_1{
+    width:300px;
+    }
+    .tamana_ancho_2{
+    width:500px;
+    }
+    .tamana_ancho_3{
+    width:700px;
+    margin-top:10px;
+    }
+    .div_contenedor{
+    	display:block;
+	display:flex;
+	margin-left:auto;
+	margin-right:auto;
+	align-items:center;
+	padding: 10px;
+    }
+    .div_izquierdo{
+	margin-left:auto;
+	margin-right:5px;
+	display:block;
+	padding: 10px;
+	float:left;
+    }
+    .div_derecho{
+    margin-left:5px;
+	margin-right:auto;
+	padding: 10px;
+	float: right;      
+    }
+    .texto_centro
+    {
+     text-align: center;
+    }
+	</style>	
+		<h:form id = "form_g">    
+		<p:growl id="mensajes" showDetail="true" life="2000" />
+			
+			 
+			 	 <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="10" class = "alineacion">
+				 		<p:panel class = "alineacion tamana_ancho_1">
+				 		<h:form id="form1">	
+						   <p:fragment >
+						              					
+              					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+									<p:outputLabel for="TipoUsuario" value="Tipo de Usuario: " />
+	        						<p:selectOneMenu id="TipoUsuario" value="#{registroUsuario.tipoUsuario}">
+	            						<f:selectItem itemLabel="Seleccione un Usuario" itemValue="" />
+	            						<f:selectItems value="#{registroUsuario.tipoUsuarios}" />
+	        						</p:selectOneMenu>
+	              				</h:panelGrid>
+              					
+              					
+              				<p:dataTable  id = "usuarios"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								 rowsPerPageTemplate="5,10,15"
+								  paginatorPosition="bottom" value="#{registroUsuario.cuentas1}"
+								  var="reg"  reflow="true" selectionMode="single"  
+							  	  selection="#{registroUsuario.seleccion_user}"  rowKey="#{reg.cuenta}" >
+              						<p:column headerText="Cuenta">
+						        	<h:outputText value="#{reg.cuenta}" />
+						    		</p:column>
+						    
+						    		<p:column headerText="Estatus">
+						        	<h:outputText value="#{reg.estatus}" />
+						   			 </p:column>
+								</p:dataTable>
+						   </p:fragment>
+						   </h:form>   
+				 		</p:panel> 
+			
+			</h:panelGrid>
 
-</html>
+	</h:form>
+	
+</ui:define>
+
+
+</ui:composition>

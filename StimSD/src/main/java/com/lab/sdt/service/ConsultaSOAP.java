@@ -133,7 +133,6 @@ public class ConsultaSOAP {
 		}catch(Exception e) {}
 		return res;
 	}
-
 	private String todos_los_grupos_de_ondas() {
 		String res = "";
 		TipondaExample onEx = new TipondaExample();

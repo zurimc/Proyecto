@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+<title>Cambiar Tipo de Cuenta </title>
+	<meta charset="utf-8"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+	
+	<link rel="stylesheet" href="css/font-awesome.min.css" />
+	<link href="css/style.css" rel='stylesheet' type='text/css' />
+</h:head> 	
+<h:body class="signup-body" > 
+<h:form>
+<div class="grids-heading signup-heading">
+		<h2>Cambiar Cuenta</h2>
+</div > 
+<br></br>
+ <p:outputLabel for="TipoUsuario" value="Tipo de Usuario: " />
+        <p:selectOneMenu id="TipoUsuario" value="#{registroUsuario.tipoUsuario}">
+            <f:selectItem itemLabel="Seleccione un Usuario" itemValue="" />
+            <f:selectItems value="#{registroUsuario.tipoUsuarios}" />
+        </p:selectOneMenu>
+        
+ <p:dataTable >
+    <p:column headerText="Nombre">
+        <h:outputText  />
+    </p:column>
+ 
+    <p:column headerText="Apellido Paterno">
+        <h:outputText  />
+    </p:column>
+ 
+    <p:column headerText="Apellido Materno">
+        <h:outputText  />
+    </p:column>
+ 
+    <p:column headerText="Cuenta">
+        <h:outputText  />
+    </p:column>
+    
+    <p:column headerText="Editar TipoUsuario">
+        <h:outputText  />
+    </p:column>
+</p:dataTable>
+</h:form>
+</h:body>
+    
+<!-- footer -->
+	<div class="copyright">
+		<p>© Vision Artificial</p>
+	</div>
+<!-- //footer -->
+
+</html>

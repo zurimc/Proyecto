@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+<title>Login</title>
+	<meta charset="utf-8"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+	
+	<link rel="stylesheet" href="css/font-awesome.css" />
+	<link href="css/style.css" rel='stylesheet' type='text/css' />
+		
+	
+</h:head>
+<h:body styleClass="general">
+
+	<div class="container" style="margin:0 auto; width:100%;">
+
+		<ui:insert name="header">
+			<h:form id="form1">
+				
+
+
+
+				<nav class="navbar navbar-default">
+<!-- 					<div class="container-fluid"> -->
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle collapsed"
+								data-toggle="collapse"
+								data-target="#trgt"
+								aria-expanded="false">
+								<span class="sr-only">Toggle navigation</span> <span
+									class="icon-bar"></span> <span class="icon-bar"></span> <span
+									class="icon-bar"></span>
+							</button>
+							<a class="navbar-brand" href="#">
+								<h:outputText value="#{manejoSesionView.usuarioDTO.cliente.nombre}" style="font-weight:bold;"/>
+							</a>
+						</div>
+
+						<div class="navbar-collapse collapse"
+							id="trgt" aria-expanded="false"
+							style="height: 1px;">
+							<ul class="nav navbar-nav navbar-right">
+								<c:if test="#{manejoSesionView.usuarioDTO.idTipousuario == 1}">
+									<li>
+										<p:commandLink id="linkAdmin" onclick="PF('statusDialog').show();"
+											value="Administración" action="#{manejoSesionView.redirigir(3)}" />
+									</li>
+								</c:if>
+								<c:if test="#{manejoSesionView.usuarioDTO.idTipousuario != 3}">
+									<li>
+										<p:commandLink id="linkReportes" onclick="PF('statusDialog').show();"
+											value="Reportes" action="#{manejoSesionView.redirigir(2)}" />
+									</li>
+								</c:if>
+								<c:if test="#{manejoSesionView.usuarioDTO.idTipousuario != 3}">
+									<li>
+										<p:commandLink id="linkCodigos" onclick="PF('statusDialog').show();"
+											value="Generación de Codigo y Apertura Remota"
+											action="#{manejoSesionView.redirigir(1)}" />
+									</li>
+								</c:if>
+								<c:if test="#{manejoSesionView.usuarioDTO.idTipousuario == 1}">
+									<li>
+										<p:commandLink id="linkChoferes" onclick="PF('statusDialog').show();"
+											value="Choferes"
+											action="#{manejoSesionView.redirigir(4)}" />
+									</li>
+								</c:if>
+								<li >
+									<p:commandLink styleClass="btn btn-danger" style="color:white;"
+										value="Cerrar Sesión" onclick="PF('statusDialog').show();"
+										action="#{manejoSesionView.cerrarSesionUsuario}" />
+								</li>
+							</ul>
+						</div>
+<!-- 					</div> -->
+				</nav>
+
+			</h:form>
+		</ui:insert>
+		<ui:insert name="content">
+			NO CONTENT
+		</ui:insert>
+		<ui:insert name="footer">
+			<p:dialog id="statusDialog" widgetVar="statusDialog" modal="true" draggable="false" 
+						closable="false" resizable="false" showHeader="false" styleClass="customDialog">
+				<p:graphicImage value="resources/imgs/ring.svg" height="300" width="300" />
+			</p:dialog>
+		</ui:insert>
+		<ui:insert name="scripts">
+			
+		</ui:insert>
+		
+		
+	</div>
+
+</h:body>
+</html>

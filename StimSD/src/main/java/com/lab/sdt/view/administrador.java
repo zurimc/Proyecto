@@ -3,11 +3,13 @@ package com.lab.sdt.view;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import com.lab.sdt.model.Usuario;
+import com.lab.sdt.util.MensajeG;
 
 
 @ManagedBean
@@ -30,6 +32,8 @@ public class administrador implements Serializable{
 		Usuario userDTO = gestiondeSeccionView.obtenerUsuarioEnSesion();
 		setInicio(" Hola "+userDTO.getNombre() +" "+userDTO.getApellido1()+ " "+userDTO.getApellido2());
 	}
+	
+
 	
 	public String getInicio() {
 		return inicio;

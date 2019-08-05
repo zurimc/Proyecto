@@ -1,0 +1,245 @@
+<ui:composition template="menu.xhtml"
+  xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:define name="muestra">
+
+	
+	<style type="text/css">
+    .alineacion{
+        margin:auto;
+		align-items:center;
+		padding: auto;
+		width:400px;
+    }
+    .tamana_ancho_1{
+    width:300px;
+    }
+    .tamana_ancho_2{
+    width:500px;
+    }
+    .tamana_ancho_3{
+    width:700px;
+    margin-top:10px;
+    }
+    .div_contenedor{
+    	display:block;
+	display:flex;
+	margin-left:auto;
+	margin-right:auto;
+	align-items:center;
+	padding: 10px;
+    }
+    .div_izquierdo{
+	margin-left:auto;
+	margin-right:5px;
+	display:block;
+	padding: 10px;
+	float:left;
+    }
+    .div_derecho{
+    margin-left:5px;
+	margin-right:auto;
+	padding: 10px;
+	float: right;      
+    }
+    .texto_centro
+    {
+     text-align: center;
+    }
+    
+</style>
+<h:form id = "form_g">
+<p:growl id="growl" autoUpdate="true" showDetail="false" />	 
+
+<div>
+	<p:fragment >
+		<p:toolbar >
+		<f:facet name="left">
+				<p:commandButton  id="boton_equipo"  value="Equipo" actionListener="#{controlestimuladores.vista_equipo}"
+			onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton > 
+			
+			<p:commandButton id="boton_mantenimiento" value="Mantenimiento" actionListener="#{controlestimuladores.vista_mantenimiento}"
+			onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton> 
+			
+			<p:commandButton id="boton_material" value="Material" actionListener="#{controlestimuladores.vista_material}"
+			onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton> 
+		</f:facet>
+			
+		
+		</p:toolbar>
+	</p:fragment>
+</div>
+
+            						
+	<c:if  test="#{controlestimuladores.tipos_vistas == 1}">
+		<div class = "div_contenedor">
+		 	<div class = "div_izquierdo">
+	 			<h:form id="form1">	
+	 		
+	 			
+	 				<p:fragment >
+	 					<p:panel id  ="panel_equipo1" class = "alineacion tamana_ancho_1">
+						   
+						   <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+						   <h:outputLabel  value="Serie: " />
+              					<p:inputText  id="serie1"  style="width:70%;" value="#{controlestimuladores.serie}"  label="Serie">
+              					</p:inputText>  
+              					</h:panelGrid>
+              					 
+               					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+								 <h:outputLabel for="generacion" value="Modelo: " />
+                  				<h:selectOneMenu  id="generacion" style="width:100%;"  value="#{controlestimuladores.generacion}">
+                  			
+	                    			<f:selectItem itemLabel="Generación" itemValue="" />
+	                    			<f:selectItem itemLabel="G. 1" itemValue="1" />
+	                    			<f:selectItem itemLabel="G. 2" itemValue="2" />
+	                    			<f:selectItem itemLabel="G. 3" itemValue="3" />
+	                    			<f:selectItem itemLabel="G. 4" itemValue="4" />
+	                    			<f:selectItem itemLabel="G. 5" itemValue="5" />
+	                    			<f:selectItem itemLabel="G. 6" itemValue="6" />
+	                    			 <p:ajax event="change" listener="#{controlestimuladores.busca_noserie}" update=":form_g:form2:serie_b" />
+          						</h:selectOneMenu>  
+              					</h:panelGrid>
+              					             					
+              					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+								 <h:outputLabel for="estadoesti" value="Estado: " />
+                  				<h:selectOneMenu  id="estadoesti" style="width:100%;"  value="#{controlestimuladores.idEstadoe}">
+	                    			<f:selectItem itemLabel="Est. Equipo" itemValue="" />
+	                    			<f:selectItem itemLabel="Nuevo" itemValue="Nuevo" />
+	                    			<f:selectItem itemLabel="Actualizado" itemValue="Actualizado" />
+	                    			<f:selectItem itemLabel="Óptimo" itemValue="Optimo" />
+	                    			<f:selectItem itemLabel="Desprogramado" itemValue="Desprogramado" />
+	                    			<f:selectItem itemLabel="Desconfigurado" itemValue="Desconfigurado" />
+	                    			<f:selectItem itemLabel="Descompuesto" itemValue="Descompuesto" />
+	                    			<f:selectItem itemLabel="Descontinuado" itemValue="Descompuesto" />
+          						</h:selectOneMenu>  
+              					</h:panelGrid>
+              					
+          						<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+          							 <p:outputLabel for="estatusr" value="Estatus:" />
+          							 
+	          						 <p:selectOneRadio  id="estatusr" value="#{controlestimuladores.acti_est}" unselectable="false">
+						            	<f:selectItem itemLabel="Activar"  itemValue="true" />
+						            	<f:selectItem itemLabel="Desactivar" itemValue="false" />
+						        	</p:selectOneRadio>
+          						</h:panelGrid>
+          					
+          						 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+          						  <p:commandButton id="salva_e1" value="Guarda" actionListener="#{controlestimuladores.guarda_e}" 
+            						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" update=":form_g:form2:equipos"  ></p:commandButton>  
+     							<p:commandButton id="actualiza_e1" value="Actualiza" actionListener="#{controlestimuladores.actualiza_e}" 
+            						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton> 
+          						</h:panelGrid>
+          						
+						  
+				 		</p:panel> 
+				 </p:fragment>
+	 			</h:form>
+	 		</div>
+	 		
+	 		<div class = "div_derecho">
+	 			<h:form id="form2">	
+	 			
+		 			  <p:fragment>
+					 		<p:panel  id  ="panel_equipo2" class = "alineacion tamana_ancho_2">
+					 	      	<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" class = "alineacion">
+					 	    	
+					 				<p:commandButton id="caragar_equ" value="Cargar" actionListener="#{controlestimuladores.cargar_equipo}" 
+					 				 update = "equipos"
+	            						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton> 
+	          						
+				     				<p:inputText id="serie_b" value="#{controlestimuladores.serie_b}" style="width:70%;"  placeholder="Serie">
+				     				 <p:ajax event="keyup" update="equipos" listener="#{controlestimuladores.buscar_equipo}" />
+				        		</p:inputText>
+				        	
+					 		</h:panelGrid>
+					 		
+							<p:dataTable id = "equipos"  paginator="true" rows="5" 
+							paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+							 rowsPerPageTemplate="5,10,15"
+							  paginatorPosition="bottom" value="#{controlestimuladores.estimuladores}"
+							 var="estim"  reflow="true" selectionMode="single"  
+						selection="#{controlestimuladores.selecion_est}"   rowKey="#{estim.noserie}" >
+					
+					     <p:ajax event="rowSelect" listener="#{controlestimuladores.elige}" update=":form_g:form1:serie1, :form_g:form1:generacion, :form_g:form1:estadoesti, :form_g:form1:estatusr" />
+								
+								<p:column headerText="Serie">
+							        <h:outputText value="#{estim.noserie}" />
+							    </p:column>
+							    <p:column headerText="Estado">
+							        <h:outputText value="#{estim.estado}" />
+							    </p:column>
+							    
+							    <p:column headerText="Estatus">
+							        <h:outputText   value="#{estim.estatus?'Activo':'Inactivo'}"
+							        style="color:#{estim.estatus?'green':'red'}"
+							        />
+							    </p:column>
+							    
+							</p:dataTable>
+					    </p:panel>	   
+				 </p:fragment> 
+	 			</h:form>
+	 		</div>
+	 		
+		</div>
+
+	</c:if>
+	<c:if  test="#{controlestimuladores.tipos_vistas == 2}">
+		<h:form id="form_m1" class = "">
+			<p:fragment>
+				<p:panel class = "tamana_ancho_3 div_contenedor">
+				<h:panelGrid columns="1" cellpadding="5" >
+				
+				<h:outputText value="Equipo: #{controlestimuladores.serie} G : #{controlestimuladores.generacion}" />
+				
+					<h:panelGrid columns="2" cellpadding="5" >
+					
+						<h:panelGrid columns="1" cellpadding="5">
+					
+						 	<h:panelGrid columns="1" cellpadding="5">
+						 	<h3>Fecha</h3>
+			        			<p:calendar id="fecha_m" class = "texto_centro" value="#{controlestimuladores.fecha1}" showOn="button" />
+						 	</h:panelGrid>
+						 	
+						 		<h:panelGrid columns="1" cellpadding="1">
+									<h3>Actualización</h3>
+									<h:panelGrid columns="2" cellpadding="1"></h:panelGrid>
+									<p:inputTextarea id = "actualizacion_equipo" rows="1" cols="30"
+									 counter="contador_palabras1" maxlength="100" counterTemplate="{0} " 
+									 autoResize="false" value="#{controlestimuladores.actualiza_est}"
+									  class = "texto_centro"/>
+									<h:outputText id="contador_palabras1" />
+								</h:panelGrid>
+						 	
+	
+						</h:panelGrid>
+						
+						<h:panelGrid columns="1" cellpadding="1">
+							<h3>Falla</h3>
+							<p:inputTextarea id = "falla_equipo"  rows="4" cols="30" counter="contador_palabras" maxlength="230" 
+							counterTemplate="{0} " autoResize="false" value="#{controlestimuladores.fallas_est}"    class = "texto_centro"/>
+							<h:outputText id="contador_palabras" />
+							
+							<p:commandButton id="caragar_equ" value="Guardar" actionListener="#{controlestimuladores.mantenimiento}" 
+						 				 
+		            						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton> 
+		          						
+						</h:panelGrid>
+				
+					</h:panelGrid>
+				</h:panelGrid>
+				</p:panel>
+			</p:fragment>  
+		</h:form>
+	</c:if>
+</h:form>
+	
+</ui:define>
+
+</ui:composition>
