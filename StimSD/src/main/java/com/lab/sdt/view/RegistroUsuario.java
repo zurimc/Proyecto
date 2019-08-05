@@ -69,6 +69,7 @@ public List<SelectItem> tipoUsuarios;
 private List<Usuario> cuentas1;
 
 private Usuario seleccion_user;
+private int tipos_vistas;
 
 @PostConstruct
 public void init(){
@@ -169,6 +170,14 @@ public void ini_login() {
 		
 	}
 }
+
+public void vista_cuenta() {
+	   tipos_vistas =  1;
+}
+public void vista_actualizar() {
+	   tipos_vistas =  2;
+}
+
 
 public String getEstado() {
 	estado = estados.get(idEstado-1).getLabel();
@@ -351,6 +360,12 @@ public Usuario getSeleccion_user() {
 }
 public void setSeleccion_user(Usuario seleccion_user) {
 	this.seleccion_user = seleccion_user;
+}
+public int getTipos_vistas() {
+	return tipos_vistas;
+}
+public void setTipos_vistas(int tipos_vistas) {
+	this.tipos_vistas = tipos_vistas;
 }
 
 

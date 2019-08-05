@@ -51,15 +51,36 @@
     {
      text-align: center;
     }
+    .ui-toggleswitch {
+        vertical-align: bottom;
+    }
 	</style>	
 		<h:form id = "form_g">    
 		<p:growl id="mensajes" showDetail="true" life="2000" />
+		
+<div>
+	<p:fragment >
+		<p:toolbar >
+		<f:facet name="left">
+				<p:commandButton  id="boton_equipo"  value="Cuenta" actionListener="#{controlestimuladores.vista_equipo}"
+			onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton > 
 			
-			 
+			<p:commandButton id="boton_mantenimiento" value="Actualizacion Usuario" actionListener="#{controlestimuladores.vista_mantenimiento}"
+			onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton> 
+			
+		</f:facet>
+		</p:toolbar>
+	</p:fragment>
+</div>
+			<c:if  test="#{registroUsuario.tipos_vistas == 1}">
+				<div class = "div_contenedor">
+		 		<div class = "div_izquierdo">
+	 			<h:form id="form1">	
+			 	 <p:fragment >
 			 	 <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="10" class = "alineacion">
 				 		<p:panel class = "alineacion tamana_ancho_1">
-				 		<h:form id="form1">	
-						   <p:fragment >
+				 			
+						  
 						              					
               					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 									<p:outputLabel for="TipoUsuario" value="Tipo de Usuario: " />
@@ -87,9 +108,14 @@
 						   </p:fragment>
 						   </h:form>   
 				 		</p:panel> 
+			</div>
+			</div>
 			
-			
-			<h:form id="form2">	
+			<h:form id="form2">
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+        		<h:outputText value="Basic: " />
+        		
+   			</h:panelGrid>	
 			</h:form>
 			</h:panelGrid>
 
