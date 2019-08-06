@@ -11,8 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lab.sdt.dao.TipousuarioMapper;
 import com.lab.sdt.dao.UsuarioMapper;
-import com.lab.sdt.model.Equipo;
-import com.lab.sdt.model.EquipoExample;
+
 import com.lab.sdt.model.Tipousuario;
 import com.lab.sdt.model.TipousuarioExample;
 import com.lab.sdt.model.UsuarioExample;
@@ -117,16 +116,9 @@ public class ConsultaUsuarios {
 	
 	//buscar la cuenta y el estatus
 	public Usuario encuentra_cuenta(String cuenta) {
-		Usuario cuenta1 = new Usuario();
-		cuenta1 = usuarioMapper.selectByCu(cuenta);
-		return cuenta1;
-	}
-	public String cuenta (String cuenta) {
-		try {
-			return usuarioMapper.selectByCu(cuenta).getCuenta();
-		}catch(Exception e) {
-			return "";
-		}
+		Usuario cuentas1 = new cuentas1();
+		cuentas1 = usuarioMapper.selectBycuenta(cuenta);
+		return cuentas1;
 	}
 	
 	public List<Usuario> lista_cuentas() {

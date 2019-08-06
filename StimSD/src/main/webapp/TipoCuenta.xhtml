@@ -17,13 +17,13 @@
 		width:400px;
     }
     .tamana_ancho_1{
-    width:300px;
+    width:500px;
     }
     .tamana_ancho_2{
     width:500px;
     }
     .tamana_ancho_3{
-    width:700px;
+    width:600px;
     margin-top:10px;
     }
     .div_contenedor{
@@ -72,24 +72,25 @@
 		</p:toolbar>
 	</p:fragment>
 </div>
-			<c:if  test="#{registroUsuario.tipos_vistas == 1}">
+			<!-- <c:if  test="#{registroUsuario.tipos_vistas == 1}"> -->
 				<div class = "div_contenedor">
 		 		<div class = "div_izquierdo">
 	 			<h:form id="form1">	
 			 	 <p:fragment >
+			 	 <p:panel class = "alineacion tamana_ancho_1">
 			 	 <h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="10" class = "alineacion">
-				 		<p:panel class = "alineacion tamana_ancho_1">
-				 			
-						  
-						              					
-              					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-									<p:outputLabel for="TipoUsuario" value="Tipo de Usuario: " />
-	        						<p:selectOneMenu id="TipoUsuario" value="#{registroUsuario.tipoUsuario}">
-	            						<f:selectItem itemLabel="Seleccione un Usuario" itemValue="" />
-	            						<f:selectItems value="#{registroUsuario.tipoUsuarios}" />
-	        						</p:selectOneMenu>
-	              				</h:panelGrid>
-              					
+				 	<p:outputLabel for="TipoUsuario" value="Actualizar Usuarios" />
+		
+              	 </h:panelGrid>
+              	 	<p:outputLabel  value="Buscador:" />
+				 	<h:inputText value="Cuenta" placeholder="Cuenta" style="width:65%;"/>
+				 		<br /><br />
+              	 			<p:outputLabel for="TipoUsuario" value="Tipo de Usuario: " />
+	        					<p:selectOneMenu id="TipoUsuario" value="#{registroUsuario.tipoUsuario}">
+	            					<f:selectItem itemLabel="Seleccione un Usuario" itemValue="" />
+	            					<f:selectItems value="#{registroUsuario.tipoUsuarios}" />
+	        				</p:selectOneMenu>		
+              					<br /><br />
               					
               				<p:dataTable  id = "usuarios"  paginator="true" rows="5" 
 								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
@@ -105,20 +106,38 @@
 						        	<h:outputText value="#{reg.estatus}" />
 						   			 </p:column>
 								</p:dataTable>
+								
+							</p:panel> 	
 						   </p:fragment>
 						   </h:form>   
-				 		</p:panel> 
-			</div>
+				 		
 			</div>
 			
-			<h:form id="form2">
-			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-        		<h:outputText value="Basic: " />
-        		
-   			</h:panelGrid>	
-			</h:form>
-			</h:panelGrid>
-
+	 		<div class = "div_derecho">
+	 			<h:form id="form2">	
+	 			
+		 			  <p:fragment>
+					 		<p:panel  id  ="panel_equipo2" class = "alineacion tamana_ancho_2">
+					 	      	<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" class = "alineacion">
+					 	    	<p:outputLabel for="TipoUsuario" value="Tipo de Usuario: " />
+	        						<p:selectOneMenu id="TipoUsuario" value="#{registroUsuario.tipoUsuario}">
+	            						<f:selectItem itemLabel="Seleccione un Usuario" itemValue="" />
+	            						<f:selectItems value="#{registroUsuario.tipoUsuarios}" />
+	        						</p:selectOneMenu>
+	              			 <h:outputText value="Activar Usuario: " />
+        					<p:inputSwitch value="#{selectBooleanView.value1}" />
+        					
+					 		</h:panelGrid>
+					 		
+							
+					    </p:panel>	   
+				 </p:fragment> 
+	 			</h:form>
+	 		</div>
+			
+			</div>
+		
+		<!--  </c:if>-->
 	</h:form>
 	
 </ui:define>

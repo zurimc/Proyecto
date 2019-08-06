@@ -70,6 +70,7 @@ private List<Usuario> cuentas1;
 
 private Usuario seleccion_user;
 private int tipos_vistas;
+private String buscador = "";
 
 @PostConstruct
 public void init(){
@@ -177,6 +178,28 @@ public void vista_cuenta() {
 public void vista_actualizar() {
 	   tipos_vistas =  2;
 }
+public void buscar_cuentas() {
+	 if(cuenta.trim().length() > 0) {
+		 try {
+			 Equipo estimulador = new Equipo();
+			 cuentas1.clear();
+			 for(int jjf=1;jjf<=6;jjf++) {
+				 estimulador =  consultaUsuarios.encuentra_cuenta(cuenta+";"+jjf);
+				 if(estimulador!=null) {
+					 
+					 cuentas1.addAll(cuentas1);
+				 }
+			 }
+		 }catch(Exception e) {
+			 MensajeG.mostrar("Sin resultados", FacesMessage.SEVERITY_INFO);
+		 }
+	 }else {
+		 MensajeG.mostrar("Sin resultados", FacesMessage.SEVERITY_INFO);
+	 }
+	
+	
+}
+
 
 
 public String getEstado() {

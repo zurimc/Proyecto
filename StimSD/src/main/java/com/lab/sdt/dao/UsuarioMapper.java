@@ -99,7 +99,7 @@ public interface UsuarioMapper {
      */
     int updateByPrimaryKey(Usuario record);
 
-	List<Usuario> selectByCuenta(String cuenta);
+    List<Usuario>  selectByCuenta(String cuenta);
 	List<Usuario> selectByEstatus(String estatus);
 
 
