@@ -74,6 +74,7 @@ private String buscador = "";
 
 @PostConstruct
 public void init(){
+	setCuenta("");
 	cuentas1 = new ArrayList<Usuario>();
 	cuentas1 = consultaUsuarios.lista_cuentas();
 	
@@ -181,13 +182,13 @@ public void vista_actualizar() {
 public void buscar_cuentas() {
 	 if(cuenta.trim().length() > 0) {
 		 try {
-			 Equipo estimulador = new Equipo();
-			 cuentas1.clear();
+			 Usuario cuentas1 = new Usuario();
+			 this.cuentas1.clear();
 			 for(int jjf=1;jjf<=6;jjf++) {
-				 estimulador =  consultaUsuarios.encuentra_cuenta(cuenta+";"+jjf);
-				 if(estimulador!=null) {
+				 cuentas1 =  consultaUsuarios.encuentra_cuenta(cuenta+";"+jjf);
+				 if(cuentas1!=null) {
 					 
-					 cuentas1.addAll(cuentas1);
+					 this.cuentas1.add(cuentas1);
 				 }
 			 }
 		 }catch(Exception e) {
@@ -389,6 +390,12 @@ public int getTipos_vistas() {
 }
 public void setTipos_vistas(int tipos_vistas) {
 	this.tipos_vistas = tipos_vistas;
+}
+public String getBuscador() {
+	return buscador;
+}
+public void setBuscador(String buscador) {
+	this.buscador = buscador;
 }
 
 

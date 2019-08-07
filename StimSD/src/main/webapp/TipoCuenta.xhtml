@@ -62,17 +62,17 @@
 	<p:fragment >
 		<p:toolbar >
 		<f:facet name="left">
-				<p:commandButton  id="boton_equipo"  value="Cuenta" actionListener="#{controlestimuladores.vista_equipo}"
+				<p:commandButton  id="boton_cuenta"  value="Cuenta" actionListener="#{registroUsuario.vista_cuenta()}"
 			onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton > 
 			
-			<p:commandButton id="boton_mantenimiento" value="Actualizacion Usuario" actionListener="#{controlestimuladores.vista_mantenimiento}"
+			<p:commandButton id="boton_grado" value="Grado" actionListener="#{registroUsuario.vista_actualizar()}"
 			onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton> 
 			
 		</f:facet>
 		</p:toolbar>
 	</p:fragment>
 </div>
-			<!-- <c:if  test="#{registroUsuario.tipos_vistas == 1}"> -->
+			 <c:if  test="#{registroUsuario.tipos_vistas == 1}"> 
 				<div class = "div_contenedor">
 		 		<div class = "div_izquierdo">
 	 			<h:form id="form1">	
@@ -83,7 +83,9 @@
 		
               	 </h:panelGrid>
               	 	<p:outputLabel  value="Buscador:" />
-				 	<h:inputText value="Cuenta" placeholder="Cuenta" style="width:65%;"/>
+				 	<p:inputText id="buscador" value="#{registroUsuario.cuenta}" style="width:65%;"  placeholder="Buscador">
+				     	<p:ajax event="keyup" update="usuarios" listener="#{registroUsuario.buscar_cuentas}" />
+				     </p:inputText>
 				 		<br /><br />
               	 			<p:outputLabel for="TipoUsuario" value="Tipo de Usuario: " />
 	        					<p:selectOneMenu id="TipoUsuario" value="#{registroUsuario.tipoUsuario}">
@@ -137,7 +139,30 @@
 			
 			</div>
 		
-		<!--  </c:if>-->
+		  </c:if>
+		  
+		  <c:if  test="#{registroUsuario.tipos_vistas == 2}">
+		<h:form id="form_m1" >
+			<p:fragment>
+				<p:panel class = "tamana_ancho_3 div_contenedor">
+				<h:panelGrid columns="1" cellpadding="5" >
+				<p:outputLabel  value="Grado: " />
+				<p:selectOneMenu id="Grado" value="#{gradoView.grado}">
+	            						<f:selectItem itemLabel="Seleccione el grado" itemValue="" />
+	            						<f:selectItems value="#{gradoView.grados1}" />
+	        	</p:selectOneMenu>
+	        	<p:outputLabel  value="Especialidad: " />
+				<p:selectOneMenu id="Especialidad" value="#{gradoView.especialidad}">
+	            						<f:selectItem itemLabel="Seleccione la especialidad" itemValue="" />
+	            						<f:selectItems value="#{gradoView.especialidad1}" />
+	        	</p:selectOneMenu>
+	              			 <h:outputText value="Activar Grado: " />
+        					<p:inputSwitch value="#{selectBooleanView.value1}" />
+				</h:panelGrid>
+				</p:panel>
+			</p:fragment>  
+		</h:form>
+	</c:if>
 	</h:form>
 	
 </ui:define>
