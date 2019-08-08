@@ -116,9 +116,10 @@ public class ConsultaUsuarios {
 	
 	//buscar la cuenta y el estatus
 	public Usuario encuentra_cuenta(String cuenta) {
-		Usuario cuentas1 = new Usuario();
-		cuentas1 = usuarioMapper.selectByCu(cuenta);
-		return cuentas1;
+		Usuario usera = new Usuario();
+		
+		usera = usuarioMapper.selectByCuenta(cuenta).get(0);
+		return usera;
 	}
 	
 	public List<Usuario> lista_cuentas() {

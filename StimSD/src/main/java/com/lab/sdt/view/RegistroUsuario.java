@@ -179,17 +179,21 @@ public void vista_cuenta() {
 public void vista_actualizar() {
 	   tipos_vistas =  2;
 }
+public void vista_datos() {
+	   tipos_vistas =  3;
+}
 public void buscar_cuentas() {
 	 if(cuenta.trim().length() > 0) {
 		 try {
-			 Usuario cuentas1 = new Usuario();
-			 this.cuentas1.clear();
-			 for(int jjf=1;jjf<=6;jjf++) {
-				 cuentas1 =  consultaUsuarios.encuentra_cuenta(cuenta+";"+jjf);
-				 if(cuentas1!=null) {
+			 Usuario cuent = new Usuario();
+			
+			 cuentas1.clear();
+			 
+				 cuent =  consultaUsuarios.encuentra_cuenta(cuenta);
+				 if(cuent!=null) {
 					 
-					 this.cuentas1.add(cuentas1);
-				 }
+					 cuentas1.add(cuent);
+				 
 			 }
 		 }catch(Exception e) {
 			 MensajeG.mostrar("Sin resultados", FacesMessage.SEVERITY_INFO);
