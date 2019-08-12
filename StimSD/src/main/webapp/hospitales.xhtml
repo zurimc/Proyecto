@@ -1,0 +1,192 @@
+<ui:composition template="menu.xhtml"
+  xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:define name="muestra">
+	
+<style type="text/css">
+    .alineacion{
+        margin:auto;
+		align-items:center;
+		padding: auto;
+		
+    }
+    .tamana_ancho_1{
+    width:300px;
+    }
+    .tamana_ancho_2{
+    width:400px;
+    }
+    .tamana_ancho_3{
+    width:400px;
+    margin-top:10px;
+    }
+   
+    .div_contenedor{
+    	display:block;
+	display:flex;
+	margin-left:auto;
+	margin-right:auto;
+	
+	padding: 10px;
+    }
+    .div_izquierdo{
+	margin-left:0px;
+	margin-right:2px;
+	
+	padding: 5px;
+	float:left;
+    }
+    .div_derecho{
+    margin-left:5px;
+	margin-right:auto;
+	padding: 10px;
+	float: right;      
+    }
+    .texto_centro
+    {
+     text-align: center;
+    }
+    .ui-toggleswitch {
+        vertical-align: bottom;
+    }
+    
+	</style>	
+		<h:form id = "form_g">    
+		<p:growl id="mensajes" showDetail="true" life="2000" />
+<!-- botones de la parte superior -->		
+<div>
+	<p:fragment >
+		<p:toolbar >
+		<f:facet name="left">
+			<h3 style="text-align: center">Hospital</h3>
+		</f:facet>
+		</p:toolbar>
+	</p:fragment>
+</div>
+<!-- botones de la parte superior -->
+<!-- CONDICIONAL PARA MOSTRAR LA PRIMERA PAGINA DE HOSPITALES -->
+			
+				<div class = "div_contenedor ui-fluid">
+		 		<div class = "div_izquierdo ui-fluid">
+	 			<h:form id="form1">	
+			 	 <p:fragment >
+			 	 <p:panel class = "alineacion tamana_ancho_1">
+			 	 <h:panelGrid columns="1" style="margin-bottom:5px" cellpadding="10" class = "alineacion" styleClass="ui-panelgrid-blank ui-fluid" layout="grid" >
+				 	<p:outputLabel  for="Hospi" value="Actualizar Hospitales"  />
+				 	<h:panelGrid columns="2"  cellpadding="2"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid">	
+              		<p:commandButton id="cargar_hosp" value="Cargar" actionListener="#{hospitalView.cargar_hos}"></p:commandButton>
+              		<p:inputText id="buscadorhos" value="#{hospitalView.hospital}" placeholder="Buscar" style="width: 70%;">
+				     	<p:ajax event="keyup" update="hospital2" listener="#{hospitalView.buscar_hospitales}" />
+				    </p:inputText>
+              		</h:panelGrid>
+				 </h:panelGrid>
+				 
+				 	<p:outputLabel for="Hospi" value="Hospital: " />
+	        					<p:selectOneMenu id="Hospi" value="#{hospitalView.hospital}">
+	            					<f:selectItem itemLabel="Seleccione un Hospital" itemValue="" />
+	            					<f:selectItems value="#{hospitalView.hospitales1}" />
+	        					</p:selectOneMenu>
+	        					
+	        					<p:dataTable  id ="hospital2"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								 rowsPerPageTemplate="5,10,15"
+								  paginatorPosition="bottom" value="#{hospitalView.hospitales}"
+								  var="hos"  reflow="true" selectionMode="single"  
+							  	  selection="#{hospitalView.seleccion_hosp}"  rowKey="#{hos.hospital}" >
+              						 <p:ajax event="rowSelect"  />
+              						<p:column headerText="Hospitales">
+						        	<h:outputText value="#{hos.hospital}" />
+						    		</p:column>
+								</p:dataTable>			
+				  </p:panel> 	
+				  </p:fragment>
+				 </h:form> 
+				 </div>
+				 
+				 <div class = "div_derecho ui-fluid">
+	 			 <h:form id="form2">	
+				 <p:fragment >
+				 <p:panel>
+					<p:growl id="growl" sticky="true" showDetail="true"/>
+    				<p:wizard flowListener="#{hospitalView.onFlowProcess}">
+        			<p:tab id="hospital" title="Datos del hospital">
+            		<p:panel header="Datos del Hospital">
+                	<p:messages />
+                	<h:panelGrid columns="2" columnClasses="label, value" styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
+                    	<h:outputLabel for="Nombre" value="Nombre del hospital:" />
+              			<p:inputText  id="nombre"  required="true" label="nombre" >
+               			<p:keyFilter regEx="/[a-z_]/i"/>  
+              			</p:inputText>  
+                	</h:panelGrid>
+            		</p:panel>
+       				</p:tab>
+ 
+        			<p:tab id="direccion" title="Direccion del Hospital">
+            		<p:panel header="Direcccion del hospital">
+                	<p:messages />
+                	<h:panelGrid columns="2" columnClasses="label, value" styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
+                    	<h:outputLabel for="calle" value="Calle:" />
+              			<p:inputText  id="calle"  required="true" label="calle" />
+                		<h:outputLabel for="numero" value="Numero:" />
+              			<p:inputText  id="numero"   required="true" label="numero">
+             			 <p:keyFilter regEx="/[\d\-\.]/"/>  
+              			</p:inputText>
+    
+                  		<h:outputLabel for="colonia" value="Colonia:" />
+              			<p:inputText  id="colonia" 
+                			required="true" label="colonia" />
+      
+                  		<h:outputLabel for="cp" value="CP:" />
+              			<p:inputText  id="cp"  
+                			required="true" label="cp">
+                		<p:keyFilter regEx="/[\d\-\.]/"/>  
+              			</p:inputText>
+    
+                  		<h:outputLabel for="estado" value="Estado: " />
+                  		<h:selectOneMenu  id="estado" style="width:95%;"  >
+                    	<f:selectItem itemLabel="seleccione uno" itemValue="" />
+            			<f:selectItems  />
+          				</h:selectOneMenu>
+               		</h:panelGrid>
+            		</p:panel>
+        			</p:tab>
+ 
+        			<p:tab id="contacto" title="Contacto">
+            		<p:panel header="Contacto">
+                	<p:messages />
+                	<h:panelGrid columns="2" columnClasses="label, value" styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
+                   		<h:outputLabel for="telefono" value="Telefono:" />
+              		 	<p:inputText  id="telefono"  
+                  		required="true" label="username">
+                		<p:keyFilter regEx="/[\d\-\.]/"/>  
+             		 	</p:inputText>  
+            
+                  		
+               	 	</h:panelGrid>
+                <p:commandButton value="Guardar" class="guardar" styleClass="ui-priority-primary"></p:commandButton>
+            </p:panel>
+        </p:tab>
+        
+    </p:wizard>
+    <br/>
+    <p:commandButton value="Actualizar" styleClass="ui-priority-primary" style="width:70%;"></p:commandButton>   
+    
+   </p:panel>
+</p:fragment>	
+		 		
+</h:form>
+	 	</div>
+				 
+		</div>
+		  	<!--  </c:if> -->
+<!-- CONDICIONAL PARA MOSTRAR LA PRIMERA PAGINA DE HOSPITALES -->		
+	
+		</h:form>
+	
+</ui:define>
+</ui:composition>

@@ -10,11 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lab.sdt.dao.EquipoMantenMapper;
 import com.lab.sdt.dao.EquipoMapper;
 import com.lab.sdt.dao.MantenimientoMapper;
+import com.lab.sdt.dao.MantenimientoMaterialMapper;
+import com.lab.sdt.dao.MaterialMapper;
 import com.lab.sdt.model.Equipo;
 import com.lab.sdt.model.EquipoExample;
 import com.lab.sdt.model.EquipoManten;
 import com.lab.sdt.model.Mantenimiento;
 import com.lab.sdt.model.MantenimientoExample;
+import com.lab.sdt.model.MantenimientoMaterial;
+import com.lab.sdt.model.Material;
+import com.lab.sdt.model.MaterialExample;
 
 
 
@@ -31,12 +36,25 @@ public class EstimuladorService {
 	@Autowired
 	private EquipoMantenMapper equipoMantenMapper;
 	
-	public void insertarequipoManten(EquipoManten manequ) {
+	@Autowired
+	private MaterialMapper materialMapper;
+	
+	@Autowired
+	private MantenimientoMaterialMapper eantenimientoMaterialMapper;
+	
+	public void insertamantenimetomaterial(MantenimientoMaterial manmate) {
+		eantenimientoMaterialMapper.insert(manmate);
+	}
+	public void insertaMaterial(Material mat) {
+		materialMapper.insert(mat);
+	}
+	public int insertarequipoManten(EquipoManten manequ) {
 		 List<Mantenimiento> list_man = new ArrayList<Mantenimiento>();
 		 MantenimientoExample man_ex = new  MantenimientoExample();
 		 list_man = mantenimientoMapper.selectByExample(man_ex);
 		 manequ.setIdmantenimiento(list_man.get(list_man.size()-1).getIdmantenimiento());
 		equipoMantenMapper.insert(manequ);
+		return list_man.get(list_man.size()-1).getIdmantenimiento();
 	}
 	
 	public void insertarmantenimiento(Mantenimiento mans) {
@@ -45,6 +63,15 @@ public class EstimuladorService {
 	public void insertarequipo(Equipo equipo_est)throws Exception{
 		equipoMapper.insert(equipo_est);
 	}
+	public List<Material> encuntra_material (String material) {
+		List<Material> mater= new ArrayList<Material>();
+		mater= materialMapper.selectByMaterial(material);
+		return mater;
+	}
+	public Material encutra_noserie(String n_serie) {
+		return materialMapper.selectByNoSerie(n_serie);
+	}
+
 	public Equipo encuentra_serie(String noserie) {
 		Equipo estimulador = new Equipo();
 		estimulador = equipoMapper.selectBySerie(noserie);
@@ -57,6 +84,9 @@ public class EstimuladorService {
 			return "";
 		}
 	}
+	public void actualizarmaterial(Material material) throws Exception{
+		materialMapper.updateByPrimaryKeySelective(material);
+	}
 	public void actualizarequipo(Equipo equipo_est)throws Exception{
 		equipoMapper.updateByPrimaryKeySelective(equipo_est);
 	}
@@ -67,5 +97,18 @@ public class EstimuladorService {
         list_est = equipoMapper.selectByExample(equipoEx);
         return list_est;
     }
+	public List<Material> lista_material(){
+		
+		List<Material> list_mat =  new ArrayList<Material>();
+		MaterialExample materialEx =  new MaterialExample();
+		list_mat = materialMapper.selectByExample(materialEx);
+		return list_mat;
+	}
+	public Material datosMaterial(int m) {
+		return materialMapper.selectByPrimaryKey(m);
+	}
+	public void actualizarMaterial(Material m) {
+		materialMapper.updateByPrimaryKey(m);
+	}
 	
 }

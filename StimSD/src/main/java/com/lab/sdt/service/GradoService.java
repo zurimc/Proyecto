@@ -13,10 +13,10 @@ import com.lab.sdt.dao.EspecialidadMapper;
 import com.lab.sdt.dao.GradoMapper;
 import com.lab.sdt.model.Especialidad;
 import com.lab.sdt.model.EspecialidadExample;
-import com.lab.sdt.model.EstadoExample;
+
 import com.lab.sdt.model.Grado;
 import com.lab.sdt.model.GradoExample;
-import com.lab.sdt.model.Tipousuario;
+
 
 @Service
 @Transactional

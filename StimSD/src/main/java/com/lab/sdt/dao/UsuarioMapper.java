@@ -1,6 +1,6 @@
 package com.lab.sdt.dao;
 
-import com.lab.sdt.model.Equipo;
+
 import com.lab.sdt.model.Usuario;
 import com.lab.sdt.model.UsuarioExample;
 import java.util.List;

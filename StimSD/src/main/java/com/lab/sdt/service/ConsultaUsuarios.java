@@ -34,31 +34,30 @@ public class ConsultaUsuarios {
 	
 
 	
-	public void registroUsuario(Usuario U) throws Exception{
+public void registroUsuario(Usuario U) throws Exception{
 		
 		insertarUsuario(U);
 		
 		
 	}
+public Usuario validarusuario(String cuenta, String contrasenia) throws Exception{
+	Usuario user = new Usuario();
 	
-	public Usuario validarusuario(String cuenta, String contrasenia) throws Exception{
-		Usuario user = new Usuario();
-		
-		if(cuenta_registro(cuenta) == null) {
-			throw new Exception("contraseña o usuario no valido");
-		}else {
-			user = obterusuarioporcuenta(cuenta);
-		}
-		
-		if(user.getEstatus().equals("D") || user.getEstatus().equals("") ) {
-			throw new Exception("Su cuenta esta deshabilitada. Por favor consulte a su proveedor");
-		} if(!user.getContrasenia().contentEquals(contrasenia)){
-			throw new Exception("contraseña o usuario no valido");
-		}
-		return user;
+	if(cuenta_registro(cuenta) == null) {
+		throw new Exception("contraseña o usuario no valido");
+	}else {
+		user = obterusuarioporcuenta(cuenta);
 	}
 	
-	//METODO PARA PONER NOMBRE Y CONTRASEÑA Y TE DICE QUE TIPO DE USUARIO ES
+	if(user.getEstatus().equals("D") || user.getEstatus().equals("") ) {
+		throw new Exception("Su cuenta esta deshabilitada. Por favor consulte a su proveedor");
+	} if(!user.getContrasenia().contentEquals(contrasenia)){
+		throw new Exception("contraseña o usuario no valido");
+	}
+	return user;
+}
+	
+//METODO PARA PONER NOMBRE Y CONTRASEÑA Y TE DICE QUE TIPO DE USUARIO ES
 	public String login(String nombre, String contrasenia) {
 		String resultado=null ;
 		Tipousuario tipo_usuario = new Tipousuario();
@@ -78,24 +77,24 @@ public class ConsultaUsuarios {
 	
 	//METODO PARA INSERTAR EN BASE DE DATOS
 	
-	public void insertarUsuario(Usuario usuario)throws Exception{
-		usuarioMapper.insert(usuario);
-	}
-	
-	public Usuario obterusuarioporcuenta(String cuenta1) {
-		List<Usuario> contenedor_usuario = usuarioMapper.selectByCuenta(cuenta1);
-		return contenedor_usuario.get(0);
-	}
-	
-	public String cuenta_registro(String cuenta2) {
-		String res= null;
-		try {
-			res = obterusuarioporcuenta(cuenta2).getCuenta();
-		}catch(Exception e) {
-			res=null;
+		public void insertarUsuario(Usuario usuario)throws Exception{
+			usuarioMapper.insert(usuario);
 		}
-		return res;
-	}
+		
+		public Usuario obterusuarioporcuenta(String cuenta1) {
+			List<Usuario> contenedor_usuario = usuarioMapper.selectByCuenta(cuenta1);
+			return contenedor_usuario.get(0);
+		}
+		
+		public String cuenta_registro(String cuenta2) {
+			String res= null;
+			try {
+				res = obterusuarioporcuenta(cuenta2).getCuenta();
+			}catch(Exception e) {
+				res=null;
+			}
+			return res;
+		}
 	public List<SelectItem> getLista_tipousuarios() {
 		this.lista_tipousuario = new ArrayList<SelectItem>();
 		TipousuarioExample exTUs = new TipousuarioExample();

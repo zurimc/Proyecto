@@ -2,6 +2,7 @@ package com.lab.sdt.dao;
 
 import com.lab.sdt.model.Hospital;
 import com.lab.sdt.model.HospitalExample;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -93,4 +94,7 @@ public interface HospitalMapper {
      * @mbg.generated Mon May 20 14:45:29 CDT 2019
      */
     int updateByPrimaryKey(Hospital record);
+    
+    List<Hospital> selectByHospital(String hospital);
+  
 }

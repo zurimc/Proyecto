@@ -16,6 +16,7 @@ import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
+import org.primefaces.event.SelectEvent;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -67,6 +68,7 @@ public String tipoUsuario;
 public List<SelectItem> estados;
 public List<SelectItem> tipoUsuarios;
 private List<Usuario> cuentas1;
+
 
 private Usuario seleccion_user;
 private int tipos_vistas;
@@ -173,15 +175,8 @@ public void ini_login() {
 	}
 }
 
-public void vista_cuenta() {
-	   tipos_vistas =  1;
-}
-public void vista_actualizar() {
-	   tipos_vistas =  2;
-}
-public void vista_datos() {
-	   tipos_vistas =  3;
-}
+
+
 public void buscar_cuentas() {
 	 if(cuenta.trim().length() > 0) {
 		 try {
@@ -201,6 +196,33 @@ public void buscar_cuentas() {
 	 }else {
 		 MensajeG.mostrar("Sin resultados", FacesMessage.SEVERITY_INFO);
 	 }
+	
+	
+}
+
+public void cargar_usu() {
+	
+	cuentas1 = new ArrayList<Usuario>();
+	cuentas1 = consultaUsuarios.lista_cuentas();
+	
+	seleccion_user = new Usuario();
+	seleccion_user.setCuenta("");
+	
+}
+
+public void elige( SelectEvent event) {
+	
+	String[] parte_usuario = seleccion_user.getCuenta().split("");
+	setNombre(seleccion_user.getNombre());
+	setApellido1(seleccion_user.getApellido1());
+	setApellido2(seleccion_user.getApellido2());
+	setCalle(seleccion_user.getCalle());
+	setNum(seleccion_user.getNum());
+	setColonia(seleccion_user.getColonia());
+	setCodigoPostal(seleccion_user.getCodigopostal());
+	setIdEstado(seleccion_user.getIdestado());
+	setTelefono(seleccion_user.getTelefono());
+	setEmail(seleccion_user.getEmail());
 	
 	
 }

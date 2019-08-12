@@ -64,32 +64,29 @@
 	<p:fragment >
 		<p:toolbar >
 		<f:facet name="left">
-				<p:commandButton  id="boton_cuenta"  value="Cuenta" actionListener="#{registroUsuario.vista_cuenta()}"
-			onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton > 
-			
-		
+				<h3 style="text-align: center">Tipo Cuenta</h3>
 			
 		</f:facet>
 		</p:toolbar>
 	</p:fragment>
 </div>
-			 <c:if  test="#{registroUsuario.tipos_vistas == 1}"> 
+			
 				<div class = "div_contenedor">
 		 		<div class = "div_izquierdo">
 	 			<h:form id="form1">	
 			 	 <p:fragment >
 			 	 <p:panel class = "alineacion tamana_ancho_1">
-			 	 <h:panelGrid columns="1" style="margin-bottom:5px" cellpadding="10" class = "alineacion">
+			 	 <h:panelGrid columns="1" style="margin-bottom:5px" cellpadding="10" class = "alineacion"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
 				 	<p:outputLabel for="TipoUsuario" value="Actualizar Usuarios"  />
-				<h:panelGrid columns="2"  cellpadding="2" >	
-              		<p:commandButton value="Cargar"></p:commandButton>
+				<h:panelGrid columns="2"  cellpadding="2"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid">	
+              		<p:commandButton id="cargar_us" value="Cargar" actionListener="#{registroUsuario.cargar_usu}"></p:commandButton>
               		<p:inputText id="buscador" value="#{registroUsuario.cuenta}"   placeholder="Buscador" style="width: 70%; text-aling: center;">
 				     	<p:ajax event="keyup" update="usuarios" listener="#{registroUsuario.buscar_cuentas}" />
 				    </p:inputText>
               	</h:panelGrid>
               	 	
-				 	
 				 	 </h:panelGrid>
+				 	 
               	 			<p:outputLabel for="TipoUsuario" value="Tipo de Usuario: " />
 	        					<p:selectOneMenu id="TipoUsuario" value="#{registroUsuario.tipoUsuario}">
 	            					<f:selectItem itemLabel="Seleccione un Usuario" itemValue="" />
@@ -103,6 +100,7 @@
 								  paginatorPosition="bottom" value="#{registroUsuario.cuentas1}"
 								  var="reg"  reflow="true" selectionMode="single"  
 							  	  selection="#{registroUsuario.seleccion_user}"  rowKey="#{reg.cuenta}" >
+							  	   <p:ajax event="rowSelect"  />
               						<p:column headerText="Cuenta">
 						        	<h:outputText value="#{reg.cuenta}" />
 						    		</p:column>
@@ -127,14 +125,14 @@
     	<p:tab id="cuenta" title="Cuenta">
             <p:panel header="Cuenta">
                 <p:messages />
-                <h:panelGrid columns="2" columnClasses="label, value">
+                <h:panelGrid columns="2" columnClasses="label, value" styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
                     <p:outputLabel for="TipoUsuario" value="Tipo de Usuario: " />
 	        						<p:selectOneMenu id="TipoUsuario" value="#{registroUsuario.tipoUsuario}">
 	            						<f:selectItem itemLabel="Seleccione un Usuario" itemValue="" />
 	            						<f:selectItems value="#{registroUsuario.tipoUsuarios}" />
 	        						</p:selectOneMenu>
 	        	</h:panelGrid>
-	        	<h:panelGrid columns="3" columnClasses="label, value">
+	        	<h:panelGrid columns="3" columnClasses="label, value" styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
 	              	<h:outputText value="Activar Usuario: " />
         			 <h:outputText   value="#{estim.estatus?'Activo':'Inactivo'}"
 							        style="color:#{estim.estatus?'green':'red'}"
@@ -146,7 +144,7 @@
         <p:tab id="personal" title="Personales">
             <p:panel header="Datos Personales">
                 <p:messages />
-                <h:panelGrid columns="2" columnClasses="label, value">
+                <h:panelGrid columns="2" columnClasses="label, value" styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
                     <h:outputLabel for="Nombre" value="Nombre:" />
               <p:inputText  id="nombre" value="#{registroUsuario.nombre}" required="true" label="nombre" >
                <p:keyFilter regEx="/[a-z_]/i"/>  
@@ -176,7 +174,7 @@
         <p:tab id="direccion" title="Direccion">
             <p:panel header="Direcccion">
                 <p:messages />
-                <h:panelGrid columns="2" columnClasses="label, value">
+                <h:panelGrid columns="2" columnClasses="label, value" styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
                     
                     <h:outputLabel for="calle" value="Calle:" />
               			<p:inputText  id="calle"  value="#{registroUsuario.calle}" required="true" label="calle" />
@@ -208,7 +206,7 @@
         <p:tab id="contacto" title="Contacto">
             <p:panel header="Contacto">
                 <p:messages />
-                <h:panelGrid columns="2" columnClasses="label, value">
+                <h:panelGrid columns="2" columnClasses="label, value" styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
                    <h:outputLabel for="telefono" value="Telefono:" />
               		 <p:inputText  id="telefono"  value="#{registroUsuario.telefono}"
                   		required="true" label="username">
@@ -236,13 +234,13 @@
 		 		<h:form id="form_m1" >
 			<p:fragment>
 				<p:panel class = "tamana_ancho_1 div_contenedor">
-				<h:panelGrid columns="1" cellpadding="5" >
+				<h:panelGrid columns="1" cellpadding="5" styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
 			
-					<h:panelGrid columns="2" columnClasses="label, value">
+					<h:panelGrid columns="2" columnClasses="label, value" styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
 		        		<h:outputText value="Escolaridad: " />
 	        			<p:inputSwitch  />
 		        	</h:panelGrid>
-				<h:panelGrid columns="2" cellpadding="5" >
+				<h:panelGrid columns="2" cellpadding="5" styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
 					<p:outputLabel  value="Nivel: " />
 					<p:selectOneMenu id="Grado" value="#{gradoView.grado}">
 		            						<f:selectItem itemLabel="Tipo" itemValue="" />
@@ -250,7 +248,7 @@
 		        	</p:selectOneMenu>
 				</h:panelGrid>
 					
-		        	<h:panelGrid columns="2" cellpadding="5">
+		        	<h:panelGrid columns="2" cellpadding="5" styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
 			        	<p:outputLabel  value="Titulo: " />
 						<p:inputText placeholder="tipo" id="especialidad" style="width: 90%;"></p:inputText>
 		              	
@@ -266,7 +264,7 @@
 			
 			</div>
 		
-		  </c:if>
+		
 		
 	
 	</h:form>
