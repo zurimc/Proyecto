@@ -9,6 +9,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.event.FlowEvent;
@@ -134,9 +136,18 @@ public class HospitalView implements Serializable {
 		hospital1.setIdestado(idEstado);
 		hospital1.setTelefono(telefono);
 		try {
+			if (){
+
+				ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+				
+				 MensajeG.mostrar("Registro exitoso", FacesMessage.SEVERITY_INFO);
+			}else {
+				MensajeG.mostrar("ya existe hospital ya existe", FacesMessage.SEVERITY_WARN);
+			}
 			
 		}catch(Exception e ) {
-			
+			e.printStackTrace();
+			MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_ERROR);
 		}
 		
 	}
