@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lab.sdt.dao.TipousuarioMapper;
 import com.lab.sdt.dao.UsuarioMapper;
-import com.lab.sdt.model.Equipo;
+
 import com.lab.sdt.model.Tipousuario;
 import com.lab.sdt.model.TipousuarioExample;
 import com.lab.sdt.model.UsuarioExample;

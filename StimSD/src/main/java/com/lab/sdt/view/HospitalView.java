@@ -18,7 +18,7 @@ import org.primefaces.event.SelectEvent;
 
 
 import com.lab.sdt.model.Hospital;
-
+import com.lab.sdt.service.EstadoUnidad;
 import com.lab.sdt.service.HospitalService;
 import com.lab.sdt.util.MensajeG;
 
@@ -29,20 +29,25 @@ public class HospitalView implements Serializable {
 	
 	@ManagedProperty("#{hospitalService}")
 	public HospitalService hospitalService;
+	@ManagedProperty("#{estadoUnidad}")
+	public EstadoUnidad estadoUnidad;
+
 	
 	public String hospital;
+	public String hospital_b;	
 	public String calle;
 	public int numero;
 	public String colonia;
 	public String codigoPostal;
 	public int idEstado;
 	public String telefono;
+	public char estatus;
 	private boolean skiph;
 	
 	
 	public List<SelectItem> hospitales1;
 	private List<Hospital> hospitales;
-	
+	public List<SelectItem> estados;
 	
 	private Hospital seleccion_hosp;
 	private String buscador = "";
@@ -55,10 +60,11 @@ public class HospitalView implements Serializable {
 		hospitales = hospitalService.lista_hospital();
 		
 		hospitales1 = new ArrayList<SelectItem>();
+		estados = new ArrayList<SelectItem>();
 		
 		try {
 			hospitales1 = hospitalService.getLista_hospital();
-			
+			estados = estadoUnidad.getLista_estados();
 			
 		}catch(Exception e) {
 			MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
@@ -67,13 +73,13 @@ public class HospitalView implements Serializable {
 }
 
 	public void buscar_hospitales() {
-		 if(hospital.trim().length() > 0) {
+		 if(hospital_b.trim().length() > 0) {
 			 try {
 				 Hospital ho = new Hospital();
 				
 				 hospitales.clear();
 				 
-					 ho =  hospitalService.encuentra_hospital(hospital);
+					 ho =  hospitalService.encuentra_hospital(hospital_b);
 					 if(ho!=null) {
 						 
 						 hospitales.add(ho);
@@ -123,7 +129,20 @@ public class HospitalView implements Serializable {
 	        return event.getNewStep();
 	    }
 	}
-	
+	public void muestra() {
+
+		try {
+
+		hospitalService.insertarHospital("hola");
+		MensajeG.mostrar("", FacesMessage.SEVERITY_WARN);
+		}catch(Exception e) {
+			MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
+		}
+		
+		//setResultado("Prueba base de datos");
+		
+		
+	}
 	//insertar datos de hospital
 	public void registroHospital() {
 		
@@ -135,9 +154,11 @@ public class HospitalView implements Serializable {
 		hospital1.setCodigopostal(codigoPostal);
 		hospital1.setIdestado(idEstado);
 		hospital1.setTelefono(telefono);
-		try {
-			if (){
-
+		hospital1.setEstatus("d");
+		/*try {
+			if (hospitalService.registro_hospital(hospital)==null){
+				hospitalService.registroHospital(hospital1);
+				
 				ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 				
 				 MensajeG.mostrar("Registro exitoso", FacesMessage.SEVERITY_INFO);
@@ -148,7 +169,7 @@ public class HospitalView implements Serializable {
 		}catch(Exception e ) {
 			e.printStackTrace();
 			MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_ERROR);
-		}
+		}*/
 		
 	}
 	public HospitalService getHospitalService() {
@@ -263,6 +284,36 @@ public class HospitalView implements Serializable {
 	public void setBuscador(String buscador) {
 		this.buscador = buscador;
 	}
-	
+
+	public EstadoUnidad getEstadoUnidad() {
+		return estadoUnidad;
+	}
+
+	public void setEstadoUnidad(EstadoUnidad estadoUnidad) {
+		this.estadoUnidad = estadoUnidad;
+	}
+
+	public List<SelectItem> getEstados() {
+		return estados;
+	}
+
+	public void setEstados(List<SelectItem> estados) {
+		this.estados = estados;
+	}
+	public String getHospital_b() {
+		return hospital_b;
+	}
+
+	public void setHospital_b(String hospital_b) {
+		this.hospital_b = hospital_b;
+	}
+
+	public char getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(char estatus) {
+		this.estatus = estatus;
+	}
 	
 }

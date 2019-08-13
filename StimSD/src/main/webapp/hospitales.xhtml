@@ -16,7 +16,7 @@
 		
     }
     .tamana_ancho_1{
-    width:300px;
+    width:450px;
     }
     .tamana_ancho_2{
     width:400px;
@@ -56,137 +56,76 @@
     }
     
 	</style>	
-		<h:form id = "form_g">    
-		<p:growl id="mensajes" showDetail="true" life="2000" />
-<!-- botones de la parte superior -->		
-<div>
-	<p:fragment >
-		<p:toolbar >
-		<f:facet name="left">
-			<h3 style="text-align: center">Hospital</h3>
-		</f:facet>
-		</p:toolbar>
-	</p:fragment>
-</div>
-<!-- botones de la parte superior -->
-<!-- CONDICIONAL PARA MOSTRAR LA PRIMERA PAGINA DE HOSPITALES -->
-			
-				<div class = "div_contenedor ui-fluid">
-		 		<div class = "div_izquierdo ui-fluid">
-	 			<h:form id="form1">	
-			 	 <p:fragment >
-			 	 <p:panel class = "alineacion tamana_ancho_1">
-			 	 <h:panelGrid columns="1" style="margin-bottom:5px" cellpadding="10" class = "alineacion" styleClass="ui-panelgrid-blank ui-fluid" layout="grid" >
-				 	<p:outputLabel  for="Hospi" value="Actualizar Hospitales"  />
-				 	<h:panelGrid columns="2"  cellpadding="2"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid">	
-              		<p:commandButton id="cargar_hosp" value="Cargar" actionListener="#{hospitalView.cargar_hos}"></p:commandButton>
-              		<p:inputText id="buscadorhos" value="#{hospitalView.hospital}" placeholder="Buscar" style="width: 70%;">
-				     	<p:ajax event="keyup" update="hospital2" listener="#{hospitalView.buscar_hospitales}" />
-				    </p:inputText>
-              		</h:panelGrid>
-				 </h:panelGrid>
-				 
-				 	<p:outputLabel for="Hospi" value="Hospital: " />
-	        					<p:selectOneMenu id="Hospi" value="#{hospitalView.hospital}">
-	            					<f:selectItem itemLabel="Seleccione un Hospital" itemValue="" />
-	            					<f:selectItems value="#{hospitalView.hospitales1}" />
-	        					</p:selectOneMenu>
-	        					
-	        					<p:dataTable  id ="hospital2"  paginator="true" rows="5" 
-								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
-								 rowsPerPageTemplate="5,10,15"
-								  paginatorPosition="bottom" value="#{hospitalView.hospitales}"
-								  var="hos"  reflow="true" selectionMode="single"  
-							  	  selection="#{hospitalView.seleccion_hosp}"  rowKey="#{hos.hospital}" >
-              						 <p:ajax event="rowSelect"  />
-              						<p:column headerText="Hospitales">
-						        	<h:outputText value="#{hos.hospital}" />
-						    		</p:column>
-								</p:dataTable>			
-				  </p:panel> 	
-				  </p:fragment>
-				 </h:form> 
-				 </div>
-				 
-				 <div class = "div_derecho ui-fluid">
-	 			 <h:form id="form2">	
-				 <p:fragment >
-				 <p:panel>
-					<p:growl id="growl" sticky="true" showDetail="true"/>
-    				<p:wizard flowListener="#{hospitalView.onFlowProcess}">
-        			<p:tab id="hospital" title="Datos del hospital">
-            		<p:panel header="Datos del Hospital">
-                	<p:messages />
-                	<h:panelGrid columns="2" columnClasses="label, value" styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
-                    	<h:outputLabel for="Nombre" value="Nombre del hospital:" />
-              			<p:inputText  id="nombre"  required="true" label="nombre" >
-               			<p:keyFilter regEx="/[a-z_]/i"/>  
-              			</p:inputText>  
-                	</h:panelGrid>
-            		</p:panel>
-       				</p:tab>
- 
-        			<p:tab id="direccion" title="Direccion del Hospital">
-            		<p:panel header="Direcccion del hospital">
-                	<p:messages />
-                	<h:panelGrid columns="2" columnClasses="label, value" styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
-                    	<h:outputLabel for="calle" value="Calle:" />
-              			<p:inputText  id="calle"  required="true" label="calle" />
-                		<h:outputLabel for="numero" value="Numero:" />
-              			<p:inputText  id="numero"   required="true" label="numero">
-             			 <p:keyFilter regEx="/[\d\-\.]/"/>  
-              			</p:inputText>
-    
-                  		<h:outputLabel for="colonia" value="Colonia:" />
-              			<p:inputText  id="colonia" 
-                			required="true" label="colonia" />
-      
-                  		<h:outputLabel for="cp" value="CP:" />
-              			<p:inputText  id="cp"  
-                			required="true" label="cp">
-                		<p:keyFilter regEx="/[\d\-\.]/"/>  
-              			</p:inputText>
-    
-                  		<h:outputLabel for="estado" value="Estado: " />
-                  		<h:selectOneMenu  id="estado" style="width:95%;"  >
-                    	<f:selectItem itemLabel="seleccione uno" itemValue="" />
-            			<f:selectItems  />
-          				</h:selectOneMenu>
-               		</h:panelGrid>
-            		</p:panel>
-        			</p:tab>
- 
-        			<p:tab id="contacto" title="Contacto">
-            		<p:panel header="Contacto">
-                	<p:messages />
-                	<h:panelGrid columns="2" columnClasses="label, value" styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
-                   		<h:outputLabel for="telefono" value="Telefono:" />
-              		 	<p:inputText  id="telefono"  
-                  		required="true" label="username">
-                		<p:keyFilter regEx="/[\d\-\.]/"/>  
-             		 	</p:inputText>  
-            
-                  		
-               	 	</h:panelGrid>
-                <p:commandButton value="Guardar" class="guardar" styleClass="ui-priority-primary"></p:commandButton>
-            </p:panel>
-        </p:tab>
-        
-    </p:wizard>
-    <br/>
-    <p:commandButton value="Actualizar" styleClass="ui-priority-primary" style="width:70%;"></p:commandButton>   
-    
-   </p:panel>
-</p:fragment>	
-		 		
-</h:form>
-	 	</div>
-				 
-		</div>
-		  	<!--  </c:if> -->
-<!-- CONDICIONAL PARA MOSTRAR LA PRIMERA PAGINA DE HOSPITALES -->		
+<h:form id = "form_g">    
+	<p:growl id="mensajes" showDetail="true" life="2000" />
+	<h:panelGrid columns="1" cellpadding="5" class = "alineacion"  >		
+	<!-- botones de la parte superior -->		
+
+		<h3 class = "alineacion" >Hospital</h3>
 	
-		</h:form>
+	<!-- botones de la parte superior -->
+	<!-- CONDICIONAL PARA MOSTRAR LA PRIMERA PAGINA DE HOSPITALES -->
+	
+		<h:panelGrid columns="2" cellpadding="5" class = "alineacion"  >
+			<h:form id="form_buscar">
+				<p:fragment >
+			 		<p:panel>
+			 					
+			 			<h:panelGrid columns="2" cellpadding="5" class = "alineacion"  >
+			 				<p:commandButton id="cargar_hosp" value="Cargar" actionListener="#{hospitalView.cargar_hos}"></p:commandButton>
+					 		<p:inputText id="buscadorhos" value="#{hospitalView.hospital_b}" placeholder="Buscar" style="width: 100%;">
+					     		<p:ajax event="keyup" update="hospital2" listener="#{hospitalView.buscar_hospitales}" />
+					    	</p:inputText>
+			 			</h:panelGrid>
+			 					
+			 			<h:panelGrid columns="2" cellpadding="5" class = "alineacion">
+			 				<p:outputLabel  value="Hospital: " />
+					    	<p:selectOneMenu id="Hospi" value="#{hospitalView.hospital}">
+		            			<f:selectItem itemLabel="Seleccione un Hospital" itemValue="" />
+		            			<f:selectItems value="#{hospitalView.hospitales1}" />
+		        			</p:selectOneMenu>
+			 			</h:panelGrid>
+			 						
+			 			<p:dataTable  id ="hospital2"  paginator="true" rows="5" 
+						paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,15" 
+						paginatorPosition="bottom" value="#{hospitalView.hospitales}"
+						var="hos"  reflow="true" selectionMode="single"  
+						selection="#{hospitalView.seleccion_hosp}"  rowKey="#{hos.hospital}" >
+	              						
+	              			<p:column headerText="Hospitales">
+								<h:outputText value="#{hos.hospital}" />
+							</p:column>
+						</p:dataTable>
+								
+			 		  </p:panel>
+			 		</p:fragment>
+				</h:form>
+				
+				<h:panelGrid columns="1" cellpadding="5" class = "alineacion"  >
+					<p:panel>
+						<h:panelGrid columns="3" cellpadding="5" class = "alineacion"  >
+						<p:commandButton value="1"></p:commandButton>
+						<p:commandButton value="2"></p:commandButton>
+						<p:commandButton value="3"></p:commandButton>
+						</h:panelGrid>
+					</p:panel>
+					
+					<h:form id="form_registro">
+						<p:fragment>
+							<p:panel>
+						
+							<p:commandButton value="4"></p:commandButton>
+							</p:panel>
+						</p:fragment>
+					</h:form>
+					
+				</h:panelGrid>
+
+				
+			</h:panelGrid>
+		</h:panelGrid>
+	</h:form>
 	
 </ui:define>
 </ui:composition>
