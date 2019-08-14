@@ -131,21 +131,21 @@
 						<p:fragment>
 							<p:panel>
 								 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
-						   			<h:outputLabel  value="Hospital: " />
-              						<p:inputText  id="nom_hospital"  style="width:100%;" label="nom_hospital" placeholder="Ingrese hospital" value="#{hospitalView.hospital}">
+						   			<h:outputLabel  for ="hospital" value="Hospital: " />
+              						<p:inputText  id="hospital"  style="width:100%;" label="nom_hospital" placeholder="Ingrese hospital" value="#{hospitalView.hospital}">
               						</p:inputText>
-						   			<h:outputLabel  value="Calle: " />
-              						<p:inputText  id="ca_hospital"  style="width:100%;" label="ca_hospital" placeholder="Ingrese calle" value="#{hospitalView.calle}">
+						   			<h:outputLabel for="calle" value="Calle: " />
+              						<p:inputText  id="calle"  style="width:100%;" label="ca_hospital" placeholder="Ingrese calle" value="#{hospitalView.calle}">
               						</p:inputText>
-              						<h:outputLabel  value="Numero: " />
-              						<p:inputText  id="nu_hospital"  style="width:100%;" label="nu_hospital" placeholder="Ingrese numero" value="#{hospitalView.numero}">
+              						<h:outputLabel for="numero" value="Numero: " />
+              						<p:inputText  id="numero"  style="width:100%;" label="nu_hospital" placeholder="Ingrese numero" value="#{hospitalView.numero}">
               						<p:keyFilter regEx="/[\d\-\.]/"/>
               						</p:inputText>
-              						<h:outputLabel  value="Colonia: " />
-              						<p:inputText  id="co_hospital"  style="width:100%;" label="co_hospital" placeholder="Ingrese colonia" value="#{hospitalView.colonia}">
+              						<h:outputLabel for="colonia" value="Colonia: " />
+              						<p:inputText  id="colonia"  style="width:100%;" label="co_hospital" placeholder="Ingrese colonia" value="#{hospitalView.colonia}">
               						</p:inputText>
-              						<h:outputLabel  value="Codigo Postal: " />
-              						<p:inputText  id="cp_hospital"  style="width:100%;" label="cp_hospital" placeholder="Ingrese CP" value="#{hospitalView.codigoPostal}">
+              						<h:outputLabel for="codigoPostal" value="Codigo Postal: " />
+              						<p:inputText  id="codigoPostal"  style="width:100%;" label="cp_hospital" placeholder="Ingrese CP" value="#{hospitalView.codigoPostal}">
               						<p:keyFilter regEx="/[\d\-\.]/"/>
               						</p:inputText>
               						<h:outputLabel for="estado" value="Estado: " />
@@ -153,8 +153,8 @@
                     					<f:selectItem itemLabel="seleccione uno" itemValue="" />
             							<f:selectItems value="#{hospitalView.estados}" />
           							</h:selectOneMenu>
-          							<h:outputLabel  value="Telefono: " />
-              						<p:inputText  id="tel_hospital"  style="width:100%;" label="tel_hospital" placeholder="Ingrese telefono">
+          							<h:outputLabel  for= "telefono" value="Telefono: " />
+              						<p:inputText  id="telefono"  style="width:100%;" label="tel_hospital" placeholder="Ingrese telefono">
               						</p:inputText>   
               					</h:panelGrid>
 							

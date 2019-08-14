@@ -171,7 +171,7 @@ public class HospitalView implements Serializable {
 		hospital1.setNumero(numero);
 		hospital1.setColonia(colonia);
 		hospital1.setCodigopostal(codigoPostal);
-		hospital1.setIdestado(idEstado);
+		hospital1.setIdestado(5);
 		hospital1.setTelefono(telefono);
         
         
