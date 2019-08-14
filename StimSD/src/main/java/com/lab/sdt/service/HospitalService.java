@@ -63,21 +63,7 @@ public class HospitalService {
 	    }
 		
 		//REGISTRAR UN HOSPITAL
-		//METODO PARA INSERTAR EN BASE DE DATOS
-		public String insertarHospital(String hospital) throws Exception{
-			Hospital hos_1 = new Hospital();
-			hos_1.setHospital("abcdeew");
-			hos_1.setCalle("kdie");
-			hos_1.setNumero(44);
-			hos_1.setColonia("sewse");
-			hos_1.setCodigopostal("4533");
-			hos_1.setIdestado(5);
-			hos_1.setTelefono("57489878");
-			hos_1.setEstatus("d");
-			
-			insertarHospital(hos_1);
-			return "ok";
-		}
+		
 		
 			public void insertarHospital(Hospital hospital)throws Exception{
 				hospitalMapper.insert(hospital);

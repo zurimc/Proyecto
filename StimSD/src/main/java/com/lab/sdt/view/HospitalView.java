@@ -36,13 +36,14 @@ public class HospitalView implements Serializable {
 	public String hospital;
 	public String hospital_b;	
 	public String calle;
-	public int numero;
+	public String numero;
 	public String colonia;
 	public String codigoPostal;
 	public int idEstado;
 	public String telefono;
 	public char estatus;
 	private boolean skiph;
+	private int tipos_vistas;
 	
 	
 	public List<SelectItem> hospitales1;
@@ -111,6 +112,23 @@ public class HospitalView implements Serializable {
 		//setHospital(lishospital[0]);
 		
 	}
+	
+	//CAMBIAR VISTAS
+    public void vista_hospital() {
+          hospitales = new ArrayList<Hospital>();
+          hospitales = hospitalService.lista_hospital();
+          tipos_vistas =  1;
+     }
+     public void vista_direccion() {
+         hospitales = new ArrayList<Hospital>();
+          hospitales = hospitalService.lista_hospital();
+          tipos_vistas =  2;
+     }
+     public void vista_contacto() {
+         hospitales = new ArrayList<Hospital>();
+          hospitales = hospitalService.lista_hospital();
+          tipos_vistas =  3;
+     }
 	//cambiar el flujo
 	public boolean isSkiph() {
 	    return skiph;
@@ -133,7 +151,7 @@ public class HospitalView implements Serializable {
 
 		try {
 
-		hospitalService.insertarHospital("hola");
+		
 		MensajeG.mostrar("", FacesMessage.SEVERITY_WARN);
 		}catch(Exception e) {
 			MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
@@ -144,34 +162,28 @@ public class HospitalView implements Serializable {
 		
 	}
 	//insertar datos de hospital
-	public void registroHospital() {
-		
-		Hospital hospital1 = new Hospital();
-		hospital1.setHospital(hospital);
+	
+    public void registroHospital() {
+        
+        Hospital hospital1 = new Hospital();
+    	hospital1.setHospital(hospital);
 		hospital1.setCalle(calle);
 		hospital1.setNumero(numero);
 		hospital1.setColonia(colonia);
 		hospital1.setCodigopostal(codigoPostal);
 		hospital1.setIdestado(idEstado);
 		hospital1.setTelefono(telefono);
-		hospital1.setEstatus("d");
-		/*try {
-			if (hospitalService.registro_hospital(hospital)==null){
-				hospitalService.registroHospital(hospital1);
-				
-				ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-				
-				 MensajeG.mostrar("Registro exitoso", FacesMessage.SEVERITY_INFO);
-			}else {
-				MensajeG.mostrar("ya existe hospital ya existe", FacesMessage.SEVERITY_WARN);
-			}
-			
-		}catch(Exception e ) {
-			e.printStackTrace();
-			MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_ERROR);
-		}*/
-		
-	}
+        
+        
+        try {
+            hospitalService.insertarHospital(hospital1);
+            MensajeG.mostrar("hola", FacesMessage.SEVERITY_WARN);
+        } catch (Exception e) {
+            MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
+        }
+        
+        
+    }
 	public HospitalService getHospitalService() {
 		return hospitalService;
 	}
@@ -202,15 +214,14 @@ public class HospitalView implements Serializable {
 	}
 
 
-	public int getNumero() {
+
+	public String getNumero() {
 		return numero;
 	}
 
-
-	public void setNumero(int numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
-
 
 	public String getColonia() {
 		return colonia;
@@ -314,6 +325,14 @@ public class HospitalView implements Serializable {
 
 	public void setEstatus(char estatus) {
 		this.estatus = estatus;
+	}
+
+	public int getTipos_vistas() {
+		return tipos_vistas;
+	}
+
+	public void setTipos_vistas(int tipos_vistas) {
+		this.tipos_vistas = tipos_vistas;
 	}
 	
 }

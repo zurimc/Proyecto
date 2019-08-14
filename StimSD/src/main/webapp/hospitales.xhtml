@@ -105,23 +105,78 @@
 				<h:panelGrid columns="1" cellpadding="5" class = "alineacion"  >
 					<p:panel>
 						<h:panelGrid columns="3" cellpadding="5" class = "alineacion"  >
-						<p:commandButton value="1"></p:commandButton>
-						<p:commandButton value="2"></p:commandButton>
-						<p:commandButton value="3"></p:commandButton>
+						<p:commandButton value="Hospital" id="boton_hospital"   actionListener="#{hospitalView.vista_hospital()}"
+						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton>
+						<p:commandButton value="Direccion" id="boton_dir"  actionListener="#{hospitalView.vista_direccion}"
+						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton>
+						<p:commandButton value="Contacto" id="boton_con"  actionListener="#{hospitalView.vista_contacto}"
+						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton>
 						</h:panelGrid>
 					</p:panel>
-					
+					<c:if  test="#{hospitalView.tipos_vistas == 1}">
 					<h:form id="form_registro">
 						<p:fragment>
 							<p:panel>
-						
-							<p:commandButton value="4"></p:commandButton>
+								 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
+						   			
+              						    
+              					</h:panelGrid>
+							<p:commandButton value="Actualizacion" id="actualizar" styleClass="ui-priority-primary"></p:commandButton>
 							</p:panel>
 						</p:fragment>
 					</h:form>
-					
+					</c:if>
+					<c:if  test="#{hospitalView.tipos_vistas == 2}">
+					<h:form id="form_registro">
+						<p:fragment>
+							<p:panel>
+								 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
+						   			<h:outputLabel  value="Hospital: " />
+              						<p:inputText  id="nom_hospital"  style="width:100%;" label="nom_hospital" placeholder="Ingrese hospital" value="#{hospitalView.hospital}">
+              						</p:inputText>
+						   			<h:outputLabel  value="Calle: " />
+              						<p:inputText  id="ca_hospital"  style="width:100%;" label="ca_hospital" placeholder="Ingrese calle" value="#{hospitalView.calle}">
+              						</p:inputText>
+              						<h:outputLabel  value="Numero: " />
+              						<p:inputText  id="nu_hospital"  style="width:100%;" label="nu_hospital" placeholder="Ingrese numero" value="#{hospitalView.numero}">
+              						<p:keyFilter regEx="/[\d\-\.]/"/>
+              						</p:inputText>
+              						<h:outputLabel  value="Colonia: " />
+              						<p:inputText  id="co_hospital"  style="width:100%;" label="co_hospital" placeholder="Ingrese colonia" value="#{hospitalView.colonia}">
+              						</p:inputText>
+              						<h:outputLabel  value="Codigo Postal: " />
+              						<p:inputText  id="cp_hospital"  style="width:100%;" label="cp_hospital" placeholder="Ingrese CP" value="#{hospitalView.codigoPostal}">
+              						<p:keyFilter regEx="/[\d\-\.]/"/>
+              						</p:inputText>
+              						<h:outputLabel for="estado" value="Estado: " />
+                  						<h:selectOneMenu  id="estado" style="width:95%;"  value="#{hospitalView.idEstado}">
+                    					<f:selectItem itemLabel="seleccione uno" itemValue="" />
+            							<f:selectItems value="#{hospitalView.estados}" />
+          							</h:selectOneMenu>
+          							<h:outputLabel  value="Telefono: " />
+              						<p:inputText  id="tel_hospital"  style="width:100%;" label="tel_hospital" placeholder="Ingrese telefono">
+              						</p:inputText>   
+              					</h:panelGrid>
+							
+							</p:panel>
+						</p:fragment>
+					</h:form>
+					</c:if>		
+					<c:if  test="#{hospitalView.tipos_vistas == 3}">
+					<h:form id="form_registro">
+						<p:fragment>
+							<p:panel>
+								 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
+						   			 
+              					</h:panelGrid>
+							<p:commandButton value="Actualizacion" id="actualizar" styleClass="ui-priority-primary"></p:commandButton>
+							</p:panel>
+						</p:fragment>
+					</h:form>
+					</c:if>
 				</h:panelGrid>
-
+				<p:commandButton  value="Guardar"  actionListener="#{hospitalView.registroHospital}" 
+            						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton>
 				
 			</h:panelGrid>
 		</h:panelGrid>
