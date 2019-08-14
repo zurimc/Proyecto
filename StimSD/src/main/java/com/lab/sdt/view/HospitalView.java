@@ -184,6 +184,15 @@ public class HospitalView implements Serializable {
         
         
     }
+    public void guarda_actualiza_datos() {
+    	setHospital(getHospital());
+    	setCalle(getCalle());
+    	setNumero(getNumero());
+    	setColonia(getColonia());
+    	setCodigoPostal(getCodigoPostal());
+    	setIdEstado(getIdEstado());
+    	setTelefono(getTelefono());
+    }
 	public HospitalService getHospitalService() {
 		return hospitalService;
 	}
