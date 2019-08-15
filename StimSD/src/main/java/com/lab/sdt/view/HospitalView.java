@@ -63,7 +63,7 @@ public class HospitalView implements Serializable {
 		
 		hospitales1 = new ArrayList<SelectItem>();
 		estados = new ArrayList<SelectItem>();
-		
+		seleccion_hosp = new Hospital();
 		try {
 			hospitales1 = hospitalService.getLista_hospital();
 			estados = estadoUnidad.getLista_estados();
@@ -96,7 +96,17 @@ public class HospitalView implements Serializable {
 		
 		
 	}
-	
+	//cargar toda la lista de hospitales
+	public void cargar_lis_hospi() {
+		hospitales = new ArrayList<Hospital>();
+		hospitales.clear();
+		try {
+			hospitales = hospitalService.lista_hospital();
+			
+		}catch(Exception e) {
+			
+		}
+	}
 	//cargar hospitales
 	
 	public void cargar_hos() {
@@ -106,16 +116,11 @@ public class HospitalView implements Serializable {
 		seleccion_hosp = new Hospital();
 		seleccion_hosp.setHospital("");
 	}
-	//actualizar
-	public void actualiza_h() {
-		seleccion_hosp = new Hospital();
-		seleccion_hosp.setHospital("");
-		
-	}
+	
 	//ELEGIR UN HOSPITAL
 	public void elige_hospital( SelectEvent event) {
 		
-		setHospital(seleccion_hosp.getHospital());
+		setNom_hospital(seleccion_hosp.getHospital());
 		setCalle(seleccion_hosp.getCalle());
 		setNumero(seleccion_hosp.getNumero());
 		setColonia(seleccion_hosp.getColonia());
@@ -132,16 +137,7 @@ public class HospitalView implements Serializable {
           hospitales = hospitalService.lista_hospital();
           tipos_vistas =  1;
      }
-     public void vista_direccion() {
-         hospitales = new ArrayList<Hospital>();
-          hospitales = hospitalService.lista_hospital();
-          tipos_vistas =  2;
-     }
-     public void vista_contacto() {
-         hospitales = new ArrayList<Hospital>();
-          hospitales = hospitalService.lista_hospital();
-          tipos_vistas =  3;
-     }
+    
 	//cambiar el flujo
 	public boolean isSkiph() {
 	    return skiph;
@@ -176,7 +172,7 @@ public class HospitalView implements Serializable {
 	}
 	//insertar datos de hospital
 	
-    public void registroHospital() {
+    public void registroHospital(int tipo) {
         
         Hospital hospital1 = new Hospital();
     	hospital1.setHospital(nom_hospital);
@@ -189,8 +185,17 @@ public class HospitalView implements Serializable {
         
         
         try {
-            hospitalService.insertarHospital(hospital1);
-            MensajeG.mostrar("hola", FacesMessage.SEVERITY_WARN);
+        	if(tipo==0) {
+        		hospitalService.insertarHospital(hospital1);
+                MensajeG.mostrar("Se guardo hospital: " +nom_hospital, FacesMessage.SEVERITY_WARN);
+                
+        	} else {
+        		hospital1.setIdhospital(hospitalService.encuentra_hospital(nom_hospital).getIdhospital());
+        		hospitalService.actualizar_registro(hospital1);
+        		  MensajeG.mostrar("Se actualizo el hospital: "+nom_hospital, FacesMessage.SEVERITY_INFO);
+        	}
+        	
+            
         } catch (Exception e) {
             MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
         }
@@ -198,13 +203,33 @@ public class HospitalView implements Serializable {
         
     }
     public void guarda_actualiza_datos() {
-    	setHospital(getHospital());
+    	setNom_hospital(getNom_hospital());
     	setCalle(getCalle());
     	setNumero(getNumero());
     	setColonia(getColonia());
     	setCodigoPostal(getCodigoPostal());
     	setIdEstado(getIdEstado());
     	setTelefono(getTelefono());
+    }
+    
+    //ACTUALIZAR DATOS
+    public void actualizar() {
+    	try {
+    		if(nom_hospital.trim().length() > 0) {
+    			if(hospitalService.actualizarh(nom_hospital)== null) {
+    				
+    				 //MensajeG.mostrar(hospitalService.actualizarh(nom_hospital)+":"+nom_hospital, FacesMessage.SEVERITY_WARN);
+    				registroHospital(0);
+    			}else {
+    				 //MensajeG.mostrar(hospitalService.actualizarh(nom_hospital)+":"+nom_hospital, FacesMessage.SEVERITY_WARN);
+     				
+    				registroHospital(1);
+    			}
+    		}
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    		MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_ERROR);
+    	}
     }
 	public HospitalService getHospitalService() {
 		return hospitalService;

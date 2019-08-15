@@ -55,6 +55,18 @@ public class HospitalService {
 			return hospitala;
 		}
 		
+		public void actualizar_registro(Hospital h) {
+			hospitalMapper.updateByPrimaryKey(h);
+		}
+		public String actualizarh (String actualizarh) {
+			String r= null;
+			try {
+				r= encuentra_hospital(actualizarh).getHospital();
+			}catch(Exception e) {
+				r= null;
+			}
+			return r;
+		}
 		public List<Hospital> lista_hospital() {
 	        List<Hospital> list_hos = new ArrayList<Hospital>();
 	        HospitalExample HospitalEx = new HospitalExample();

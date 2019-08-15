@@ -72,17 +72,19 @@
 			 		<p:panel>
 			 					
 			 			<h:panelGrid columns="2" cellpadding="5" class = "alineacion"  >
-			 				<p:commandButton id="cargar_hosp" value="Cargar" actionListener="#{hospitalView.cargar_hos}" update="hospital2"></p:commandButton>
+			 				<p:commandButton id="cargar_hosp" value="Cargar" actionListener="#{hospitalView.cargar_hos}" update="hospital2"
+			 				onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton>
 					 		<p:inputText id="buscadorhos" value="#{hospitalView.hospital_b}" placeholder="Buscar" style="width: 100%;">
 					     		<p:ajax event="keyup" update="hospital2" listener="#{hospitalView.buscar_hospitales}" />
 					    	</p:inputText>
 			 			</h:panelGrid>
 			 					
 			 			<h:panelGrid columns="2" cellpadding="5" class = "alineacion">
-			 				<p:outputLabel  value="Hospital: " />
-					    	<p:selectOneMenu id="Hospi" value="#{hospitalView.hospital}">
+			 				<p:outputLabel for="hospi" value="Hospital: " />
+					    	<p:selectOneMenu id="hospi" value="#{hospitalView.hospital}">
 		            			<f:selectItem itemLabel="Seleccione un Hospital" itemValue="" />
 		            			<f:selectItems value="#{hospitalView.hospitales1}" />
+		            			<p:ajax event="change" listener="#{hospitalView.cargar_lis_hospi}" update="hospital2"  />
 		        			</p:selectOneMenu>
 			 			</h:panelGrid>
 			 						
@@ -92,9 +94,9 @@
 						paginatorPosition="bottom" value="#{hospitalView.hospitales}"
 						var="hos"  reflow="true" selectionMode="single"  
 						selection="#{hospitalView.seleccion_hosp}"  rowKey="#{hos.hospital}" >
-	              			 <p:ajax event="rowSelect" listener="#{hospitalView.elige_hospital}"
-					      		update=":form_g:" />
-												
+	              			<p:ajax event="rowSelect" listener="#{hospitalView.elige_hospital}"
+					      	update=":form_g:form_registro" 
+					     	/>			
 	              			<p:column headerText="Hospitales">
 								<h:outputText value="#{hos.hospital}" />
 							</p:column>
@@ -106,64 +108,15 @@
 				
 				<h:panelGrid columns="1" cellpadding="5" class = "alineacion"  >
 					<p:panel>
-						<h:panelGrid columns="3" cellpadding="5" class = "alineacion"  >
-						<p:commandButton value="Actualizacion" id="boton_hospital"   actionListener="#{hospitalView.vista_hospital()}"
+						<h:panelGrid columns="1" cellpadding="5" class = "alineacion"  >
+						<p:commandButton value="Registro/Actualizacion" id="boton_hospital"   actionListener="#{hospitalView.vista_hospital()}"
 						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton>
-						<p:commandButton value="Registro" id="boton_dir"  actionListener="#{hospitalView.vista_direccion}"
-						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton>
-						<p:commandButton value="Consulta" id="boton_con"  actionListener="#{hospitalView.vista_contacto}"
-						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton>
+						
 						</h:panelGrid>
 					</p:panel>
-					
-					<h:form id="form_act">
-					<c:if  test="#{hospitalView.tipos_vistas == 1}">
-					
-						<p:fragment>
-							<p:panel>
-								 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
-						   			<h:outputLabel  for ="nom_h" value="Hospital: " />
-              						<p:inputText  id="nom_h"  style="width:100%;" label="nom_hospital" placeholder="Ingrese hospital" value="#{hospitalView.nom_hospital}">
-              						<p:ajax event="keyup" listener="#{hospitalView.guarda_actualiza_datos}"></p:ajax>
-              						</p:inputText>
-						   			<h:outputLabel for="calleh" value="Calle: " />
-              						<p:inputText  id="calleh"  style="width:100%;" label="ca_hospital" placeholder="Ingrese calle" value="#{hospitalView.calle}">
-              						<p:ajax event="keyup" listener="#{hospitalView.guarda_actualiza_datos}"></p:ajax>
-              						</p:inputText>
-              						<h:outputLabel for="numeroh" value="Numero: " />
-              						<p:inputText  id="numeroh"  style="width:100%;" label="nu_hospital" placeholder="Ingrese numero" value="#{hospitalView.numero}">
-              						<p:ajax event="keyup" listener="#{hospitalView.guarda_actualiza_datos}"></p:ajax>
-              						<p:keyFilter regEx="/[\d\-\.]/"/>
-              						</p:inputText>
-              						<h:outputLabel for="coloniah" value="Colonia: " />
-              						<p:inputText  id="coloniah"  style="width:100%;" label="co_hospital" placeholder="Ingrese colonia" value="#{hospitalView.colonia}">
-              						<p:ajax event="keyup" listener="#{hospitalView.guarda_actualiza_datos}"></p:ajax>
-              						</p:inputText>
-              						<h:outputLabel for="codigoPostalh" value="Codigo Postal: " />
-              						<p:inputText  id="codigoPostalh"  style="width:100%;" label="cp_hospital" placeholder="Ingrese CP" value="#{hospitalView.codigoPostal}">
-              						<p:ajax event="keyup" listener="#{hospitalView.guarda_actualiza_datos}"></p:ajax>
-              						<p:keyFilter regEx="/[\d\-\.]/"/>
-              						</p:inputText>
-              						<h:outputLabel for="estadoh" value="Estado: " />
-                  						<h:selectOneMenu  id="estadoh" style="width:95%;"  value="#{hospitalView.idEstado}">
-                    					<f:selectItem itemLabel="seleccione uno" itemValue="----" />
-            							<f:selectItems value="#{hospitalView.estados}" />
-            							<p:ajax event="change" listener="#{hospitalView.guarda_actualiza_datos}" update="estado"></p:ajax>
-          							</h:selectOneMenu>
-          							<h:outputLabel  for= "telefonoh" value="Telefono: " />
-              						<p:inputText  id="telefonoh"  style="width:100%;" label="tel_hospital" placeholder="Ingrese telefono" value="#{hospitalView.telefono}">
-              						<p:ajax event="keyup" listener="#{hospitalView.guarda_actualiza_datos}"></p:ajax>
-              						</p:inputText>   
-              						    
-              					</h:panelGrid>
-							<p:commandButton value="Actualizacion" id="actualizar" styleClass="ui-priority-primary"></p:commandButton>
-							</p:panel>
-						</p:fragment>
-					
-					</c:if>
-					</h:form>
-					<c:if  test="#{hospitalView.tipos_vistas == 2}">
 					<h:form id="form_registro">
+					
+					
 						<p:fragment>
 							<p:panel>
 								 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
@@ -203,23 +156,13 @@
 							
 							</p:panel>
 						</p:fragment>
-					</h:form>
-					</c:if>		
-					<c:if  test="#{hospitalView.tipos_vistas == 3}">
-					<h:form id="form_registro">
-						<p:fragment>
-							<p:panel>
-								 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
-						   			 
-              					</h:panelGrid>
-							<p:commandButton value="Actualizacion" id="actualizar" styleClass="ui-priority-primary"></p:commandButton>
-							</p:panel>
-						</p:fragment>
-					</h:form>
-					</c:if>
+					
+				
+					</h:form>		
+					<p:commandButton  value="Guardar/Actualizar"  actionListener="#{hospitalView.actualizar}" update=":form_g:form_registro" 
+            		onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" styleClass="ui-priority-primary"></p:commandButton>
 				</h:panelGrid>
-				<p:commandButton  value="Guardar"  actionListener="#{hospitalView.registroHospital}" 
-            						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton>
+				
 				
 			</h:panelGrid>
 		</h:panelGrid>
