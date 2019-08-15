@@ -13,14 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lab.sdt.dao.EstadoMapper;
-import com.lab.sdt.model.Estado;
+import com.lab.sdt.dao.GradoMapper;
+
 
 import com.lab.sdt.model.EstadoExample;
-
-
-
-
-
+import com.lab.sdt.model.GradoExample;
 
 
 @Service
@@ -30,11 +27,31 @@ public class EstadoUnidad {
 	@Autowired
 	private EstadoMapper estadoMapper;
 	
-	public List<SelectItem> lista_estados;
-       	
-
-	public List<Estado> estados1;
+	@Autowired
+	private GradoMapper gradoMapper;
 	
+	private List<SelectItem> lista_estados;
+       	
+	private List<SelectItem> lista_grado;
+
+
+	
+	public List<SelectItem> getLista_grado() {
+		this.lista_grado = new ArrayList<SelectItem>();
+		GradoExample exEstG = new GradoExample();
+		for(int ii = 1; ii<= gradoMapper.countByExample(exEstG); ii++) {
+			SelectItem grado = new SelectItem(ii,gradoMapper.selectByPrimaryKey(ii).getGrado());
+			this.lista_grado.add(grado);
+		}
+		return lista_grado;
+	}
+
+
+	public void setLista_grado(List<SelectItem> lista_grado) {
+		this.lista_grado = lista_grado;
+	}
+
+
 	public List<SelectItem> getLista_estados() {
 		this.lista_estados = new ArrayList<SelectItem>();
 		EstadoExample exEst = new EstadoExample();

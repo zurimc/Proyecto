@@ -16,7 +16,7 @@ import javax.faces.model.SelectItem;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 
-
+import com.lab.sdt.model.Equipo;
 import com.lab.sdt.model.Hospital;
 import com.lab.sdt.service.EstadoUnidad;
 import com.lab.sdt.service.HospitalService;
@@ -33,6 +33,7 @@ public class HospitalView implements Serializable {
 	public EstadoUnidad estadoUnidad;
 
 	
+	public String nom_hospital;
 	public String hospital;
 	public String hospital_b;	
 	public String calle;
@@ -105,11 +106,23 @@ public class HospitalView implements Serializable {
 		seleccion_hosp = new Hospital();
 		seleccion_hosp.setHospital("");
 	}
-	
+	//actualizar
+	public void actualiza_h() {
+		seleccion_hosp = new Hospital();
+		seleccion_hosp.setHospital("");
+		
+	}
 	//ELEGIR UN HOSPITAL
 	public void elige_hospital( SelectEvent event) {
-		String[] lishopital = seleccion_hosp.getHospital().split(hospital);
-		//setHospital(lishospital[0]);
+		
+		setHospital(seleccion_hosp.getHospital());
+		setCalle(seleccion_hosp.getCalle());
+		setNumero(seleccion_hosp.getNumero());
+		setColonia(seleccion_hosp.getColonia());
+		setCodigoPostal(seleccion_hosp.getCodigopostal());
+		setIdEstado(seleccion_hosp.getIdestado());
+		setTelefono(seleccion_hosp.getTelefono());
+		
 		
 	}
 	
@@ -166,12 +179,12 @@ public class HospitalView implements Serializable {
     public void registroHospital() {
         
         Hospital hospital1 = new Hospital();
-    	hospital1.setHospital(hospital);
+    	hospital1.setHospital(nom_hospital);
 		hospital1.setCalle(calle);
 		hospital1.setNumero(numero);
 		hospital1.setColonia(colonia);
 		hospital1.setCodigopostal(codigoPostal);
-		hospital1.setIdestado(5);
+		hospital1.setIdestado(idEstado);
 		hospital1.setTelefono(telefono);
         
         
@@ -203,15 +216,15 @@ public class HospitalView implements Serializable {
 	}
 
 
-	public String getHospital() {
-		return hospital;
+
+
+	public String getNom_hospital() {
+		return nom_hospital;
 	}
 
-
-	public void setHospital(String hospital) {
-		this.hospital = hospital;
+	public void setNom_hospital(String nom_hospital) {
+		this.nom_hospital = nom_hospital;
 	}
-
 
 	public String getCalle() {
 		return calle;
@@ -343,5 +356,14 @@ public class HospitalView implements Serializable {
 	public void setTipos_vistas(int tipos_vistas) {
 		this.tipos_vistas = tipos_vistas;
 	}
+
+	public String getHospital() {
+		return hospital;
+	}
+
+	public void setHospital(String hospital) {
+		this.hospital = hospital;
+	}
+	
 	
 }
