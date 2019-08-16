@@ -69,7 +69,7 @@
 		<h:panelGrid columns="2" cellpadding="5" class = "alineacion"  >
 			<h:form id="form_buscar">
 				<p:fragment >
-			 		<p:panel>
+			 		<p:panel class = "alineacion tamana_ancho_1">
 			 					
 			 			<h:panelGrid columns="2" cellpadding="5" class = "alineacion"  >
 			 				<p:commandButton id="cargar_hosp" value="Cargar" actionListener="#{hospitalView.cargar_hos}" update="hospital2"
@@ -107,19 +107,13 @@
 				</h:form>
 				
 				<h:panelGrid columns="1" cellpadding="5" class = "alineacion"  >
-					<p:panel>
-						<h:panelGrid columns="1" cellpadding="5" class = "alineacion"  >
-						<p:commandButton value="Registro/Actualizacion" id="boton_hospital"   actionListener="#{hospitalView.vista_hospital()}"
-						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton>
-						
-						</h:panelGrid>
-					</p:panel>
+					
 					<h:form id="form_registro">
 					
 					
 						<p:fragment>
 							<p:panel>
-								 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
+								 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="2"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid" >
 						   			<h:outputLabel  for ="nom_hospital" value="Hospital: " />
               						<p:inputText  id="nom_hospital"  style="width:100%;" label="nom_hospital" placeholder="Ingrese hospital" value="#{hospitalView.nom_hospital}">
               						<p:ajax event="keyup" listener="#{hospitalView.guarda_actualiza_datos}"></p:ajax>
@@ -143,7 +137,7 @@
               						<p:keyFilter regEx="/[\d\-\.]/"/>
               						</p:inputText>
               						<h:outputLabel for="estado" value="Estado: " />
-                  						<h:selectOneMenu  id="estado" style="width:95%;"  value="#{hospitalView.idEstado}">
+                  						<h:selectOneMenu  id="estado" style="width:100%;"  value="#{hospitalView.idEstado}">
                     					<f:selectItem itemLabel="seleccione uno" itemValue="----" />
             							<f:selectItems value="#{hospitalView.estados}" />
             							<p:ajax event="change" listener="#{hospitalView.guarda_actualiza_datos}" update="estado"></p:ajax>
