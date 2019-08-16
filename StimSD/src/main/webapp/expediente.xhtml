@@ -1,0 +1,112 @@
+<ui:composition template="menu.xhtml"
+  xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:define name="muestra">
+	
+<style type="text/css">
+    .alineacion{
+        margin:auto;
+		align-items:center;
+		padding: auto;
+		
+    }
+    .tamana_ancho_1{
+    width:450px;
+    }
+    .tamana_ancho_2{
+    width:400px;
+    }
+    .tamana_ancho_3{
+    width:400px;
+    margin-top:10px;
+    }
+   
+    .div_contenedor{
+    	display:block;
+	display:flex;
+	margin-left:auto;
+	margin-right:auto;
+	
+	padding: 10px;
+    }
+    .div_izquierdo{
+	margin-left:0px;
+	margin-right:2px;
+	
+	padding: 5px;
+	float:left;
+    }
+    .div_derecho{
+    margin-left:5px;
+	margin-right:auto;
+	padding: 10px;
+	float: right;      
+    }
+    .texto_centro
+    {
+     text-align: center;
+    }
+    .ui-toggleswitch {
+        vertical-align: bottom;
+    }
+    
+	</style>	
+<h:form id = "form_g">    
+	<p:growl id="mensajes" showDetail="true" life="2000" />
+	<h:panelGrid columns="1" cellpadding="5" class = "alineacion"  >		
+	<!-- botones de la parte superior -->		
+
+		<h3 class = "alineacion" >Expediente</h3>
+	
+	<!-- botones de la parte superior -->
+	<!-- CONDICIONAL PARA MOSTRAR LA PRIMERA PAGINA DE HOSPITALES -->
+	
+		<h:panelGrid columns="2" cellpadding="5" class = "alineacion"  >
+			<h:form id="form_buscarex">
+				<p:fragment >
+			 		<p:panel class = "alineacion tamana_ancho_1">
+			 					
+			 			<h:panelGrid columns="2" cellpadding="5" class = "alineacion"  >
+			 				<p:commandButton id="cargar_exp" value="Cargar" 
+			 				onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton>
+					 		<p:inputText id="buscaExp"  placeholder="Buscar" style="width: 100%;">
+					     		
+					    	</p:inputText>
+			 			</h:panelGrid>
+			 					
+			 			<h:panelGrid columns="2" cellpadding="5" class = "alineacion">
+			 				<p:outputLabel for="expediente" value="Expediente: " />
+					    	<p:selectOneMenu id="expediente" >
+		            			<f:selectItem itemLabel="Seleccione un Expediente" itemValue="" />
+		            			<f:selectItems  />
+		            			
+		        			</p:selectOneMenu>
+			 			</h:panelGrid>
+			 						
+			 			<p:dataTable   paginator="true" rows="5" 
+						paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,15" 
+						paginatorPosition="bottom" 
+						var="hos"  reflow="true" selectionMode="single"  
+						  >
+	              						
+	              			<p:column headerText="Expediente">
+								<h:outputText  />
+							</p:column>
+						</p:dataTable>
+								
+			 		  </p:panel>
+			 		</p:fragment>
+				</h:form>
+				
+			</h:panelGrid>
+		</h:panelGrid>
+	</h:form>
+	
+</ui:define>
+</ui:composition>
