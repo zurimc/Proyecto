@@ -8,6 +8,7 @@
 
 <ui:define name="muestra">
 	
+	
 <style type="text/css">
     .alineacion{
         margin:auto;
@@ -16,7 +17,7 @@
 		
     }
     .tamana_ancho_1{
-    width:450px;
+    width:300px;
     }
     .tamana_ancho_2{
     width:400px;
@@ -56,31 +57,26 @@
     }
     
 	</style>	
-<h:form id = "form_g">    
-	<p:growl id="mensajes" showDetail="true" life="2000" />
-	<h:panelGrid columns="1" cellpadding="5" class = "alineacion"  >		
-	<!-- botones de la parte superior -->		
-
-		<h3 class = "alineacion" >Expediente</h3>
 	
-	<!-- botones de la parte superior -->
-	<!-- CONDICIONAL PARA MOSTRAR LA PRIMERA PAGINA DE HOSPITALES -->
+<h:form id = "form_g">    
+	<p:growl id="mensajes" showDetail="true" life="2000" /> 		
+	<h:panelGrid columns="1" cellpadding="5" class = "alineacion" layout="grid">	
+	<h3 class = "alineacion" >Expediente</h3>
 	
 		<h:panelGrid columns="2" cellpadding="5" class = "alineacion"  >
-			<h:form id="form_buscarex">
-				<p:fragment >
-			 		<p:panel class = "alineacion tamana_ancho_1">
-			 					
-			 			<h:panelGrid columns="2" cellpadding="5" class = "alineacion"  >
-			 				<p:commandButton id="cargar_exp" value="Cargar" actionListener="#{expedienteView.cargar_exp}" update="expediente1"
+		<h:form id="form_buscarex">	
+			<p:fragment >
+				<p:panel class = "alineacion tamana_ancho_1">
+					
+						<h:panelGrid columns="2"  cellpadding="2"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid">	
+	              			<p:commandButton id="cargar_exp" value="Cargar" actionListener="#{expedienteView.cargar_exp}" update="expediente1"
 			 				onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton>
 					 		<p:inputText id="buscaExp" value="#{expedienteView.buscarexp}" placeholder="Buscar" style="width: 100%;">
 					     		<p:ajax event="keyup" update="expediente1" listener="#{expedienteView.buscar_expediente}" />
 					    	</p:inputText>
-			 			</h:panelGrid>
-			 			
-			 					
-			 			<p:dataTable id ="expediente1"  paginator="true" rows="5" 
+	              		</h:panelGrid>
+							
+		              	<p:dataTable id ="expediente1"  paginator="true" rows="5" 
 						paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
 						rowsPerPageTemplate="5,10,15" 
 						paginatorPosition="bottom" value="#{expedienteView.expedientes}"
@@ -92,27 +88,29 @@
 							</p:column>
 						</p:dataTable>
 								
-			 		  </p:panel>
-			 		</p:fragment>
-				</h:form>
-				
-				
-				<h:panelGrid columns="1" cellpadding="5" class = "alineacion"  >
-				<p:panel>
-						<h:panelGrid columns="3" cellpadding="5" class = "alineacion"  >
+				</p:panel> 	
+			</p:fragment>
+		</h:form>   
+		
+		<h:panelGrid columns="1"  cellpadding="1" class = "alineacion" layout="grid">	
+			<p:panel>
+				<h:panelGrid columns="3" cellpadding="5" class = "alineacion"  >
 						<p:commandButton value="Actualizacion/Consulta" id="boton_exp"   actionListener="#{expedienteView.vista_expediente}"
 						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton>
 						<p:commandButton value="Registro" id="boton_re"  actionListener="#{expedienteView.vista_exregistro}"
 						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton>
-						</h:panelGrid>
-				</p:panel>
-					<c:if  test="#{expedienteView.tipos_vistas == 1}">
-					<h:form id="form_expediente">
-					
-					
-						<p:fragment>
-							<p:panel>
-								 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="2"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid" >
+				</h:panelGrid>
+			</p:panel> 
+			
+			
+				<p:panel>
+				<h:form id="form_expediente">
+				<h:panelGrid  columns="1" style="margin-bottom:10px" cellpadding="5" responsive="true" class = "alineacion" >
+					<p:fragment >
+						<p:panel>
+						<c:if   test="#{expedienteView.tipos_vistas == 1}">	
+					 		<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5" responsive="true">
+					 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="2"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid" >
 						   			<h:outputLabel  for ="nom_exp" value="Nombre Expediente: " />
               						<p:inputText  id="nom_exp"  style="width:100%;" label="nom_exp" placeholder="Ingrese Expediente" value="#{expedienteView.nombre}">
               						<p:ajax event="keyup" listener="#{expedienteView.guarda_expe}"></p:ajax>
@@ -121,14 +119,13 @@
               						<p:inputText  id="descripcion"  style="width:100%;" label="descripcion" placeholder="Ingrese descripcion" value="#{expedienteView.descripcion}">
               						<p:ajax event="keyup" listener="#{expedienteView.guarda_expe}"></p:ajax>
               						</p:inputText>
-              					</h:panelGrid>	
-              					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="2"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid" >
+              					
               						<h:outputLabel value="Hospital:" for="hospital" />
               						<p:commandButton  icon="ui-icon-home" type="button"  onclick="PF('agrega_hos').show();" />
-              					</h:panelGrid>	
-              					
-              					
-              					<!-- dialog para el booton de hospital -->
+              						<h:outputLabel value="Equipo:" for="equipo" />
+              						<p:commandButton  icon="ui-icon-wrench"  type="button"  onclick="PF('agrega_equipo').show();"  />
+              					</h:panelGrid>
+              						<!-- dialog para el booton de hospital -->
               					 	<p:dialog header="Hospital" widgetVar="agrega_hos" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
 										<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5" class = "alineacion tamana_ancho_1">
 											<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" class = "alineacion">
@@ -150,30 +147,36 @@
 											</p:dataTable>
 									  	</h:panelGrid>
 									</p:dialog>
-								<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="2"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid" >	
-              						<h:outputLabel value="Equipo:" for="equipo" />
-              						<p:commandButton  icon="ui-icon-wrench"  type="button"  onclick="PF('agrega_equipo').show();"  />
-              					</h:panelGrid>
-              					<!-- dialog para el booton de hospital -->
-              					 	<p:dialog header="Equipo" widgetVar="agrega_equipo" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+									<p:dialog header="Equipo" widgetVar="agrega_equipo" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
               					 		<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5" class = "alineacion tamana_ancho_1">
 										<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" class = "alineacion">
 											
+					 						<p:commandButton id="caragar_equ" value="Cargar" actionListener="#{expedienteView.cargar_equipo}" update="equipos"
+					 						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton> 
+	            					
+				     						<p:inputText id="equipo_b" value="#{expedienteView.equipo_b}" style="width:70%;"  placeholder="Buscar">
+				     				 		<p:ajax event="keyup" update="equipos" listener="#{expedienteView.buscar_equipos()}" />
+				        					</p:inputText>
 								        </h:panelGrid>
-								        </h:panelGrid>
-									</p:dialog>
-							</p:panel>
-						</p:fragment>
-				
-					</h:form>	
-					</c:if>
+								        	<p:dataTable id = "equipos"  paginator="true" rows="5" 
+											paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+											rowsPerPageTemplate="5,10,15"
+							  				paginatorPosition="bottom" value="#{expedienteView.equipos}"
+							 				var="estim"  reflow="true" selectionMode="single"  
+											selection="#{expedienteView.seleccion_equipo}"   rowKey="#{estim.noserie}" >
 					
-            		<c:if  test="#{expedienteView.tipos_vistas == 2}">
-					<h:form id="registroex">
-						<p:fragment>
-							<p:panel>
-								 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid">
-						   			<h:outputLabel  for ="noexp" value="Numero de Expediente: " />
+											<p:column headerText="Equipo">
+							        		<h:outputText value="#{estim.noserie}" />
+							    			</p:column>
+							   
+											</p:dataTable>
+								        </h:panelGrid>
+									</p:dialog>		
+				  	 		</h:panelGrid>
+				    	</c:if>
+				    	<c:if  test="#{expedienteView.tipos_vistas == 2}">
+					 		<h:panelGrid columns="2" layout="grid">
+				            	<h:outputLabel  for ="noexp" value="Numero de Expediente: " />
               						<p:inputText  id="noexp"  style="width:100%;" label="noexp" placeholder="Ingrese No.Expediente" value="#{expedienteView.noExpediente}">
               						</p:inputText>
               						
@@ -203,7 +206,7 @@
 		            					</p:selectOneMenu>
 			 					
 			 							<p:outputLabel for="medico" value="Medico: " />
-					    				<p:selectOneMenu id="medico" value="#{expedienteView.idMedico}">
+					    				<p:selectOneMenu id="medico" value="#{expedienteView.idMedico}" >
 		            					<f:selectItem itemLabel="Seleccione un Medico" itemValue="" />
 		            					<f:selectItems value="#{expedienteView.tipoUsuarios}" />
 		            					</p:selectOneMenu>
@@ -211,22 +214,19 @@
               						<h:outputLabel  for ="nom_exp" value="Nombre Expediente: " />
               						<p:inputText  id="nom_exp"  style="width:100%;" label="nom_exp" placeholder="Ingrese Expediente" value="#{expedienteView.nombre}">
               						</p:inputText>
-						   			
-              					</h:panelGrid>
-									
-							</p:panel>
-						</p:fragment>
-						
+						   			  
+				        	</h:panelGrid>		    	
+				    	</c:if>
+				    	
+						</p:panel>
+					</p:fragment>
+					</h:panelGrid>
 					</h:form>
-					
-					</c:if>
-					
-				</h:panelGrid>
-				
-			</h:panelGrid>
-			
+					<p:commandButton value="Guardar/Actualizar" actionListener="#{expedienteView.registroExpediente}" styleClass="ui-priority-primary" ></p:commandButton>
+				</p:panel>
 		</h:panelGrid>
-	</h:form>
-	
+		</h:panelGrid>	
+	</h:panelGrid>		
+</h:form>
 </ui:define>
 </ui:composition>

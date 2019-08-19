@@ -17,6 +17,7 @@ import com.lab.sdt.service.EstimuladorService;
 import com.lab.sdt.service.ExpedienteService;
 import com.lab.sdt.service.HospitalService;
 import com.lab.sdt.util.MensajeG;
+import com.lab.sdt.model.Equipo;
 import com.lab.sdt.model.Expediente;
 import com.lab.sdt.model.Hospital;
 
@@ -33,6 +34,8 @@ public class ExpedienteView implements Serializable{
 	public HospitalService hospitalService;
 	@ManagedProperty("#{consultaUsuarios}")
 	private ConsultaUsuarios consultaUsuarios;
+	@ManagedProperty("#{estimuladorService}")
+	public EstimuladorService estimuladorService;
 	
 	
 	public String noExpediente;
@@ -46,8 +49,11 @@ public class ExpedienteView implements Serializable{
 	public String nombre;
 	public String buscarexp;
 	public String hospital;
+	public String equipo;
+	
 	private int tipos_vistas;
-	public String hospital_b;	
+	public String hospital_b;
+	public String equipo_b;
 	public List<SelectItem> tipoUsuarios;
 	public List<SelectItem> hospitales1;
 	private Expediente seleccion_exp;
@@ -56,17 +62,19 @@ public class ExpedienteView implements Serializable{
 	private List<Expediente> expedientes;
 	private List<Expediente> pacientes;
 	private List<Hospital> hospitales;
+	private List<Equipo> equipos;
 	private Hospital seleccion_hosp;
+	private Equipo seleccion_equipo;
 	
 	@PostConstruct
 	public void init() {
-		
 		
 		hospitales = new ArrayList<Hospital>();
 		hospitales = hospitalService.lista_hospital();
 		hospitales1 = new ArrayList<SelectItem>();
 		tipoUsuarios = new ArrayList<SelectItem>();
 		seleccion_hosp = new Hospital();
+		seleccion_equipo = new Equipo();
 		try {
 			hospitales1 = hospitalService.getLista_hospital();
 			tipoUsuarios = consultaUsuarios.lista_tipousuarios();
@@ -88,8 +96,7 @@ public class ExpedienteView implements Serializable{
 		expediente1.setEstatus("d");
 		expediente1.setIdmedico(1);
 		expediente1.setNombre("ser");
-		
-		
+	
 		
 	}
 	
@@ -112,7 +119,7 @@ public class ExpedienteView implements Serializable{
 		expedientes = expedienteService.lista_exp();
 		
 		seleccion_exp = new Expediente();
-		seleccion_exp.setNoexpediente("");
+		seleccion_exp.setNoexpediente("");;
 	}
 	public void cargar_hos() {
 		hospitales = new ArrayList<Hospital>();
@@ -120,6 +127,13 @@ public class ExpedienteView implements Serializable{
 		
 		seleccion_hosp = new Hospital();
 		seleccion_hosp.setHospital("");
+	}
+	public void cargar_equipo() {
+		equipos = new ArrayList<Equipo>();
+		equipos = estimuladorService.lista_equipos();
+		
+		seleccion_equipo = new Equipo();
+		seleccion_equipo.setNoserie("");
 	}
 	//CAMBIAR VISTAS
     public void vista_expediente() {
@@ -171,6 +185,31 @@ public class ExpedienteView implements Serializable{
 						 
 						 hospitales.add(ho);
 					 
+				 }
+			 }catch(Exception e) {
+				 MensajeG.mostrar("Sin resultados", FacesMessage.SEVERITY_INFO);
+			 }
+		 }else {
+			 MensajeG.mostrar("Sin resultados", FacesMessage.SEVERITY_INFO);
+		 }
+		
+		
+	}
+	public void buscar_equipos() {
+		 if(equipo_b.trim().length() > 0) {
+			 try {
+				 Equipo eq = new Equipo();
+				
+				 equipos.clear();
+				 
+				 for(int jjf=1;jjf<=6;jjf++) // tipos de generaciones
+				 {
+					 eq =  estimuladorService.encuentra_serie(equipo_b+";"+jjf);
+					 if(eq!=null) {
+						 
+						 equipos.add(eq);
+					 
+				 }
 				 }
 			 }catch(Exception e) {
 				 MensajeG.mostrar("Sin resultados", FacesMessage.SEVERITY_INFO);
@@ -243,49 +282,33 @@ public class ExpedienteView implements Serializable{
 		this.nombre = nombre;
 	}
 
-
-
 	public ExpedienteService getExpedienteService() {
 		return expedienteService;
 	}
-
-
 
 	public void setExpedienteService(ExpedienteService expedienteService) {
 		this.expedienteService = expedienteService;
 	}
 
-
-
 	public Expediente getSeleccion_exp() {
 		return seleccion_exp;
 	}
-
-
 
 	public void setSeleccion_exp(Expediente seleccion_exp) {
 		this.seleccion_exp = seleccion_exp;
 	}
 
-
-
 	public List<Expediente> getExpedientes() {
 		return expedientes;
 	}
-
-
 
 	public void setExpedientes(List<Expediente> expedientes) {
 		this.expedientes = expedientes;
 	}
 
-
-
 	public String getBuscarexp() {
 		return buscarexp;
 	}
-
-
 
 	public void setBuscarexp(String buscarexp) {
 		this.buscarexp = buscarexp;
@@ -330,8 +353,6 @@ public class ExpedienteView implements Serializable{
 	public void setHospitalService(HospitalService hospitalService) {
 		this.hospitalService = hospitalService;
 	}
-
-	
 
 	public List<SelectItem> getHospitales1() {
 		return hospitales1;
@@ -388,9 +409,46 @@ public class ExpedienteView implements Serializable{
 	public void setHospital_b(String hospital_b) {
 		this.hospital_b = hospital_b;
 	}
-	
-	
-	
-	
+
+	public EstimuladorService getEstimuladorService() {
+		return estimuladorService;
+	}
+
+	public void setEstimuladorService(EstimuladorService estimuladorService) {
+		this.estimuladorService = estimuladorService;
+	}
+
+	public List<Equipo> getEquipos() {
+		return equipos;
+	}
+
+	public void setEquipos(List<Equipo> equipos) {
+		this.equipos = equipos;
+	}
+
+	public Equipo getSeleccion_equipo() {
+		return seleccion_equipo;
+	}
+
+	public void setSeleccion_equipo(Equipo seleccion_equipo) {
+		this.seleccion_equipo = seleccion_equipo;
+	}
+
+	public String getEquipo_b() {
+		return equipo_b;
+	}
+
+	public void setEquipo_b(String equipo_b) {
+		this.equipo_b = equipo_b;
+	}
+
+	public String getEquipo() {
+		return equipo;
+	}
+
+	public void setEquipo(String equipo) {
+		this.equipo = equipo;
+	}
+		
 
 }
