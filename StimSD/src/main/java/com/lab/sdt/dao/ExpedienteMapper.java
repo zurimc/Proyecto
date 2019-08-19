@@ -93,4 +93,5 @@ public interface ExpedienteMapper {
      * @mbg.generated Thu Aug 15 23:12:05 CDT 2019
      */
     int updateByPrimaryKey(Expediente record);
+    List<Expediente> selectByExpediente(String noExpediente);
 }

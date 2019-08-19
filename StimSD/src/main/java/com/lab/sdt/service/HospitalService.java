@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lab.sdt.dao.HospitalMapper;
 import com.lab.sdt.model.HospitalExample;
-import com.lab.sdt.model.Usuario;
+
 import com.lab.sdt.model.Hospital;
 
 

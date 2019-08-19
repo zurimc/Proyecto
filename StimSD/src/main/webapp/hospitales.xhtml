@@ -79,14 +79,14 @@
 					    	</p:inputText>
 			 			</h:panelGrid>
 			 					
-			 			<h:panelGrid columns="2" cellpadding="5" class = "alineacion">
+			 			<!-- <h:panelGrid columns="2" cellpadding="5" class = "alineacion">
 			 				<p:outputLabel for="hospi" value="Hospital: " />
 					    	<p:selectOneMenu id="hospi" value="#{hospitalView.hospital}">
 		            			<f:selectItem itemLabel="Seleccione un Hospital" itemValue="" />
 		            			<f:selectItems value="#{hospitalView.hospitales1}" />
 		            			<p:ajax event="change" listener="#{hospitalView.cargar_lis_hospi}" update="hospital2"  />
 		        			</p:selectOneMenu>
-			 			</h:panelGrid>
+			 			</h:panelGrid> -->
 			 						
 			 			<p:dataTable  id ="hospital2"  paginator="true" rows="5" 
 						paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
