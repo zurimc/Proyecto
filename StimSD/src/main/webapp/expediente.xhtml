@@ -177,42 +177,46 @@
 				    	<c:if  test="#{expedienteView.tipos_vistas == 2}">
 					 		<h:panelGrid columns="2" layout="grid">
 				            	<h:outputLabel  for ="noexp" value="Numero de Expediente: " />
-              						<p:inputText  id="noexp"  style="width:100%;" label="noexp" placeholder="Ingrese No.Expediente" value="#{expedienteView.noExpediente}">
+              						<p:inputText  id="noexp"  style="width:100%;" label="noexp" placeholder="No.Expediente" value="#{expedienteView.noExpediente}">
+              						<p:ajax event="keyup" listener="#{expedienteView.guarda_expe}"></p:ajax>
               						</p:inputText>
               						
-						   			
-			 							<p:outputLabel for="paciente" value="Pacientes: " />
+			 						<p:outputLabel for="paciente" value="Pacientes: " />
 					    				<p:selectOneMenu id="paciente" value="#{expedienteView.idUsuario}">
 		            					<f:selectItem itemLabel="Seleccione un Paciente" itemValue="" />
 		            					<f:selectItems  value="#{expedienteView.tipoUsuarios}"/>
+		            					<p:ajax event="change" listener="#{expedienteView.guarda_expe}" update="paciente"></p:ajax>
 		            					</p:selectOneMenu>
 			 						
 			 							<p:outputLabel for="hospital" value="Hospital: " />
 					    				<p:selectOneMenu id="hospital" value="#{expedienteView.idHospital}">
 		            					<f:selectItem itemLabel="Seleccione un Hospital" itemValue="---" />
 		            					<f:selectItems value="#{expedienteView.hospitales1}" />
+		            					<p:ajax event="change" listener="#{expedienteView.guarda_expe}" update="hospital"></p:ajax>
 		            					</p:selectOneMenu>
 			 						
-              						
 						   			<h:outputLabel for="descripcion" value="Descripcion: " />
               						<p:inputText  id="descripcion"  style="width:100%;" label="descripcion" placeholder="Ingrese descripcion" value="#{expedienteView.descripcion}">
+              						<p:ajax event="keyup" listener="#{expedienteView.guarda_expe}"></p:ajax>
               						</p:inputText>
               						
-              						
-			 							<p:outputLabel for="equipo" value="Equipo: " />
+			 						<p:outputLabel for="equipo" value="Equipo: " />
 					    				<p:selectOneMenu id="equipo" value="#{expedienteView.idEquipo}">
 		            					<f:selectItem itemLabel="Seleccione un Equipo" itemValue="" />
-		            					<f:selectItems  value="#{expedienteView.tipoUsuarios}"/>
+		            					<f:selectItems  value="#{expedienteView.equipos1}"/>
+		            					<p:ajax event="change" listener="#{expedienteView.guarda_expe}" update="equipo"></p:ajax>
 		            					</p:selectOneMenu>
 			 					
-			 							<p:outputLabel for="medico" value="Medico: " />
+			 						<p:outputLabel for="medico" value="Medico: " />
 					    				<p:selectOneMenu id="medico" value="#{expedienteView.idMedico}" >
 		            					<f:selectItem itemLabel="Seleccione un Medico" itemValue="" />
 		            					<f:selectItems value="#{expedienteView.tipoUsuarios}" />
+		            					<p:ajax event="change" listener="#{expedienteView.guarda_expe}" update="medico"></p:ajax>
 		            					</p:selectOneMenu>
 						   			
               						<h:outputLabel  for ="nom_exp" value="Nombre Expediente: " />
               						<p:inputText  id="nom_exp"  style="width:100%;" label="nom_exp" placeholder="Ingrese Expediente" value="#{expedienteView.nombre}">
+              						<p:ajax event="keyup" listener="#{expedienteView.guarda_expe}"></p:ajax>
               						</p:inputText>
 						   			  
 				        	</h:panelGrid>		    	
@@ -222,7 +226,8 @@
 					</p:fragment>
 					</h:panelGrid>
 					</h:form>
-					<p:commandButton value="Guardar/Actualizar" actionListener="#{expedienteView.registroExpediente}" styleClass="ui-priority-primary" ></p:commandButton>
+					<p:commandButton value="Guardar/Actualizar" actionListener="#{expedienteView.actualizar_expe}" styleClass="ui-priority-primary" 
+					onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton>
 				</p:panel>
 		</h:panelGrid>
 		</h:panelGrid>	

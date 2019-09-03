@@ -12,6 +12,7 @@ import com.lab.sdt.dao.EquipoMapper;
 import com.lab.sdt.dao.MantenimientoMapper;
 import com.lab.sdt.dao.MantenimientoMaterialMapper;
 import com.lab.sdt.dao.MaterialMapper;
+import com.lab.sdt.dao.UsuarioMapper;
 import com.lab.sdt.model.Equipo;
 import com.lab.sdt.model.EquipoExample;
 import com.lab.sdt.model.EquipoManten;
@@ -20,6 +21,7 @@ import com.lab.sdt.model.MantenimientoExample;
 import com.lab.sdt.model.MantenimientoMaterial;
 import com.lab.sdt.model.Material;
 import com.lab.sdt.model.MaterialExample;
+import com.lab.sdt.model.Usuario;
 
 
 
@@ -40,13 +42,29 @@ public class EstimuladorService {
 	private MaterialMapper materialMapper;
 	
 	@Autowired
-	private MantenimientoMaterialMapper eantenimientoMaterialMapper;
+	private MantenimientoMaterialMapper mantenimientoMaterialMapper;
+	
+	@Autowired
+	private UsuarioMapper usuarioMapper;
 	
 	public void insertamantenimetomaterial(MantenimientoMaterial manmate) {
-		eantenimientoMaterialMapper.insert(manmate);
+		mantenimientoMaterialMapper.insert(manmate);
 	}
 	public void insertaMaterial(Material mat) {
 		materialMapper.insert(mat);
+	}
+	public List<Mantenimiento> ver_historico(int idequipo){
+		List<Mantenimiento> res = new ArrayList<Mantenimiento>();
+		List<EquipoManten> lista_man = lista_mante_equi(idequipo);
+		for(int i = 0;i<=lista_man.size()-1;i++) {
+			res.add(mantenimientoMapper.selectByPrimaryKey(lista_man.get(i).getIdmantenimiento()));
+		}
+		//res.add(mantenimientoMapper.selectByPrimaryKey(1));
+		return res;
+	}
+	public List<EquipoManten> lista_mante_equi(int idequipo){
+		
+		return equipoMantenMapper.selectByEquipo(idequipo);
 	}
 	public int insertarequipoManten(EquipoManten manequ) {
 		 List<Mantenimiento> list_man = new ArrayList<Mantenimiento>();
@@ -66,6 +84,19 @@ public class EstimuladorService {
 	public List<Material> encuntra_material (String material) {
 		List<Material> mater= new ArrayList<Material>();
 		mater= materialMapper.selectByMaterial(material);
+		return mater;
+	}
+	public List<Material> encuntra_material_man (int id_mante) {
+		List<Material> mater= new ArrayList<Material>();
+		List<MantenimientoMaterial> MMM = new ArrayList<MantenimientoMaterial>();
+		MMM = mantenimientoMaterialMapper.selectByIdmantenimiento(id_mante);
+		for(int i = 0;i<=MMM.size()-1;i++) {
+			Material m_h = new Material();
+			m_h = materialMapper.selectByPrimaryKey(MMM.get(i).getIdmaterial());
+			m_h.setCantidad(MMM.get(i).getCantTipo());
+			mater.add(m_h);
+		}
+
 		return mater;
 	}
 	public Material encutra_noserie(String n_serie) {
@@ -109,6 +140,13 @@ public class EstimuladorService {
 	}
 	public void actualizarMaterial(Material m) {
 		materialMapper.updateByPrimaryKey(m);
+	}
+	
+	public Usuario encuentraIdUsuatio(int iduser) {
+		return usuarioMapper.selectByPrimaryKey(iduser);
+	}
+	public Equipo encuentra_por_id(int idkey) {
+		return equipoMapper.selectByPrimaryKey(idkey);
 	}
 	
 }

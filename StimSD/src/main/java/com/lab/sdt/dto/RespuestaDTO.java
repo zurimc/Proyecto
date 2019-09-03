@@ -6,8 +6,14 @@ public class RespuestaDTO {
 	private int tipo_usuario;
 	private String mensaje;
 	private String ondas;
-	
+	private String parametros;
 
+	public String getParametros() {
+		return parametros;
+	}
+	public void setParametros(String parametros) {
+		this.parametros = parametros;
+	}
 	public String getOndas() {
 		return ondas;
 	}

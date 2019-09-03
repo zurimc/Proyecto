@@ -24,6 +24,7 @@ public class GestiondeSeccionView implements Serializable{
 	
 
 	
+
 	@PostConstruct
 	public void init(){
 		obtenerUsuarioEnSesion();
@@ -69,5 +70,12 @@ public class GestiondeSeccionView implements Serializable{
 				MensajeG.mostrar("Ocurrió un error al redirigir al Login", FacesMessage.SEVERITY_FATAL);
 			}
 		}
+	}
+	
+	public Usuario getUserDTO() {
+		return userDTO;
+	}
+	public void setUserDTO(Usuario userDTO) {
+		this.userDTO = userDTO;
 	}
 }

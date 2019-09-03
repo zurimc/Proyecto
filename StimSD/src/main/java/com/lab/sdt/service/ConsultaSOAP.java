@@ -12,14 +12,16 @@ import com.lab.sdt.model.Usuario;
 
 import com.lab.sdt.dao.UsuarioMapper;
 import com.lab.sdt.dto.ConsultaDTO;
+import com.lab.sdt.dto.EquipoDTO;
 import com.lab.sdt.dao.OndaMapper;
 import com.lab.sdt.dao.OndaValorMapper;
 import com.lab.sdt.dao.TipondaMapper;
-
+import com.lab.sdt.dao.EquipoMapper;
 import com.lab.sdt.dao.NumOndaMapper;
 
 import com.lab.sdt.dao.ValorMapper;
 import com.lab.sdt.model.Onda;
+import com.lab.sdt.model.Equipo;
 import com.lab.sdt.model.NumOnda;
 import com.lab.sdt.model.Tiponda;
 import com.lab.sdt.model.OndaValor;
@@ -34,6 +36,7 @@ import com.lab.sdt.model.NumOndaExample;
 @Transactional
 public class ConsultaSOAP {
 	
+
 	@Autowired
 	private UsuarioMapper usuarioMapper;
 
@@ -75,6 +78,7 @@ public class ConsultaSOAP {
 						if(consu.getTipo_consulta() == 0) // inicio de sección
 						{
 							res.setAutorizacion(true);
+							res.setOndas(""+contenedor_usuario.get(0).getIdusuario());
 							res.setMensaje("Autorizado");
 						}else if(consu.getTipo_consulta() == 1) //consulta datos de los grupos de onda
 						{
@@ -84,7 +88,7 @@ public class ConsultaSOAP {
 							res.setOndas(todos_los_grupos_de_ondas());
 						
 							
-						}else if(consu.getTipo_consulta() == 2) // consulta datos de una onda en expecifico onda
+						}else if(consu.getTipo_consulta() == 2) // consulta datos de una onda en específico onda
 						{
 							res.setAutorizacion(true);
 							res.setMensaje("Autorizado");
@@ -117,6 +121,9 @@ public class ConsultaSOAP {
 		}
 		return res;
 	}
+	
+
+	
 	private String valores_de_la_onda(String idNum_Ondaa) {
 		String res = "";
 		String[] valores = new String[300];
@@ -133,6 +140,8 @@ public class ConsultaSOAP {
 		}catch(Exception e) {}
 		return res;
 	}
+	
+	
 	private String todos_los_grupos_de_ondas() {
 		String res = "";
 		TipondaExample onEx = new TipondaExample();
@@ -161,6 +170,9 @@ public class ConsultaSOAP {
 	
 		return res;
 	}
+	
+
+	
 	private boolean validarConsulta(ConsultaDTO consulta,RespuestaDTO respuesta) {
 		if(consulta.getFecha()== null) {
 			respuesta.setMensaje("Sin fecha");
@@ -185,5 +197,7 @@ public class ConsultaSOAP {
 		return true;
 		
 	}
+	
+
 
 }

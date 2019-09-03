@@ -131,7 +131,7 @@ public class ConsultaUsuarios {
 		usera = usuarioMapper.selectByCuenta(cuenta).get(0);
 		return usera;
 	}
-	
+
 	public List<SelectItem> lista_tipousuarios() {
 		List<SelectItem> lista_tipousuario = new ArrayList<SelectItem>();
 		TipousuarioExample exTUs = new TipousuarioExample();
@@ -145,5 +145,10 @@ public class ConsultaUsuarios {
 		}
 		return lista_tipousuario;
 }
-	
+	public List<Usuario> lista_usuaio_nombre(String  nombre){
+		 return usuarioMapper.selectByNombre(nombre);
+	}
+	public Usuario encontra_porid(int iduserkey) {
+		return usuarioMapper.selectByPrimaryKey(iduserkey);
+	}
 }

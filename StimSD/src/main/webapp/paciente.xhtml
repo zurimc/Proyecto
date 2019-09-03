@@ -1,0 +1,544 @@
+<ui:composition template="menu.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<ui:define name="linsk_b">
+	<h:form styleClass="navbar-form navbar-right" >
+		<b:dropButton value="Expedientes"  inverse="true" look="info" >
+			<b:navCommandLink value = "Crear expediente"    onclick="PF('pexpediente').show();"></b:navCommandLink>
+			<b:navCommandLink value = "Modificar expediente"    onclick="PF('pexpedientemodi').show();"></b:navCommandLink>	
+		</b:dropButton>
+	</h:form>
+</ui:define>
+<ui:define name="muestra">
+	<style type="text/css">
+    .alineacion{
+        margin:auto;
+		align-items:center;
+		padding: auto;
+		
+    }
+    .alineacion2{
+         margin:auto;
+		align-items:center;
+		padding: auto;
+    }
+      .tamana_ancho_0{
+    max-width:150px;    
+    }
+    .tamana_ancho_1{
+    max-width:300px;
+    
+    }
+    .tamana_ancho_2{
+    width:500px;
+    }
+    .tamana_ancho_3{
+    width:700px;
+    margin-top:10px;
+    }
+        .tamana_ancho_4{
+    width:800px;
+    margin-top:10px;
+    }
+      .tamana_ancho_5{
+    width:400px;
+    }
+     .tamana_ancho_6{
+    width:600px;
+    }
+       .tamana_ancho_7{
+    width:330px;
+    }
+  
+    .tamana_ancho_8{
+    min-width:100px;
+    }
+    .tamana_ancho_9{
+   	width:350px;
+    }
+     .tamana_ancho_10{
+   	width:450px;
+    }
+      .tamana_ancho_11{
+   	width:900px;
+    }
+    .div_contenedor{
+    	display:block;
+	display:flex;
+	margin-left:auto;
+	margin-right:auto;
+	align-items:center;
+	padding: 10px;
+    }
+    .div_izquierdo{
+	margin-left:auto;
+	margin-right:5px;
+	display:block;
+	padding: 10px;
+	float:left;
+    }
+    .div_derecho{
+    margin-left:5px;
+	margin-right:auto;
+	padding: 10px;
+	float: right;      
+    }
+    .texto_centro
+    {
+     text-align: center;
+    }
+    
+</style>
+
+	<b:well>
+
+		<h:form id = "form_g_p">
+			<c:if  test="#{pacienteView.tipos_vistas == 0}">
+			</c:if>
+<!-- ingresar o modificar expediente -->
+
+<c:if  test="#{pacienteView.tipos_vistas == 1 || pacienteView.tipos_vistas == 2}">
+				<b:panelGrid  columns="3"   >
+					 <b:panel title="Configuración" look="info" id  ="pagrega" class = "alineacion tamana_ancho_0">
+					 	<b:container fluid="true"  >
+					 		<b:row  style="margin-bottom:1px" >
+								<b:switch id  ="pswiex" value="#{pacienteView.exestatus}"  offColor="success" onColor="info" >
+								   <p:ajax listener="#{pacienteView.pdatosv}" />
+								 </b:switch>	
+					 		</b:row>
+					 		<b:row  style="margin-bottom:10px;" >
+					 			<b:commandButton look="primary" id="penfermedadb" type="button" value="Enfermedad"
+					 			actionListener="#{pacienteView.cargar_enfermedad}"
+					 			onclick="PF('ptableenfermedad').show();"
+					 				update=":form_g_p:ptableenfermedades"
+					 			/>
+					 		</b:row>
+					 		<b:row  style="margin-bottom:10px" >
+					 			<b:commandButton look="primary" value="Paciente"  type="button" 
+					 			actionListener="#{pacienteView.muestra_pacientes}"
+					 			onclick="PF('ptablapaciente').show();"
+					 			update=":form_g_p:pusuariosp" >
+					 			</b:commandButton>
+					 		</b:row>
+					 		<b:row  style="margin-bottom:10px" >
+					 			<b:commandButton look="primary" id="phospitalb" type="button" value="Hospital"
+					 			actionListener="#{pacienteView.cargar_hospital}"
+					 			onclick="PF('ptablahospital').show();"
+					 				update=":form_g_p:ptablehosptial"
+					 			/>
+					 		</b:row>
+					 		<b:row  style="margin-bottom:10px" >
+					 			<b:commandButton look="primary" id="pmedicob" type="button" value="Medico"
+					 			actionListener="#{pacienteView.muestra_medicos}"
+					 			onclick="PF('ptablamedico').show();"
+					 				update=":form_g_p:pusuariosm"
+					 			/>
+					 		</b:row>
+
+					 		<b:row  style="margin-bottom:10px" >
+					 			<b:commandButton look="primary" id="pequipob" type="button" value="Equipo"
+					 			actionListener="#{pacienteView.cargar_equipos}"
+					 			onclick="PF('ptablaequipo').show();"
+					 				update=":form_g_p:ptableequipo"
+					 			/>
+					 		</b:row>
+					 	</b:container>
+					 </b:panel>
+					 <b:panel title="Detalles"  look="info" id  ="pdetalles" class = "alineacion tamana_ancho_11">
+					 	<b:panelGrid  columns="2"   >
+					 		<b:container fluid="true"  >
+					 			<b:row  style="margin-bottom:10px" >
+		
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Folio: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<p:inputText id="pfoliodex" style="text-align: center; " value="#{pacienteView.pfoliov1}"  placeholder="Folio">
+				     				 		<p:ajax event="keyup" listener="#{pacienteView.pdatosv}" update=""/>
+				        				</p:inputText>
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Nombre: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 				<p:inputText id="pnombredex" style="text-align: center;" value="#{pacienteView.pnombrev1}"  placeholder="Nombre">
+				     				 	<p:ajax event="keyup" listener="#{pacienteView.pdatosv}" />
+				        			</p:inputText>
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Paciente: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<h:outputLabel   value="#{pacienteView.pnombrepacientev}" />
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Enfermedad: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<h:outputLabel   value="#{pacienteView.pnombreenfermedadav}" />
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Medico: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<h:outputLabel   value="#{pacienteView.pnombremedicov}" />
+					 				</b:column>
+					 			</b:row>
+					 			</b:container>
+					 			<b:container fluid="true"  >
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Hospital: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<h:outputLabel   value="#{pacienteView.pnombrehospitalv}" />
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Equipo: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<h:outputLabel   value="#{pacienteView.pnombrequipov}" />
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Parametro: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<h:outputLabel   value="#{pacienteView.parametrosstring}" />
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Descripción: "/>
+					 				</b:column>
+					 				<b:column span="4" offset="2">
+					 					<p:inputTextarea id = "exdescripcion"  rows="2" cols="20" counter="cont_exdescripcion" maxlength="230" 
+											counterTemplate="{0} " autoResize="false" value="#{pacienteView.pdescripcionv}"    class = "texto_centro"/>
+											
+					 				</b:column>
+					 			</b:row>
+					 			<b:row >
+						 			<b:column span="5" offset="5">
+						 				<h:outputText id="cont_exdescripcion"/>
+						 			</b:column>
+					 			</b:row>
+					 				<b:row  style="margin-bottom:10px" >
+					 			<b:commandButton look="success" id="pcrearb" value="#{pacienteView.pbotoncrearv}"
+					 			actionListener="#{pacienteView.modifica_crea_ex}"
+					 			onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></b:commandButton> 
+					 		</b:row>
+					 		</b:container>
+					 		
+					 	</b:panelGrid>
+					 </b:panel>
+				</b:panelGrid>
+<!-- Selecciona paciente -->
+					<p:dialog header="Seleccione Paciente" widgetVar="ptablapaciente" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+			 			<b:container fluid="true"  >
+			 				<b:row  style="margin-bottom:10px" >
+				 				<b:column span="2">
+									<b:commandButton look="primary" value="cargar"  actionListener="#{pacienteView.muestra_pacientes}" 
+									update="pusuariosp" ></b:commandButton>
+								</b:column>
+								<b:column span="4" offset= "2">
+									<p:inputText id="pbuscador" value="#{pacienteView.pbnombrepacientev}"   placeholder="Buscar paciente" style=" text-aling: center;">
+					     				<p:ajax event="keyup" update="pusuariosp" listener="#{pacienteView.buscar_paciente}" />
+					    			</p:inputText>			
+								</b:column>
+			 				</b:row>
+			 				<b:row  style="margin-bottom:10px" >
+			 					<p:dataTable class = "tamana_ancho_5" id = "pusuariosp"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								paginatorPosition="bottom" value="#{pacienteView.pacientes}"
+								var="paci"  reflow="true" selectionMode="single"  
+								selection="#{pacienteView.seleccion_paciente}"  rowKey="#{paci.nombre}" 
+								>
+								<p:ajax event="rowSelect" listener="#{pacienteView.asignacion_paciente}"
+								update=":form_g_p:pdetalles" />
+									<p:column headerText="Nombre">
+										<h:outputText value="#{paci.nombre}" />
+									</p:column>
+									<p:column headerText="Apellidos">
+									<h:outputText value="#{paci.apellido1} #{paci.apellido2}" />
+									</p:column>
+								</p:dataTable>
+			 				</b:row>
+						</b:container> 			
+					</p:dialog>
+<!-- Selecciona medico -->
+					<p:dialog header="Seleccione Mequico" widgetVar="ptablamedico" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+			 			<b:container fluid="true"  >
+			 				<b:row  style="margin-bottom:10px" >
+				 				<b:column span="2">
+									<b:commandButton look="primary" value="cargar"  actionListener="#{pacienteView.muestra_medicos}" 
+									update="pusuariosp" ></b:commandButton>
+								</b:column>
+								<b:column span="4" offset= "2">
+									<p:inputText id="mbuscador" value="#{pacienteView.pbnombremedicov}"   placeholder="Buscar medico" style=" text-aling: center;">
+					     				<p:ajax event="keyup" update="pusuariosm" listener="#{pacienteView.buscar_medico}" />
+					    			</p:inputText>			
+								</b:column>
+			 				</b:row>
+			 				<b:row  style="margin-bottom:10px" >
+			 					<p:dataTable class = "tamana_ancho_5" id = "pusuariosm"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								paginatorPosition="bottom" value="#{pacienteView.medicos}"
+								var="medi"  reflow="true" selectionMode="single"  
+								selection="#{pacienteView.seleccion_medico}"  rowKey="#{medi.cuenta}" 
+								>
+								<p:ajax event="rowSelect" listener="#{pacienteView.asignacion_medico}"
+								update=":form_g_p:pdetalles" />
+									<p:column headerText="Medico">
+										<h:outputText value="#{medi.nombre} #{medi.apellido1} #{medi.apellido2}" />
+									</p:column>
+								</p:dataTable>
+			 				</b:row>
+						</b:container> 			
+					</p:dialog>
+<!-- Selecciona hospital -->
+					<p:dialog header="Seleccione Hospital" widgetVar="ptablahospital" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+			 			<b:container fluid="true"  >
+			 				<b:row  style="margin-bottom:10px" >
+				 				<b:column span="2">
+									<b:commandButton look="primary" value="cargar"  actionListener="#{pacienteView.cargar_hospital}" 
+									update="ptablehosptial" ></b:commandButton>
+								</b:column>
+								<b:column span="4" offset= "2">
+									<p:inputText id="hbuscador" value="#{pacienteView.pbnombrehospitalv}"   placeholder="Buscar hospital" style=" text-aling: center;">
+					     				<p:ajax event="keyup" update="ptablehosptial" listener="#{pacienteView.buscar_hospital}" />
+					    			</p:inputText>		
+								</b:column>
+			 				</b:row>
+			 				<b:row  style="margin-bottom:10px" >
+			 					<p:dataTable class = "tamana_ancho_5" id = "ptablehosptial"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								paginatorPosition="bottom" value="#{pacienteView.hospitales}"
+								var="hosp"  reflow="true" selectionMode="single"  
+								selection="#{pacienteView.seleccion_hospital}"  rowKey="#{hosp.idhospital}" 
+								>
+								<p:ajax event="rowSelect" listener="#{pacienteView.asignacion_hospital}"
+								update=":form_g_p:pdetalles" />
+									<p:column headerText="ID">
+										<h:outputText value="#{hosp.idhospital}" />
+									</p:column>
+									<p:column headerText="Hospital">
+										<h:outputText value="#{hosp.hospital}" />
+									</p:column>
+									<p:column headerText="C.P">
+										<h:outputText value="#{hosp.codigopostal}" />
+									</p:column>
+								</p:dataTable>
+			 				</b:row>
+						</b:container> 			
+					</p:dialog>
+<!-- Selecciona equipo -->
+					<p:dialog header="Seleccione Equipo" widgetVar="ptablaequipo" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+					<b:panelGrid  columns="2"   >
+			 			<b:container fluid="true"  >
+			 				<b:row  style="margin-bottom:10px" >
+				 				<b:column span="2">
+									<b:commandButton look="primary" value="cargar"  actionListener="#{pacienteView.cargar_equipos}" 
+									update="ptableequipo" ></b:commandButton>
+								</b:column>
+								<b:column span="4" offset= "2">
+									<p:inputText id="ebuscador" value="#{pacienteView.pbnombreequipov}"   placeholder="Buscar Equipo" style=" text-aling: center;">
+					     				<p:ajax event="keyup" update="ptableequipo" listener="#{pacienteView.buscar_equipo}" />
+					    			</p:inputText>		
+								</b:column>
+			 				</b:row>
+			 				<b:row  style="margin-bottom:10px" >
+			 					<p:dataTable class = "tamana_ancho_5" id = "ptableequipo"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								paginatorPosition="bottom" value="#{pacienteView.estimuladores}"
+								var="esti"  reflow="true" selectionMode="single"  
+								selection="#{pacienteView.selecion_estimulador}"  rowKey="#{esti.noserie}" 
+								>
+								<p:ajax event="rowSelect" listener="#{pacienteView.asignacion_equipo}"
+								update=":form_g_p:pdetalles, :form_g_p:ptableparametrosp" />
+								<p:column headerText="Serie">
+							        	<h:outputText value="#{pacienteView.convertirserie(esti.noserie)}" />
+							    	</p:column>
+							    	<p:column headerText="Generación">
+							    		<h:outputText value="#{pacienteView.convertirgeneracion(esti.noserie)}" />
+							    	</p:column>
+								</p:dataTable>
+			 				</b:row>
+						</b:container> 
+						<b:container fluid="true">
+						<b:row  style="margin-bottom:10px" >
+							<b:column span="2">
+								<b:commandButton look="primary" value="cargar"  actionListener="#{pacienteView.cargar_parametros_e}" 
+								 update="ptableparametrosp" ></b:commandButton>
+							</b:column>
+							<b:column span="4" offset= "2">
+							<p:inputText id="pabuscadorp" value="#{pacienteView.buscar_parametrosstring}"   placeholder="Buscar Pamatros" style=" text-aling: center;">
+						    	<p:ajax event="keyup" update="ptableparametrosp" listener="#{pacienteView.buscar_parametros}" />
+							</p:inputText>		
+						</b:column>
+						</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<p:dataTable class = "tamana_ancho_5" id = "ptableparametrosp"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								paginatorPosition="bottom" value="#{pacienteView.parametros_list}"
+								var="para"  reflow="true" selectionMode="single"  
+								selection="#{pacienteView.seleccion_parametro}"  rowKey="#{para.idparametro}" 
+								>
+									<p:ajax event="rowSelect" listener="#{pacienteView.asignacion_parametros}"
+									update=":form_g_p:pdetalles" />
+								
+									<p:column headerText="ID">
+										<h:outputText value="#{para.idparametro}" />
+									</p:column>
+					    			<p:column headerText="Nombre">
+										<h:outputText value="#{para.nombre}" />
+									</p:column>
+							</p:dataTable>
+						</b:row>
+						</b:container>
+						</b:panelGrid>			
+					</p:dialog>
+<!-- Selecciona enfermedad -->
+				<p:dialog header="Enfermedad" widgetVar="ptableenfermedad" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+					<b:container fluid="true"  >
+						<b:row  style="margin-bottom:10px" >
+							<p:dataTable class = "tamana_ancho_5" id = "ptableenfermedades"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								paginatorPosition="bottom" value="#{pacienteView.enfermedades}"
+								var="enfer"  reflow="true" selectionMode="single"  
+								selection="#{pacienteView.seleccion_enfermedad}"  rowKey="#{enfer.enfermedad}" 
+								>
+								<p:ajax event="rowSelect" listener="#{pacienteView.asignacion_enfermedad}"
+								update=":form_g_p:pdetalles, :form_g_p:penfermedadb" />
+								<p:column headerText="ID">
+							        	<h:outputText value="#{enfer.idenfermedad}" />
+							    	</p:column>
+							    	<p:column headerText="Enfermedad">
+							    		<h:outputText value="#{enfer.enfermedad}" />
+							    	</p:column>
+								</p:dataTable>
+						</b:row>
+					</b:container>
+				</p:dialog>
+	</c:if>
+<!-- Crea Expedietne -->
+			<p:dialog header="Expediente" widgetVar="pexpediente" showEffect="explode" hideEffect="bounce" height="100"  modal="true" >
+				 	 <b:container fluid="true"  >
+				 	 	<b:row  style="margin-bottom:25px" >
+				 	 		<b:column span="2">
+				 	 			<p:inputText id="pnombre" style="text-align: center;" value="#{pacienteView.pnombrev}"  placeholder="Nombre">
+				     				 	<p:ajax event="keyup" listener="#{pacienteView.pdatosv}" />
+				        			</p:inputText>
+				 	 		</b:column>
+				 	 		<b:column span="1" offset="4">
+				 	 				<p:inputText id="pfolio" style="text-align: center; " value="#{pacienteView.pfoliov}"  placeholder="Folio">
+				     				 	<p:ajax event="keyup" listener="#{pacienteView.pdatosv}" />
+				        			</p:inputText>
+				 	 		</b:column>
+				 	 		
+				 	 	</b:row>
+				 	 	<b:row  style="margin-bottom:10px" >
+				 	 		<b:commandButton look="success" id="pcrea" value="OK" actionListener="#{pacienteView.vista_crear_expediente}"/>
+				 	 	</b:row>
+				 	 </b:container>
+			</p:dialog>
+<!-- Modifica Expedietne -->
+ 			<p:dialog header="Expedientes" widgetVar="pexpedientemodi" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+ 				<b:panelGrid  columns="2" >
+ 					<b:container fluid="true">
+ 							
+			 				<b:row  style="margin-bottom:10px" >
+				 				<b:column span="2">
+									<b:commandButton look="primary" value="cargar"  actionListener="#{pacienteView.muestra_pacientes}" 
+									update="pusuariospex" ></b:commandButton>
+								</b:column>
+								<b:column span="2" offset= "1">
+									<p:inputText id="pbuscadorex" value="#{pacienteView.pbnombrepacientev}"   placeholder="Buscar paciente" style=" text-aling: center;">
+					     				<p:ajax event="keyup" update="pusuariospex" listener="#{pacienteView.buscar_paciente}" />
+					    			</p:inputText>			
+								</b:column>
+			 				</b:row>
+			 				<b:row  style="margin-bottom:10px" >
+			 					<p:dataTable  id = "pusuariospex" class = "tamana_ancho_5" paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								paginatorPosition="bottom" value="#{pacienteView.pacientes}"
+								var="paci"  reflow="true" selectionMode="single"  
+								selection="#{pacienteView.seleccion_paciente}"  rowKey="#{paci.cuenta}" 
+								>
+								<p:ajax event="rowSelect" listener="#{pacienteView.selecion_de_paciente}"
+								update=":form_g_p:pexpedietne, :form_g_p:enfermedadesex" />
+									<p:column headerText="Paciente">
+										<h:outputText value="#{paci.nombre} #{paci.apellido1} #{paci.apellido2}" />
+									</p:column>
+								</p:dataTable>
+			 				</b:row>
+ 					</b:container>
+ 					<b:container fluid="true">
+ 						<b:row  style="margin-bottom:11px" >
+ 							<b:column span="2">
+ 								<b:commandButton look="primary" value="cargar"  actionListener="#{pacienteView.selecion_de_paciente}" 
+									update="pexpedietne" ></b:commandButton>
+ 							</b:column>
+ 							<b:column span="2" offset= "1">
+ 									<h:selectOneMenu  id="enfermedadesex" value="#{pacienteView.idpaciente}">
+			                    		<f:selectItem itemLabel="Enfermedad" itemValue="" />
+			            				<f:selectItems value="#{pacienteView.enfermedadesitem}" />
+			            				<p:ajax event="change" listener="#{pacienteView.tipo_enfermedad_paciente}"
+			            				update=":form_g_p:pexpedietne" />
+			          				</h:selectOneMenu>			
+ 							</b:column>
+ 						</b:row>
+ 						<b:row  style="margin-bottom:10px" >
+ 							<p:dataTable  id = "pexpedietne" class = "tamana_ancho_5" paginator="true" rows="5" 
+							paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10,15,20"
+							paginatorPosition="bottom" value="#{pacienteView.expedientes}"
+							var="expe"  reflow="true" selectionMode="single"  
+							selection="#{pacienteView.seleccion_expediente}"  rowKey="#{expe.noexpediente}" 
+							>
+						
+							<p:column headerText="Folio">
+								<h:outputText value="#{expe.noexpediente}" />
+							</p:column>
+							<p:column headerText="Nombre">
+								<h:outputText value="#{expe.nombre}" />
+							</p:column>
+							</p:dataTable>
+ 						</b:row>
+ 						<b:row  style="margin-bottom:10px" >
+				 	 		<b:commandButton look="success" id="pmodifica" value="OK" actionListener="#{pacienteView.vista_modifica_expedeinte}"
+				 	 		/>
+				 	 	</b:row>
+ 					</b:container>
+ 				</b:panelGrid>
+				 	
+			</p:dialog>
+
+</h:form>
+		
+	</b:well>
+</ui:define>
+</ui:composition>

@@ -4,17 +4,39 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	>
+	
+<ui:define name="linsk_b">
+<h:form styleClass="navbar-form navbar-right" >
+ 
+	<b:dropButton value="STIM-SD"  inverse="true" look="info" >
+	
+	<b:navCommandLink value = "Equipos" actionListener="#{controlestimuladores.vista_equipo}" 
+		></b:navCommandLink>
 
+    <b:navCommandLink value = "Mantenimiento" actionListener="#{controlestimuladores.vista_mantenimiento}" 
+		></b:navCommandLink>
+		
+       <b:navCommandLink value = "Material" actionListener="#{controlestimuladores.vista_material}" 
+		></b:navCommandLink>
+		
+	<b:navCommandLink value = "Histórico" actionListener="#{controlestimuladores.vista_historia}" 
+		></b:navCommandLink>
+		
+	</b:dropButton>
+</h:form>
+
+</ui:define>
 <ui:define name="muestra">
-
 	
 	<style type="text/css">
     .alineacion{
         margin:auto;
 		align-items:center;
 		padding: auto;
-		width:400px;
+		
     }
     .alineacion2{
          margin:auto;
@@ -22,7 +44,8 @@
 		padding: auto;
     }
     .tamana_ancho_1{
-    width:300px;
+    max-width:300px;
+    
     }
     .tamana_ancho_2{
     width:500px;
@@ -30,6 +53,26 @@
     .tamana_ancho_3{
     width:700px;
     margin-top:10px;
+    }
+        .tamana_ancho_4{
+    width:800px;
+    margin-top:10px;
+    }
+      .tamana_ancho_5{
+    width:400px;
+    }
+     .tamana_ancho_6{
+    width:600px;
+    }
+       .tamana_ancho_7{
+    width:330px;
+    }
+  
+    .tamana_ancho_8{
+    min-width:100px;
+    }
+    .tamana_ancho_9{
+   	width:350px;
     }
     .div_contenedor{
     	display:block;
@@ -58,106 +101,22 @@
     }
     
 </style>
-<h:form id = "form_g">
+<h:form id = "form_g" class = "tamana_ancho_8">
 <p:growl id="growl" autoUpdate="true" showDetail="false" />	 
 
-<div >
 
- <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5" class = "alineacion2">
- 	<p:commandButton  id="boton_equipo"  value="Equipo" actionListener="#{controlestimuladores.vista_equipo}"
-		onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton > 
-	<p:commandButton id="boton_mantenimiento" value="Mantenimiento" actionListener="#{controlestimuladores.vista_mantenimiento}"
-			onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton> 
-	<p:commandButton id="boton_material" value="Material" actionListener="#{controlestimuladores.vista_material}"
-			onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton> 
- </h:panelGrid>
-
-</div>
-<br/>
-            						
+<br/>  					
+	<!-- Equipos -->	
 	<c:if  test="#{controlestimuladores.tipos_vistas == 1}">
-		 	  <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" class = "alineacion2" responsive="true">
-	 			<h:form id="form1" >	
-	 		
-	 			
-	 				<p:fragment >
-	 					<p:panel id  ="panel_equipo1" class = "alineacion tamana_ancho_1">
-						   <h3>Características</h3>
-						   <br/>
-						   <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-						   <h:outputLabel  value="Serie: " />
-              					<p:inputText  id="serie1"  style="width:70%;" value="#{controlestimuladores.serie}"  label="Serie">
-              					</p:inputText>  
-              					</h:panelGrid>
-              					 
-               					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-								 
-									 <h:selectOneMenu  id="estadoesti" style="width:100%;"  value="#{controlestimuladores.idEstadoe}">
-		                    			<f:selectItem itemLabel="Condición" itemValue="" />
-		                    			<f:selectItem itemLabel="Nuevo" itemValue="Nuevo" />
-		                    			<f:selectItem itemLabel="Actualizado" itemValue="Actualizado" />
-		                    			<f:selectItem itemLabel="Óptimo" itemValue="Optimo" />
-		                    			<f:selectItem itemLabel="Desprogramado" itemValue="Desprogramado" />
-		                    			<f:selectItem itemLabel="Desconfigurado" itemValue="Desconfigurado" />
-		                    			<f:selectItem itemLabel="Descompuesto" itemValue="Descompuesto" />
-		                    			<f:selectItem itemLabel="Descontinuado" itemValue="Descompuesto" />
-	          						</h:selectOneMenu>  
-	          						
-	                  				<h:selectOneMenu  id="generacion" style="width:100%;"  value="#{controlestimuladores.generacion}">
-		                    			<f:selectItem itemLabel="Modelo" itemValue="" />
-		                    			<f:selectItem itemLabel="G. 1" itemValue="1" />
-		                    			<f:selectItem itemLabel="G. 2" itemValue="2" />
-		                    			<f:selectItem itemLabel="G. 3" itemValue="3" />
-		                    			<f:selectItem itemLabel="G. 4" itemValue="4" />
-		                    			<f:selectItem itemLabel="G. 5" itemValue="5" />
-		                    			<f:selectItem itemLabel="G. 6" itemValue="6" />
-		                    			 <p:ajax event="change" listener="#{controlestimuladores.busca_noserie}" update=":form_g:form2:serie_b" />
-	          						</h:selectOneMenu>                 			
-              					</h:panelGrid>
-              					
-              					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" >
-	          						 <h:outputLabel  value="Botón: " />
-	              					<p:inputText  id="boton_f1"  style="width:50%;" value="#{controlestimuladores.boton_f}"  label="boton_f1">
-	              						  <p:keyFilter regEx="/[\d\-\.]/"/>  
-	              					</p:inputText>  
-              					</h:panelGrid>
-              					
-          						<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" >
-          							 <p:outputLabel for="estatusr" value="Activar:" />
-          							 
-	          						 <p:selectOneRadio  id="estatusr" value="#{controlestimuladores.acti_est}" unselectable="false">
-						            	<f:selectItem itemLabel="on"  itemValue="true" />
-						            	<f:selectItem itemLabel="Off" itemValue="false" />
-						        	</p:selectOneRadio>
-          						</h:panelGrid>
-          					
-          						
-              					
-          						 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-          						  <p:commandButton id="salva_e1" value="Guarda" actionListener="#{controlestimuladores.guarda_e}" 
-            						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" update=":form_g:form2:equipos"  ></p:commandButton>  
-     							<p:commandButton id="actualiza_e1" value="Actualiza" actionListener="#{controlestimuladores.actualiza_e}" 
-            						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton> 
-          						</h:panelGrid>
-          						
-          					
-						  
-				 		</p:panel> 
-				 </p:fragment>
-	 			</h:form>
-	 	
-	 	
-	 			<h:form id="form2">	
-	 			
-		 			  <p:fragment>
-					 		<p:panel  id  ="panel_equipo2" class = "alineacion tamana_ancho_2">
-					 		<h3>Equipos</h3>
-					 		<br/>
+	<b:well>
+		 <b:panelGrid  columns="3" >	
+		 	 <p:fragment>
+		 	 
+		 			  <b:panel title="Equipos" look="info" id  ="panel_equipo2" class = "alineacion tamana_ancho_1">
 					 	      	<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" class = "alineacion">
-					 	    	
-					 				<p:commandButton id="caragar_equ" value="Cargar" actionListener="#{controlestimuladores.cargar_equipo}" 
+					 				<b:commandButton look="info" id="caragar_equ" value="Cargar" actionListener="#{controlestimuladores.cargar_equipo}" 
 					 				 update = "equipos"
-	            					></p:commandButton> 
+	            					></b:commandButton> 
 	          						
 				     				<p:inputText id="serie_b" value="#{controlestimuladores.serie_b}" style="width:70%;"  placeholder="Serie">
 				     				 <p:ajax event="keyup" update="equipos" listener="#{controlestimuladores.buscar_equipo}" />
@@ -173,64 +132,324 @@
 						selection="#{controlestimuladores.selecion_est}"   rowKey="#{estim.noserie}" >
 					
 					     <p:ajax event="rowSelect" listener="#{controlestimuladores.elige}"
-					      update=":form_g:form1:serie1, :form_g:form1:generacion, :form_g:form1:estadoesti, :form_g:form1:estatusr, :form_g:form1:boton_f1" />
-								
+					      update=":form_g:serie1, :form_g:generacion1, :form_g:estadoesti, :form_g:estatusr, :form_g:boton_f1, 
+					       :form_g:lote1, :form_g:imei1, :form_g:tipo_c, :form_g:onda_c, :form_g:qr2"/>
+		
 								<p:column headerText="Serie">
-							        <h:outputText value="#{estim.noserie}" />
-							    </p:column>
-							    <p:column headerText="Estado">
-							        <h:outputText value="#{estim.estado}" />
-							    </p:column>
-							    
-							    <p:column headerText="Estatus">
-							        <h:outputText   value="#{estim.estatus?'Activo':'Inactivo'}"
-							        style="color:#{estim.estatus?'green':'red'}"
-							        />
-							    </p:column>
+							      	<h:outputText value="#{controlestimuladores.convertirserie(estim.noserie)}" 
+							      	style="color:#{estim.estatus?'blue':'red'}" />
+							    	</p:column>
+							   <p:column headerText="Generación">
+							    		<h:outputText value="#{controlestimuladores.convertirgeneracion(estim.noserie)}" 
+							    		style="color:#{estim.estatus?'blue':'red'}" />
+							   </p:column>
 							    
 							</p:dataTable>
-					    </p:panel>	   
+					    </b:panel>	   
 				 </p:fragment> 
-	 			</h:form>
-	 		
-	 		</h:panelGrid>
 
+			
+		 		<p:fragment >
+		 			<b:panel title="Detalles" look="info" id  ="panel_equipo_lote" class = "alineacion tamana_ancho_1">
+		 				<b:container fluid="true"  >
+		 				
+		 				 	<b:row style="margin-bottom:15px">
+	               					 		<b:column span="2">
+	               					 			<h:outputLabel  value="Estado: " />
+	               					 		</b:column>
+	               					 		<b:column span="2" offset="3">
+	               					 		<p:autoUpdate></p:autoUpdate>
+	               					 			 <h:selectOneMenu  id="estadoesti"   value="#{controlestimuladores.idEstadoe}">
+					                    			<f:selectItem itemLabel="Condición" itemValue="" />
+					                    			<f:selectItem itemLabel="Nuevo" itemValue="Nuevo" />
+					                    			<f:selectItem itemLabel="Actualizado" itemValue="Actualizado" />
+					                    			<f:selectItem itemLabel="Óptimo" itemValue="Optimo" />
+					                    			<f:selectItem itemLabel="Desprogramado" itemValue="Desprogramado" />
+					                    			<f:selectItem itemLabel="Desconfigurado" itemValue="Desconfigurado" />
+					                    			<f:selectItem itemLabel="Descompuesto" itemValue="Descompuesto" />
+					                    			<f:selectItem itemLabel="Descontinuado" itemValue="Descompuesto" />
+					                    			<p:ajax event="change" listener="#{controlestimuladores.actualiza_lote}"/>
+		          								</h:selectOneMenu> 
+		          								
+	               					 		</b:column>
+	               			</b:row>
+	               			<b:row style="margin-bottom:15px">
+	               				<b:column span="2">
+	               					<h:outputLabel  value="Generación: " />
+	               				</b:column>
+	               				<b:column span="2" offset="3" >
+	               					<h:selectOneMenu  id="generacion1"   value="#{controlestimuladores.generacion}">
+					                	<f:selectItem itemLabel="Modelo" itemValue="" />
+					                    <f:selectItem itemLabel="G. 1" itemValue="1" />
+					                    <f:selectItem itemLabel="G. 2" itemValue="2" />
+					                    <f:selectItem itemLabel="G. 3" itemValue="3" />
+					                    <f:selectItem itemLabel="G. 4" itemValue="4" />
+					                    <f:selectItem itemLabel="G. 5" itemValue="5" />
+					                    <f:selectItem itemLabel="G. 6" itemValue="6" />
+					                    <p:ajax event="change" listener="#{controlestimuladores.actualiza_lote}"/>
+		              				</h:selectOneMenu> 
+	               				</b:column>
+	               			</b:row>
+	
+	               			<b:row style="margin-bottom:20px">
+	               				<b:column span="2">
+	               					<h:outputLabel  value="Enlace: "/>
+	               				</b:column>
+	               				<b:column span="2" offset="3">
+	               					<h:selectOneMenu  id="tipo_c"   value="#{controlestimuladores.tipo_comu}">
+	               						<f:selectItem itemLabel="Tipo" itemValue="" />
+	               						<f:selectItem itemLabel="USB" itemValue="USB" />
+	               						<f:selectItem itemLabel="Bluetooth" itemValue="Bluetooth" />
+	               						<f:selectItem itemLabel="WIFI" itemValue="WIFI" />
+	               						<f:selectItem itemLabel="GPRS" itemValue="GPRS" />
+	               						<p:ajax event="change" listener="#{controlestimuladores.actualiza_lote}"/>
+	               					</h:selectOneMenu>
+	               				</b:column>
+	               			</b:row>
+	               			<b:row style="margin-bottom:20px">
+	               				<b:column span="2">
+	               					<h:outputLabel  value="Onda: "/>
+	               				</b:column>
+	               				<b:column span="2" offset="3">
+	               					<h:selectOneMenu  id="onda_c"   value="#{controlestimuladores.onda_pref}">
+	               						<f:selectItem itemLabel="1" itemValue="1" />
+	               						<f:selectItem itemLabel="2" itemValue="2" />
+	               						<f:selectItem itemLabel="3" itemValue="3" />
+	               						<f:selectItem itemLabel="4" itemValue="4" />
+	               						<f:selectItem itemLabel="5" itemValue="5" />
+	               						<f:selectItem itemLabel="6" itemValue="6" />
+	               						<f:selectItem itemLabel="7" itemValue="7" />
+	               						<f:selectItem itemLabel="8" itemValue="8" />
+	               						<f:selectItem itemLabel="9" itemValue="9" />
+	               						<f:selectItem itemLabel="10" itemValue="10" />
+	               						<f:selectItem itemLabel="11" itemValue="11" />
+	               						<f:selectItem itemLabel="12" itemValue="12" />
+	               						<f:selectItem itemLabel="13" itemValue="13" />
+	               						<f:selectItem itemLabel="14" itemValue="14" />
+	               						<f:selectItem itemLabel="15" itemValue="15" />
+	               						<f:selectItem itemLabel="16" itemValue="16" />
+	               						<p:ajax event="change" listener="#{controlestimuladores.actualiza_lote}" />
+	               					</h:selectOneMenu>
+	               				</b:column>
+	               			</b:row>
+	               			
+	               			<b:row style="margin-bottom:10px">
+	               				<b:column span="2">
+	               					<p:outputLabel  value="Activar:" />
+	               				</b:column>
+	               				<b:column span="2" offset="3">
+	               					<p:inputSwitch  id="estatusr" value="#{controlestimuladores.acti_est}"  style=" color:#{controlestimuladores.acti_est?'green':'red'}"></p:inputSwitch>
+								</b:column>
+	               			</b:row >
+	               			 	<b:row>
+	               					 	<b:column span="2" style="margin-bottom:10px">
+	               							<b:commandButton look="warning" id="salva_e1" value="Guarda" actionListener="#{controlestimuladores.guarda_e}" 
+	            							onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" update=":form_g:equipos"  ></b:commandButton>				 	
+	               					 		<br/>
+	               					 	</b:column>
+	               					 	<b:column span="2" offset="3">
+	               					 		<b:commandButton look="info" id="actualiza_e1" value="Actualiza" actionListener="#{controlestimuladores.actualiza_e}" 
+	            							onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></b:commandButton> 
+	               					 	</b:column>
+	               					 	</b:row>
+		 				</b:container>
+		 			</b:panel>
+		 		</p:fragment>  					
+		 	
+	 				
+	 				<p:fragment >
+	 					<b:panel title="Características" look="info" id  ="panel_equipo1" class = "alineacion tamana_ancho_9">
+               					<b:container fluid="true"  >
+               					 	<b:row style="margin-bottom:10px">
+               					 	   <b:column span="2">
+               					 	    <h:outputLabel  value="Serie: "/>
+               					 	   
+               					 	   </b:column>
+ 										<b:column span="6" offset="2">
+ 											<b:inputText  id="serie1"  style="text-align: center;" value="#{controlestimuladores.serie}"  >
+ 											
+              								</b:inputText> 
+ 										</b:column>
+               					 	</b:row>
+               					 	
+               						<b:row style="margin-bottom:10px">
+               							<b:column span="2">
+               								<h:outputLabel  value="Lote: "/>
+               							</b:column>
+               		 					<b:column span="6" offset="2">
+               		 						<b:inputText  id="lote1"  style="text-align: center;"  value="#{controlestimuladores.lote}"  >
+               		 							<p:ajax event="keyup" listener="#{controlestimuladores.actualiza_lote}"/>
+               		 						</b:inputText> 
+               							</b:column>
+               						</b:row>
+               						<b:row style="margin-bottom:10px">
+               							<b:column span="2">
+               								<h:outputLabel  value="IMEI: "/>
+               							</b:column>
+               							<b:column span="6" offset="2">
+               		 						<b:inputText  id="imei1"  style="text-align: center;"  value="#{controlestimuladores.imei}"  >
+               		 							<p:ajax event="keyup" listener="#{controlestimuladores.actualiza_lote}"/>
+               		 						</b:inputText> 
+               							</b:column>
+               						</b:row>
 
+               					 	<b:row style="margin-bottom:10px">
+               					 		<b:column span="2">
+               					 			<h:outputLabel  value="Botón: " />
+               					 		</b:column>
+               					 		<b:column span="6" offset="2">
+               					 			<p:inputText  id="boton_f1"  style="width:100%; text-align: center;" value="#{controlestimuladores.boton_f}" >
+	              						  		<p:keyFilter regEx="/[\d\-\.]/"/>  
+	              							</p:inputText> 
+               					 		</b:column>
+               					 	</b:row>
+            						<b:commandButton look="primary" value="QR"  type="button"  onclick="PF('qr_m').show();"/> 
+							</b:container>
+
+				 		</b:panel> 
+				 		
+				 </p:fragment>
+				 <p:dialog header="Qr del equipo" widgetVar="qr_m" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+				 	<p:barcode value="#{controlestimuladores.qr_equipo}" type="qr" id="qr2" style="width:250px;height:250px;"/>
+				 </p:dialog>	 					
+		
+	 	</b:panelGrid>
+	 	</b:well>
 	</c:if>
+	<!-- mantenimiento -->
 	<c:if  test="#{controlestimuladores.tipos_vistas == 2}">
 		<h:form id="form_m1">
 			<p:fragment>
-				<p:panel  class = "tamana_ancho_3 alineacion2">
-					<h:panelGrid columns="1" cellpadding="5" class = "alineacion2">
-					
-					<h:outputText value="Equipo: #{controlestimuladores.serie} G : #{controlestimuladores.generacion}" />
-					
-						<h:panelGrid columns="3" cellpadding="5" >
-							<h:panelGrid columns="1" cellpadding="5">
-								 <h:panelGrid columns="1" cellpadding="5">
-								 <h3>Fecha</h3>
-				        			<p:calendar id="fecha_m" class = "texto_centro" value="#{controlestimuladores.fecha1}" showOn="button"  placeholder="Fecha"/>
-							 	</h:panelGrid>
-							 	
-							 		<h3>Material Utilizado</h3>
-							 	<h:panelGrid columns="2" cellpadding="5" class = "alineacion2">
-								 	<p:commandButton value="Modificar/Agregar"  type="button"  onclick="PF('agrega_m').show();"/> 
-								 	<p:commandButton value="Quitar"  update = "material_utilizado" actionListener="#{controlestimuladores.quita_elemento}"></p:commandButton> 
-							 	</h:panelGrid>
-							 	
-							 	<p:dialog header="Material" widgetVar="agrega_m" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
-
-									<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5" class = "alineacion tamana_ancho_1" >
+			<h1>
+				<b:label id = "equi_m" style="margin-bottom:10px" text="Equipo: #{controlestimuladores.serie} G : #{controlestimuladores.generacion}" severity="primary"/> 
+			</h1>
+				<br/>
+				<b:panelGrid  columns="3" >
+					<b:panel title="Equipo" look="info" class = "alineacion tamana_ancho_5">
+						<b:container fluid="true"  >
+							<b:row  style="margin-bottom:10px" >
+								<b:column span="2">
+									<b:commandButton look="info" id="caragar_equh" value="Cargar" actionListener="#{controlestimuladores.cargar_equipoh}" 
+					 				 update = "equiposh"
+	            					></b:commandButton> 
+								</b:column>
+								<b:column span="3" offset="1">
+									<p:inputText id="serie_bh"  value="#{controlestimuladores.seriem}"  placeholder="Serie">
+				     				 	<p:ajax event="keyup" update="equiposh" listener="#{controlestimuladores.buscar_equipom}" />
+				        			</p:inputText>
+								</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<p:dataTable id = "equiposh"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+							 	rowsPerPageTemplate="5,10,15"
+							  	paginatorPosition="bottom" value="#{controlestimuladores.estimuladoresh}"
+							 	var="estim"  reflow="true" selectionMode="single"  
+								selection="#{controlestimuladores.selecion_est}"   rowKey="#{estim.noserie}" >
+					      
+					       <p:ajax event="rowSelect" listener="#{controlestimuladores.elige}"
+					      update=":form_g:form_m1:equi_m" /> 
+					      
+									<p:column headerText="Serie">
+							        	<h:outputText value="#{controlestimuladores.convertirserie(estim.noserie)}" />
+							    	</p:column>
+							    	<p:column headerText="Generación">
+							    		<h:outputText value="#{controlestimuladores.convertirgeneracion(estim.noserie)}" />
+							    	</p:column>
+								</p:dataTable>
+							</b:row>
+						</b:container>
+					</b:panel>
+					<b:panel title="Fecha Material" look="info" class = "alineacion tamana_ancho_5">
+		 	 	 		<b:container fluid="true"  >
+		 	 	 				<b:row style="margin-bottom:10px">
+		 	 	 					<p:calendar id="fecha_m" class = "texto_centro" value="#{controlestimuladores.fecha1}" showOn="button"  placeholder="Fecha"/>
+		 	 	 				</b:row>
+		 	 	 				<b:row style="margin-bottom:10px">
+		 	 	 					<h3>Material Utilizado</h3>
+		 	 	 				</b:row>
+		 	 	 				<b:row  style="margin-bottom:10px">
+		 	 	 					<b:column span="2" offset="2" style="margin-bottom:10px">
+		 	 	 					    <b:commandButton look="primary" value="Modificar/Agregar"  type="button"  onclick="PF('agrega_m').show();"/> 
+		 	 	 					</b:column>
+		 	 	 					<b:column span="2" offset="3">
+		 	 	 						<b:commandButton look="danger" value="Quitar"  update = "material_utilizado" actionListener="#{controlestimuladores.quita_elemento}"/>
+							 		</b:column>
+		 	 	 				</b:row>
+								<b:row  style="margin-bottom:10px">
+									<b:column offset="1">
+										<p:dataTable id = "material_utilizado"  paginator="true" rows="5" 
+										paginatorTemplate="{PageLinks} {RowsPerPageDropdown}" class ="tamana_ancho_1"
+										rowsPerPageTemplate="3,6,9"
+										paginatorPosition="bottom" value="#{controlestimuladores.materiales_utlizados}"
+										var="mat_equ_m_uti"  reflow="true" selectionMode="single"  
+										selection="#{controlestimuladores.selecion_mat_utlizados}"   rowKey="#{mat_equ_m_uti.material}" >
 									
-										<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" class = "alineacion">
-											 <p:commandButton id="caragar_mante" value="Cargar" actionListener="#{controlestimuladores.cargar_materiales1}" 
+										<p:ajax event="rowSelect" listener="#{controlestimuladores.mostar_Cantidad}"
+									      update="" />
+												
+										<p:column headerText="nombre">
+											<h:outputText value="#{mat_equ_m_uti.material}" />
+										</p:column>
+										
+										<p:column headerText="Serie" style="width:25%;">
+											<h:outputText value="#{mat_equ_m_uti.nSerie}" />
+										</p:column>
+										
+									
+										<p:column headerText="Can." style="width:20%;">
+											<h:outputText value="#{mat_equ_m_uti.cantidad}" />
+										</p:column>
+									</p:dataTable>
+									</b:column>
+								</b:row>
+               					 	
+		 	 	 		</b:container>
+		 	 	 	</b:panel>
+		 	 	 	
+		 	 	 	<b:panel title="Falla Actualización" look="info" class = "alineacion tamana_ancho_5">
+		 	 	 		<b:container fluid="true"  >
+		 	 	 			<b:row>
+		 	 	 				<h3>Actualización</h3>
+		 	 	 			</b:row>
+		 	 	 			<b:row>
+		 	 	 				<p:inputTextarea id = "actualizacion_equipo" rows="1" cols="30"
+									counter="contador_palabras1" maxlength="100" counterTemplate="{0} " 
+									autoResize="false" value="#{controlestimuladores.actualiza_est}"
+									class = "texto_centro"/>
+		 	 	 			</b:row>
+		 	 	 			<b:row>
+		 	 	 				<h:outputText id="contador_palabras1" />
+		 	 	 			</b:row>
+		 	 	 			<b:row>
+		 	 	 				<h3>Falla</h3>
+		 	 	 			</b:row>
+		 	 	 			<b:row>
+		 	 	 				<p:inputTextarea id = "falla_equipo"  rows="4" cols="30" counter="contador_palabras" maxlength="230" 
+								counterTemplate="{0} " autoResize="false" value="#{controlestimuladores.fallas_est}"    class = "texto_centro"/>
+		 	 	 			</b:row>
+		 	 	 			<b:row>
+		 	 	 				<h:outputText id="contador_palabras" />
+		 	 	 			</b:row>
+		 	 	 			<b:row>
+		 	 	 				<b:commandButton look="success" id="caragar_equ" value="Guardar" actionListener="#{controlestimuladores.mantenimiento}" 
+									onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></b:commandButton> 
+		 	 	 			</b:row>
+		 	 	 		</b:container>
+		 	 	 	</b:panel>
+				
+				</b:panelGrid>
+					<p:dialog header="Material" widgetVar="agrega_m" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+						<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5" class = "alineacion tamana_ancho_1" >
+							<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" class = "alineacion">
+								 <p:commandButton look="info" id="caragar_mante" value="Cargar" actionListener="#{controlestimuladores.cargar_materiales1}" 
 									 			update = "material_em, serie_mante"></p:commandButton> 
-											<p:inputText id="serie_mante" value="#{controlestimuladores.serie_m_m}" style="width:70%;"  placeholder="Nombre">
-								     			<p:ajax event="keyup" update="material_em" listener="#{controlestimuladores.buscar_material_m}" />
-								        	</p:inputText>
+								<p:inputText id="serie_mante" value="#{controlestimuladores.serie_m_m}" style="width:70%;"  placeholder="Nombre">
+								     <p:ajax event="keyup" update="material_em" listener="#{controlestimuladores.buscar_material_m}" />
+								 </p:inputText>
 									 	</h:panelGrid>
 									 	<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" class = "alineacion">
-									 		<p:commandButton id="agrega" value="Agregar" actionListener="#{controlestimuladores.cantidad_ocupada}" 
+									 		<p:commandButton look="success" id="agrega" value="Agregar" actionListener="#{controlestimuladores.cantidad_ocupada}" 
 											 update = "material_utilizado, cantidad_m"></p:commandButton> 
 											<p:inputText id="cantidad_m" value="#{controlestimuladores.se_tulizo}" style="width:70%;"  placeholder="Cantidad">
 												<p:keyFilter regEx="/[\d]/"/>  
@@ -264,154 +483,288 @@
 										</p:dataTable>
 									  </h:panelGrid>
 								</p:dialog>
-								
-							 
-								<p:dataTable id = "material_utilizado"  paginator="true" rows="5" 
-								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}" class ="tamana_ancho_1"
-								rowsPerPageTemplate="3,6,9"
-								paginatorPosition="bottom" value="#{controlestimuladores.materiales_utlizados}"
-								var="mat_equ_m_uti"  reflow="true" selectionMode="single"  
-								selection="#{controlestimuladores.selecion_mat_utlizados}"   rowKey="#{mat_equ_m_uti.material}" >
-								
-								<p:ajax event="rowSelect" listener="#{controlestimuladores.mostar_Cantidad}"
-								      update="" />
-											
-									<p:column headerText="nombre">
-										<h:outputText value="#{mat_equ_m_uti.material}" />
-									</p:column>
-									
-									<p:column headerText="Serie" style="width:25%;">
-										<h:outputText value="#{mat_equ_m_uti.nSerie}" />
-									</p:column>
-									
-								
-									<p:column headerText="Ca." style="width:10%;">
-										<h:outputText value="#{mat_equ_m_uti.cantidad}" />
-									</p:column>
-								</p:dataTable>
-							</h:panelGrid>
-	
-							<h:panelGrid columns="1" cellpadding="5">
-						
-							 		<h:panelGrid columns="1" cellpadding="1">
-										<h3>Actualización</h3>
-										<h:panelGrid columns="2" cellpadding="1"></h:panelGrid>
-										<p:inputTextarea id = "actualizacion_equipo" rows="1" cols="30"
-										 counter="contador_palabras1" maxlength="100" counterTemplate="{0} " 
-										 autoResize="false" value="#{controlestimuladores.actualiza_est}"
-										  class = "texto_centro"/>
-										<h:outputText id="contador_palabras1" />
-									</h:panelGrid>
-									
-									<h:panelGrid columns="1" cellpadding="1">
-										<h3>Falla</h3>
-										<p:inputTextarea id = "falla_equipo"  rows="4" cols="30" counter="contador_palabras" maxlength="230" 
-										counterTemplate="{0} " autoResize="false" value="#{controlestimuladores.fallas_est}"    class = "texto_centro"/>
-										<h:outputText id="contador_palabras" />
-								</h:panelGrid>
-								
-								<p:commandButton id="caragar_equ" value="Guardar" actionListener="#{controlestimuladores.mantenimiento}" 
-						 				 
-		            						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton> 
-
-							</h:panelGrid>
-					
-		
-						</h:panelGrid>
-		
-				</h:panelGrid>
-				</p:panel>
 			</p:fragment>  
 		</h:form>
 	</c:if>
 	<c:if  test="#{controlestimuladores.tipos_vistas == 3}">
-	<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" class = "alineacion2">
+	<b:panelGrid  columns="2" >
 			<h:form id="form_mc">	
-				<p:fragment> 	
-					<p:panel>
-						 <h:panelGrid columns="1" cellpadding="1">
-						 <h3>Características</h3>
-						 <br/>
-							<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" >
-			          			<h:outputLabel  value="___Nombre: " />
-			              		<p:inputText  id="material"  value="#{controlestimuladores.material}"  label="material"></p:inputText>  
-		              		</h:panelGrid>
-		              		
-		              		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" >
-			          			<h:outputLabel  value="______Valor: " />
-			              		<p:inputText  id="unidad1"  value="#{controlestimuladores.unidad}"  label="unidad1"></p:inputText>  
-		              		</h:panelGrid>
-		              			
-		              		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" >
-			          			<h:outputLabel  value="__No. Serie:" />
-			              		<p:inputText  id="noseriem"  value="#{controlestimuladores.noserie}"  label="noseriem"></p:inputText>  
-		              		</h:panelGrid>
-		              			
-		              		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" >
-			          			<h:outputLabel  value="__Cantidad: " />
-			              		<p:inputText  id="cantidad"   value="#{controlestimuladores.cantidad}"  label="cantidad">
-			              		<p:keyFilter regEx="/[\d\-\.]/"/>  
-			              		</p:inputText>  
-		              		</h:panelGrid>
-
-		    		        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" >
-			          			<h:outputLabel  value="Descripción:" />
-			              		<p:inputText  id="carac"   value="#{controlestimuladores.modelo}"  label="carac"></p:inputText>  
-		              		</h:panelGrid>
-
-          					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-          						 <p:commandButton id="salva_mat" value="Guarda" actionListener="#{controlestimuladores.guarda_m}" 
-            						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton>  
-     							<p:commandButton id="actualiza_mat" value="Actualiza" actionListener="#{controlestimuladores.actualizar_m}" 
-            						onclick="PF('statusDialog').show()" update=":form_g:form_tm:material_e" oncomplete="PF('statusDialog').hide()" ></p:commandButton> 
-          					</h:panelGrid>
-          					
-						 </h:panelGrid>
-					</p:panel>
-				</p:fragment>  
-			</h:form>
+				<p:fragment>
+				<b:panel title="Datos Material" look="info" class = "alineacion tamana_ancho_5">
+					<b:container fluid="true"  >
+							<b:row  style="margin-bottom:10px" >
+								 <b:column span="2">
+								 	<h:outputLabel  value="Nombre: " />
+								 </b:column>
+								 <b:column span="2"  offset="2">
+								 	<p:inputText  id="material"  value="#{controlestimuladores.material}"  label="material"></p:inputText> 
+								 </b:column>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<b:column span="2">
+									<h:outputLabel  value="Valor: " />
+								</b:column>
+								<b:column span="2"  offset="2">
+									<p:inputText  id="unidad1"  value="#{controlestimuladores.unidad}"  label="unidad1"></p:inputText> 
+								</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<b:column span="2">
+									<h:outputLabel  value="Serie:" />
+								</b:column>
+								<b:column span="2"  offset="2">
+									<p:inputText  id="noseriem"  value="#{controlestimuladores.noserie}"  label="noseriem"></p:inputText> 
+								</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<b:column span="2">
+									<h:outputLabel  value="Cantidad: " />
+								</b:column>
+								<b:column span="2"  offset="2">
+									<p:inputText  id="cantidad"   value="#{controlestimuladores.cantidad}"  label="cantidad">
+			              				<p:keyFilter regEx="/[\d\-\.]/"/>  
+			              			</p:inputText>  
+								</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<b:column span="2">
+									<h:outputLabel  value="Descripción:" />
+								</b:column>
+								<b:column span="2"  offset="2">
+									<p:inputText  id="carac"   value="#{controlestimuladores.modelo}"  label="carac"></p:inputText>  
+								</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<b:column span="2" offset="1" style="margin-bottom:10px" >
+          						 	<b:commandButton look="success" id="salva_mat" value="Guarda" actionListener="#{controlestimuladores.guarda_m}" 
+            						onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></b:commandButton> 
+								</b:column>
+								<b:column span="2"  offset="2">
+     								<b:commandButton look="primary" id="actualiza_mat" value="Actualiza" actionListener="#{controlestimuladores.actualizar_m}" 
+            							onclick="PF('statusDialog').show()" update=":form_g:form_tm:material_e" oncomplete="PF('statusDialog').hide()" ></b:commandButton>
+								</b:column>
+							</b:row>
+					</b:container>
+				</b:panel> 	
+			</p:fragment>  
+		</h:form>
 
 		<h:form id = "form_tm">
 			<p:fragment>
-				<p:panel class = "alineacion tamana_ancho_2">
-				<h3>Material</h3>
-				<br/>
-					<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" class = "alineacion">    	
-					 	<p:commandButton id="caragar_mat" value="Cargar" actionListener="#{controlestimuladores.cargar_materiales}" 
+				<b:panel title="Materiales" look="info" class = "alineacion tamana_ancho_2">
+					<b:container fluid="true"  >
+						<b:row  style="margin-bottom:10px" >
+							<b:column span="2">
+								<b:commandButton look="info" id="caragar_mat" value="Cargar" actionListener="#{controlestimuladores.cargar_materiales}" 
 					 				 update = "material_e"
-	            						 ></p:commandButton> 
-	          						
-				     	<p:inputText id="serie_mat" value="#{controlestimuladores.serie_m}" style="width:70%;"  placeholder="Nombre">
-				     		 <p:ajax event="keyup" update="material_e" listener="#{controlestimuladores.buscar_material}" />
-				        </p:inputText>
-					</h:panelGrid>
+	            				></b:commandButton> 
+							</b:column>
+							<b:column span="2"  offset="2">
+						     	<p:inputText id="serie_mat" value="#{controlestimuladores.serie_m}"  placeholder="Nombre">
+						     		 <p:ajax event="keyup" update="material_e" listener="#{controlestimuladores.buscar_material}" />
+						        </p:inputText>
+							</b:column>
+						</b:row>
+						<b:row  style="margin-bottom:10px" >
+							<p:dataTable id = "material_e"  paginator="true" rows="5" 
+							paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10,15"
+							paginatorPosition="bottom" value="#{controlestimuladores.materiales}"
+							var="mat_equ"  reflow="true" selectionMode="single"  
+							selection="#{controlestimuladores.selecion_mat}"   rowKey="#{mat_equ.material}" >
 					
-					<p:dataTable id = "material_e"  paginator="true" rows="5" 
-					paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
-					rowsPerPageTemplate="5,10,15"
-					paginatorPosition="bottom" value="#{controlestimuladores.materiales}"
-					var="mat_equ"  reflow="true" selectionMode="single"  
-					selection="#{controlestimuladores.selecion_mat}"   rowKey="#{mat_equ.material}" >
-					
-					<p:ajax event="rowSelect" listener="#{controlestimuladores.elige_m}"
-					      update=":form_g:form_mc:material, :form_g:form_mc:cantidad, :form_g:form_mc:unidad1, :form_g:form_mc:noseriem, :form_g:form_mc:carac" />
+							<p:ajax event="rowSelect" listener="#{controlestimuladores.elige_m}"
+					      	update=":form_g:form_mc:material, :form_g:form_mc:cantidad, :form_g:form_mc:unidad1, :form_g:form_mc:noseriem, :form_g:form_mc:carac" />
 								
-						<p:column headerText="nombre">
-							<h:outputText value="#{mat_equ.material}" />
-						</p:column>
-						<p:column headerText="Valor">
-							<h:outputText value="#{mat_equ.unidad}" />
-						</p:column>
-							<p:column headerText="Serie">
-							<h:outputText value="#{mat_equ.nSerie}" />
-						</p:column>
-					</p:dataTable>
-							
-				</p:panel>
+								<p:column headerText="nombre">
+									<h:outputText value="#{mat_equ.material}" />
+								</p:column>
+								<p:column headerText="Valor">
+									<h:outputText value="#{mat_equ.unidad}" />
+								</p:column>
+								<p:column headerText="Serie">
+									<h:outputText value="#{mat_equ.nSerie}" />
+								</p:column>
+							</p:dataTable>
+						</b:row>
+					</b:container>
+				</b:panel>
 			</p:fragment>	
 		</h:form>
-	</h:panelGrid>
+	</b:panelGrid>
 	</c:if>
+	<c:if  test="#{controlestimuladores.tipos_vistas == 4}">
+		<b:panelGrid  columns="4"  class = "alineacion"> 
+		
+			<h:form id="form_his_b">
+				<p:fragment>
+					<b:panel title="Equipo" look="info" class = "alineacion tamana_ancho_7">
+						<b:container fluid="true"  >
+							<b:row  style="margin-bottom:10px" >
+								<b:column span="2">
+									<b:commandButton look="info" id="caragar_equh" value="Cargar" actionListener="#{controlestimuladores.cargar_equipoh}" 
+					 				 update = "equiposh"
+	            					></b:commandButton> 
+								</b:column>
+								<b:column span="3" offset="1">
+									<p:inputText id="serie_bh"  value="#{controlestimuladores.serie_bh}"  placeholder="Serie">
+				     				 	<p:ajax event="keyup" update="equiposh" listener="#{controlestimuladores.buscar_equipoh}" />
+				        			</p:inputText>
+								</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<p:dataTable id = "equiposh"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+							 	rowsPerPageTemplate="5,10,15"
+							  	paginatorPosition="bottom" value="#{controlestimuladores.estimuladoresh}"
+							 	var="estim"  reflow="true" selectionMode="single"  
+								selection="#{controlestimuladores.selecion_esth}"   rowKey="#{estim.noserie}" >
+						
+								<p:ajax event="rowSelect" listener="#{controlestimuladores.elige_hist}"
+					      		update=":form_g:form_his_m:mantenimientosh,  :form_g:form_his_m:hist_equipo, :form_g:form_his_m:hist_equipo1" />
+					      
+									<p:column headerText="Serie">
+							        	<h:outputText value="#{controlestimuladores.convertirserie(estim.noserie)}" 
+							        	style="color:#{estim.estatus?'blue':'red'}" />
+							    	</p:column>
+							    	<p:column headerText="Generación">
+							    		<h:outputText value="#{controlestimuladores.convertirgeneracion(estim.noserie)}" 
+							    		style="color:#{estim.estatus?'blue':'red'}" />
+							    	</p:column>
+								</p:dataTable>
+							</b:row>
+						</b:container>
+					</b:panel>
+				</p:fragment>
+			</h:form>
+			
+			<h:form id="form_his_m">
+				<p:fragment>
+					<b:panel title="Histórico" look="info" class = "alineacion tamana_ancho_1"> 
+						<b:container fluid="true"  >
+							<b:row  style="margin-bottom:10px" >
+								<h:outputLabel id = "hist_equipo" value="Equipo: #{controlestimuladores.serieh} G : #{controlestimuladores.generacionh}" />
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<h:outputLabel id = "hist_equipo1" value="#{controlestimuladores.selecion_esth.estado}" />
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<p:dataTable id = "mantenimientosh"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="4,8,12,16"
+								paginatorPosition="bottom" value="#{controlestimuladores.his_man}"
+								var="hist"  reflow="true" selectionMode="single"  
+								selection="#{controlestimuladores.man_selec}"   rowKey="#{hist.idmantenimiento}" >
+								
+								<p:ajax event="rowSelect" listener="#{controlestimuladores.elige_mant}"
+					      		update=":form_g:form_his_mx, :form_g:emapa1" />
+					      		<p:column headerText="id">
+					      			<h:outputText value="#{hist.idmantenimiento}" />
+					      		</p:column>
+									<p:column headerText="Fecha">
+										<h:outputText value="#{controlestimuladores.convertirFecha(hist.fechamantenimiento)}" />
+					    			</p:column>
+					    			
+								</p:dataTable>
+							</b:row>
+						</b:container>
+					</b:panel>
+				</p:fragment>
+			</h:form>
+			<h:form id="form_his_mx">
+				<p:fragment>
+					<b:panel title="Detalles" look="info" class = "alineacion tamana_ancho_7"> 
+						<b:container fluid="true"  >
+							<b:row  style="margin-bottom:10px" >
+								<b:column span="3">
+									<h:outputLabel  value="Técnico:" />
+								</b:column>
+								<b:column span="6" offset="1">
+									<h:outputLabel  value="#{controlestimuladores.tecnico_m}" />
+								</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+							
+									<h:outputLabel  value="#{controlestimuladores.fallas_hist}" />
+								
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<h:outputLabel  value="Material Utilizado" />
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<p:dataTable id = "material_utilizado"  paginator="true" rows="5" 
+										paginatorTemplate="{PageLinks} {RowsPerPageDropdown}" class ="tamana_ancho_1"
+										rowsPerPageTemplate="3,6,9"
+										paginatorPosition="bottom" value="#{controlestimuladores.materiales_utlizados}"
+										var="mat_equ_m_uti_h"  reflow="true" selectionMode="single"  
+										selection="#{controlestimuladores.selecion_mat_utlizados}"   rowKey="#{mat_equ_m_uti_h.material}" >
+									
+												
+										<p:column headerText="nombre">
+											<h:outputText value="#{mat_equ_m_uti_h.material}" />
+										</p:column>
+										
+										<p:column headerText="Serie" style="width:25%;">
+											<h:outputText value="#{mat_equ_m_uti_h.nSerie}" />
+										</p:column>
+										
+									
+										<p:column headerText="Can." style="width:20%;">
+											<h:outputText value="#{mat_equ_m_uti_h.cantidad}" />
+										</p:column>
+									</p:dataTable>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+							
+								<b:commandButton look="primary" value="Ver"  type="button"  onclick="PF('edetalles').show();"/> 
+						
+							</b:row>
+							
+						</b:container>
+					</b:panel>
+				</p:fragment>
+				 <p:dialog header="Detalles" widgetVar="edetalles" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+					 <b:container fluid="true"  >
+					 <b:row  style="margin-bottom:10px" >
+					 	<b:column span="2">
+					 		<h:outputLabel  value="Fecha:" />
+					 	</b:column>
+					 	<b:column span="10">
+					 		<h:outputLabel  value="Día: #{controlestimuladores.fech_his}  Hora: #{controlestimuladores.hora_his}" />
+					 	</b:column>
+					 	</b:row>
+						<b:row  style="margin-bottom:10px" >
+						<b:column span="2">
+							<h:outputLabel  value="Actualización: " />
+						</b:column>
+						<b:column span="10">
+							<h:outputLabel  value="#{controlestimuladores.fallas_hist}" />
+						</b:column>
+					 		
+					 	</b:row>
+					 </b:container>
+					 <b:row  style="margin-bottom:10px" >
+					 <b:column span="1" offset="1">
+							<h:outputLabel  value="Falla: " />
+						</b:column>
+					 <b:column span="10">
+					 	 <h:outputLabel  value="#{controlestimuladores.actualiza_hist}"  />
+					 </b:column>
+					 
+					 </b:row>
+				 </p:dialog>
+			</h:form>
+				<b:panel title="Lugar del evento" look="info" class = "alineacion tamana_ancho_7">
+					<b:openStreetMap id = "emapa1" width="100%" height="300px"
+        				center="#{controlestimuladores.elat},#{controlestimuladores.elog}" marker="#{controlestimuladores.elat},#{controlestimuladores.elog}"
+       					popupMsg="#{controlestimuladores.elat},#{controlestimuladores.elog}"
+        				zoom="14"
+        				dragging= "true"
+        				zoomGlobal = "true"
+        				urlTemplate="https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png" />
+				</b:panel>
+		</b:panelGrid>
+	</c:if>				
 </h:form>
 	
 </ui:define>

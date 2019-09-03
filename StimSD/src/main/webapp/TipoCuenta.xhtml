@@ -4,7 +4,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui">
 
 <ui:define name="muestra">
 	
@@ -17,16 +18,20 @@
 		
     }
     .tamana_ancho_1{
-    width:300px;
+    
+    width:400px;
     }
     .tamana_ancho_2{
     width:400px;
     }
     .tamana_ancho_3{
     width:400px;
-    margin-top:10px;
+    
     }
-   
+     .tamana_ancho_5{
+     margin-left:5px;
+    width:500px;
+    }
     .div_contenedor{
     	display:block;
 	display:flex;
@@ -57,201 +62,298 @@
     }
     
 	</style>	
-	
+	<br/>  
 <h:form id = "form_registro">    
-	<p:growl id="mensajes" showDetail="true" life="2000" /> 		
-	<h:panelGrid columns="2" cellpadding="5" class = "alineacion" layout="grid">	
-	
+	<p:growl id="mensajes" showDetail="true" life="2000" /> 
+	<b:panelGrid  columns="2" >
 		<h:form id="form_busca">	
-			<p:fragment >
-				<p:panel class = "alineacion tamana_ancho_1">
-					<h:panelGrid columns="1" style="margin-bottom:5px" cellpadding="10" class = "alineacion">
-					 							
-						<h:panelGrid columns="2"  cellpadding="2"  styleClass="ui-panelgrid-blank ui-fluid" layout="grid">	
-	              			<p:commandButton value="Cargar"  actionListener="#{registroUsuario.cargar_todos_user}" update="usuarios" 
-							onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"  ></p:commandButton>
-	              			<p:inputText id="buscador" value="#{registroUsuario.cuenta}"   placeholder="Buscador" style="width: 70%; text-aling: center;">
-					     		<p:ajax event="keyup" update="usuarios" listener="#{registroUsuario.buscar_cuentas}" />
-					    	</p:inputText>
-	              		</h:panelGrid>
-					
-					<h:panelGrid columns="2" style="margin-bottom:5px" cellpadding="10" class = "alineacion">
-						<p:outputLabel for="TipoUsuario" value="Tipo: " />
-	              	
-		        		<p:selectOneMenu id="TipoUsuario" value="#{registroUsuario.tipoUsuario}">
-		            		<f:selectItem itemLabel="Usuario" itemValue="" />
-		            		<f:selectItems value="#{registroUsuario.tipoUsuarios}" />
-		            		<p:ajax event="change" listener="#{registroUsuario.cargar_tipos_user}" update="usuarios"  />
-		        		</p:selectOneMenu>	
-					</h:panelGrid>
-	              					
-		              	<p:dataTable  id = "usuarios"  paginator="true" rows="5" 
-						paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="5,10,15"
-						paginatorPosition="bottom" value="#{registroUsuario.cuentas1}"
-						var="reg"  reflow="true" selectionMode="single"  
-						selection="#{registroUsuario.seleccion_user}"  rowKey="#{reg.cuenta}" >
-		              	 <p:ajax event="rowSelect" listener="#{registroUsuario.carga_datos_user}"
-					      update=":form_registro:form_cambia" 
-					     />
-					      	
-		              		<p:column headerText="Cuenta">
-								<h:outputText value="#{reg.cuenta}" />
-							</p:column>
-			
-						</p:dataTable>
-					</h:panelGrid>				
-				</p:panel> 	
-			</p:fragment>
+				<b:panel title="Usuarios" look="info" class = "alineacion tamana_ancho_1">
+					<b:container fluid="true"  >
+						<b:row style="margin-bottom:10px">
+							<b:column span="2">
+								<b:commandButton look="info" value="Cargar"  actionListener="#{registroUsuario.cargar_todos_user}" update="usuarios" 
+								onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"  ></b:commandButton>
+							</b:column>
+							<b:column span="4" offset="2">
+								<p:inputText id="buscador" value="#{registroUsuario.cuenta}"   placeholder="Buscador" style=" text-aling: center;">
+					     			<p:ajax event="keyup" update="usuarios" listener="#{registroUsuario.buscar_cuentas}" />
+					    		</p:inputText>
+							</b:column>
+						</b:row>
+						<b:row style="margin-bottom:10px">
+							<b:column span="2">
+								<p:outputLabel value="Tipo: " />
+							</b:column>
+							<b:column span="4" offset="2">
+								<p:selectOneMenu id="TipoUsuario" value="#{registroUsuario.tipoUsuario}">
+		            				<f:selectItem itemLabel="Usuario" itemValue="" />
+		            				<f:selectItems value="#{registroUsuario.tipoUsuarios}" />
+		            				<p:ajax event="change" listener="#{registroUsuario.cargar_tipos_user}" update="usuarios"  />
+		        				</p:selectOneMenu>	
+							</b:column>
+						</b:row>
+						<b:row style="margin-bottom:10px">
+							<p:dataTable  id = "usuarios"  paginator="true" rows="5" 
+							paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10,15"
+							paginatorPosition="bottom" value="#{registroUsuario.cuentas1}"
+							var="reg"  reflow="true" selectionMode="single"  
+							selection="#{registroUsuario.seleccion_user}"  rowKey="#{reg.cuenta}" >
+		              	 	<p:ajax event="rowSelect" listener="#{registroUsuario.carga_datos_user}"
+					      	update=":form_registro:form_cambia" />
+		              			<p:column headerText="Cuenta">
+									<h:outputText value="#{reg.cuenta}" />
+								</p:column>
+							</p:dataTable>
+						</b:row>
+					</b:container>			
+				</b:panel> 	
 		</h:form>   
-		
-		<h:panelGrid columns="1"  cellpadding="1" class = "alineacion" layout="grid">	
-			<p:panel>
-				<p:commandButton  id="Cuenta_data"  value="Cuenta" actionListener="#{registroUsuario.tipo_cuenta_1}"  
-					onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></p:commandButton > 
-				<p:commandButton  id="datos_data"  value="Datos" actionListener="#{registroUsuario.tipo_cuenta_2}"  
-					onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton > 
-				<p:commandButton  id="datos_direc"  value="Dirección" actionListener="#{registroUsuario.tipo_cuenta_3}"  
-					onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton > 
-				<p:commandButton  id="datos_cont"  value="Contacto" actionListener="#{registroUsuario.tipo_cuenta_4}"  
-					onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton >
-				<p:commandButton  id="datos_escol"  value="Escolaridad" actionListener="#{registroUsuario.tipo_cuenta_5}"  
-					onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton >  
-			</p:panel> 
-			
-			
-				<p:panel>
-				<h:form id="form_cambia">
-				<h:panelGrid  columns="1" style="margin-bottom:10px" cellpadding="5" responsive="true" class = "alineacion" >
-					<p:fragment >
-						<p:panel>
-						<c:if  test="#{registroUsuario.tipo_menu == 1}">	
-					 		<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5" responsive="true">
-					 			<h:panelGrid columns="2" columnClasses="label, value"  layout="grid">
-				            		<h:outputLabel for="cuentame" value="Cuenta:" />
-				       				<p:inputText  id="cuentame" value="#{registroUsuario.cuenta1}" label="cuentame" >
+	
+	<b:panel title="Datos" look="info" class = "alineacion tamana_ancho_5">
+		<b:container fluid="true"  >
+			<b:row style="margin-bottom:10px">
+				<b:buttonGroup >
+					<b:commandButton look="info" id="Cuenta_data"  value="Cuenta" actionListener="#{registroUsuario.tipo_cuenta_1}"  
+							onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" />
+					<b:commandButton look="info" id="datos_data"  value="Datos" actionListener="#{registroUsuario.tipo_cuenta_2}"  
+							onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"/>
+					<b:commandButton look="info" id="datos_direc"  value="Dirección" actionListener="#{registroUsuario.tipo_cuenta_3}"  
+							onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"/>
+					<b:commandButton look="info" id="datos_cont"  value="Contacto" actionListener="#{registroUsuario.tipo_cuenta_4}"  
+							onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"/>
+					<b:commandButton look="info" id="datos_escol"  value="Escolaridad" actionListener="#{registroUsuario.tipo_cuenta_5}"  
+							onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"/>
+				</b:buttonGroup>
+			</b:row>
+			<b:row style="margin-bottom:10px">
+			<h:form id="form_cambia">
+				<c:if  test="#{registroUsuario.tipo_menu == 1}">
+					<b:panel title="Cuenta" look="warning" class = "alineacion ">
+						<b:container fluid="true"  >
+							<b:row style="margin-bottom:10px">
+								<b:column span="2">
+									<h:outputLabel value="Cuenta:" />
+								</b:column>
+								<b:column span="4"  offset="2">
+									<p:inputText  style="text-align: center;" id="cuentame" value="#{registroUsuario.cuenta1}" label="cuentame" >
 				       					<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
 				       					<p:keyFilter regEx="/[a-z_]/i"/>  
 				              		</p:inputText> 
-				              	</h:panelGrid> 
-								<h:panelGrid columns="2" columnClasses="label, value" layout="grid">
-				        			<p:outputLabel for="usuario_user" value="Tipo :" />			
-					        		<p:selectOneMenu id="usuario_user" value="#{registroUsuario.tipoUsuario1}">
+								</b:column>
+							</b:row>
+							<b:row style="margin-bottom:10px">
+								<b:column span="2">
+									<p:outputLabel value="Tipo:" />	
+								</b:column>
+								<b:column span="4"  offset="2">
+									<p:selectOneMenu id="usuario_user" value="#{registroUsuario.tipoUsuario1}">
 					        			<f:selectItem itemLabel="---" itemValue="" />
 					            		<f:selectItems value="#{registroUsuario.tipoUsuarios}" />
 					            		<p:ajax event="change" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
 									</p:selectOneMenu>
-					    		</h:panelGrid>
-					    	<h:panelGrid columns="2" columnClasses="label, value" layout="grid">
-					    			<h:outputText value="Usuario: " />
-				        			<p:inputSwitch  value="#{registroUsuario.estatus}">
-				        				<p:ajax listener="#{registroUsuario.guarda_actualiza_datos_in}" />
-				        			</p:inputSwitch>
-				  	 		</h:panelGrid>
-				  	 	</h:panelGrid>
-				    	</c:if>
-				    	<c:if  test="#{registroUsuario.tipo_menu == 2}">
-					 		<h:panelGrid columns="2" layout="grid">
-				            	<h:outputLabel for="Nombre" value="Nombre:" />
-				       			<p:inputText  id="nombre" value="#{registroUsuario.nombre}"  label="nombre" >
+								</b:column>
+							</b:row>
+							<b:row style="margin-bottom:10px">
+								<b:column span="2">
+									<p:outputLabel value="Usuario: " />
+								</b:column>
+								<b:column span="4"  offset="2">
+									<b:switch value="#{registroUsuario.estatus}"  offColor="success" onColor="info" >
+								   		<p:ajax listener="#{registroUsuario.guarda_actualiza_datos_in}" />
+								  	</b:switch>
+								</b:column>
+							</b:row>
+						</b:container>
+					</b:panel>
+				</c:if>
+				<c:if  test="#{registroUsuario.tipo_menu == 2}">
+				<b:panel title="Datos" look="warning" class = "alineacion ">
+					<b:container fluid="true"  >
+						<b:row style="margin-bottom:10px">
+							<b:column span="2">
+								<h:outputLabel  value="Nombre:" />
+							</b:column>
+							<b:column span="4"  offset="2">       	
+				       			<p:inputText  style="text-align: center;" id="nombre" value="#{registroUsuario.nombre}"  label="nombre" >
 				       				<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
 				       				<p:keyFilter regEx="/[a-z_]/i"/>  
 				              	</p:inputText>  
-				          		<h:outputLabel for="apellido1" value="A.Paterno:" />
-				              	<p:inputText  id="apellido1"  value="#{registroUsuario.apellido1}"  label="apellido1">
+							</b:column>
+						</b:row>
+						<b:row style="margin-bottom:10px">
+							<b:column span="2">
+								<h:outputLabel value="A.Paterno:" />
+							</b:column>
+							<b:column span="4"  offset="2">
+								<p:inputText style="text-align: center;" id="apellido1"  value="#{registroUsuario.apellido1}"  label="apellido1">
 				              		<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
 				               		<p:keyFilter regEx="/[a-z_]/i"/>  
-				              	</p:inputText>                      
-					            <h:outputLabel for="apellido2" value="A.Materno:" />
-					            <p:inputText  id="apellido2"  value="#{registroUsuario.apellido2}"  label="apellido2">
+				              	</p:inputText>  
+							</b:column>
+						</b:row>
+						<b:row style="margin-bottom:10px">
+							<b:column span="2">
+								<h:outputLabel  value="A.Materno:" />
+							</b:column>
+							<b:column span="4"  offset="2">
+								<p:inputText style="text-align: center;"  id="apellido2"  value="#{registroUsuario.apellido2}"  label="apellido2">
 					            	<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
 					            	<p:keyFilter regEx="/[a-z_]/i"/>  
-					            </p:inputText>  
-					            <h:outputLabel for="cont" value="Contraseña:" />
-					            <p:inputText  id="cont"  value="#{registroUsuario.contrasenia}"  label="cont">
+					            </p:inputText> 
+							</b:column>
+						</b:row>
+						<b:row style="margin-bottom:10px">
+							<b:column span="2">
+							  <h:outputLabel value="Contraseña:" />
+							</b:column>
+							<b:column span="4"  offset="2">
+								<p:inputText style="text-align: center;" id="cont"  value="#{registroUsuario.contrasenia}"  label="cont">
 					            	<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
-					            </p:inputText>    
-				        	</h:panelGrid>		    	
-				    	</c:if>
-				    	<c:if  test="#{registroUsuario.tipo_menu == 3}">
-		         			<h:panelGrid columns="2" layout="grid">
-			                	<h:outputLabel for="calle" value="Calle:" />
-			              		<p:inputText  id="calle"  value="#{registroUsuario.calle}" label="calle" >
-			              			<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
-			              		</p:inputText>
-			                	<h:outputLabel for="numero" value="Numero:" />
-			              		<p:inputText  id="numero"  value="#{registroUsuario.num}"  label="numero">
-			              			<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
+					            </p:inputText>
+							</b:column>
+						</b:row>
+					</b:container>
+				</b:panel>			
+				</c:if>
+				<c:if  test="#{registroUsuario.tipo_menu == 3}">
+					<b:panel title="Dirección" look="warning" class = "alineacion ">
+						<b:container fluid="true"  >
+							<b:row style="margin-bottom:10px">
+								<b:column span="2">
+									<h:outputLabel value="Calle:" />
+								</b:column>
+								<b:column span="4"  offset="2">
+								    <p:inputText  style="text-align: center;"  id="calle"  value="#{registroUsuario.calle}" label="calle" >
+			              				<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
+			              			</p:inputText>
+								</b:column>
+							</b:row>
+							<b:row style="margin-bottom:10px">
+								<b:column span="2">
+									<h:outputLabel value="Numero:" />
+								</b:column>
+								<b:column span="4"  offset="2">
+									<p:inputText style="text-align: center;" id="numero"  value="#{registroUsuario.num}"  label="numero">
+			              				<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
 			             			<p:keyFilter regEx="/[\d\-\.]/"/>  
 			              		</p:inputText>
-			                  	<h:outputLabel for="colonia" value="Colonia:" />
-			              		<p:inputText  id="colonia"  value="#{registroUsuario.colonia}"  label="colonia" >
-			              			<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
-			              		</p:inputText>
-			                  	<h:outputLabel for="cp" value="CP:" />
-			              		<p:inputText  id="cp"  value="#{registroUsuario.codigoPostal}"  label="cp">
-			              			<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
-			                		<p:keyFilter regEx="/[\d\-\.]/"/>  
-			              		</p:inputText>
-			                  	<h:outputLabel for="estado" value="Estado: " />
-			                  	<h:selectOneMenu  id="estado" value="#{registroUsuario.idEstado1}">
-			                    	<f:selectItem itemLabel="seleccione uno" itemValue="" />
-			            			<f:selectItems value="#{registroUsuario.estados}" />
-			            			<p:ajax event="change" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
-			          			</h:selectOneMenu>
-			           		</h:panelGrid>		    	
-				    	</c:if>
-				    	<c:if  test="#{registroUsuario.tipo_menu == 4}">
-				        	<h:panelGrid columns="2" layout="grid">
-				            	<h:outputLabel for="telefono" value="Telefono:" />
-				              	<p:inputText  id="telefono"  value="#{registroUsuario.telefono}" label="username">
-				              		<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
-				                	<p:keyFilter regEx="/[\d\-\.]/"/>  
-				             	</p:inputText>  
-				                <h:outputLabel for="email" value="Email:" />
-				              	<p:inputText  id="email"  value="#{registroUsuario.email}" label="email">
-				              		<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
-				                	<p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/>  
-				              	</p:inputText>
-				            </h:panelGrid>
-				    	</c:if>
-				    	<c:if  test="#{registroUsuario.tipo_menu == 5}">
-				    		<h:panelGrid columns="1" cellpadding="5" layout="grid">
-								<h:panelGrid columns="2" columnClasses="label, value" layout="grid">
-					        		<h:outputText value="Agregar grado: " />			        			
-				        			<p:inputSwitch value = "#{registroUsuario.ingresa_grado}"  >
-				        				<p:ajax listener="#{registroUsuario.ingresoescialdiad}" update = "Grado, especialidada" />
-				        			</p:inputSwitch>
-					        	</h:panelGrid>
-								
-								<h:panelGrid columns="2" cellpadding="5" layout="grid">
+								</b:column>
+							</b:row>
+							<b:row style="margin-bottom:10px">
+								<b:column span="2">
+									<h:outputLabel value="Colonia:" />
+								</b:column>
+								<b:column span="4"  offset="2">
+								  <p:inputText  style="text-align: center;" id="colonia"  value="#{registroUsuario.colonia}"  label="colonia" >
+			              				<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
+			              			</p:inputText>
+								</b:column>
+							</b:row>
+							<b:row style="margin-bottom:10px">
+								<b:column span="2">
+									<h:outputLabel value="CP:" />
+								</b:column>
+								<b:column span="4"  offset="2">
+								   	<p:inputText   style="text-align: center;" id="cp"  value="#{registroUsuario.codigoPostal}"  label="cp">
+			              				<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
+			                			<p:keyFilter regEx="/[\d\-\.]/"/>  
+			              			</p:inputText>
+								</b:column>
+							</b:row>
+							<b:row style="margin-bottom:10px">
+								<b:column span="2">
+									<h:outputLabel  value="Estado: " />
+								</b:column>
+								<b:column span="4"  offset="2">	
+								   	<h:selectOneMenu  id="estado" value="#{registroUsuario.idEstado1}">
+			                    		<f:selectItem itemLabel="seleccione uno" itemValue="" />
+			            				<f:selectItems value="#{registroUsuario.estados}" />
+			            				<p:ajax event="change" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
+			          				</h:selectOneMenu>					
+								</b:column>
+							</b:row>
+						</b:container>
+					</b:panel>
+				</c:if>
+				<c:if  test="#{registroUsuario.tipo_menu == 4}">
+					<b:panel title="Contacto" look="warning" class = "alineacion ">
+						<b:container fluid="true"  >
+							<b:row style="margin-bottom:10px">
+								<b:column span="2">
+									<h:outputLabel value="Telefono:" />
+								</b:column>
+								<b:column span="4"  offset="2">
+								  	<p:inputText  style="text-align: center;" id="telefono"  value="#{registroUsuario.telefono}" label="username">
+				              			<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
+				                		<p:keyFilter regEx="/[\d\-\.]/"/>  
+				             		</p:inputText>  						
+								</b:column>
+							</b:row>
+							<b:row style="margin-bottom:10px">
+								<b:column span="2">
+									<h:outputLabel value="Email:" />
+								</b:column>
+								<b:column span="4"  offset="2">	
+									<p:inputText  id="email"  value="#{registroUsuario.email}" label="email">
+				              			<p:ajax event="keyup" listener="#{registroUsuario.guarda_actualiza_datos_in}" />
+				                		<p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/>  
+				              		</p:inputText>					
+								</b:column>
+							</b:row>
+						</b:container>
+					</b:panel>
+				</c:if>
+				<c:if  test="#{registroUsuario.tipo_menu == 5}">
+				<b:panel title="Escolaridad" look="warning" class = "alineacion ">
+					<b:container fluid="true"  >
+						<b:row style="margin-bottom:10px">
+								<b:column span="2">
+									<p:outputLabel  value="Agregar: " />
+								</b:column>
+								<b:column span="4"  offset="2">	
+								<b:switch value="#{registroUsuario.ingresa_grado}"  offColor="success" onColor="info" >
+								   <p:ajax listener="#{registroUsuario.ingresoescialdiad}" update = "Grado, especialidada" />
+								  </b:switch>
+													
+								</b:column>
+							</b:row>
+							<b:row style="margin-bottom:10px">
+								<b:column span="2">
 									<p:outputLabel  value="Nivel: " />
+								</b:column>
+								<b:column span="4"  offset="2">
 									<p:selectOneMenu id="Grado" value="#{registroUsuario.grado}" disabled="#{registroUsuario.ingresa_grado?'false':'true'}">
 					            		<f:selectItem itemLabel="Tipo" itemValue="---" />
 					            		<f:selectItems value="#{registroUsuario.grados}" />
 					            		<p:ajax event="change" listener="#{registroUsuario.especiladiad}" update = "especialidada"/>
-					        	</p:selectOneMenu>
-								</h:panelGrid>
-								
-					        	<h:panelGrid columns="2" cellpadding="5" layout="grid">
-						        	<p:outputLabel  value="Titulo: " />
-									<p:inputText placeholder="tipo" id="especialidada" value="#{registroUsuario.especialidad1}" style="width: 90%;"
-									disabled="#{registroUsuario.ingresa_grado?'false':'true'}">
+					        		</p:selectOneMenu>						
+								</b:column>
+							</b:row>
+							<b:row style="margin-bottom:10px">
+								<b:column span="2">
+									<p:outputLabel  value="Titulo: " />
+								</b:column>
+								<b:column span="4"  offset="2">	
+									<p:inputText style="text-align: center;" placeholder="tipo" id="especialidada" value="#{registroUsuario.especialidad1}" 
+										disabled="#{registroUsuario.ingresa_grado?'false':'true'}">
 										<p:ajax listener="#{registroUsuario.guarda_actualiza_datos_in}" />
-									</p:inputText>
-					        	</h:panelGrid>
-				        	</h:panelGrid>
-				    	</c:if>	
-						</p:panel>
-					</p:fragment>
-					</h:panelGrid>
-					</h:form>
-					<p:commandButton  id="modifcar"  value="Guardar/Actualizar" actionListener="#{registroUsuario.guarda_actualiza_datos}"
+									</p:inputText>					
+								</b:column>
+							</b:row>
+					</b:container>
+				</b:panel>
+				</c:if>
+			</h:form>
+			</b:row>
+			<b:row style="margin-bottom:10px">
+				<b:commandButton look="success" id="modifcar"  value="Guardar/Actualizar" actionListener="#{registroUsuario.guarda_actualiza_datos}"
 					update=":form_registro:form_cambia"   
-					onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></p:commandButton > 
-			</p:panel>
-		</h:panelGrid>	
-	</h:panelGrid>		
+					onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"/> 
+			</b:row>		
+		</b:container>
+	</b:panel>
+	</b:panelGrid>			
 </h:form>
 </ui:define>
 </ui:composition>

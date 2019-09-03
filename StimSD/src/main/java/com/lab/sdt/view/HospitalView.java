@@ -9,13 +9,14 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 
-
+import com.lab.sdt.model.Equipo;
 import com.lab.sdt.model.Hospital;
 import com.lab.sdt.service.EstadoUnidad;
 import com.lab.sdt.service.HospitalService;
@@ -92,8 +93,7 @@ public class HospitalView implements Serializable {
 		 }else {
 			 MensajeG.mostrar("Sin resultados", FacesMessage.SEVERITY_INFO);
 		 }
-		
-		
+
 	}
 	//cargar toda la lista de hospitales
 	public void cargar_lis_hospi() {

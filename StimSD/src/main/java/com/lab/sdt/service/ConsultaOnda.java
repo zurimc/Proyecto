@@ -7,13 +7,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lab.sdt.dao.NumOndaMapper;
-import com.lab.sdt.dao.OndaMapper;
 import com.lab.sdt.dao.OndaValorMapper;
+import com.lab.sdt.dao.ParametroMapper;
 import com.lab.sdt.dao.TipondaMapper;
 import com.lab.sdt.dao.ValorMapper;
 import com.lab.sdt.model.NumOnda;
 import com.lab.sdt.model.NumOndaExample;
 import com.lab.sdt.model.OndaValor;
+import com.lab.sdt.model.Parametro;
+import com.lab.sdt.model.ParametroExample;
 import com.lab.sdt.model.Tiponda;
 import com.lab.sdt.model.TipondaExample;
 
@@ -21,8 +23,7 @@ import com.lab.sdt.model.TipondaExample;
 @Transactional
 public class ConsultaOnda {
 
-	private OndaMapper ondaMapper;
-	
+
 	@Autowired
 	private OndaValorMapper ondaValorMapper;
 	
@@ -34,6 +35,9 @@ public class ConsultaOnda {
 	
 	@Autowired
 	private NumOndaMapper numOndaMapper;
+	
+	@Autowired
+	private ParametroMapper parametroMapper;
 	
 	public String todos_los_grupos_de_ondas() {
 		String res = "";
@@ -68,7 +72,6 @@ public class ConsultaOnda {
 		double[] resint = new double[270];
 		String res = "";
 		//String[] valores = new String[300];
-		int idNum_Ondaan = 0;
 		int idondaa = 0;
 		try {
 			//idNum_Ondaan = Integer.parseInt(idNum_Ondaa);
@@ -82,5 +85,44 @@ public class ConsultaOnda {
 			}
 		}catch(Exception e) {}
 		return resint;
+	}
+	public double[] valores_onda(int idOnda) {
+		double[] resint = new double[270];
+		String res = "";
+		try {
+			List<OndaValor> ondvalor =ondaValorMapper.selectByidOnda(idOnda);
+			for(int ii =0; ii<= ondvalor.size()-1; ii++) {
+				res = valorMapper.selectByPrimaryKey(ondvalor.get(ii).getIdvalor()).getValor();
+				resint[ii] = Double.parseDouble(res);
+				//valores[ii] = valorMapper.selectByPrimaryKey(ondvalor.get(ii).getIdvalor()).getValor();
+				//res = res + valores[ii]+":";
+			}
+		}catch(Exception e) {}
+		return resint;
+	}
+	public int entrega_onda(int idNum_Ondaa) {
+		return numOndaMapper.selectByPrimaryKey(idNum_Ondaa).getIdonda();
+	}
+	public int entrega_num_onda(int idonda) {
+		return numOndaMapper.selectByidOnda(idonda).get(0).getIdnumOnda();
+	}
+	public void actulizar_parametro(Parametro p) {
+		parametroMapper.updateByPrimaryKey(p);
+	}
+	public void insertar_parametro(Parametro p) {
+		parametroMapper.insert(p);
+	}
+	public List<Parametro> todos_parametros(){
+		ParametroExample paraEx = new ParametroExample();
+		return parametroMapper.selectByExample(paraEx);
+	}
+	public List<Parametro> parametros_equipo(int idequipo){
+		return parametroMapper.selectByequipo(idequipo);
+	}
+	public List<Parametro> parametros_por_nombre(String nombre){
+		return parametroMapper.selectBynombre(nombre);
+	}
+	public Parametro parametroporkey(int idparametro) {
+		return parametroMapper.selectByPrimaryKey(idparametro);
 	}
 }

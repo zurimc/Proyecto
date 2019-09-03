@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lab.sdt.dao.HospitalMapper;
 import com.lab.sdt.model.HospitalExample;
-
+import com.lab.sdt.model.Usuario;
 import com.lab.sdt.model.Hospital;
 
 
@@ -25,13 +25,12 @@ public class HospitalService {
 	public List<SelectItem> lista_hospital;
 	public List<Hospital> hospitales1;
 	
-	
-	
-	
-	
+	public List<Hospital> entrega_hospitales(){
+		HospitalExample exh = new HospitalExample();
+		return hospitalMapper.selectByExample(exh);
+	}
 	
 	public List<SelectItem> getLista_hospital() {
-		
 		this.lista_hospital= new ArrayList<SelectItem>();
 		HospitalExample exh = new HospitalExample();
 		
@@ -94,6 +93,10 @@ public class HospitalService {
 				res=null;
 			}
 			return res;
+		}
+		public Hospital encuentra_por_id(int idkey)
+		{
+			return hospitalMapper.selectByPrimaryKey(idkey);
 		}
 	
 }
