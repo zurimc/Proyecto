@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+
+	<title>LOGIN::</title>
+ <style type="text/css">
+    .alineacion{
+        margin:auto;
+		align-items:center;
+		padding: auto;
+		text-align: center;
+	
+    }
+    </style>
+</h:head>
+
+<h:body style= "background-color: #ecf2f5">
+
+<b:container>
+<h:form   id="loginForm" >
+   <h2 style="text-align: center">Inicio de Sesion</h2>
+   <br></br><br />
+   
+<b:container fluid="true">
+    <h:panelGrid column="1" size="lg" class="alineacion"> 
+           
+    <b:panel title="Inicio de Sesion" look="info"  >
+      <b:row>
+        <b:column  offset="1" span="2">
+          <h:outputText value="Usuario:" for="usuario" />
+        </b:column>
+        <b:column span="8" offset="1" >
+          <b:inputText placeholder="Usuario" id="usuario"  >
+            <f:facet name="prepend">
+              <b:icon name="user" />
+            </f:facet>
+          </b:inputText>
+        </b:column>
+        
+      </b:row>
+      <b:row >
+        <b:column  offset="1" span="2">
+          <h:outputText value="Contaseña:" />
+        </b:column>
+        <b:column span="8" offset="1">
+          <b:inputSecret placeholder="Contraseña" id="contrasenia" >
+                        
+            <f:facet name="prepend">
+              <b:iconAwesome name="key" />
+            </f:facet>
+          </b:inputSecret>
+        </b:column>
+       
+      </b:row>
+      <b:row>
+        <b:column offset="1" span="4" style="margin-bottom:20px">
+          <b:commandButton value="Login"  look="primary"
+                           style="width:100%" />
+        </b:column>
+          <b:column offset="1" span="4" style="margin-bottom:20px">
+          <b:commandButton value="Registro" 
+                           look="danger" style="width:100%" />
+        </b:column>
+      </b:row>
+    
+    
+      
+    </b:panel>
+    </h:panelGrid> 
+  </b:container>
+
+</h:form>
+</b:container>
+</h:body>
+</html>
