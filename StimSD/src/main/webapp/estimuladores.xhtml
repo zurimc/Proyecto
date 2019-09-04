@@ -110,7 +110,7 @@
 	<c:if  test="#{controlestimuladores.tipos_vistas == 1}">
 	<b:well>
 		 <b:panelGrid  columns="3" >	
-		 	 <p:fragment>
+		 	
 		 	 
 		 			  <b:panel title="Equipos" look="info" id  ="panel_equipo2" class = "alineacion tamana_ancho_1">
 					 	      	<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" class = "alineacion">
@@ -139,17 +139,17 @@
 							      	<h:outputText value="#{controlestimuladores.convertirserie(estim.noserie)}" 
 							      	style="color:#{estim.estatus?'blue':'red'}" />
 							    	</p:column>
-							   <p:column headerText="Generación">
+							  <!--   <p:column headerText="Generación">
 							    		<h:outputText value="#{controlestimuladores.convertirgeneracion(estim.noserie)}" 
 							    		style="color:#{estim.estatus?'blue':'red'}" />
-							   </p:column>
+							   </p:column>-->
 							    
 							</p:dataTable>
 					    </b:panel>	   
-				 </p:fragment> 
+				 
 
 			
-		 		<p:fragment >
+		 		
 		 			<b:panel title="Detalles" look="info" id  ="panel_equipo_lote" class = "alineacion tamana_ancho_1">
 		 				<b:container fluid="true"  >
 		 				
@@ -254,10 +254,7 @@
 	               					 	</b:row>
 		 				</b:container>
 		 			</b:panel>
-		 		</p:fragment>  					
-		 	
-	 				
-	 				<p:fragment >
+		 		
 	 					<b:panel title="Características" look="info" id  ="panel_equipo1" class = "alineacion tamana_ancho_9">
                					<b:container fluid="true"  >
                					 	<b:row style="margin-bottom:10px">
@@ -307,8 +304,7 @@
 							</b:container>
 
 				 		</b:panel> 
-				 		
-				 </p:fragment>
+				 
 				 <p:dialog header="Qr del equipo" widgetVar="qr_m" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
 				 	<p:barcode value="#{controlestimuladores.qr_equipo}" type="qr" id="qr2" style="width:250px;height:250px;"/>
 				 </p:dialog>	 					

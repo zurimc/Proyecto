@@ -22,7 +22,8 @@
 </h:head>
 
 <h:body style= "background-color: #ecf2f5">
-
+<p:growl id="mensajes" showDetail="true" life="2000" />
+<h:outputLabel id = "R" value="#{login.resultado}" />
 <b:container>
 <h:form   id="loginForm" >
    <h2 style="text-align: center">Inicio de Sesion</h2>
@@ -37,7 +38,7 @@
           <h:outputText value="Usuario:" for="usuario" />
         </b:column>
         <b:column span="8" offset="1" >
-          <b:inputText placeholder="Usuario" id="usuario"  >
+          <b:inputText placeholder="Usuario" id="usuario"  value="#{login.nombre}" required="false" >
             <f:facet name="prepend">
               <b:icon name="user" />
             </f:facet>
@@ -50,7 +51,7 @@
           <h:outputText value="Contaseña:" />
         </b:column>
         <b:column span="8" offset="1">
-          <b:inputSecret placeholder="Contraseña" id="contrasenia" >
+          <b:inputSecret placeholder="Contraseña" id="contrasenia" value="#{login.contrasenia}" required="false" >
                         
             <f:facet name="prepend">
               <b:iconAwesome name="key" />
@@ -59,14 +60,17 @@
         </b:column>
        
       </b:row>
+       <b:selectBooleanCheckbox value="true" caption="Recordar Contraseña"/>
       <b:row>
         <b:column offset="1" span="4" style="margin-bottom:20px">
-          <b:commandButton value="Login"  look="primary"
-                           style="width:100%" />
+          <b:commandButton value="Login"  look="primary" style="width:100%" id="loginButton"
+             actionListener="#{login.ingresa}" update=":R"
+             onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" />
         </b:column>
           <b:column offset="1" span="4" style="margin-bottom:20px">
-          <b:commandButton value="Registro" 
-                           look="danger" style="width:100%" />
+          <b:commandButton value="Registro" look="danger" style="width:100%"
+          actionListener="#{login.ini_registro}" 
+       	  onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" />
         </b:column>
       </b:row>
     
