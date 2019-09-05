@@ -8,63 +8,79 @@
 	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
-<title>Login</title>
-	<meta charset="utf-8"></meta>
-	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-	
-	<link rel="stylesheet" href="css/font-awesome.css" />
-	<link href="css/style.css" rel='stylesheet' type='text/css' />
-		
-	
-</h:head>
-<h:body class="signup-body">
 
+	<title>LOGIN::</title>
+ <style type="text/css">
+    .alineacion{
+        margin:auto;
+		align-items:center;
+		padding: auto;
+		text-align: center;
+	
+    }
+    </style>
+</h:head>
+
+<h:body style= "background-color: #ecf2f5">
 <p:growl id="mensajes" showDetail="true" life="2000" />
 <h:outputLabel id = "R" value="#{login.resultado}" />
-
-<!-- FORMULARIO PARA INGRESAR USUARIO Y CONTRASEÑA -->
-  <h:form>
-<div class="agile-signup">
-     <div class="content2l">
-     		<div class="grids-heading  signup-heading">
-					<h2>Login</h2>
-			</div>
-		 <div class="ui-fluid">
-        <p:panelGrid columns="1" columnClasses="label, value" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">	
-        <h:outputLabel for="username" value="Usuario:"  style="width:95%;" />
-        <p:inputText value="#{login.nombre}" id="username" required="false" label="username"  style="width:95%; text-align: center;" />
-        <h:outputLabel for="password" value="Clave:"  style="width:95%;"/>
-        <p:password value="#{login.contrasenia}" id="password" required="false"  label="password"  style="width:95%; text-align: center;"/>
-        </p:panelGrid>
-        </div>
-        <p:commandButton id="loginButton" value="Login"
-             actionListener="#{login.ingresa}" update=":R"
-             onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" class="register"/>
-       	<p:commandButton id="submit" value="Registro" 
-       	actionListener="#{login.ini_registro}" 
-       	  onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" 
-       	class="register"></p:commandButton>   
-         
-          <div class="signin-text">
-					<div class="text-left">
-						<p><a href="#"> Olvido su Contraseña </a></p>
-					</div>
-					
-					<div class="clearfix"> </div>
-				</div>
-	</div>
-	 
-<!-- footer -->
-	<div class="copyright">
-		<p>© Vision Artificial</p>
-	</div>
-<!-- //footer -->
+<b:container>
+<h:form   id="loginForm" >
+   <h2 style="text-align: center">Inicio de Sesion</h2>
+   <br></br><br />
+   
+<b:container fluid="true">
+    <h:panelGrid column="1" size="lg" class="alineacion"> 
+           
+    <b:panel title="Inicio de Sesion" look="info"  >
+      <b:row>
+        <b:column  offset="1" span="2">
+          <h:outputText value="Usuario:" for="usuario" />
+        </b:column>
+        <b:column span="8" offset="1" >
+          <b:inputText placeholder="Usuario" id="usuario"  value="#{login.nombre}" required="false" >
+            <f:facet name="prepend">
+              <b:icon name="user" />
+            </f:facet>
+          </b:inputText>
+        </b:column>
+        
+      </b:row>
+      <b:row >
+        <b:column  offset="1" span="2">
+          <h:outputText value="Contaseña:" />
+        </b:column>
+        <b:column span="8" offset="1">
+          <b:inputSecret placeholder="Contraseña" id="contrasenia" value="#{login.contrasenia}" required="false" >
+                        
+            <f:facet name="prepend">
+              <b:iconAwesome name="key" />
+            </f:facet>
+          </b:inputSecret>
+        </b:column>
        
-</div>
+      </b:row>
+       
+      <b:row>
+        <b:column offset="1" span="4" style="margin-bottom:20px">
+          <b:commandButton value="Login"  look="primary" style="width:100%" id="loginButton"
+             actionListener="#{login.ingresa}" update=":R"
+             onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" />
+        </b:column>
+          <b:column offset="1" span="4" style="margin-bottom:20px">
+          <b:commandButton value="Registro" look="danger" style="width:100%"
+          actionListener="#{login.ini_registro}" 
+       	  onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" />
+        </b:column>
+      </b:row>
     
-  </h:form>
-  <!-- FORMULARIO PARA INGRESAR USUARIO Y CONTRASEÑA -->
+    
+      
+    </b:panel>
+    </h:panelGrid> 
+  </b:container>
 
+</h:form>
+</b:container>
 </h:body>
 </html>

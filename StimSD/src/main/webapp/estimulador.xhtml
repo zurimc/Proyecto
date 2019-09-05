@@ -49,16 +49,13 @@
 </h:head>
 
 <h:body style= "background-color: #ecf2f5">
-
+<h:form   id = "form_g" class = "tamana_ancho_8" >
 <p:growl id="growl" autoUpdate="true" showDetail="false" />	 
 
-<b:container>
-<h:form   id = "form_g" class = "tamana_ancho_8" >
-   
-<b:container fluid="true">
-    <h:panelGrid column="3" class="alineacion"> 
-           
+<c:if  test="#{controlestimuladores.tipos_vistas == 1}">
+    <b:panelGrid column="3" col-spans="4,4,4">
     	<b:panel title="Equipo" look="info"  >
+    	<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" >
       	<b:row style="margin-bottom:10px">
 				<b:column  offset="1" span="2">
 				<b:commandButton look="info" id="caragar_equ" value="Cargar" actionListener="#{controlestimuladores.cargar_equipo}" 
@@ -71,6 +68,7 @@
 				    </p:inputText>
 	         	</b:column>	
 			</b:row>
+			</h:panelGrid>
 			<b:row >
 			<b:column>
 				<p:dataTable id = "equipos"  paginator="true" rows="5" 
@@ -93,7 +91,7 @@
 			</b:row>	
       	
       	</b:panel>
-      	<b:panel title="Detalles" look="info" id  ="panel_equipo_lote" class = "alineacion tamana_ancho_1">
+      	<b:panel title="Detalles" look="info" id  ="panel_equipo_lote" >
 		<b:container fluid="true" >				
 		 <b:row style="margin-bottom:15px">
 	        <b:column span="2">
@@ -238,9 +236,432 @@
             	<b:commandButton look="primary" value="QR"  type="button"  onclick="PF('qr_m').show();"/> 
 			</b:container>
 			</b:panel> 
-     </h:panelGrid>
-</b:container>
+     </b:panelGrid>
+     </c:if>
+     <c:if  test="#{controlestimuladores.tipos_vistas == 2}">
+     <h:form id="form_m1">
+     <h1>
+	 	<b:label id = "equi_m" style="margin-bottom:10px" text="Equipo: #{controlestimuladores.serie} G : #{controlestimuladores.generacion}" severity="primary"/> 
+	 </h1>
+	 <b:panelGrid  columns="3" >
+	 	<b:panel title="Equipo" look="info" class = "alineacion tamana_ancho_5">
+	 		<b:container fluid="true"  >
+							<b:row  style="margin-bottom:10px" >
+								<b:column span="2">
+									<b:commandButton look="info" id="caragar_equh" value="Cargar" actionListener="#{controlestimuladores.cargar_equipoh}" 
+					 				 update = "equiposh"
+	            					></b:commandButton> 
+								</b:column>
+								<b:column span="3" offset="1">
+									<p:inputText id="serie_bh"  value="#{controlestimuladores.seriem}"  placeholder="Serie">
+				     				 	<p:ajax event="keyup" update="equiposh" listener="#{controlestimuladores.buscar_equipom}" />
+				        			</p:inputText>
+								</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<p:dataTable id = "equiposh"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+							 	rowsPerPageTemplate="5,10,15"
+							  	paginatorPosition="bottom" value="#{controlestimuladores.estimuladoresh}"
+							 	var="estim"  reflow="true" selectionMode="single"  
+								selection="#{controlestimuladores.selecion_est}"   rowKey="#{estim.noserie}" >
+					      
+					       <p:ajax event="rowSelect" listener="#{controlestimuladores.elige}"
+					      update=":form_g:form_m1:equi_m" /> 
+					      
+									<p:column headerText="Serie">
+							        	<h:outputText value="#{controlestimuladores.convertirserie(estim.noserie)}" />
+							    	</p:column>
+							    	<p:column headerText="Generación">
+							    		<h:outputText value="#{controlestimuladores.convertirgeneracion(estim.noserie)}" />
+							    	</p:column>
+								</p:dataTable>
+							</b:row>
+						</b:container>
+	 	</b:panel>
+	 	<b:panel title="Fecha Material" look="info" class = "alineacion tamana_ancho_5">
+		 	 	 		<b:container fluid="true"  >
+		 	 	 				<b:row style="margin-bottom:10px">
+		 	 	 					<p:calendar id="fecha_m" class = "texto_centro" value="#{controlestimuladores.fecha1}" showOn="button"  placeholder="Fecha"/>
+		 	 	 				</b:row>
+		 	 	 				<b:row style="margin-bottom:10px">
+		 	 	 					<h3>Material Utilizado</h3>
+		 	 	 				</b:row>
+		 	 	 				<b:row  style="margin-bottom:10px">
+		 	 	 					<b:column span="2" offset="2" style="margin-bottom:10px">
+		 	 	 					    <b:commandButton look="primary" value="Modificar/Agregar"  type="button"  onclick="PF('agrega_m').show();"/> 
+		 	 	 					</b:column>
+		 	 	 					<b:column span="2" offset="3">
+		 	 	 						<b:commandButton look="danger" value="Quitar"  update = "material_utilizado" actionListener="#{controlestimuladores.quita_elemento}"/>
+							 		</b:column>
+		 	 	 				</b:row>
+								<b:row  style="margin-bottom:10px">
+									<b:column offset="1">
+										<p:dataTable id = "material_utilizado"  paginator="true" rows="5" 
+										paginatorTemplate="{PageLinks} {RowsPerPageDropdown}" class ="tamana_ancho_1"
+										rowsPerPageTemplate="3,6,9"
+										paginatorPosition="bottom" value="#{controlestimuladores.materiales_utlizados}"
+										var="mat_equ_m_uti"  reflow="true" selectionMode="single"  
+										selection="#{controlestimuladores.selecion_mat_utlizados}"   rowKey="#{mat_equ_m_uti.material}" >
+									
+										<p:ajax event="rowSelect" listener="#{controlestimuladores.mostar_Cantidad}"
+									      update="" />
+												
+										<p:column headerText="nombre">
+											<h:outputText value="#{mat_equ_m_uti.material}" />
+										</p:column>
+										
+										<p:column headerText="Serie" style="width:25%;">
+											<h:outputText value="#{mat_equ_m_uti.nSerie}" />
+										</p:column>
+										
+									
+										<p:column headerText="Can." style="width:20%;">
+											<h:outputText value="#{mat_equ_m_uti.cantidad}" />
+										</p:column>
+									</p:dataTable>
+									</b:column>
+								</b:row>
+               					 	
+		 	 	 		</b:container>
+		 	 	 	</b:panel>
+		 	 	 	<b:panel title="Falla Actualización" look="info" class = "alineacion tamana_ancho_5">
+		 	 	 		<b:container fluid="true"  >
+		 	 	 			<b:row>
+		 	 	 				<h3>Actualización</h3>
+		 	 	 			</b:row>
+		 	 	 			<b:row>
+		 	 	 				<p:inputTextarea id = "actualizacion_equipo" rows="1" cols="30"
+									counter="contador_palabras1" maxlength="100" counterTemplate="{0} " 
+									autoResize="false" value="#{controlestimuladores.actualiza_est}"
+									class = "texto_centro"/>
+		 	 	 			</b:row>
+		 	 	 			<b:row>
+		 	 	 				<h:outputText id="contador_palabras1" />
+		 	 	 			</b:row>
+		 	 	 			<b:row>
+		 	 	 				<h3>Falla</h3>
+		 	 	 			</b:row>
+		 	 	 			<b:row>
+		 	 	 				<p:inputTextarea id = "falla_equipo"  rows="4" cols="30" counter="contador_palabras" maxlength="230" 
+								counterTemplate="{0} " autoResize="false" value="#{controlestimuladores.fallas_est}"    class = "texto_centro"/>
+		 	 	 			</b:row>
+		 	 	 			<b:row>
+		 	 	 				<h:outputText id="contador_palabras" />
+		 	 	 			</b:row>
+		 	 	 			<b:row>
+		 	 	 				<b:commandButton look="success" id="caragar_equ" value="Guardar" actionListener="#{controlestimuladores.mantenimiento}" 
+									onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></b:commandButton> 
+		 	 	 			</b:row>
+		 	 	 		</b:container>
+		 	 	 	</b:panel>
+	 </b:panelGrid>
+	 <p:dialog header="Material" widgetVar="agrega_m" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+						<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5" class = "alineacion tamana_ancho_1" >
+							<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" class = "alineacion">
+								 <p:commandButton look="info" id="caragar_mante" value="Cargar" actionListener="#{controlestimuladores.cargar_materiales1}" 
+									 			update = "material_em, serie_mante"></p:commandButton> 
+								<p:inputText id="serie_mante" value="#{controlestimuladores.serie_m_m}" style="width:70%;"  placeholder="Nombre">
+								     <p:ajax event="keyup" update="material_em" listener="#{controlestimuladores.buscar_material_m}" />
+								 </p:inputText>
+									 	</h:panelGrid>
+									 	<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" class = "alineacion">
+									 		<p:commandButton look="success" id="agrega" value="Agregar" actionListener="#{controlestimuladores.cantidad_ocupada}" 
+											 update = "material_utilizado, cantidad_m"></p:commandButton> 
+											<p:inputText id="cantidad_m" value="#{controlestimuladores.se_tulizo}" style="width:70%;"  placeholder="Cantidad">
+												<p:keyFilter regEx="/[\d]/"/>  
+								        	</p:inputText>
+									 	</h:panelGrid>
+
+											 
+										<p:dataTable id = "material_em"  paginator="true" rows="5" 
+										paginatorTemplate="{PageLinks} {RowsPerPageDropdown}" 
+										rowsPerPageTemplate="4,8,12"
+										paginatorPosition="bottom" value="#{controlestimuladores.materiales_m}"
+										var="mat_equ_m"  reflow="true" selectionMode="single"  
+										selection="#{controlestimuladores.selecion_mat_m}"   rowKey="#{mat_equ_m.material}" 
+										>
+										
+										<p:ajax event="rowSelect" listener="#{controlestimuladores.material_ocupado}" 
+										      update=":form_g:form_m1:serie_mante" />
+										      
+											<p:column headerText="nombre">
+												<h:outputText value="#{mat_equ_m.material}" />
+											</p:column>
+											
+											<p:column headerText="Valor">
+											  <h:outputText value="#{mat_equ_m.unidad}" />
+											</p:column>
+											
+											<p:column headerText="Serie">
+											<h:outputText value="#{mat_equ_m.nSerie}" />
+											</p:column>
+											
+										</p:dataTable>
+									  </h:panelGrid>
+								</p:dialog>	
+     </h:form>
+     </c:if>
+     <c:if  test="#{controlestimuladores.tipos_vistas == 3}">
+     <b:panelGrid  columns="2" >
+	 <h:form id="form_mc">
+	 <b:panel title="Datos Material" look="info" class = "alineacion tamana_ancho_5">
+					<b:container fluid="true"  >
+							<b:row  style="margin-bottom:10px" >
+								 <b:column span="2">
+								 	<h:outputLabel  value="Nombre: " />
+								 </b:column>
+								 <b:column span="2"  offset="2">
+								 	<p:inputText  id="material"  value="#{controlestimuladores.material}"  label="material"></p:inputText> 
+								 </b:column>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<b:column span="2">
+									<h:outputLabel  value="Valor: " />
+								</b:column>
+								<b:column span="2"  offset="2">
+									<p:inputText  id="unidad1"  value="#{controlestimuladores.unidad}"  label="unidad1"></p:inputText> 
+								</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<b:column span="2">
+									<h:outputLabel  value="Serie:" />
+								</b:column>
+								<b:column span="2"  offset="2">
+									<p:inputText  id="noseriem"  value="#{controlestimuladores.noserie}"  label="noseriem"></p:inputText> 
+								</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<b:column span="2">
+									<h:outputLabel  value="Cantidad: " />
+								</b:column>
+								<b:column span="2"  offset="2">
+									<p:inputText  id="cantidad"   value="#{controlestimuladores.cantidad}"  label="cantidad">
+			              				<p:keyFilter regEx="/[\d\-\.]/"/>  
+			              			</p:inputText>  
+								</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<b:column span="2">
+									<h:outputLabel  value="Descripción:" />
+								</b:column>
+								<b:column span="2"  offset="2">
+									<p:inputText  id="carac"   value="#{controlestimuladores.modelo}"  label="carac"></p:inputText>  
+								</b:column>
+							</b:row>
+							
+					</b:container>
+				</b:panel> 	
+	 </h:form>
+	 <h:form id = "form_tm">
+	 <b:panel title="Materiales" look="info" class = "alineacion tamana_ancho_2">
+					<b:container fluid="true"  >
+						<b:row  style="margin-bottom:10px" >
+							<b:column span="2">
+								<b:commandButton look="info" id="caragar_mat" value="Cargar" actionListener="#{controlestimuladores.cargar_materiales}" 
+					 				 update = "material_e"
+	            				></b:commandButton> 
+							</b:column>
+							<b:column span="2"  offset="2">
+						     	<p:inputText id="serie_mat" value="#{controlestimuladores.serie_m}"  placeholder="Nombre">
+						     		 <p:ajax event="keyup" update="material_e" listener="#{controlestimuladores.buscar_material}" />
+						        </p:inputText>
+							</b:column>
+						</b:row>
+						<b:row  style="margin-bottom:10px" >
+							<p:dataTable id = "material_e"  paginator="true" rows="5" 
+							paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10,15"
+							paginatorPosition="bottom" value="#{controlestimuladores.materiales}"
+							var="mat_equ"  reflow="true" selectionMode="single"  
+							selection="#{controlestimuladores.selecion_mat}"   rowKey="#{mat_equ.material}" >
+					
+							<p:ajax event="rowSelect" listener="#{controlestimuladores.elige_m}"
+					      	update=":form_g:form_mc:material, :form_g:form_mc:cantidad, :form_g:form_mc:unidad1, :form_g:form_mc:noseriem, :form_g:form_mc:carac" />
+								
+								<p:column headerText="nombre">
+									<h:outputText value="#{mat_equ.material}" />
+								</p:column>
+								<p:column headerText="Valor">
+									<h:outputText value="#{mat_equ.unidad}" />
+								</p:column>
+								<p:column headerText="Serie">
+									<h:outputText value="#{mat_equ.nSerie}" />
+								</p:column>
+							</p:dataTable>
+						</b:row>
+					</b:container>
+				</b:panel>
+	 </h:form>
+	 </b:panelGrid>
+	 </c:if>
+	<c:if  test="#{controlestimuladores.tipos_vistas == 4}">	
+	 <b:panelGrid  columns="4"  class = "alineacion"> 
+		
+			<h:form id="form_his_b">
+			<b:panel title="Equipo" look="info" class = "alineacion tamana_ancho_7">
+						<b:container fluid="true"  >
+							<b:row  style="margin-bottom:10px" >
+								<b:column span="2">
+									<b:commandButton look="info" id="caragar_equh" value="Cargar" actionListener="#{controlestimuladores.cargar_equipoh}" 
+					 				 update = "equiposh"
+	            					></b:commandButton> 
+								</b:column>
+								<b:column span="3" offset="1">
+									<p:inputText id="serie_bh"  value="#{controlestimuladores.serie_bh}"  placeholder="Serie">
+				     				 	<p:ajax event="keyup" update="equiposh" listener="#{controlestimuladores.buscar_equipoh}" />
+				        			</p:inputText>
+								</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<p:dataTable id = "equiposh"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+							 	rowsPerPageTemplate="5,10,15"
+							  	paginatorPosition="bottom" value="#{controlestimuladores.estimuladoresh}"
+							 	var="estim"  reflow="true" selectionMode="single"  
+								selection="#{controlestimuladores.selecion_esth}"   rowKey="#{estim.noserie}" >
+						
+								
+					      
+									<p:column headerText="Serie">
+							        	<h:outputText value="#{controlestimuladores.convertirserie(estim.noserie)}" 
+							        	style="color:#{estim.estatus?'blue':'red'}" />
+							    	</p:column>
+							    	<p:column headerText="Generación">
+							    		<h:outputText value="#{controlestimuladores.convertirgeneracion(estim.noserie)}" 
+							    		style="color:#{estim.estatus?'blue':'red'}" />
+							    	</p:column>
+								</p:dataTable>
+							</b:row>
+						</b:container>
+					</b:panel>
+			</h:form>
+			<h:form id="form_his_m">
+			<b:panel title="Histórico" look="info" class = "alineacion tamana_ancho_1">
+			<b:container fluid="true"  >
+							<b:row  style="margin-bottom:10px" >
+								<h:outputLabel id = "hist_equipo" value="Equipo: #{controlestimuladores.serieh} G : #{controlestimuladores.generacionh}" />
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<h:outputLabel id = "hist_equipo1" value="#{controlestimuladores.selecion_esth.estado}" />
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<p:dataTable id = "mantenimientosh"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="4,8,12,16"
+								paginatorPosition="bottom" value="#{controlestimuladores.his_man}"
+								var="hist"  reflow="true" selectionMode="single"  
+								selection="#{controlestimuladores.man_selec}"   rowKey="#{hist.idmantenimiento}" >
+								
+								
+					      		<p:column headerText="id">
+					      			<h:outputText value="#{hist.idmantenimiento}" />
+					      		</p:column>
+									<p:column headerText="Fecha">
+										<h:outputText value="#{controlestimuladores.convertirFecha(hist.fechamantenimiento)}" />
+					    			</p:column>
+					    			
+								</p:dataTable>
+							</b:row>
+						</b:container> 
+			</b:panel>
+			</h:form>
+				<h:form id="form_his_mx">
+				<p:fragment>
+					<b:panel title="Detalles" look="info" class = "alineacion tamana_ancho_7"> 
+						<b:container fluid="true"  >
+							<b:row  style="margin-bottom:10px" >
+								<b:column span="3">
+									<h:outputLabel  value="Técnico:" />
+								</b:column>
+								<b:column span="6" offset="1">
+									<h:outputLabel  value="#{controlestimuladores.tecnico_m}" />
+								</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+							
+									<h:outputLabel  value="#{controlestimuladores.fallas_hist}" />
+								
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<h:outputLabel  value="Material Utilizado" />
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<p:dataTable id = "material_utilizado"  paginator="true" rows="5" 
+										paginatorTemplate="{PageLinks} {RowsPerPageDropdown}" class ="tamana_ancho_1"
+										rowsPerPageTemplate="3,6,9"
+										paginatorPosition="bottom" value="#{controlestimuladores.materiales_utlizados}"
+										var="mat_equ_m_uti_h"  reflow="true" selectionMode="single"  
+										selection="#{controlestimuladores.selecion_mat_utlizados}"   rowKey="#{mat_equ_m_uti_h.material}" >
+									
+												
+										<p:column headerText="nombre">
+											<h:outputText value="#{mat_equ_m_uti_h.material}" />
+										</p:column>
+										
+										<p:column headerText="Serie" style="width:25%;">
+											<h:outputText value="#{mat_equ_m_uti_h.nSerie}" />
+										</p:column>
+										
+									
+										<p:column headerText="Can." style="width:20%;">
+											<h:outputText value="#{mat_equ_m_uti_h.cantidad}" />
+										</p:column>
+									</p:dataTable>
+							</b:row>
+							<b:row  style="margin-bottom:10px" >
+							
+								<b:commandButton look="primary" value="Ver"  type="button"  onclick="PF('edetalles').show();"/> 
+						
+							</b:row>
+							
+						</b:container>
+					</b:panel>
+				</p:fragment>
+				 <p:dialog header="Detalles" widgetVar="edetalles" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+					 <b:container fluid="true"  >
+					 <b:row  style="margin-bottom:10px" >
+					 	<b:column span="2">
+					 		<h:outputLabel  value="Fecha:" />
+					 	</b:column>
+					 	<b:column span="10">
+					 		<h:outputLabel  value="Día: #{controlestimuladores.fech_his}  Hora: #{controlestimuladores.hora_his}" />
+					 	</b:column>
+					 	</b:row>
+						<b:row  style="margin-bottom:10px" >
+						<b:column span="2">
+							<h:outputLabel  value="Actualización: " />
+						</b:column>
+						<b:column span="10">
+							<h:outputLabel  value="#{controlestimuladores.fallas_hist}" />
+						</b:column>
+					 		
+					 	</b:row>
+					 </b:container>
+					 <b:row  style="margin-bottom:10px" >
+					 <b:column span="1" offset="1">
+							<h:outputLabel  value="Falla: " />
+						</b:column>
+					 <b:column span="10">
+					 	 <h:outputLabel  value="#{controlestimuladores.actualiza_hist}"  />
+					 </b:column>
+					 
+					 </b:row>
+				 </p:dialog>
+			</h:form>
+			<b:panel title="Lugar del evento" look="info" class = "alineacion tamana_ancho_7">
+					<b:openStreetMap id = "emapa1" width="100%" height="300px"
+        				center="#{controlestimuladores.elat},#{controlestimuladores.elog}" marker="#{controlestimuladores.elat},#{controlestimuladores.elog}"
+       					popupMsg="#{controlestimuladores.elat},#{controlestimuladores.elog}"
+        				zoom="14"
+        				dragging= "true"
+        				zoomGlobal = "true"
+        				urlTemplate="https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png" />
+				</b:panel>
+	</b:panelGrid>
+	</c:if>		
+
 </h:form>
-</b:container>
+
 </h:body>
 </html>
