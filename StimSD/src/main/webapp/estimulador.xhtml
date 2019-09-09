@@ -240,7 +240,7 @@
      </c:if>
      <c:if  test="#{controlestimuladores.tipos_vistas == 2}">
      <h:form id="form_m1">
-     <h1>
+     <h1 style="text-align: center">
 	 	<b:label id = "equi_m" style="margin-bottom:10px" text="Equipo: #{controlestimuladores.serie} G : #{controlestimuladores.generacion}" severity="primary"/> 
 	 </h1>
 	 <b:panelGrid  columns="3" >
@@ -545,6 +545,12 @@
 							<b:row  style="margin-bottom:10px" >
 								<h:outputLabel id = "hist_equipo1" value="#{controlestimuladores.selecion_esth.estado}" />
 							</b:row>
+							<b:row  style="margin-bottom:10px">
+									<b:selectOneMenu  id="onda_c"   >
+	        							<f:selectItem itemLabel="Fecha" itemValue="Fecha" />
+	            						<f:selectItem itemLabel="Hora" itemValue="Hora" />
+	         						</b:selectOneMenu>
+								</b:row>
 							<b:row  style="margin-bottom:10px" >
 								<p:dataTable id = "mantenimientosh"  paginator="true" rows="5" 
 								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
