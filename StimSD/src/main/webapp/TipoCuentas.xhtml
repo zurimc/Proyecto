@@ -182,9 +182,11 @@
 				              		</p:inputText> 
 								</b:column>
 							</b:row>
+							<c:if  test="#{gestiondeSeccionView.userDTO.idtipo == 1}">
 							<b:row style="margin-bottom:10px">
 								<b:column span="2">
 									<p:outputLabel value="Tipo:" />	
+									
 								</b:column>
 								<b:column span="4"  offset="2">
 									<p:selectOneMenu id="usuario_user" value="#{registroUsuario.tipoUsuario1}">
@@ -204,6 +206,7 @@
 								  	</b:switch>
 								</b:column>
 							</b:row>
+							</c:if>
 						</b:container>
 					</b:panel>
 				</c:if>

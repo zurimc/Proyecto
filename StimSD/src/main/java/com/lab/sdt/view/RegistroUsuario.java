@@ -1,8 +1,10 @@
 package com.lab.sdt.view;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -365,6 +367,7 @@ public int registroUsuario(int tipo,int id_user) throws Exception{
 	}
  return id_user_1;
 }
+
 public void tipo_cuenta_1() {
 	tipo_menu = 1;
 }

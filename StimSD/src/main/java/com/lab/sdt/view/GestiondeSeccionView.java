@@ -57,6 +57,25 @@ public class GestiondeSeccionView implements Serializable{
 		}
 		return userDTO;
 	}
+	public int obtenertipouser(){
+		System.out.println("Entro a obtenerUsuarioEnSesion");
+		int  tipo_s = 0;
+		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+		if(!ec.isResponseCommitted()){
+			try {
+				Map<String, Object> session = ec.getSessionMap();
+				userDTO = (Usuario)session.get("usuario");
+				tipo_s = userDTO.getIdtipo();
+				if(userDTO == null){
+					ec.invalidateSession();
+					ec.redirect("login.xhtml");
+				}
+			} catch (IOException e) {
+				MensajeG.mostrar("No se pudo obtener al usuario y ocurrió un error al redirigir", FacesMessage.SEVERITY_FATAL);
+			}
+		}
+		return tipo_s;
+	}
 	public void cerrarSesionUsuario(){
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
 		if(!ec.isResponseCommitted()){
