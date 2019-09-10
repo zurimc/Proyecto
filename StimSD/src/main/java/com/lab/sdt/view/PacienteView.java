@@ -2,6 +2,8 @@ package com.lab.sdt.view;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,12 +14,18 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.LineChartModel;
+import org.primefaces.model.chart.LineChartSeries;
 
 import com.lab.sdt.model.Enfermedad;
 import com.lab.sdt.model.Equipo;
+import com.lab.sdt.model.ExpeEstim;
 import com.lab.sdt.model.Expediente;
 import com.lab.sdt.model.Hospital;
 import com.lab.sdt.model.Parametro;
+import com.lab.sdt.model.Ubicacion;
 import com.lab.sdt.model.Usuario;
 import com.lab.sdt.service.ConsultaOnda;
 import com.lab.sdt.service.ConsultaUsuarios;
@@ -72,6 +80,8 @@ public class PacienteView implements Serializable {
 	
 	private int idpaciente;
 	
+	private int pdosisexp;
+	
 	private String pbotoncrearv;
 	
 	@ManagedProperty("#{consultaUsuarios}")
@@ -88,6 +98,16 @@ public class PacienteView implements Serializable {
 	private Usuario seleccion_medico;
 	
 	private Usuario seleccion_user;
+	
+	protected List<Double> valores_g_p;
+	 
+	private double pafrecueciaj_p;
+
+    private double paamplitudj_p = 5;
+    
+    private double patiempoj_p;
+
+	private  double[] valores;
 	
 	@ManagedProperty("#{hospitalService}")
 	public HospitalService hospitalService;
@@ -143,8 +163,30 @@ public class PacienteView implements Serializable {
 	private String buscar_parametrosstring;
 
 	private String parametrosstring;
+	
+	private List<ExpeEstim> expeestimes;
+	
+	private ExpeEstim seleccion_expeestim;
+
+    private String exlat;
+    
+    private String exlog;
+
+    private String nombre_onda;
+    
+    private String nombre_onda_ubica;
+
+	 private LineChartModel lineModel1;
+	 
+	 private LineChartModel zoomModel;
+	   
+	 private String estimulos_empreados;
+	 
+
 	@PostConstruct
 	public void init(){
+		valores = new double[300];
+		valores_g_p = new ArrayList<Double>();
 		cuentas = new ArrayList<Usuario>();
 		enfermedadesitem = new ArrayList<SelectItem>();
 		expedientes = new ArrayList<Expediente>();
@@ -156,11 +198,28 @@ public class PacienteView implements Serializable {
 		seleccion_hospital = new Hospital();
 		selecion_estimulador = new Equipo();
 		
-		//tipos_vistas = 1;
-		carga_user_todo();
-		//muestra_pacientes();
-	}
+		seleccion_expeestim = new ExpeEstim();
+		
 
+		//tipos_vistas = 0;
+		carga_user_todo();
+		
+		//carga_valores1(1) ;
+		 //agrega_valores(5);
+		//muestra_pacientes();
+		createLineModels(5);
+	}
+public String conviertetipouser(String partes) {
+	String regresa_tipo = "";
+	estimulos_empreados = "";
+	try {
+		String[] partes_serie =partes.split(";");
+		regresa_tipo = partes_serie[0];
+		estimulos_empreados = partes_serie[1];
+	}catch(Exception e){}
+	
+	return regresa_tipo;
+}
 	public void carga_user_todo() {
 		cargar_tipos_user(tipopaciente);
 		pacientes = cuentas;
@@ -241,6 +300,7 @@ public class PacienteView implements Serializable {
 		setPnombrev(getPnombrev());
 		setPfoliov(getPfoliov());
 		setExestatus(isExestatus());
+		setPdosisexp(getPdosisexp());
 	}
 	public void selecion_de_paciente() {
 		try {
@@ -315,6 +375,20 @@ public class PacienteView implements Serializable {
 			RequestContext.getCurrentInstance().execute("PF('ptableenfermedad').hide();");
 
 	}
+	public void asignar_ubicacion() {
+		Ubicacion  ubicaex = new Ubicacion(); 
+		ubicaex = u_pacientesService.ubica(seleccion_expeestim.getIdestimulacion());
+		setExlat(ubicaex.getLatitud());
+		setExlog(ubicaex.getLonguitud());
+		setPafrecueciaj_p(Double.parseDouble(ubicaex.getFrecuencia()));
+		setPatiempoj_p(Double.parseDouble(ubicaex.getTiempo()));
+		setPaamplitudj_p(Double.parseDouble(ubicaex.getAmplitud()));
+		//conviertetipouser(seleccion_expeestim.getClinica());
+		try {	
+			setNombre_onda_ubica(u_pacientesService.regresa_onda_nombre(Integer.parseInt(ubicaex.getOndaP2())).getNombre());
+		}catch(Exception e) {}
+		
+	}
 	public void asignacion_expediente() {
 		try {
 
@@ -330,7 +404,20 @@ public class PacienteView implements Serializable {
             idequipoex = selecion_estimulador.getIdequipo();
 			
             seleccion_parametro = consultaOnda.parametroporkey(seleccion_expediente.getIdparametroexp());
+            
 			idparametroex = seleccion_parametro.getIdparametro();
+			try {
+				carga_valores1(seleccion_parametro.getIdonda()) ;
+				setNombre_onda(seleccion_parametro.getNombre());
+				 agrega_valores(Double.parseDouble(seleccion_parametro.getAmplitud()));
+				 createLineModels(Double.parseDouble(seleccion_parametro.getAmplitud()));
+			}catch(Exception e) {MensajeG.mostrar("Error al cargar expediente: "+e.toString(), FacesMessage.SEVERITY_ERROR);}
+			
+			try {
+				expeestimes = u_pacientesService.lista_historico_expediente(seleccion_expediente.getIdexpediente());
+				
+			}catch(Exception e) {}
+			
 			
 			setPdescripcionv(seleccion_expediente.getDescripcion());
 			setPnombrequipov(convertirserie(selecion_estimulador.getNoserie())+"  "+convertirgeneracion(selecion_estimulador.getNoserie()));
@@ -344,6 +431,12 @@ public class PacienteView implements Serializable {
 			
 			
 			setParametrosstring(seleccion_parametro.getNombre());
+			try {
+				setPdosisexp(seleccion_expediente.getDosis());
+				
+			}catch(Exception e) {setPdosisexp(0);}
+			
+			
 			
 			if(seleccion_expediente.getEstatus().equals("true")) {setExestatus(true);}else {setExestatus(false);}
 			
@@ -367,6 +460,30 @@ public class PacienteView implements Serializable {
 			MensajeG.mostrar("Selecciones un expediente", FacesMessage.SEVERITY_WARN);
 		}
 	}
+	public void vista_ver_expedeinte() {
+		if(seleccion_expediente != null) {
+			tipos_vistas = 0;
+			asignacion_expediente();
+	
+		}else {
+			MensajeG.mostrar("Selecciones un expediente", FacesMessage.SEVERITY_WARN);
+		}
+	}
+
+    private void carga_valores1(int idOnda) {
+   	 double[] val = consultaOnda.valores_onda(idOnda);
+   	 
+   	 for(int ii =0; ii<= val.length-1; ii++) {
+   		 valores[ii] = val[ii];
+   	 }
+    }
+    private void  agrega_valores(double paamplitudj1) {
+   	 valores_g_p.clear();
+   	 setPaamplitudj_p(paamplitudj1);
+    	 for(int ii =0; ii<= 260; ii++) {
+    		 valores_g_p.add((paamplitudj1*(valores[ii]-130)/(29)/5));
+    	 } 
+    }
 	public void vista_crear_expediente() {
 		if(pnombrev.trim().length()>0) {
 			if(pfoliov.trim().length()>0) {
@@ -395,9 +512,7 @@ public class PacienteView implements Serializable {
 		}
 		
 	}
-	public void vista_modifica_expediente() {
-		
-	}
+
 	public void buscar_parametros() {
 		if(buscar_parametrosstring.trim().length()>0) {
 			 try {
@@ -490,6 +605,10 @@ public class PacienteView implements Serializable {
 						 }else {
 							// MensajeG.mostrar(listex.size()+";"+seleccion_paciente.getIdusuario(), FacesMessage.SEVERITY_WARN);
 							u_pacientesService.insertaExpediente(expediente_g);
+							Equipo cambiae =  estimuladorService.encuentra_por_id(expediente_g.getIdequipo());
+							int resta_e = Integer.parseInt(cambiae.getTipo()) - expediente_g.getDosis(); 
+							cambiae.setTipo(resta_e+"");
+							estimuladorService.actualizarequipo(cambiae);
 							MensajeG.mostrar("Expedinte: "+expediente_g.getNombre()+ " con folio "+expediente_g.getNoexpediente() +" Registrado", FacesMessage.SEVERITY_INFO);
 						 }
 
@@ -503,7 +622,10 @@ public class PacienteView implements Serializable {
 					expediente_g.setIdexpediente(seleccion_expediente.getIdexpediente());
 					u_pacientesService.modificaExpediente(expediente_g);
 					seleccion_expediente = expediente_g;
-					
+					Equipo cambiae =  estimuladorService.encuentra_por_id(expediente_g.getIdequipo());
+					int resta_e = Integer.parseInt(cambiae.getTipo()) - expediente_g.getDosis(); 
+					cambiae.setTipo(resta_e+"");
+					estimuladorService.actualizarequipo(cambiae);
 					MensajeG.mostrar("Expedeitne: "+expediente_g.getNombre()+ " con folio "+expediente_g.getNoexpediente() +" Modificado", FacesMessage.SEVERITY_INFO);
 				}catch(Exception e) {
 					MensajeG.mostrar(e.toString()+" id: "+expediente_g.getIdexpediente(),FacesMessage.SEVERITY_INFO);
@@ -522,17 +644,29 @@ public class PacienteView implements Serializable {
 							 if(idhospitalex>0) {
 								 if(idequipoex>0) {
 									 if(idparametroex>0) {
-										 expediente_g.setNoexpediente(getPfoliov1());
-										 expediente_g.setNombre(getPnombrev1());
-										 expediente_g.setIdusuario(idpacienteex);
-										 expediente_g.setIdenfermedad(idenfermedadex);
-										 expediente_g.setIdmedico(idmedicoex);
-										 expediente_g.setIdhospital(idhospitalex);
-										 expediente_g.setIdequipo(idequipoex);
-										 expediente_g.setDescripcion(getPdescripcionv());
-										 if(isExestatus()) {expediente_g.setEstatus("true");}else {expediente_g.setEstatus("false");}
-										 expediente_g.setIdparametroexp(idparametroex);
-										 ok_em = true;
+										 int num_equi_Est = 0;
+										 try {
+											 num_equi_Est = Integer.parseInt(estimuladorService.encuentra_por_id(idequipoex).getTipo()); 
+										 }catch(Exception e) {}
+										  if(num_equi_Est>=getPdosisexp()) {
+												 expediente_g.setDosis(getPdosisexp());
+												 expediente_g.setNoexpediente(getPfoliov1());
+												 expediente_g.setNombre(getPnombrev1());
+												 expediente_g.setIdusuario(idpacienteex);
+												 expediente_g.setIdenfermedad(idenfermedadex);
+												 expediente_g.setIdmedico(idmedicoex);
+												 expediente_g.setIdhospital(idhospitalex);
+												 expediente_g.setIdequipo(idequipoex);
+												 expediente_g.setDescripcion(getPdescripcionv());
+												
+												 if(isExestatus()) {expediente_g.setEstatus("true");}else {expediente_g.setEstatus("false");}
+												 expediente_g.setIdparametroexp(idparametroex);
+												 ok_em = true;
+											  
+										  }else {
+												 MensajeG.mostrar("la dosis debe de ser menos o igual a "+num_equi_Est, FacesMessage.SEVERITY_ERROR); 
+											 }
+
 									 }else {
 										 MensajeG.mostrar("Seleccione Parametro", FacesMessage.SEVERITY_ERROR); 
 									 }
@@ -560,6 +694,15 @@ public class PacienteView implements Serializable {
 		 }
 		return ok_em;
 	}
+	public boolean estado_ubicacion(int idkey) {
+		boolean res_ubi = false;
+		Ubicacion  ubicaex = new Ubicacion(); 
+		ubicaex = u_pacientesService.ubica(idkey);
+		if(ubicaex.getEstatus().equals("true")) {
+			res_ubi = true;
+		}
+		return res_ubi;
+	}
 	public String convertirserie(String serie){
 		String[] partes_serie = serie.split(";");
 		return partes_serie[0];
@@ -586,10 +729,70 @@ public class PacienteView implements Serializable {
 		
 		
 	}
+	public String convertirFecha(Date fecha){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(fecha);
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int month = cal.get(Calendar.MONTH)+1;
+		return (day<10?"0"+day:day)+"/"+ (month<10?"0"+month:month) +"/"+cal.get(Calendar.YEAR);
+	}
+	public String convertirHora(Date fecha){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(fecha);
+		int min = cal.get(Calendar.MINUTE);
+		int hour = cal.get(Calendar.HOUR_OF_DAY);
+		int second = cal.get(Calendar.SECOND);
+		return (hour<10?"0"+hour:hour)+":"+ (min<10?"0"+min:min)+ ":"+(second<10?"0"+second:second);
+	}
 	public int getTipos_vistas() {
 		return tipos_vistas;
 	}
 
+	private void createLineModels(double ampli) {
+	        lineModel1 = initLinearModel(ampli);
+	        lineModel1.setTitle("Señal de estimulación");
+	        lineModel1.setLegendPosition("e");
+	        Axis yAxis = lineModel1.getAxis(AxisType.Y);
+	        yAxis.setMin(-5);
+	        yAxis.setMax(5);
+
+	 
+	        zoomModel = initLinearModel(ampli);
+	        zoomModel.setTitle("Zoom");
+	        zoomModel.setZoom(true);
+	        zoomModel.setLegendPosition("e");
+	        yAxis = zoomModel.getAxis(AxisType.Y);
+	        yAxis.setMin(-5);
+	        yAxis.setMax(5);
+	    }
+	 
+	 private LineChartModel initLinearModel(double ampli) {
+		 LineChartModel model = new LineChartModel();
+		 
+	        LineChartSeries series1 = new LineChartSeries();
+	        series1.setLabel("Señal oriogina");
+	      	 for(int ii =0; ii<= 260; ii++) {
+	      		series1.set(ii,ampli*((valores[ii]-130)/29)/5);
+	       	 }
+	        
+	      	/*LineChartSeries series2 = new LineChartSeries();
+	        series2.setLabel("Series de estimulo");
+	 
+	        
+	        series2.set(1, 2);
+	        series2.set(2, 3);
+	        series2.set(3, 1);
+	        series2.set(4, 2);
+	        series2.set(5, 1);
+	 
+	 		model.addSeries(series2);*/
+	       
+	        model.addSeries(series1);
+	        
+	 
+	        return model;
+	    }
+	 
 	public void setTipos_vistas(int tipos_vistas) {
 		this.tipos_vistas = tipos_vistas;
 	}
@@ -887,5 +1090,112 @@ public class PacienteView implements Serializable {
 		this.parametrosstring = parametrosstring;
 	}
 
+	public List<Double> getValores_g_p() {
+		return valores_g_p;
+	}
+
+	public void setValores_g_p(List<Double> valores_g_p) {
+		this.valores_g_p = valores_g_p;
+	}
+
+	public double getPafrecueciaj_p() {
+		return pafrecueciaj_p;
+	}
+
+	public void setPafrecueciaj_p(double pafrecueciaj_p) {
+		this.pafrecueciaj_p = pafrecueciaj_p;
+	}
+
+	public double getPaamplitudj_p() {
+		return paamplitudj_p;
+	}
+
+	public void setPaamplitudj_p(double paamplitudj_p) {
+		this.paamplitudj_p = paamplitudj_p;
+	}
+
+	public double getPatiempoj_p() {
+		return patiempoj_p;
+	}
+
+	public void setPatiempoj_p(double patiempoj_p) {
+		this.patiempoj_p = patiempoj_p;
+	}
+
 	
+	public List<ExpeEstim> getExpeestimes() {
+		return expeestimes;
+	}
+
+	public void setExpeestimes(List<ExpeEstim> expeestimes) {
+		this.expeestimes = expeestimes;
+	}
+
+	public ExpeEstim getSeleccion_expeestim() {
+		return seleccion_expeestim;
+	}
+
+	public void setSeleccion_expeestim(ExpeEstim seleccion_expeestim) {
+		this.seleccion_expeestim = seleccion_expeestim;
+	}
+
+	public String getExlat() {
+		return exlat;
+	}
+
+	public void setExlat(String exlat) {
+		this.exlat = exlat;
+	}
+
+	public String getExlog() {
+		return exlog;
+	}
+
+	public void setExlog(String exlog) {
+		this.exlog = exlog;
+	}
+	public String getNombre_onda() {
+		return nombre_onda;
+	}
+
+	public void setNombre_onda(String nombre_onda) {
+		this.nombre_onda = nombre_onda;
+	}
+
+	public String getNombre_onda_ubica() {
+		return nombre_onda_ubica;
+	}
+
+	public void setNombre_onda_ubica(String nombre_onda_ubica) {
+		this.nombre_onda_ubica = nombre_onda_ubica;
+	}
+	 public LineChartModel getLineModel1() {
+			return lineModel1;
+		}
+
+		public void setLineModel1(LineChartModel lineModel1) {
+			this.lineModel1 = lineModel1;
+		}
+
+		public LineChartModel getZoomModel() {
+			return zoomModel;
+		}
+
+		public void setZoomModel(LineChartModel zoomModel) {
+			this.zoomModel = zoomModel;
+		}
+		public int getPdosisexp() {
+			return pdosisexp;
+		}
+
+		public void setPdosisexp(int pdosisexp) {
+			this.pdosisexp = pdosisexp;
+		}
+		public String getEstimulos_empreados() {
+			return estimulos_empreados;
+		}
+		public void setEstimulos_empreados(String estimulos_empreados) {
+			this.estimulos_empreados = estimulos_empreados;
+		}
+
 }

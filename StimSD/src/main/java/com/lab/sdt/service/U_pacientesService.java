@@ -10,11 +10,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lab.sdt.dao.EnfermedadMapper;
+import com.lab.sdt.dao.ExpeEstimMapper;
 import com.lab.sdt.dao.ExpedienteMapper;
+import com.lab.sdt.dao.NumOndaMapper;
+import com.lab.sdt.dao.OndaMapper;
+import com.lab.sdt.dao.UbicacionMapper;
 import com.lab.sdt.model.Enfermedad;
 import com.lab.sdt.model.EnfermedadExample;
+import com.lab.sdt.model.ExpeEstim;
 import com.lab.sdt.model.Expediente;
 import com.lab.sdt.model.ExpedienteExample;
+import com.lab.sdt.model.NumOnda;
+import com.lab.sdt.model.Onda;
+import com.lab.sdt.model.Ubicacion;
 
 @Service
 @Transactional
@@ -25,6 +33,18 @@ public class U_pacientesService {
 	
 	@Autowired
 	private ExpedienteMapper expedienteMapper;
+	
+	@Autowired
+	private ExpeEstimMapper expeEstimMapper;
+	
+	@Autowired
+	private UbicacionMapper ubicacionMapper;
+	
+	@Autowired
+	private OndaMapper ondaMapper;
+	
+	@Autowired
+	private NumOndaMapper numOndaMapper;
 	
 	public List<Enfermedad> lista_enfermedad(){
 		  List<Enfermedad> list_en = new ArrayList<Enfermedad>();
@@ -50,4 +70,14 @@ public class U_pacientesService {
 	public void modificaExpediente(Expediente exp) {
 		expedienteMapper.updateByPrimaryKey(exp);
 	}
+	public List<ExpeEstim> lista_historico_expediente(int idExpe){
+		return expeEstimMapper.selectByidExpediente(idExpe);
+	}
+	public Ubicacion ubica(int idkey){
+		return ubicacionMapper.selectByPrimaryKey(idkey);
+	}
+	public NumOnda regresa_onda_nombre(int idkey) {
+		return numOndaMapper.selectByidOnda(idkey).get(0);
+	}
+
 }

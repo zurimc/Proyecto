@@ -233,7 +233,9 @@
 	            </p:inputText> 
                 </b:column>
               </b:row>
-            	<b:commandButton look="primary" value="QR"  type="button"  onclick="PF('qr_m').show();"/> 
+            	<p:dialog header="Qr del equipo" widgetVar="qr_m" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+				 	<p:barcode value="#{controlestimuladores.qr_equipo}" type="qr" id="qr2" style="width:250px;height:250px;"/>
+				</p:dialog>
 			</b:container>
 			</b:panel> 
      </b:panelGrid>
