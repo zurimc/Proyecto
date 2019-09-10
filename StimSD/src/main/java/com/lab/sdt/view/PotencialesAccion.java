@@ -50,6 +50,7 @@ public class PotencialesAccion  implements Serializable {
     private String panombrej1;
     
     private String pabnombreequipov;
+    private int idequipoon = 0;
     
     private  double[] valores;
 	@ManagedProperty("#{consultaOnda}")
@@ -299,7 +300,28 @@ public class PotencialesAccion  implements Serializable {
     	 carga_valores();
     	 agrega_valores(getPaamplitudj());
      }
+ 	@SuppressWarnings("deprecation")
+ 	public void asignacion_parametros_onda() {
+ 		idequipoon = seleccion_parametro.getIdparametro();
+ 		setPabnombreparametrosv(seleccion_parametro.getNombre());
+ 		RequestContext.getCurrentInstance().execute("PF('ptablaequipo').hide();");
+ 	}
+     public void cargar_parametros_onda() {
+ 		parametros_list = new ArrayList<Parametro>();
+ 		parametros_list.clear();
+ 		try {
+ 			parametros_list = consultaOnda.parametros_equipo(idequipoon);
+ 		}catch(Exception e) {
 
+ 		}
+ 	}
+ 	public void asignacion_equipoondas() {
+ 		idequipoon = selecion_estimulador.getIdequipo();
+		cargar_parametros_onda();
+		setPabnombreequipov(convertirserie(selecion_estimulador.getNoserie())+"  "+convertirgeneracion(selecion_estimulador.getNoserie()));
+			
+
+	}
 	public List<SelectItem> getGeneral() {
 		return general;
 	}
@@ -427,6 +449,30 @@ public class PotencialesAccion  implements Serializable {
 	}
 	public void setIdequipopa(int idequipopa) {
 		this.idequipopa = idequipopa;
+	}
+	public int getIdequipoon() {
+		return idequipoon;
+	}
+	public void setIdequipoon(int idequipoon) {
+		this.idequipoon = idequipoon;
+	}
+	public int getIdparametros() {
+		return idparametros;
+	}
+	public void setIdparametros(int idparametros) {
+		this.idparametros = idparametros;
+	}
+	public Parametro getParametro_g() {
+		return parametro_g;
+	}
+	public void setParametro_g(Parametro parametro_g) {
+		this.parametro_g = parametro_g;
+	}
+	public int getIdTipoOndapase() {
+		return idTipoOndapase;
+	}
+	public void setIdTipoOndapase(int idTipoOndapase) {
+		this.idTipoOndapase = idTipoOndapase;
 	}
 
 	

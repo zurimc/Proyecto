@@ -22,8 +22,8 @@
 	   <h:form styleClass="navbar-form navbar-right" >
  		<b:dropButton value="STIM-SD"  inverse="true" look="info" >
 		<b:navCommandLink icon-spin="true" icon="cd" value = "Expediente"    onclick="PF('pexpedientemodi').show();"></b:navCommandLink>	
-			<b:navCommandLink icon="cog" spin="true" value = "Crear expediente"    onclick="PF('pexpediente').show();"></b:navCommandLink>
-    	
+		<b:navCommandLink icon="cog" spin="true" value = "Crear expediente"    onclick="PF('pexpediente').show();"></b:navCommandLink>
+			
 		</b:dropButton>
 		</h:form> 
 </b:tabLinks>
@@ -114,11 +114,9 @@
 </h:head>
 
 <h:body style= "background-color: #ecf2f5">
-<h:form   id = "form_g" class = "tamana_ancho_8" >
-
-<h:form id = "form_g_p">
-<b:container fluid="true">
-	<b:panelGrid  columns="3" colSpans="4,4,4"   >
+<h:form   id = "form_g_p" class = "tamana_ancho_8" >
+<c:if  test="#{pacienteView.tipos_vistas == 0}">
+				<b:panelGrid  columns="3" colSpans="4,4,4"   >
 					<b:container fluid="true"  >
 						<b:panel title="Expediente" look="info" id  ="estim_espe" >
 							<b:row  style="margin-bottom:10px;" >
@@ -126,7 +124,7 @@
 					 					<h:outputLabel  value="Paciente:"/>
 					 			</b:column>
 					 			<b:column span="7" offset = "1">
-					 					<h:outputLabel id="verpacient" />
+					 					<h:outputLabel id="verpacient" value="#{pacienteView.pnombrepacientev}"/>
 					 			</b:column>
 							</b:row>
 							<b:row  style="margin-bottom:15px;" >
@@ -134,7 +132,7 @@
 					 					<h:outputLabel  value="Enfermedad:"/>
 					 			</b:column>
 					 			<b:column span="7" offset = "1">
-					 					<h:outputLabel  />
+					 					<h:outputLabel  value="#{pacienteView.pnombreenfermedadav}"/>
 					 			</b:column>
 							</b:row>
 							<b:row  style="margin-bottom:15px;" >
@@ -142,7 +140,7 @@
 					 				<h:outputLabel  value="Médico:"/>
 					 			</b:column>
 					 			<b:column span="7" offset = "1">
-					 				<h:outputLabel />
+					 				<h:outputLabel  value="#{pacienteView.pnombremedicov}"/>
 					 			</b:column>
 							</b:row>
 							<b:row  style="margin-bottom:15px;" >
@@ -150,7 +148,7 @@
 					 				<h:outputLabel  value="Equipo:"/>
 					 			</b:column>
 					 			<b:column span="7" offset = "1">
-					 				<h:outputLabel  />
+					 				<h:outputLabel  value="#{pacienteView.pnombrequipov}"/>
 					 			</b:column>
 							</b:row>
 							<b:row  style="margin-bottom:15px;" >
@@ -158,7 +156,7 @@
 					 				<h:outputLabel  value="Potencial:"/>
 					 			</b:column>
 					 			<b:column span="7" offset = "1">
-					 				<h:outputLabel />
+					 				<h:outputLabel  value="#{pacienteView.nombre_onda}"/>
 					 			</b:column>
 							</b:row>
 							<b:row  style="margin-bottom:10px;" >
@@ -170,17 +168,26 @@
 					<b:container fluid="true"  >
 						<b:panel title="Fechas de Estimulación" look="info" id  ="estim_espe_fecha" >
 							<b:row  style="margin-bottom:10px;" >
-								<p:dataTable  id = "expe_estim_his" 
+								<p:dataTable  id = "expe_estim_his"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								paginatorPosition="bottom" value="#{pacienteView.expeestimes}"
+								var="espe"  reflow="true" selectionMode="single"  
+								selection="#{pacienteView.seleccion_expeestim}"  rowKey="#{espe.idestimulacion}" 
 								>
-								
+								<p:ajax event="rowSelect" listener="#{pacienteView.asignar_ubicacion}"
+								update=":form_g_p:exmapa2, :form_g_p:veramplitud, :form_g_p:verfrecuencia, :form_g_p:vertiempo, :form_g_p:versenal, :form_g_p:verestmin" />
 									<p:column headerText="Fecha">
-										<h:outputText />
+										<h:outputText value="#{pacienteView.convertirFecha(espe.fechaestimulacion)}" 
+										style="color:#{pacienteView.estado_ubicacion(espe.idestimulacion)?'blue':'red'}" />
 									</p:column>
 									<p:column headerText="Hora">
-										<h:outputText  />
+										<h:outputText value="#{pacienteView.convertirHora(espe.fechaestimulacion)}"
+										style="color:#{pacienteView.estado_ubicacion(espe.idestimulacion)?'blue':'red'}" />
 									</p:column>
 									<p:column headerText="Tipo">
-									<h:outputText />
+									<h:outputText value="#{pacienteView.conviertetipouser(espe.clinica )}"
+									style="color:#{pacienteView.estado_ubicacion(espe.idestimulacion)?'blue':'red'}"/>
 									</p:column>
 								</p:dataTable>
 							</b:row>
@@ -194,18 +201,27 @@
 						    <h:outputText value="Ubicación " />
 						  </f:facet>
 						<b:row  style="margin:10px;" >
-							
+								<b:openStreetMap id = "exmapa2" width="100%" height="300px"
+		        				center="#{pacienteView.exlat},#{pacienteView.exlog}" marker="#{pacienteView.exlat},#{pacienteView.exlog}"
+		       					popupMsg="#{pacienteView.exlat},#{pacienteView.exlog}"
+		        				zoom="14"
+		        				dragging= "true"
+		        				zoomGlobal = "true"
+		        				urlTemplate="https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png" />
 		        				</b:row>
-								<b:row  style="margin-bottom:10px;" >
+							<b:row  style="margin-bottom:10px;" >
 								<b:commandButton icon-spin="true" icon="glyphicon-pencil" look="info" id="pverdetalles" value="Detalles" 
-								type="button"
+								type="button" style="margin-left:30px"
 					 			onclick="PF('exdetallesubi').show();"/>
 							</b:row>
 						</b:panel>
 					</b:container>
 				</b:panelGrid>
+</c:if>
 <!-- ingresar o modificar expediente -->
-		<b:panelGrid  columns="3"   >
+
+<c:if  test="#{pacienteView.tipos_vistas == 1 || pacienteView.tipos_vistas == 2}">
+				<b:panelGrid  columns="3"   >
 					 <b:panel title="Configuración" look="info" id  ="pagrega" class = "alineacion tamana_ancho_0">
 					 	<b:container fluid="true"  >
 					 		<b:row  style="margin-bottom:1px" >
@@ -555,7 +571,7 @@
 					</b:container>
 				</p:dialog>
 	</c:if>
-<!-- Crea Expedietne -->
+	<!-- Crea Expedietne -->
 			<p:dialog header="Expediente" widgetVar="pexpediente" showEffect="explode" hideEffect="bounce" height="100"  modal="true" >
 				 	 <b:container fluid="true"  >
 				 	 	<b:row  style="margin-bottom:25px" >
@@ -702,10 +718,7 @@
 					</b:container>
 				</b:panelGrid>
  			</p:dialog>
- 												
-</b:container>
-	
-</h:form>	 
+ 				
 </h:form>
 </h:body>
 </html>

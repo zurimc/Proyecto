@@ -20,12 +20,7 @@
 	   		<h:form styleClass="navbar-form navbar-right" >
 	     	<b:commandButton look="danger" value = "Cerrar " actionListener="#{gestiondeSeccionView.cerrarSesionUsuario}"  />
 	    </h:form>
-	   <h:form styleClass="navbar-form navbar-right" >
- 		<b:dropButton value="Configuración"  inverse="true" look="info" >
-				<b:navCommandLink value = "Señales" actionListener="#{potencialesAccion.vista_senales(1)}" >
-				</b:navCommandLink>
-		</b:dropButton>
-		</h:form> 
+	
 </b:tabLinks>
 <b:messages />
 <div style="text-align: center">
@@ -135,7 +130,7 @@
 						<p:selectOneMenu id="ondas" value="#{potencialesAccion.idTipoOnda}" >
 							<f:selectItem itemLabel="Potenciales" itemValue="0"/>
 							<f:selectItems  value="#{potencialesAccion.general}" />
-							
+							<p:ajax event="change" listener="#{potencialesAccion.graficar_potencial}" update="grafi, pamplitudx"  />
 						</p:selectOneMenu>
 					</b:column>
 				</b:row>
@@ -146,7 +141,7 @@
 					<b:column span="2" offset="2">
 						<p:inputText id="paferecuenciax" style="text-align: center;" value="#{potencialesAccion.pafrecueciaj}"  placeholder="Hz">
 				     		<p:keyFilter regEx="/[\d\-\.]/"/> 
-				     		
+				     		<p:ajax event="keyup" listener="#{potencialesAccion.padatosj}" update="grafi"/>
 				        </p:inputText>
 					</b:column>
 				</b:row>
@@ -157,7 +152,7 @@
 					<b:column span="2" offset="2">
 						<p:inputText id="pamplitudx" style="text-align: center;" value="#{potencialesAccion.paamplitudj}"  placeholder="Volts">
 				     		<p:keyFilter regEx="/[\d\-\.]/"/> 
-				     		
+				     		<p:ajax event="keyup" listener="#{potencialesAccion.padatosj}" update="grafi"/>
 				        </p:inputText>
 					</b:column>
 				</b:row>
@@ -168,7 +163,7 @@
 					<b:column span="2" offset="2">
 						<p:inputText id="ptiempox" style="text-align: center;" value="#{potencialesAccion.patiempoj}"  placeholder="Minutos">
 				     		<p:keyFilter regEx="/[\d\-\.]/"/> 
-				     		
+				     		<p:ajax event="keyup" listener="#{potencialesAccion.padatosj}" update="grafi"/>
 				        </p:inputText>
 					</b:column>
 				</b:row>
@@ -289,7 +284,7 @@
 								paginatorPosition="bottom" value="#{potencialesAccion.estimuladores}"
 								var="parametroe" reflow="true" selectionMode="single"  
 								selection="#{potencialesAccion.selecion_estimulador}"  rowKey="#{parametroe.noserie}" >
-								<p:ajax event="rowSelect" update=":form_G:ptableparametros" />
+								<p:ajax event="rowSelect" listener="#{potencialesAccion.asignacion_equipoondas}" update=":form_G:ptableparametros" />
 							<p:column headerText="Serie">
 								<h:outputText value="#{potencialesAccion.convertirserie(parametroe.noserie)}" />
 							</p:column>
@@ -303,7 +298,7 @@
  				<b:container fluid="true">
  					<b:row  style="margin-bottom:10px" >
 						<b:column span="2">
-							<b:commandButton look="primary" value="cargar"  actionListener="#{potencialesAccion.cargar_parametros}" 
+							<b:commandButton look="primary" value="cargar"  actionListener="#{potencialesAccion.cargar_parametros_onda}" 
 							 update="ptableparametros" ></b:commandButton>
 						</b:column>
 						<b:column span="6" offset= "2">
@@ -320,8 +315,8 @@
 						var="para"  reflow="true" selectionMode="single"  
 						selection="#{potencialesAccion.seleccion_parametro}"  rowKey="#{para.idparametro}" 
 						>
-						<!--  <p:ajax event="rowSelect" listener="#{potencialesAccion.parametro_elegido_ajax}"
-						update=":form_G:grafica_para ,:form_G:paraid, :form_G:ondas, :form_G:panombre" />-->
+						<p:ajax event="rowSelect" listener="#{potencialesAccion.asignacion_parametros_onda()}"
+						update=":form_G:grafica_para ,:form_G:paraid, :form_G:ondas, :form_G:panombre" />
 							
 							<p:column headerText="ID">
 								<h:outputText value="#{para.idparametro}" />
