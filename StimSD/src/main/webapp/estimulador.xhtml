@@ -37,14 +37,75 @@
  <br /> <br />
 </div>
 	<title>Equipo</title>
- <style type="text/css">
+<style type="text/css">
     .alineacion{
         margin:auto;
 		align-items:center;
 		padding: auto;
-		text-align: center;
-	
+		
     }
+    .alineacion2{
+         margin:auto;
+		align-items:center;
+		padding: auto;
+    }
+    .tamana_ancho_1{
+    max-width:300px;
+    
+    }
+    .tamana_ancho_2{
+    width:500px;
+    }
+    .tamana_ancho_3{
+    width:700px;
+    margin-top:10px;
+    }
+        .tamana_ancho_4{
+    width:800px;
+    margin-top:10px;
+    }
+      .tamana_ancho_5{
+    width:400px;
+    }
+     .tamana_ancho_6{
+    width:600px;
+    }
+       .tamana_ancho_7{
+    width:330px;
+    }
+  
+    .tamana_ancho_8{
+    min-width:100px;
+    }
+    .tamana_ancho_9{
+   	width:350px;
+    }
+    .div_contenedor{
+    	display:block;
+	display:flex;
+	margin-left:auto;
+	margin-right:auto;
+	align-items:center;
+	padding: 10px;
+    }
+    .div_izquierdo{
+	margin-left:auto;
+	margin-right:5px;
+	display:block;
+	padding: 10px;
+	float:left;
+    }
+    .div_derecho{
+    margin-left:5px;
+	margin-right:auto;
+	padding: 10px;
+	float: right;      
+    }
+    .texto_centro
+    {
+     text-align: center;
+    }
+    
 </style>
 </h:head>
 
@@ -228,11 +289,12 @@
                	<h:outputLabel  value="Botón: " />
                	</b:column>
                	<b:column span="6" offset="2">
-               	<p:inputText  id="boton_f1"  style="width:100%; text-align: center;" value="#{controlestimuladores.boton_f}" >
+               	<p:inputText  id="boton_f1"  style="width:100%; text-align: center; " value="#{controlestimuladores.boton_f}" >
 	            <p:keyFilter regEx="/[\d\-\.]/"/>  
 	            </p:inputText> 
                 </b:column>
               </b:row>
+              <b:commandButton look="primary" value="QR"  type="button"  onclick="PF('qr_m').show();" style="margin-left:150px"/> 
             	<p:dialog header="Qr del equipo" widgetVar="qr_m" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
 				 	<p:barcode value="#{controlestimuladores.qr_equipo}" type="qr" id="qr2" style="width:250px;height:250px;"/>
 				</p:dialog>
@@ -547,12 +609,9 @@
 							<b:row  style="margin-bottom:10px" >
 								<h:outputLabel id = "hist_equipo1" value="#{controlestimuladores.selecion_esth.estado}" />
 							</b:row>
-							<b:row  style="margin-bottom:10px">
-									<b:selectOneMenu  id="onda_c"   >
-	        							<f:selectItem itemLabel="Fecha" itemValue="Fecha" />
-	            						<f:selectItem itemLabel="Hora" itemValue="Hora" />
-	         						</b:selectOneMenu>
-								</b:row>
+							<b:row style="margin-bottom:10px">
+		 	 	 					<p:calendar id="fecha_m" class = "texto_centro" value="#{controlestimuladores.fecha1}" showOn="button"  placeholder="Fecha"/>
+		 	 	 			</b:row>
 							<b:row  style="margin-bottom:10px" >
 								<p:dataTable id = "mantenimientosh"  paginator="true" rows="5" 
 								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"

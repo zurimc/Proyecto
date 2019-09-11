@@ -104,14 +104,12 @@
 <h:form id = "form_g" class = "tamana_ancho_8">
 <p:growl id="growl" autoUpdate="true" showDetail="false" />	 
 
-
 <br/>  					
 	<!-- Equipos -->	
 	<c:if  test="#{controlestimuladores.tipos_vistas == 1}">
 	<b:well>
 		 <b:panelGrid  columns="3" >	
 		 	
-		 	 
 		 			  <b:panel title="Equipos" look="info" id  ="panel_equipo2" class = "alineacion tamana_ancho_1">
 					 	      	<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5" class = "alineacion">
 					 				<b:commandButton look="info" id="caragar_equ" value="Cargar" actionListener="#{controlestimuladores.cargar_equipo}" 
@@ -147,9 +145,6 @@
 							</p:dataTable>
 					    </b:panel>	   
 				 
-
-			
-		 		
 		 			<b:panel title="Detalles" look="info" id  ="panel_equipo_lote" class = "alineacion tamana_ancho_1">
 		 				<b:container fluid="true"  >
 		 				
@@ -399,8 +394,7 @@
 									</p:dataTable>
 									</b:column>
 								</b:row>
-               					 	
-		 	 	 		</b:container>
+               					</b:container>
 		 	 	 	</b:panel>
 		 	 	 	
 		 	 	 	<b:panel title="Falla Actualización" look="info" class = "alineacion tamana_ancho_5">
