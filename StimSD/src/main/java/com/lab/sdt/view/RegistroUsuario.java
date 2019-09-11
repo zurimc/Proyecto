@@ -57,6 +57,8 @@ private String cuenta1;
 private String contrasenia;
 private String especialidad1;
 
+
+
 private int user_a = 0;
 private int grado;
 
@@ -67,7 +69,7 @@ private boolean ingresa_grado = false;
 
 
 public String resultado ="";
-
+public String Contrasenia2;
 public String estado;
 
 public int tipoUsuario;
@@ -335,6 +337,10 @@ public void registroUsuario_primero(){
 		e.printStackTrace();
 		MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_ERROR);
 	}
+}
+public void validar(){
+	
+	
 }
 
 public int registroUsuario(int tipo,int id_user) throws Exception{
@@ -633,4 +639,13 @@ public String getEspecialidad1() {
 public void setEspecialidad1(String especialidad1) {
 	this.especialidad1 = especialidad1;
 }
+
+public String getContrasenia2() {
+	return Contrasenia2;
+}
+
+public void setContrasenia2(String contrasenia2) {
+	Contrasenia2 = contrasenia2;
+}
+
 }

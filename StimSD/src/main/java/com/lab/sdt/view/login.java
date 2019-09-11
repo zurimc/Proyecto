@@ -108,7 +108,7 @@ public void ini_registro() {
 	
 	try {
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		externalContext.redirect("registro.xhtml");
+		externalContext.redirect("registros.xhtml");
 	}catch(Exception e) {
 		
 	}

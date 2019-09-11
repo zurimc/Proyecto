@@ -714,6 +714,18 @@ public class Controlestimuladores implements Serializable {
 			selecion_esth.setNoserie("");
 		   tipos_vistas =  4; 
 	   }
+	   /*public void cargar_horaFecha() {
+			cuentas1 = new ArrayList<Usuario>();
+			cuentas1.clear();
+			try {
+				cuentas1 = consultaUsuarios.lista_tipo_cuenta(tipoUsuario);
+				
+			}catch(Exception e) {
+
+			}
+		}
+	   */
+	   
 	public String getIdEstadoe() {
 		return idEstadoe;
 	}
