@@ -49,6 +49,7 @@ public class Controlestimuladores implements Serializable {
 	private boolean acti_ests;
 	private String serie_b;
 	private String serie_bh;
+	private String fecha_rango;
 	
 	private String serie_m;
 	
@@ -57,10 +58,11 @@ public class Controlestimuladores implements Serializable {
 	private String buscar = "";
 	
 	private String buscar_m = "";
-	
+	private List<Mantenimiento> fechasm;
 	private String boton_f;
 	
 	private String material;
+	private String mantenimiento;
 	
 	private String cantidad;
 	
@@ -69,6 +71,7 @@ public class Controlestimuladores implements Serializable {
 	private String modelo;
 	
 	private String noserie;
+	private String fechamantenimiento;
 	
 	private String onda_pref;
 	
@@ -143,6 +146,7 @@ public class Controlestimuladores implements Serializable {
 	private String hora_his;
     
 	private String fech_his;
+	
 
 	@ManagedProperty("#{estimuladorService}")
 	public EstimuladorService estimuladorService;
@@ -154,6 +158,7 @@ public class Controlestimuladores implements Serializable {
 		actualiza_e(); 	
 		vista_equipo();
 		setQr_equipo("stim-SD");
+		fechasm = new ArrayList<Mantenimiento>();
 	}
 
 	public void mantenimiento() {
@@ -542,6 +547,23 @@ public class Controlestimuladores implements Serializable {
 			
 		}
 	}
+	public void buscar_fechas() {
+		if(fechamantenimiento.trim().length()>0) {
+		try {
+			 Mantenimiento fech = new Mantenimiento();
+			 fechasm.clear();
+			 fech = estimuladorService.encuentra_fecha(fechamantenimiento);
+			 if(fech != null) {
+				 fechasm.add(fech);
+			 }
+		}catch(Exception e) {
+			 MensajeG.mostrar("Sin resultados", FacesMessage.SEVERITY_INFO);
+		}
+		
+	}else {
+		 MensajeG.mostrar("Sin resultados", FacesMessage.SEVERITY_INFO);
+	 }
+	}
 	public void busca_noserie() {
 		String res = "";
 		buscar = "";
@@ -714,18 +736,9 @@ public class Controlestimuladores implements Serializable {
 			selecion_esth.setNoserie("");
 		   tipos_vistas =  4; 
 	   }
-	   /*public void cargar_horaFecha() {
-			cuentas1 = new ArrayList<Usuario>();
-			cuentas1.clear();
-			try {
-				cuentas1 = consultaUsuarios.lista_tipo_cuenta(tipoUsuario);
-				
-			}catch(Exception e) {
-
-			}
-		}
-	   */
 	   
+  
+
 	public String getIdEstadoe() {
 		return idEstadoe;
 	}
@@ -1135,6 +1148,30 @@ public class Controlestimuladores implements Serializable {
 
 	public void setEpotencial(String epotencial) {
 		this.epotencial = epotencial;
+	}
+
+	public String getFecha_rango() {
+		return fecha_rango;
+	}
+
+	public void setFecha_rango(String fecha_rango) {
+		this.fecha_rango = fecha_rango;
+	}
+
+	public String getFechamantenimiento() {
+		return fechamantenimiento;
+	}
+
+	public void setFechamantenimiento(String fechamantenimiento) {
+		this.fechamantenimiento = fechamantenimiento;
+	}
+
+	public String getMantenimiento() {
+		return mantenimiento;
+	}
+
+	public void setMantenimiento(String mantenimiento) {
+		this.mantenimiento = mantenimiento;
 	}
 	
 }

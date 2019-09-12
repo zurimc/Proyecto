@@ -14,7 +14,7 @@
 	    <b:navLink href="hospitales.xhtml" value="Hospital"/>
 	   	<b:navLink href="estimulador.xhtml" value="Equipos"/>
 	   	<b:navLink href="pacientes.xhtml" value="Paciente"/>
-	   	<b:navLink href="expedientes.xhtml" value="Consulta"/>
+	   	<b:navLink href="consulta.xhtml" value="Consulta"/>
 	   	
 	   	<h:form styleClass="navbar-form navbar-right" ></h:form>
 	   		<h:form styleClass="navbar-form navbar-right" >
@@ -139,15 +139,17 @@
 					paginatorPosition="bottom" value="#{controlestimuladores.estimuladores}"
 					var="estim"  reflow="true" selectionMode="single"  
 					selection="#{controlestimuladores.selecion_est}"   rowKey="#{estim.noserie}" >
-					
+					 <p:ajax event="rowSelect" listener="#{controlestimuladores.elige}"
+					      update=":form_g:serie1, :form_g:generacion1, :form_g:estadoesti, :form_g:estatusr, :form_g:boton_f1, 
+					       :form_g:lote1, :form_g:imei1, :form_g:tipo_c, :form_g:onda_c, :form_g:qr2"/>
 					<p:column headerText="Serie">
 					<h:outputText value="#{controlestimuladores.convertirserie(estim.noserie)}" 
 					style="color:#{estim.estatus?'blue':'red'}" />
 					</p:column>
-					<!--<p:column headerText="Generación">
+					<p:column headerText="Generación">
 					<h:outputText value="#{controlestimuladores.convertirgeneracion(estim.noserie)}" 
 					style="color:#{estim.estatus?'blue':'red'}" />
-					</p:column>-->	    
+					</p:column>    
 				</p:dataTable>
 			</b:column>	
 			</b:row>	
@@ -586,7 +588,8 @@
 							 	var="estim"  reflow="true" selectionMode="single"  
 								selection="#{controlestimuladores.selecion_esth}"   rowKey="#{estim.noserie}" >
 						
-								
+								<p:ajax event="rowSelect" listener="#{controlestimuladores.elige_hist}"
+					      		update=":form_g:form_his_m:mantenimientosh,  :form_g:form_his_m:hist_equipo, :form_g:form_his_m:hist_equipo1" />
 					      
 									<p:column headerText="Serie">
 							        	<h:outputText value="#{controlestimuladores.convertirserie(estim.noserie)}" 
@@ -611,8 +614,8 @@
 								<h:outputLabel id = "hist_equipo1" value="#{controlestimuladores.selecion_esth.estado}" />
 							</b:row>
 							<b:row style="margin-bottom:10px">
-		 	 	 					<b:dateTimePicker  id="fechahora"/>
-		 	 	 					<p:ajax event="change" listener="" update="usuarios"></p:ajax>
+		 	 	 					<b:datepicker  id="fechahora"/>
+		 	 	 					<!-- <p:ajax event="dateSelect" listener="" update="mantenimientosh"></p:ajax>-->
 		 	 	 			</b:row>
 							<b:row  style="margin-bottom:10px" >
 								<p:dataTable id = "mantenimientosh"  paginator="true" rows="5" 
@@ -733,4 +736,4 @@
 </h:form>
 
 </h:body>
-</html>
+</html> 

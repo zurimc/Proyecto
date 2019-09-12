@@ -137,10 +137,10 @@
 							      	<h:outputText value="#{controlestimuladores.convertirserie(estim.noserie)}" 
 							      	style="color:#{estim.estatus?'blue':'red'}" />
 							    	</p:column>
-							  <!--   <p:column headerText="Generación">
+							  <p:column headerText="Generación">
 							    		<h:outputText value="#{controlestimuladores.convertirgeneracion(estim.noserie)}" 
 							    		style="color:#{estim.estatus?'blue':'red'}" />
-							   </p:column>-->
+							   </p:column>
 							    
 							</p:dataTable>
 					    </b:panel>	   
@@ -638,6 +638,14 @@
 							<b:row  style="margin-bottom:10px" >
 								<h:outputLabel id = "hist_equipo1" value="#{controlestimuladores.selecion_esth.estado}" />
 							</b:row>
+							<b:row style="margin-bottom:10px">
+		 	 	 					<b:datepicker  id="fecha1" label="fecha Inicial"/>
+		 	 	 					<!-- <p:ajax event="dateSelect" listener="" update="mantenimientosh"></p:ajax>-->
+		 	 	 			</b:row>
+		 	 	 			<b:row style="margin-bottom:10px">
+		 	 	 					<b:datepicker  id="fecha2" label="fecha Final"/>
+		 	 	 					<p:ajax event="dateSelect"  update="mantenimientosh" listener="#{controlestimuladores.buscar_fechas}"></p:ajax>
+		 	 	 			</b:row>
 							<b:row  style="margin-bottom:10px" >
 								<p:dataTable id = "mantenimientosh"  paginator="true" rows="5" 
 								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
