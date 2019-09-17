@@ -639,23 +639,17 @@
 								<h:outputLabel id = "hist_equipo1" value="#{controlestimuladores.selecion_esth.estado}" />
 							</b:row>
 							 <b:row style="margin-bottom:10px">
-		 	 	 					<b:datepicker  id="fecha1" label="fecha Inicial" value="#{consultaView.fechaIni}"/>
-		 	 	 					<!-- <p:ajax event="dateSelect" listener="#{controlestimuladores.seleccionarFechaInicial}"  update="form_his_m:fecha2"/> -->
+		 	 	 					
+		 	 	 					<p:calendar id="fecha1" showOn="button"  placeholder="Fecha Inicial" value="#{controlestimuladores.fechaI}">
+		 	 	 					<p:ajax event="dateSelect" update=":form_g:form_his_m:fecha2" listener="#{controlestimuladores.seleccionarFechaInicial}"></p:ajax>
+		 	 	 					</p:calendar>
 		 	 	 			</b:row>
 		 	 	 			<b:row style="margin-bottom:10px">
-		 	 	 					<b:datepicker  id="fecha2" label="fecha Final" value="#{consultaView.fechaFin}"/>
-		 	 	 					<!--<p:ajax event="dateSelect" update="mantenimientosh" listener="#{consultaView.buscar_consulta}" />-->
+		 	 	 					<p:calendar id="fecha2" showOn="button"  placeholder="Fecha Final" value="#{controlestimuladores.fechaF}">
+		 	 	 					
+		 	 	 					</p:calendar>
 		 	 	 			</b:row> 
-		 	 	 			<b:row style="margin-bottom:10px">
-		 	 	 			<p:commandButton value="Buscar" styleClass="btn btn-success form-control" style="width:100%;"
-												action="#{consultaView.buscar_consulta}" update="form_his_m:mantenimientosh" 
-												onstart="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"/>
-		 	 	 			</b:row>
-		 	 	 			<!-- <b:row>
-		 	 	 			<b:inputText style="text-align: center;"  id="buscadorcon" value="#{consultaView.consulta_b}" placeholder="Buscar" >
-						     			<p:ajax event="keyup" update="mantenimientosh" listener="#{consultaView.buscar_consulta}" />
-						    		</b:inputText>
-		 	 	 			</b:row> -->
+		 	 	 			
 							<b:row  style="margin-bottom:10px" >
 								<p:dataTable id = "mantenimientosh"  paginator="true" rows="5" 
 								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"

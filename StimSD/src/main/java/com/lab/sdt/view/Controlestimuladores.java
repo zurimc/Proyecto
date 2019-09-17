@@ -143,6 +143,8 @@ public class Controlestimuladores implements Serializable {
 	private String hora_his;
     
 	private String fech_his;
+	private Date fechaI;
+	private Date fechaF;
 
 	@ManagedProperty("#{estimuladorService}")
 	public EstimuladorService estimuladorService;
@@ -714,17 +716,11 @@ public class Controlestimuladores implements Serializable {
 			selecion_esth.setNoserie("");
 		   tipos_vistas =  4; 
 	   }
-	   /*public void cargar_horaFecha() {
-			cuentas1 = new ArrayList<Usuario>();
-			cuentas1.clear();
-			try {
-				cuentas1 = consultaUsuarios.lista_tipo_cuenta(tipoUsuario);
-				
-			}catch(Exception e) {
-
+	   public void seleccionarFechaInicial(){
+			if(fechaI.after(fechaF)){
+				fechaF = fechaI;
 			}
 		}
-	   */
 	   
 	public String getIdEstadoe() {
 		return idEstadoe;
@@ -1135,6 +1131,22 @@ public class Controlestimuladores implements Serializable {
 
 	public void setEpotencial(String epotencial) {
 		this.epotencial = epotencial;
+	}
+
+	public Date getFechaI() {
+		return fechaI;
+	}
+
+	public void setFechaI(Date fechaI) {
+		this.fechaI = fechaI;
+	}
+
+	public Date getFechaF() {
+		return fechaF;
+	}
+
+	public void setFechaF(Date fechaF) {
+		this.fechaF = fechaF;
 	}
 	
 }
