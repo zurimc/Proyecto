@@ -103,10 +103,6 @@ public class EstimuladorService {
 		return materialMapper.selectByNoSerie(n_serie);
 	}
 
-	   public Mantenimiento encuentra_fecha(String fechaMantenimiento){
-	   return mantenimientoMapper.selectByFechaMantenimiento(fechaMantenimiento);
-	   }
-
 	public Equipo encuentra_serie(String noserie) {
 		Equipo estimulador = new Equipo();
 		estimulador = equipoMapper.selectBySerie(noserie);

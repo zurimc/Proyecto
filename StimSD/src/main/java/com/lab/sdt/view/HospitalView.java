@@ -181,7 +181,7 @@ public class HospitalView implements Serializable {
 		hospital1.setCodigopostal(codigoPostal);
 		hospital1.setIdestado(idEstado);
 		hospital1.setTelefono(telefono);
-        
+      
         
         try {
         	if(tipo==0) {

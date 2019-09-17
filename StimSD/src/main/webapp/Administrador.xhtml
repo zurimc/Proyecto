@@ -1,18 +1,110 @@
-<ui:composition template="menu.xhtml"
-	xmlns="http://www.w3.org/1999/xhtml"
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:b="http://bootsfaces.net/ui">
-<ui:define name="linsk_b"></ui:define>
-<ui:define name="muestra">
-<b:well>
-	<h:form>
-<b:panelGrid colSpans="5,7">
+	
+<h:head>
+<b:tabLinks  look="primary" title="Stim SD" icon="globe" iconAlign="right">
+	    <b:navLink href="VistaOndas.xhtml" value="Potenciales"/>
+	    <b:navLink href="TipoCuentas.xhtml" value="Usuarios"/>
+	    <b:navLink href="hospitales.xhtml" value="Hospital"/>
+	   	<b:navLink href="estimulador.xhtml" value="Equipos"/>
+	   	<b:navLink href="pacientes.xhtml" value="Paciente"/>
+	   	<b:navLink href="expedientes.xhtml" value="Consulta"/>
+	   	
+	   	<h:form styleClass="navbar-form navbar-right" ></h:form>
+	   		<h:form styleClass="navbar-form navbar-right" >
+	     	<b:commandButton look="danger" value = "Cerrar " actionListener="#{gestiondeSeccionView.cerrarSesionUsuario}"  />
+	    </h:form>
+	  
+</b:tabLinks>
+<b:messages />
+<div style="text-align: center">
+ <br /> <br />
+</div>
+	<title>Administrador</title>
+<style type="text/css">
+    .alineacion{
+        margin:auto;
+		align-items:center;
+		padding: auto;
+		
+    }
+    .alineacion2{
+         margin:auto;
+		align-items:center;
+		padding: auto;
+    }
+    .tamana_ancho_1{
+    max-width:300px;
+    
+    }
+    .tamana_ancho_2{
+    width:500px;
+    }
+    .tamana_ancho_3{
+    width:700px;
+    margin-top:10px;
+    }
+        .tamana_ancho_4{
+    width:800px;
+    margin-top:10px;
+    }
+      .tamana_ancho_5{
+    width:400px;
+    }
+     .tamana_ancho_6{
+    width:600px;
+    }
+       .tamana_ancho_7{
+    width:330px;
+    }
+  
+    .tamana_ancho_8{
+    min-width:100px;
+    }
+    .tamana_ancho_9{
+   	width:350px;
+    }
+    .div_contenedor{
+    	display:block;
+	display:flex;
+	margin-left:auto;
+	margin-right:auto;
+	align-items:center;
+	padding: 10px;
+    }
+    .div_izquierdo{
+	margin-left:auto;
+	margin-right:5px;
+	display:block;
+	padding: 10px;
+	float:left;
+    }
+    .div_derecho{
+    margin-left:5px;
+	margin-right:auto;
+	padding: 10px;
+	float: right;      
+    }
+    .texto_centro
+    {
+     text-align: center;
+    }
+    
+</style>
+</h:head>
+<h:body style= "background-color: #ecf2f5">
+<h:form >
+<b:panelGrid colSpans="5,7"  >
+<b:column  offset="12" span="8">
  <p:barcode value="1234567890" type="qr" id="qr2" style="width:90px;height:90px;"/>
+ </b:column>
 </b:panelGrid>
-	</h:form>
-	</b:well>
-</ui:define>
-</ui:composition>
+</h:form>
+</h:body>
+</html>

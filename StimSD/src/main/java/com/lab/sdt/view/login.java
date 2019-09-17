@@ -95,7 +95,12 @@ public void guardasecciondeusuario() {
 		externalContext.redirect("index.xhtml");
 	}else if(userDTO.getIdtipo()== Constantes.TipoUsuario.PACIENTE){
 		externalContext.redirect("index.xhtml");
-		}else{
+		}else if(userDTO.getIdtipo()== Constantes.TipoUsuario.OPERADOR){
+			externalContext.redirect("Administrador.xhtml");
+			}else if(userDTO.getIdtipo()== Constantes.TipoUsuario.PORDEFINIR){
+				externalContext.redirect("index.xhtml");
+				}
+	else{
 		externalContext.redirect("login.xhtml");
 	}
 	
