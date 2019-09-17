@@ -51,8 +51,9 @@ public class ConsultaView implements Serializable {
 	public Date fechaConsulta;
 	private String expe_m;
 	private String expediente;
-	private String nombre_expediente;
+	
 	private int idExpediente;
+	private int idexp=0;
 	private List<Expediente> exp_id;
 	private Expediente seleccion_expediente;
 	
@@ -178,12 +179,12 @@ public class ConsultaView implements Serializable {
 	}
   //asignacion de expediente
 	@SuppressWarnings("deprecation")
-	/*public void asignacion_expediente() {
-		idequipopa = selecion_expediente.getIdequipo();
-			setNombre_equipo(convertirserie(selecion_expediente.getNoserie())+"  "+convertirgeneracion(selecion_expediente.getNoserie()));
+	public void asignacion_expediente() {
+		idexp = seleccion_expediente.getIdexpediente();
+		setNoexpediente((seleccion_expediente.getNoexpediente()));
 			RequestContext.getCurrentInstance().execute("PF('patablaexpediente').hide();");
 
-	}*/
+	}
 
 public String getPeso() {
 	return peso;
@@ -296,12 +297,7 @@ public int getIdExpediente() {
 public void setIdExpediente(int idExpediente) {
 	this.idExpediente = idExpediente;
 }
-public String getNombre_expediente() {
-	return nombre_expediente;
-}
-public void setNombre_expediente(String nombre_expediente) {
-	this.nombre_expediente = nombre_expediente;
-}
+
 
 public String getPresionI() {
 	return presionI;
@@ -320,6 +316,12 @@ public Date getFechapresion() {
 }
 public void setFechapresion(Date fechapresion) {
 	this.fechapresion = fechapresion;
+}
+public int getIdexp() {
+	return idexp;
+}
+public void setIdexp(int idexp) {
+	this.idexp = idexp;
 }
         
  

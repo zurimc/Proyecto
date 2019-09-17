@@ -166,10 +166,10 @@
 
 					</b:container>
 					<b:container fluid="true"  >
-						<b:panel title="Datos Consulta" look="info" id  ="consulta_datos" >
+						<b:panel title="Descripcion" look="info" id  ="descripcion" >
 							<b:row  style="margin-bottom:10px;" >
-							<b:column span="2">
-						 <h:outputLabel value="Peso: " />
+						<b:column span="2">
+							<h:outputLabel value="Peso: " />
 						</b:column>
 						<b:column span="8" offset="2">	
 							<b:inputText  style="text-align: center;"  id="peso_exp"   placeholder="Ingrese Peso" value="#{consultaView.peso}">
@@ -241,22 +241,20 @@
 						</b:panel>
 					</b:container>
 					
-						<b:panel  look="info" >
-						 <f:facet name="heading">
-						    <b:iconAwesome value="fa-location-arrow " style="padding-right:20px"/>
-						    <h:outputText value="Descripcion " />
-						  </f:facet>
+						
+						 
 						  <b:container fluid="true"  >
+						  <b:panel title="Datos Consulta" look="info" id  ="consulta_datos" >
 						  	<b:row style="margin-bottom:10px">
 							<b:column span="2">
 							<h:outputLabel  value="Seleccionar Expediente:  "/>
 							</b:column>
 								<b:column span="5" offset="2">
-								<h:outputLabel  value="#{consultaView.nombre_expediente}"/>
+								<h:outputLabel  value="#{consultaView.noexpediente}"/>
 								</b:column>
 								<b:column span="1" offset="1">
 								<b:commandButton look="info" value="E" type="button"
-								
+								actionListener="#{consultaView.cargar_expedientes}"
 					 			onclick="PF('patablaexpediente').show();"/>
 							</b:column>
 							</b:row>
@@ -288,8 +286,9 @@
 							onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></b:commandButton>
 							</b:column> 
 		 	 	 			</b:row>
+		 	 	 			</b:panel>
 		 	 	 			</b:container>
-						</b:panel>
+						
 					
 				</b:panelGrid>
 </c:if>
@@ -343,12 +342,12 @@
 								paginatorPosition="bottom"  value="#{consultaView.exp_id}"
 								 var="expe_t" reflow="true" selectionMode="single"  
 								selection="#{consultaView.seleccion_expediente}" rowKey="#{expe_t.noexpediente}">
-									<!--  <p:ajax event="rowSelect" listener="#{consultaView.asignacion_expediente}"
-								update="" />-->
-								<p:column headerText="Id">
+									<p:ajax event="rowSelect" listener="#{consultaView.asignacion_expediente}"
+								update=":form_g_p:consulta_datos" />
+								<p:column headerText="Folio">
 							        	<h:outputText value="#{expe_t.noexpediente}" />
 							    	</p:column>
-							    	<p:column headerText="Expediente">
+							    	<p:column headerText="Nombre">
 							    		<h:outputText value="#{expe_t.nombre}"  />
 							    	</p:column>
 								</p:dataTable>
@@ -360,15 +359,15 @@
  			<p:dialog header="Ingrese Datos" widgetVar="presionI" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
  				<b:panelGrid  columns="1" >
  				<b:container fluid="true">
- 				<b:icon name="cog" size="5x" style="margin-bottom:20px" spin="true" col-md="10" offset="4"/><br/>
+ 				<b:iconAwesome  size="4x" style="margin-bottom:20px"  col-md="10" offset="4" value="eye"/><br/>
  				<h3 style="text-align: center;">Presión Intraocular</h3>
  						<b:row style="margin-bottom:10px">
-						<b:column offset="1" span="2" style="margin-top:20px">
+						<b:column offset="1" span="4" style="margin-top:20px">
 						 <h:outputLabel value="Presión Izq: " />
 						</b:column>
 						
-						<b:column offset="4" span="2" style="margin-top:20px">
-						 <h:outputLabel value="Presión Derecho: " />
+						<b:column offset="2" span="4" style="margin-top:20px">
+						 <h:outputLabel value="Presión Der: " />
 						</b:column>
 						
 						</b:row>
@@ -387,11 +386,11 @@
 						
 						</b:row>
 						<b:row style="margin-top:10px">
-						
-		 	 	 					<p:calendar id="fecha_pi" class = "texto_centro"  showOn="button"  placeholder="Fecha" value="#{consultaView.fechapresion}" >
+								<b:column  >
+		 	 	 					<p:calendar id="fecha_pi" class = "texto_centro"  showOn="button"  placeholder="Fecha" value="#{consultaView.fechapresion}" large-screen="full-width">
 		 	 	 					<p:ajax event="keyup" listener="#{consultaView.guarda_presion}"></p:ajax>
 		 	 	 					</p:calendar>
-		 	 	 			
+		 	 	 				</b:column>
 		 	 	 		</b:row>
  						<b:column offset="4" span="8" style="margin-top:20px">
  						<b:commandButton look="success" id="guardar_pre" value="Guardar"  actionListener="#{consultaView.registroPresionO}"
