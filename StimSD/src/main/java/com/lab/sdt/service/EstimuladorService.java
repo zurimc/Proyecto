@@ -59,6 +59,29 @@ public class EstimuladorService {
 	public void insertaMaterial(Material mat) {
 		materialMapper.insert(mat);
 	}
+	public List<Mantenimiento> por_fecha(int idequipo, Date fecha_I, Date fecha_F){
+		List<Mantenimiento> res = new ArrayList<Mantenimiento>();
+		List<EquipoManten> lista_man = lista_mante_equi(idequipo);
+		for(int i = 0;i<=lista_man.size()-1;i++) {
+			
+			MantenimientoExample exMan = new MantenimientoExample();
+			Criteria criteria = exMan.createCriteria();
+			
+			criteria.andFechamantenimientoBetween(generarFecha(fecha_I, FECHA_INICIO), generarFecha(fecha_F, FECHA_FIN));
+			Mantenimiento man = new Mantenimiento();
+			man = mantenimientoMapper.selectByPrimaryKey(lista_man.get(i).getIdmantenimiento());
+			//if(generarFecha(fecha_I, FECHA_INICIO).after(man.getFechamantenimiento())) {
+			//	if(fecha_F.before(man.getFechamantenimiento())) {
+			man.setFechamantenimiento(fecha_I);
+					res.add(man);
+			//	}
+			//}
+			
+		}
+		//res.add(mantenimientoMapper.selectByPrimaryKey(1));
+		return res;
+		
+	}
 	public List<Mantenimiento> ver_historico(int idequipo){
 		List<Mantenimiento> res = new ArrayList<Mantenimiento>();
 		List<EquipoManten> lista_man = lista_mante_equi(idequipo);
@@ -172,13 +195,13 @@ public class EstimuladorService {
 	}
 
 	
-	public List<Mantenimiento> obtenerHistoricoPorFecha( Date fechaIni, Date fechaFin) throws Exception{
+	public List<Mantenimiento> obtenerHistoricoPorFecha( Date fechaIni, Date fechaFin, List<Mantenimiento> mantenimientoFecha) throws Exception{
 		MantenimientoExample exMan = new MantenimientoExample();
 		Criteria criteria = exMan.createCriteria();
 		
 		criteria.andFechamantenimientoBetween(generarFecha(fechaIni, FECHA_INICIO), generarFecha(fechaFin, FECHA_FIN));
 		
-		return null;
+		return mantenimientoFecha;
 	}
 	
 }

@@ -30,6 +30,7 @@ import com.lab.sdt.service.EstimuladorService;
 
 import com.lab.sdt.util.MensajeG;
 
+
 @ManagedBean
 @ViewScoped
 public class Controlestimuladores implements Serializable {
@@ -99,6 +100,7 @@ public class Controlestimuladores implements Serializable {
 	private List<Material> materiales_m;
 	
 	private List<Material> materiales_utlizados;
+	
 
 	private Equipo selecion_est;
 	
@@ -127,7 +129,7 @@ public class Controlestimuladores implements Serializable {
     private List<Mantenimiento> his_man;
      
     private List<Mantenimiento> detallesh;
-    
+ 
     private boolean tipo_user; 
 
     private String fallas_hist;
@@ -145,6 +147,15 @@ public class Controlestimuladores implements Serializable {
 	private String fech_his;
 	private Date fechaI;
 	private Date fechaF;
+	private String prueba; 
+
+	public String getPrueba() {
+		return prueba;
+	}
+
+	public void setPrueba(String prueba) {
+		this.prueba = prueba;
+	}
 
 	@ManagedProperty("#{estimuladorService}")
 	public EstimuladorService estimuladorService;
@@ -716,12 +727,62 @@ public class Controlestimuladores implements Serializable {
 			selecion_esth.setNoserie("");
 		   tipos_vistas =  4; 
 	   }
+	   public String nombreFecha(){
+			Calendar cal1 = Calendar.getInstance();
+			cal1.setTime(fechaI);
+			Calendar cal2 = Calendar.getInstance();
+			cal2.setTime(fechaF);
+			String periodo = cal1.get(Calendar.DAY_OF_MONTH)+"-";
+			periodo += (cal1.get(Calendar.MONTH)+1)+"-";
+			periodo += cal1.get(Calendar.YEAR);
+			periodo += " AL "+cal2.get(Calendar.DAY_OF_MONTH)+"-";
+			periodo += (cal2.get(Calendar.MONTH)+1)+"-";
+			periodo += cal2.get(Calendar.YEAR);
+			return periodo;
+		}
+
 	   public void seleccionarFechaInicial(){
 			if(fechaI.after(fechaF)){
 				fechaF = fechaI;
+				
+			}
+			
+		}
+		public void buscarFechaMantenimiento(){
+			//fechaF = new Date;
+		
+			//if(fechaI.after(fechaF)){
+			//	MensajeG.mostrar("La fecha final no puede ser anterior a la fecha inicial: " +d, FacesMessage.SEVERITY_INFO);
+				
+				
+				//return;
+			//}
+		
+			/*try{
+				mantenimientoFecha = estimuladorService.obtenerHistoricoPorFecha(fechaI, fechaF, mantenimientoFecha);
+				fechas = mantenimientoFecha.size();
+				
+				if(fechas == 0){
+					MensajeG.mostrar("No se encontraron registros en esa fecha", FacesMessage.SEVERITY_WARN);
+				}	
+			}catch(Exception ex){
+				MensajeG.mostrar("Ocurrió una excepción al recuperar el historial", FacesMessage.SEVERITY_FATAL);
+			}*/
+		}
+		public void actualizar_fecha() {
+			setFechaI(getFechaI());
+			setFechaF(getFechaF());
+		}
+		public void guarda_actualiza_datos() {
+
+			his_man = new ArrayList<Mantenimiento>();
+			try {
+				his_man.clear();
+				his_man = estimuladorService.por_fecha(selecion_esth.getIdequipo(),getFechaI(),getFechaF());	
+			}catch(Exception e) {
+				
 			}
 		}
-	   
 	public String getIdEstadoe() {
 		return idEstadoe;
 	}

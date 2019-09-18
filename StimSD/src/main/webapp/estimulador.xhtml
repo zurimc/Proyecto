@@ -640,16 +640,21 @@
 							</b:row>
 							 <b:row style="margin-bottom:10px">
 		 	 	 					
-		 	 	 					<p:calendar id="fecha1" showOn="button"  placeholder="Fecha Inicial" value="#{controlestimuladores.fechaI}">
-		 	 	 					<p:ajax event="dateSelect" update=":form_g:form_his_m:fecha2" listener="#{controlestimuladores.seleccionarFechaInicial}"></p:ajax>
+		 	 	 					<p:calendar id="fecha1" showOn="button"  placeholder="Fecha Inicial" value="#{controlestimuladores.fechaI}"
+		 	 	 					pattern="dd/MM/yy" locale="es">
+		 	 	 					<p:ajax event="dateSelect" listener="#{controlestimuladores.actualizar_fecha}"/>
 		 	 	 					</p:calendar>
+		 	 	 					
 		 	 	 			</b:row>
 		 	 	 			<b:row style="margin-bottom:10px">
-		 	 	 					<p:calendar id="fecha2" showOn="button"  placeholder="Fecha Final" value="#{controlestimuladores.fechaF}">
-		 	 	 					
+		 	 	 					<p:calendar id="fecha2" showOn="button"  placeholder="Fecha Final" value="#{controlestimuladores.fechaF}"
+		 	 	 					pattern="dd/MM/yy" locale="es">
+		 	 	 					<p:ajax event="dateSelect" listener="#{controlestimuladores.seleccionarFechaInicial}"/>
 		 	 	 					</p:calendar>
 		 	 	 			</b:row> 
-		 	 	 			
+		 	 	 			<b:row style="margin-bottom:10px">
+								
+		 	 	 			</b:row>
 							<b:row  style="margin-bottom:10px" >
 								<p:dataTable id = "mantenimientosh"  paginator="true" rows="5" 
 								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
@@ -670,9 +675,15 @@
 								</p:dataTable>
 							</b:row>
 						</b:container>
+						
 					</b:panel>
+					
 				</p:fragment>
 			</h:form>
+			
+			<p:commandButton value="Buscar" styleClass="btn btn-success form-control" style="width:100%;"
+												actionListener="#{controlestimuladores.guarda_actualiza_datos}"  update = ":form_g:form_his_m:mantenimientosh"
+												onstart="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"/>
 			<h:form id="form_his_mx">
 				<p:fragment>
 					<b:panel title="Detalles" look="info" class = "alineacion tamana_ancho_7"> 
