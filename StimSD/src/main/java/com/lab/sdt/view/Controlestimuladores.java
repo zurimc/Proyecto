@@ -32,6 +32,7 @@ import com.lab.sdt.util.MensajeG;
 
 
 
+
 @ManagedBean
 @ViewScoped
 public class Controlestimuladores implements Serializable {
@@ -172,6 +173,9 @@ public class Controlestimuladores implements Serializable {
 		actualiza_e(); 	
 		vista_equipo();
 		setQr_equipo("stim-SD");
+		Calendar cal = Calendar.getInstance();
+		//fechaI = cal.getTime();
+		fechaF = cal.getTime();
 	}
 
 	public void mantenimiento() {
@@ -730,35 +734,20 @@ public class Controlestimuladores implements Serializable {
 			selecion_esth.setNoserie("");
 		   tipos_vistas =  4; 
 	   }
-	   /*zuri*/
-	   public String nombreFecha(){
-			Calendar cal1 = Calendar.getInstance();
-			cal1.setTime(fechaI);
-			Calendar cal2 = Calendar.getInstance();
-			cal2.setTime(fechaF);
-			String periodo = cal1.get(Calendar.DAY_OF_MONTH)+"-";
-			periodo += (cal1.get(Calendar.MONTH)+1)+"-";
-			periodo += cal1.get(Calendar.YEAR);
-			periodo += " AL "+cal2.get(Calendar.DAY_OF_MONTH)+"-";
-			periodo += (cal2.get(Calendar.MONTH)+1)+"-";
-			periodo += cal2.get(Calendar.YEAR);
-			return periodo;
-		}
 	  
-		/*zuri*/
-		public void actualizar_fecha() {
-			setFechaI(getFechaI());
-			setFechaF(getFechaF());
-		}
+	 
 		/*zuri*/
 		public void guarda_actualiza_datos() {
-		
-			//his_man = new ArrayList<Mantenimiento>();
+			if(fechaI.after(fechaF)){
+				MensajeG.mostrar("La fecha final no puede ser anterior a la fecha inicial", FacesMessage.SEVERITY_ERROR);
+				return;
+			}
+			his_man = new ArrayList<Mantenimiento>();
 			
 			try {
-				//his_man.clear();
+				his_man.clear();
 				his_man = estimuladorService.por_fecha(selecion_esth.getIdequipo(),getFechaI(),getFechaF());	
-				//registro = his_man.size();
+				registro = his_man.size();
 				if(registro == 0){
 					MensajeG.mostrar("No se encontraron registros en esa fecha", FacesMessage.SEVERITY_WARN);
 				}
@@ -773,6 +762,12 @@ public class Controlestimuladores implements Serializable {
 					
 				}
 				
+			}
+		   
+			/*zuri*/
+			public void actualizar_fecha() {
+				setFechaI(getFechaI());
+				setFechaF(getFechaF());
 			}
 	public String getIdEstadoe() {
 		return idEstadoe;

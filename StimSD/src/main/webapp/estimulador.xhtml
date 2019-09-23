@@ -649,14 +649,13 @@
 							 <b:row style="margin-bottom:10px;  margin-left:15px;">
 		 	 	 					<p:calendar id="fecha1" showOn="button"  placeholder="Fecha Inicial" value="#{controlestimuladores.fechaI}"
 		 	 	 					pattern="dd/MM/yy" locale="es">
-		 	 	 					<p:ajax event="dateSelect" update="fecha2" listener="#{controlestimuladores.seleccionarFechaInicial}"/>
+		 	 	 					<p:ajax event="dateSelect"  listener="#{controlestimuladores.seleccionarFechaInicial}" update ="form_g:form_his_m:fecha2"></p:ajax>
 		 	 	 					</p:calendar>
 		 	 	 					
 		 	 	 			</b:row>
 		 	 	 			<b:row style="margin-bottom:10px;  margin-left:15px;">
 		 	 	 					<p:calendar id="fecha2" showOn="button"  placeholder="Fecha Final" value="#{controlestimuladores.fechaF}"
 		 	 	 					pattern="dd/MM/yy" locale="es">
-		 	 	 					
 		 	 	 					</p:calendar>
 		 	 	 			</b:row> 
 		 	 	 			<b:row style="margin-bottom:10px">
@@ -685,7 +684,7 @@
 						</b:container>
 						
 						<p:commandButton value="Buscar" styleClass="btn btn-success form-control" style="width:100%;"
-						actionListener="#{controlestimuladores.guarda_actualiza_datos}"  update = ":form_g:form_his_m:mantenimientosh"
+						action="#{controlestimuladores.guarda_actualiza_datos}"  update = "form_g:form_his_m:mantenimientosh"
 						onstart="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"/>
 					</b:panel>
 					

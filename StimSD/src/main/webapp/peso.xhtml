@@ -129,7 +129,8 @@
               					</b:inputText>					
 								</b:column>
 							</b:row>
-							<b:commandButton value="Guardar" look="success"></b:commandButton>
+							<b:commandButton id="guardar_pe" value="Guardar" look="success"  actionListener="#{consultaView.guarda_actualiza_datos}"
+							onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></b:commandButton>
 						</b:panel>
 					</b:container>
 						<b:commandButton value="Regresar" look="warning" style="margin-left:600px" ></b:commandButton>

@@ -64,19 +64,23 @@ public class EstimuladorService {
 		List<Mantenimiento> res = new ArrayList<Mantenimiento>();
 		List<EquipoManten> lista_man = lista_mante_equi(idequipo);
 		for(int i = 0;i<=lista_man.size()-1;i++) {
-			
+			try {
 			MantenimientoExample exMan = new MantenimientoExample();
 			Criteria criteria = exMan.createCriteria();
-			
 			criteria.andFechamantenimientoBetween(generarFecha(fecha_I, FECHA_INICIO), generarFecha(fecha_F, FECHA_FIN));
-			Mantenimiento man = new Mantenimiento();
-			man = mantenimientoMapper.selectByPrimaryKey(lista_man.get(i).getIdmantenimiento());
-		if(generarFecha(fecha_I, FECHA_INICIO).after(man.getFechamantenimiento())) {
-			//	if(fecha_F.before(man.getFechamantenimiento())) {
-			man.setFechamantenimiento(fecha_I);
-					res.add(man);
-			//	}
+			criteria.andIdmantenimientoEqualTo(lista_man.get(i).getIdmantenimiento());
+			List<Mantenimiento> man = new ArrayList<Mantenimiento>();
+			man = mantenimientoMapper.selectByExample(exMan);
+			res.add(man.get(0));
+			}catch(Exception e) {
+				
 			}
+		//if(generarFecha(fecha_I, FECHA_INICIO).after(man.getFechamantenimiento())) {
+			//	if(fecha_F.before(man.getFechamantenimiento())) {
+			//man.setFechamantenimiento(fecha_I);
+			//		res.add(man);
+			//	}
+			//}
 			
 		}
 		//res.add(mantenimientoMapper.selectByPrimaryKey(1));

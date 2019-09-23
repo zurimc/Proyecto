@@ -177,13 +177,15 @@
 					</b:container>
 					<b:container fluid="true"  >
 						<b:panel title="Descripcion" look="info" id  ="descripcion" class = "tamana_ancho_6" >
-							 <p:editor id="editor" widgetVar="editorWidget" value="#{editorView.text}" width="600" />
+							 <p:editor id="editor" widgetVar="editorWidget" value="#{consultaView.descripcion}" width="600" >
+							 
+							 </p:editor>
 							 <b:row>
 		 	 	 			<b:column offset="1" span="4" style="margin-top:20px">
 		 	 	 			<b:commandButton look="info" id="estudios_exp" value="Estudios" type="button" onclick="PF('paParametrosver').show();" ></b:commandButton>
 		 	 	 			</b:column>
 		 	 	 			 <b:column offset="1" span="4" style="margin-top:20px"> 
-							<b:commandButton look="success" id="guardar_exp" value="Guardar"  actionListener="#{consultaView.registroConsulta}"
+							<b:commandButton look="success" id="guardar_exp" value="Guardar"  actionListener="#{consultaView.guarda_actualiza_datos}"
 							onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></b:commandButton>
 							</b:column> 
 							<b:column span="2">
