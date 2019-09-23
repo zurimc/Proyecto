@@ -31,6 +31,7 @@ import com.lab.sdt.service.EstimuladorService;
 import com.lab.sdt.util.MensajeG;
 
 
+
 @ManagedBean
 @ViewScoped
 public class Controlestimuladores implements Serializable {
@@ -145,9 +146,13 @@ public class Controlestimuladores implements Serializable {
 	private String hora_his;
     
 	private String fech_his;
+	/*zuri*/
 	private Date fechaI;
+	/*zuri*/
 	private Date fechaF;
 	private String prueba; 
+	/*zuri*/
+	private int registro;
 
 	public String getPrueba() {
 		return prueba;
@@ -174,18 +179,16 @@ public class Controlestimuladores implements Serializable {
 			if(selecion_est.getNoserie().equals("")) {
 				 MensajeG.mostrar("Seleccione un equipo", FacesMessage.SEVERITY_ERROR);
 			}else {
-			      if(fecha1!=null) {
+			    
 			    	  try {
-			    		  registro_mantenimiento(fecha1,fallas_est,actualiza_est); 
+			    		  registro_mantenimiento(fallas_est,actualiza_est); 
 			    		  relacion_man_equ(selecion_est.getIdequipo());
 			    		  MensajeG.mostrar("Evento registrado ", FacesMessage.SEVERITY_INFO);
 			    	  }catch(Exception e) {
 			    		  MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_ERROR);
 			    		  System.out.println(e.toString());
 			    	  }
-			      }else {
-			    	  MensajeG.mostrar("Seleccione fecha", FacesMessage.SEVERITY_ERROR);
-			      }
+			      
 				
 			}
 			
@@ -576,14 +579,14 @@ public class Controlestimuladores implements Serializable {
 			setSerie_b(partes_serie[0]);
 		}	
 }
-	public void registro_mantenimiento(Date fechaa, String fallaa, String actuaa){
+	public void registro_mantenimiento(String fallaa, String actuaa){
 		try {
 			String mate_estatus = "";
 			//for(int i = 0;i<=materiales_utlizados.size()-1;i++) {
 		//		mate_estatus =  mate_estatus + estatus_mante[i]+";";
 		//	}
 			man = new Mantenimiento() ;
-			man.setFechamantenimiento(fechaa);
+			man.setFechamantenimiento(new Date());
 			man.setTipoactualizacion(actuaa);
 			man.setFalla(fallaa);
 			man.setEstatus(mate_estatus);
@@ -727,6 +730,7 @@ public class Controlestimuladores implements Serializable {
 			selecion_esth.setNoserie("");
 		   tipos_vistas =  4; 
 	   }
+	   /*zuri*/
 	   public String nombreFecha(){
 			Calendar cal1 = Calendar.getInstance();
 			cal1.setTime(fechaI);
@@ -740,49 +744,36 @@ public class Controlestimuladores implements Serializable {
 			periodo += cal2.get(Calendar.YEAR);
 			return periodo;
 		}
-
-	   public void seleccionarFechaInicial(){
-			if(fechaI.after(fechaF)){
-				fechaF = fechaI;
-				
-			}
-			
-		}
-		public void buscarFechaMantenimiento(){
-			//fechaF = new Date;
-		
-			//if(fechaI.after(fechaF)){
-			//	MensajeG.mostrar("La fecha final no puede ser anterior a la fecha inicial: " +d, FacesMessage.SEVERITY_INFO);
-				
-				
-				//return;
-			//}
-		
-			/*try{
-				mantenimientoFecha = estimuladorService.obtenerHistoricoPorFecha(fechaI, fechaF, mantenimientoFecha);
-				fechas = mantenimientoFecha.size();
-				
-				if(fechas == 0){
-					MensajeG.mostrar("No se encontraron registros en esa fecha", FacesMessage.SEVERITY_WARN);
-				}	
-			}catch(Exception ex){
-				MensajeG.mostrar("Ocurrió una excepción al recuperar el historial", FacesMessage.SEVERITY_FATAL);
-			}*/
-		}
+	  
+		/*zuri*/
 		public void actualizar_fecha() {
 			setFechaI(getFechaI());
 			setFechaF(getFechaF());
 		}
+		/*zuri*/
 		public void guarda_actualiza_datos() {
-
-			his_man = new ArrayList<Mantenimiento>();
+		
+			//his_man = new ArrayList<Mantenimiento>();
+			
 			try {
-				his_man.clear();
+				//his_man.clear();
 				his_man = estimuladorService.por_fecha(selecion_esth.getIdequipo(),getFechaI(),getFechaF());	
+				//registro = his_man.size();
+				if(registro == 0){
+					MensajeG.mostrar("No se encontraron registros en esa fecha", FacesMessage.SEVERITY_WARN);
+				}
 			}catch(Exception e) {
-				
+				MensajeG.mostrar("Ocurrió una excepción al recuperar el historial", FacesMessage.SEVERITY_FATAL);
 			}
 		}
+		 /*zuri*/
+		   public void seleccionarFechaInicial(){
+				if(fechaI.after(fechaF)){
+					fechaF = fechaI;
+					
+				}
+				
+			}
 	public String getIdEstadoe() {
 		return idEstadoe;
 	}
@@ -1208,6 +1199,15 @@ public class Controlestimuladores implements Serializable {
 
 	public void setFechaF(Date fechaF) {
 		this.fechaF = fechaF;
+	}
+	/*zuri*/
+
+	public int getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(int registro) {
+		this.registro = registro;
 	}
 	
 }

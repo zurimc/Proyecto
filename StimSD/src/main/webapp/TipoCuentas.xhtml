@@ -110,17 +110,22 @@
 		<h:form id="form_busca">	
 				<b:panel title="Usuarios" look="info" class = "alineacion tamana_ancho_5">
 					<b:container fluid="true"  >
+					<c:if  test="#{gestiondeSeccionView.userDTO.idtipo == 1}">
 						<b:row style="margin-bottom:10px">
+						<!-- zuri ocultar boton -->
+						
 							<b:column span="2">
 								<b:commandButton look="info" value="Cargar"  actionListener="#{registroUsuario.cargar_todos_user}" update="usuarios" 
 								onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"  ></b:commandButton>
 							</b:column>
+						
 							<b:column span="4" offset="2">
 								<p:inputText id="buscador" value="#{registroUsuario.cuenta}"   placeholder="Buscador" style=" text-aling: center;">
 					     			<p:ajax event="keyup" update="usuarios" listener="#{registroUsuario.buscar_cuentas}" />
 					    		</p:inputText>
 							</b:column>
 						</b:row>
+					</c:if>		
 						<b:row style="margin-bottom:10px">
 							<b:column span="2">
 								<p:outputLabel value="Tipo: " />
@@ -275,7 +280,7 @@
 							</b:row>
 							<b:row style="margin-bottom:10px">
 								<b:column span="2">
-									<h:outputLabel value="Numero:" />
+									<h:outputLabel value="Número:" />
 								</b:column>
 								<b:column span="4"  offset="2">
 									<p:inputText style="text-align: center;" id="numero"  value="#{registroUsuario.num}"  label="numero">
@@ -325,7 +330,7 @@
 						<b:container fluid="true"  >
 							<b:row style="margin-bottom:10px">
 								<b:column span="2">
-									<h:outputLabel value="Telefono:" />
+									<h:outputLabel value="Teléfono:" />
 								</b:column>
 								<b:column span="4"  offset="2">
 								  	<p:inputText  style="text-align: center;" id="telefono"  value="#{registroUsuario.telefono}" label="username">
@@ -376,7 +381,7 @@
 							</b:row>
 							<b:row style="margin-bottom:10px">
 								<b:column span="2">
-									<p:outputLabel  value="Titulo: " />
+									<p:outputLabel  value="Título: " />
 								</b:column>
 								<b:column span="4"  offset="2">	
 									<p:inputText style="text-align: center;" placeholder="tipo" id="especialidada" value="#{registroUsuario.especialidad1}" 

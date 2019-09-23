@@ -34,7 +34,7 @@
               startAnimation="false"
               showIndicators="false"
               wrap="false">
-    <b:carouselItem style="width:400px; height:330px">
+    <b:carouselItem style="width:400px; height:380px">
       <b:panel title="Personal" look="primary">
        
               <b:inputText  id="nombre" value="#{registroUsuario.nombre}" required="true" label="Nombre(s)" >
@@ -50,8 +50,11 @@
                  <p:keyFilter regEx="/[a-z_]/i"/>
                  <p:ajax update="c_apellido2" />   
               </b:inputText>
-              
-              
+              <b:inputText  id="usuario" value="#{registroUsuario.cuenta}" required="true" label="Cuenta" >
+              <p:keyFilter regEx="/[a-z_]/i"/>
+              <p:ajax update="c_cuenta" />  
+              </b:inputText>  
+             
       </b:panel>
     </b:carouselItem>
     <b:carouselItem style="width:400px;height:455px">
@@ -59,7 +62,7 @@
         		<b:inputText  id="calle"  value="#{registroUsuario.calle}" required="true" label="Calle" >
         		<p:ajax update="c_calle" /> 
         		</b:inputText>
-        		<b:inputText  id="numero"  value="#{registroUsuario.num}" required="true" label="Numero">
+        		<b:inputText  id="numero"  value="#{registroUsuario.num}" required="true" label="Número">
               	<p:keyFilter regEx="/[\d\-\.]/"/>
               	<p:ajax update="c_numero" /> 
               	</b:inputText> 
@@ -68,7 +71,7 @@
                 <p:ajax update="c_colonia" /> 
                 </b:inputText>
                 <b:inputText  id="cp"  value="#{registroUsuario.codigoPostal}"
-                required="true" label="Codigo Postal">
+                required="true" label="Código Postal">
                 <p:ajax update="c_cp" /> 
                 <p:keyFilter regEx="/[\d\-\.]/"/> 
               	</b:inputText>
@@ -81,13 +84,13 @@
     <b:carouselItem style="width:400px;height:400px">
       <b:panel title="Contacto" look="success">
         		<b:inputText  id="telefono"  value="#{registroUsuario.telefono}"
-                  required="true" label="Usuario">
+                  required="true" label="Teléfono">
                 <p:keyFilter regEx="/[\d\-\.]/"/>  
                 <p:ajax update="c_telefono" /> 
               	</b:inputText>   
             
               	<b:inputText  id="email"  value="#{registroUsuario.email}"
-                required="true" label="Correo Electronico">
+                required="true" label="Correo Electrónico">
                 <p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/>
                 <p:ajax update="c_email" />   
               	</b:inputText>
@@ -144,7 +147,7 @@
 								<h:outputLabel id = "c_calle" value="#{registroUsuario.calle}" style=" color:#{registroUsuario.calle?'green':'red'}" />
 					  </b:column>
 					  <b:column span="2">
-                    			<h:outputLabel value="Numero:" />
+                    			<h:outputLabel value="Número:" />
 					  </b:column>
 						 <b:column span="2">
 								<h:outputLabel id = "c_numero" value=" #{registroUsuario.num}" style=" color:#{registroUsuario.num?'green':'red'}" />
@@ -156,7 +159,7 @@
 								<h:outputLabel id = "c_colonia" value="#{registroUsuario.colonia}" style=" color:#{registroUsuario.colonia?'green':'red'}" />
 						</b:column>
 						<b:column span="2">
-                    			<h:outputLabel value="Codigo Postal:" />
+                    			<h:outputLabel value="Código Postal:" />
 						</b:column>
 						<b:column span="2">
 								<h:outputLabel id = "c_cp" value="#{registroUsuario.codigoPostal}" style=" color:#{registroUsuario.codigoPostal?'green':'red'}" />
@@ -170,7 +173,7 @@
                       </h:panelGrid> 
                       <h:panelGrid columns="2" style="margin-bottom:20px">
                       <b:column span="2">
-                    			<h:outputLabel value="Telefono:" />
+                    			<h:outputLabel value="Teléfono:" />
 					  </b:column>
                       <b:column span="2" >
 								<h:outputLabel id = "c_telefono" value="#{registroUsuario.telefono}" style=" color:#{registroUsuario.telefono?'green':'red'}"/>

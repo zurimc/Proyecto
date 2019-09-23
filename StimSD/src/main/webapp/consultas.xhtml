@@ -66,7 +66,7 @@
     width:400px;
     }
      .tamana_ancho_6{
-    width:600px;
+    width:700px;
     }
        .tamana_ancho_7{
     width:330px;
@@ -114,11 +114,11 @@
 </h:head>
 
 <h:body style= "background-color: #ecf2f5">
-<h:form   id = "form_g_p" class = "tamana_ancho_8" >
+<h:form   id = "form_g_p"   >
 <c:if  test="#{pacienteView.tipos_vistas == 0}">
-				<b:panelGrid  columns="3" colSpans="4,4,4"   >
+					<b:panelGrid  columns="4" col-spans="3,3,3,3">
 					<b:container fluid="true"  >
-						<b:panel title="Expediente" look="info" id  ="estim_espe" >
+						<b:panel title="Expediente" look="info" id  ="estim_espe" class = "tamana_ancho_1" style="margin-left:10px">
 							<b:row  style="margin-bottom:10px;" >
 								<b:column span="2" >
 					 					<h:outputLabel  value="Paciente:"/>
@@ -163,117 +163,22 @@
 								
 							</b:row>
 						</b:panel>
-
+	<b:column>
+					<b:dropButton look="warning" value="Warning" icon="plus">
+  					<b:navLink value="Peso" href="peso.xhtml"></b:navLink>
+  					<b:navLink value="Presion" href="presion.xhtml"></b:navLink>
+ 					<b:navLink value="Temperatura" href="temperatura.xhtml"></b:navLink>
+ 					<b:navLink value="Altura" href="altura.xhtml"></b:navLink>
+ 					<b:navLink value="Masa Corporal" href="masa.xhtml"></b:navLink>
+ 					<b:navLink value="Grasa Corporal" href="grasa.xhtml"></b:navLink>
+  					
+					</b:dropButton>
+					</b:column>
 					</b:container>
 					<b:container fluid="true"  >
-						<b:panel title="Descripcion" look="info" id  ="descripcion" >
-							<b:row  style="margin-bottom:10px;" >
-						<b:column span="2">
-							<h:outputLabel value="Peso: " />
-						</b:column>
-						<b:column span="8" offset="2">	
-							<b:inputText  style="text-align: center;"  id="peso_exp"   placeholder="Ingrese Peso" value="#{consultaView.peso}">
-              				<p:ajax event="keyup" listener="#{consultaView.guarda_actualiza_datos()}"></p:ajax>	
-              				</b:inputText>					
-						</b:column>
-					</b:row>
-					<b:row style="margin-bottom:10px">
-						<b:column span="2">
-						 <h:outputLabel value="Presión Mayor: " />
-						</b:column>
-						<b:column span="8" offset="2">
-							<b:inputText  id="presion_exp1"  style="text-align: center;"  placeholder="Ingrese presión mayor" value="#{consultaView.p_mayor}">
-              				<p:ajax event="keyup" listener="#{consultaView.guarda_actualiza_datos}"></p:ajax>
-              				</b:inputText>						
-						</b:column>
-					</b:row>
-					<b:row style="margin-bottom:10px">
-						<b:column span="2">
-						 <h:outputLabel value="Presión Menor: " />
-						</b:column>
-						<b:column span="8" offset="2">
-							<b:inputText  id="presion_exp2"  style="text-align: center;"  placeholder="Ingrese presión menor" value="#{consultaView.p_menor}">
-              				<p:ajax event="keyup" listener="#{consultaView.guarda_actualiza_datos}"></p:ajax>
-              				</b:inputText>						
-						</b:column>
-					</b:row>
-					<b:row style="margin-bottom:10px">
-						<b:column span="2">
-						 	<h:outputLabel value="Temperatura: " />
-						</b:column>
-						<b:column span="8" offset="2">	
-							<b:inputText  id="temp_exp"  style="text-align: center;"  placeholder="Ingrese temperatura" value="#{consultaView.temperatura}" >
-              				<p:ajax event="keyup" listener="#{consultaView.guarda_actualiza_datos}"></p:ajax>	
-              				</b:inputText>					
-						</b:column>
-					</b:row>
-					<b:row style="margin-bottom:10px">
-						<b:column span="2">
-					 		<h:outputLabel value="Altura: " />
-						</b:column>
-						<b:column span="8" offset="2">
-							<b:inputText  id="altura"  style="text-align: center;"  placeholder="Ingrese altura" value="#{consultaView.altura}">
-              				<p:ajax event="keyup" listener="#{consultaView.guarda_actualiza_datos}"></p:ajax>	
-              				</b:inputText>						
-						</b:column>
-					</b:row>
-					<b:row style="margin-bottom:10px">
-						<b:column span="2">
-							<h:outputLabel value="Masa Corporal: " />
-						</b:column>
-						<b:column span="8" offset="2">		
-							<b:inputText  id="masa_exp"  style="text-align: center;"  placeholder="Ingrese masa" value="#{consultaView.masa_corp}">
-              				<p:ajax event="keyup" listener="#{consultaView.guarda_actualiza_datos}"></p:ajax>	
-              				</b:inputText>				
-						</b:column>
-					</b:row>
-					<b:row style="margin-bottom:10px">
-						<b:column span="2">
-							<h:outputLabel  value="Grasa Corporal: " />
-						</b:column>
-						<b:column span="8" offset="2">	
-							<b:inputText  id="grasa"  style="text-align: center;"  placeholder="Ingrese grasa" value="#{consultaView.grasa_corp}">
-              				<p:ajax event="keyup" listener="#{consultaView.guarda_actualiza_datos}"></p:ajax>		
-              				</b:inputText> 					
-						</b:column>
-					</b:row>
-						
-						</b:panel>
-					</b:container>
-					
-						
-						 
-						  <b:container fluid="true"  >
-						  <b:panel title="Datos Consulta" look="info" id  ="consulta_datos" >
-						  	<b:row style="margin-bottom:10px">
-							<b:column span="2">
-							<h:outputLabel  value="Seleccionar Expediente:  "/>
-							</b:column>
-								<b:column span="5" offset="2">
-								<h:outputLabel  value="#{consultaView.noexpediente}"/>
-								</b:column>
-								<b:column span="1" offset="1">
-								<b:commandButton look="info" value="E" type="button"
-								actionListener="#{consultaView.cargar_expedientes}"
-					 			onclick="PF('patablaexpediente').show();"/>
-							</b:column>
-							</b:row>
-							<b:row>
-		 	 	 				<h3>Descripción</h3>
-		 	 	 			</b:row>
-		 	 	 			<b:row>
-		 	 	 				<p:inputTextarea id = "actualizacion_equipo" rows="1" cols="30"
-									 maxlength="100" counterTemplate="{0} " 
-									autoResize="false" value="#{consultaView.descripcion}"
-									class = "texto_centro">
-									<p:ajax event="keyup" listener="#{consultaView.guarda_actualiza_datos}"></p:ajax>
-								</p:inputTextarea>
-		 	 	 			</b:row>
-		 	 	 			<b:row>
-		 	 	 				<h:outputText id="contador_palabras1" />
-		 	 	 			</b:row>
-		 	 	 			
-		 	 	 			<b:row>
+						<b:panel title="Descripcion" look="info" id  ="descripcion" class = "tamana_ancho_6" >
+							 <p:editor id="editor" widgetVar="editorWidget" value="#{editorView.text}" width="600" />
+							 <b:row>
 		 	 	 			<b:column offset="1" span="4" style="margin-top:20px">
 		 	 	 			<b:commandButton look="info" id="estudios_exp" value="Estudios" type="button" onclick="PF('paParametrosver').show();" ></b:commandButton>
 		 	 	 			</b:column>
@@ -281,12 +186,20 @@
 							<b:commandButton look="success" id="guardar_exp" value="Guardar"  actionListener="#{consultaView.registroConsulta}"
 							onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></b:commandButton>
 							</b:column> 
+							<b:column span="2">
+							<h:outputLabel  value=" Expediente:  "/>
+							</b:column>
+							<b:column span="1" offset="1">
+								<b:commandButton look="info" value="E" type="button"
+								actionListener="#{consultaView.cargar_expedientes}"
+					 			onclick="PF('patablaexpediente').show();"/>
+							</b:column>
 		 	 	 			</b:row>
-		 	 	 			</b:panel>
-		 	 	 			</b:container>
-						
-					
+						</b:panel>
+					</b:container>
+				
 				</b:panelGrid>
+				
 </c:if>
 <!-- Cargar estudios -->	
  			<p:dialog header="Estudios" widgetVar="paParametrosver" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
@@ -315,43 +228,8 @@
  			
  					
  					</b:panelGrid>
- 			</p:dialog> 
- <!-- SELECCIONAR EXPEDIENTE -->								  
-<p:dialog header="Seleccione Expediente" widgetVar="patablaexpediente" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
-			 			<b:panelGrid  columns="2" >
-			 			<b:container fluid="true"  >
-			 				<b:row  style="margin-bottom:10px" >
-				 				<b:column span="4">
-									<b:commandButton look="primary" value="cargar" actionListener="#{consultaView.cargar_expedientes}"
-									update="expedientet, exbuscador" ></b:commandButton>
-								</b:column>
-								<b:column span="6" offset= "2">
-									<p:inputText id="exbuscador"  placeholder="Buscar Expediente" style=" text-aling: center;" value="#{consultaView.expe_m}">
-					     			<p:ajax event="keyup" update="expedientet" listener="#{consultaView.buscar_expediente}" />	
-					    			</p:inputText>		
-								</b:column>
-			 				</b:row>
-			 				<b:row  style="margin-bottom:10px" >
-			 					<p:dataTable class = "tamana_ancho_5" id="expedientet" paginator="true" rows="5" 
-								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
-								rowsPerPageTemplate="5,10,15,20" 
-								paginatorPosition="bottom"  value="#{consultaView.exp_id}"
-								 var="expe_t" reflow="true" selectionMode="single"  
-								selection="#{consultaView.seleccion_expediente}" rowKey="#{expe_t.noexpediente}">
-									<p:ajax event="rowSelect" listener="#{consultaView.asignacion_expediente}"
-								update=":form_g_p:consulta_datos" />
-								<p:column headerText="Folio">
-							        	<h:outputText value="#{expe_t.noexpediente}" />
-							    	</p:column>
-							    	<p:column headerText="Nombre">
-							    		<h:outputText value="#{expe_t.nombre}"  />
-							    	</p:column>
-								</p:dataTable>
-			 				</b:row>
-						</b:container>
-						</b:panelGrid> 			
-					</p:dialog>
-<!-- Cargar estudios -->	
+ 			</p:dialog>
+ <!-- Cargar estudios -->	
  			<p:dialog header="Ingrese Datos" widgetVar="presionI" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
  				<b:panelGrid  columns="1" >
  				<b:container fluid="true">
@@ -396,7 +274,41 @@
  			
  					
  					</b:panelGrid>
- 			</p:dialog> 					
+ 			</p:dialog>
+<!-- SELECCIONAR EXPEDIENTE -->								  
+<p:dialog header="Seleccione Expediente" widgetVar="patablaexpediente" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+			 			<b:panelGrid  columns="2" >
+			 			<b:container fluid="true"  >
+			 				<b:row  style="margin-bottom:10px" >
+				 				<b:column span="4">
+									<b:commandButton look="primary" value="cargar" actionListener="#{consultaView.cargar_expedientes}"
+									update="expedientet, exbuscador" ></b:commandButton>
+								</b:column>
+								<b:column span="6" offset= "2">
+									<p:inputText id="exbuscador"  placeholder="Buscar Expediente" style=" text-aling: center;" value="#{consultaView.expe_m}">
+					     			<p:ajax event="keyup" update="expedientet" listener="#{consultaView.buscar_expediente}" />	
+					    			</p:inputText>		
+								</b:column>
+			 				</b:row>
+			 				<b:row  style="margin-bottom:10px" >
+			 					<p:dataTable class = "tamana_ancho_5" id="expedientet" paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20" 
+								paginatorPosition="bottom"  value="#{consultaView.exp_id}"
+								 var="expe_t" reflow="true" selectionMode="single"  
+								selection="#{consultaView.seleccion_expediente}" rowKey="#{expe_t.noexpediente}">
+									
+								<p:column headerText="Folio">
+							        	<h:outputText value="#{expe_t.noexpediente}" />
+							    	</p:column>
+							    	<p:column headerText="Nombre">
+							    		<h:outputText value="#{expe_t.nombre}"  />
+							    	</p:column>
+								</p:dataTable>
+			 				</b:row>
+						</b:container>
+						</b:panelGrid> 			
+					</p:dialog> 			 							 				
 </h:form>
 </h:body>
 </html>

@@ -31,7 +31,7 @@ import com.lab.sdt.model.MantenimientoExample.Criteria;
 @Transactional
 
 public class EstimuladorService {
-	
+	/*zuri*/
 	private final int FECHA_INICIO = 1;
 	private final int FECHA_FIN = 2;
 	
@@ -59,6 +59,7 @@ public class EstimuladorService {
 	public void insertaMaterial(Material mat) {
 		materialMapper.insert(mat);
 	}
+	/*zuri*/
 	public List<Mantenimiento> por_fecha(int idequipo, Date fecha_I, Date fecha_F){
 		List<Mantenimiento> res = new ArrayList<Mantenimiento>();
 		List<EquipoManten> lista_man = lista_mante_equi(idequipo);
@@ -70,12 +71,12 @@ public class EstimuladorService {
 			criteria.andFechamantenimientoBetween(generarFecha(fecha_I, FECHA_INICIO), generarFecha(fecha_F, FECHA_FIN));
 			Mantenimiento man = new Mantenimiento();
 			man = mantenimientoMapper.selectByPrimaryKey(lista_man.get(i).getIdmantenimiento());
-			//if(generarFecha(fecha_I, FECHA_INICIO).after(man.getFechamantenimiento())) {
+		if(generarFecha(fecha_I, FECHA_INICIO).after(man.getFechamantenimiento())) {
 			//	if(fecha_F.before(man.getFechamantenimiento())) {
 			man.setFechamantenimiento(fecha_I);
 					res.add(man);
 			//	}
-			//}
+			}
 			
 		}
 		//res.add(mantenimientoMapper.selectByPrimaryKey(1));
@@ -177,6 +178,7 @@ public class EstimuladorService {
 	public Equipo encuentra_por_id(int idkey) {
 		return equipoMapper.selectByPrimaryKey(idkey);
 	}
+	/*zuri*/
 	private Date generarFecha(Date fecha, int tipoFecha){
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(fecha);
@@ -195,13 +197,5 @@ public class EstimuladorService {
 	}
 
 	
-	public List<Mantenimiento> obtenerHistoricoPorFecha( Date fechaIni, Date fechaFin, List<Mantenimiento> mantenimientoFecha) throws Exception{
-		MantenimientoExample exMan = new MantenimientoExample();
-		Criteria criteria = exMan.createCriteria();
-		
-		criteria.andFechamantenimientoBetween(generarFecha(fechaIni, FECHA_INICIO), generarFecha(fechaFin, FECHA_FIN));
-		
-		return mantenimientoFecha;
-	}
 	
 }

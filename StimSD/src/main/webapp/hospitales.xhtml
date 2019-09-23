@@ -65,7 +65,7 @@
     width:400px;
     }
      .tamana_ancho_6{
-    width:600px;
+    width:400px;
     }
        .tamana_ancho_7{
     width:330px;
@@ -148,14 +148,15 @@
 				</b:panel> 	
 </h:form>
 
-<h:form id="form_registro">	
+	
 <b:panel title="Datos Hospital" look="info" class = "alineacion tamana_ancho_6">				
 					<b:container fluid="true"  >
+					<h:form id="form_registro">
 					<b:row style="margin-bottom:10px">
 						<b:column span="2">
 						 <h:outputLabel value="Hospital: " />
 						</b:column>
-						<b:column span="8" offset="2">	
+						<b:column span="7" offset="1">	
 							<b:inputText  style="text-align: center;"  id="nom_hospital"   placeholder="Ingrese hospital" value="#{hospitalView.nom_hospital}">
               					<p:ajax event="keyup" listener="#{hospitalView.guarda_actualiza_datos}"></p:ajax>
               				</b:inputText>					
@@ -165,7 +166,7 @@
 						<b:column span="2">
 						 <h:outputLabel value="Calle: " />
 						</b:column>
-						<b:column span="8" offset="2">
+						<b:column  span="7" offset="1">
 							<b:inputText  id="calle"  style="text-align: center;"  placeholder="Ingrese calle" value="#{hospitalView.calle}">
               					<p:ajax event="keyup" listener="#{hospitalView.guarda_actualiza_datos}"></p:ajax>
               				</b:inputText>						
@@ -175,7 +176,7 @@
 						<b:column span="2">
 						 	<h:outputLabel value="Numero: " />
 						</b:column>
-						<b:column span="8" offset="2">	
+						<b:column  span="7" offset="1">	
 							<b:inputText  id="numero"  style="text-align: center;"  placeholder="Ingrese numero" value="#{hospitalView.numero}">
               					<p:ajax event="keyup" listener="#{hospitalView.guarda_actualiza_datos}"></p:ajax>
               					<p:keyFilter regEx="/[\d\-\.]/"/>
@@ -186,7 +187,7 @@
 						<b:column span="2">
 					 		<h:outputLabel value="Colonia: " />
 						</b:column>
-						<b:column span="8" offset="2">
+						<b:column  span="7" offset="1">
 							<b:inputText  id="colonia"  style="text-align: center;"  placeholder="Ingrese colonia" value="#{hospitalView.colonia}">
               					<p:ajax event="keyup" listener="#{hospitalView.guarda_actualiza_datos}"></p:ajax>
               				</b:inputText>						
@@ -196,7 +197,7 @@
 						<b:column span="2">
 							<h:outputLabel value="Codigo Postal: " />
 						</b:column>
-						<b:column span="8" offset="2">		
+						<b:column span="7" offset="1">		
 							<b:inputText  id="codigoPostal"  style="text-align: center;"  placeholder="Ingrese CP" value="#{hospitalView.codigoPostal}">
               					<p:ajax event="keyup" listener="#{hospitalView.guarda_actualiza_datos}"></p:ajax>
               					<p:keyFilter regEx="/[\d\-\.]/"/>
@@ -207,7 +208,7 @@
 						<b:column span="2">
 							<h:outputLabel  value="Telefono: " />
 						</b:column>
-						<b:column span="8" offset="2">	
+						<b:column  span="7" offset="1">	
 							<b:inputText  id="telefono"  style="text-align: center;"  placeholder="Ingrese telefono" value="#{hospitalView.telefono}">
               						<p:ajax event="keyup" listener="#{hospitalView.guarda_actualiza_datos}"></p:ajax>
               				</b:inputText> 					
@@ -217,7 +218,7 @@
 						<b:column span="2">
 							<h:outputLabel  value="Estado: " />
 						</b:column>
-						<b:column span="8" offset="2">	
+						<b:column  span="7" offset="1">	
 							<b:selectOneMenu  id="estado" style="width:100%;"  value="#{hospitalView.idEstado}">
                     			<f:selectItem itemLabel="seleccione uno" itemValue="----" />
             					<f:selectItems value="#{hospitalView.estados}" />
@@ -225,15 +226,17 @@
           					</b:selectOneMenu>					
 						</b:column>
 					</b:row>
-					</b:container>			
-</b:panel> 				 	
-</h:form>
-
-  
-	<b:row style="margin-bottom:10px;padding-left:900px  ">
+					</h:form>
+					</b:container>
+		<b:column style="margin-left:110px">			
 		<b:commandButton  look="success" value="Guardar/Actualizar"  actionListener="#{hospitalView.actualizar}" update=":form_g:form_registro" 
         onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" styleClass="ui-priority-primary"></b:commandButton>	
-	</b:row>
+		</b:column>		
+</b:panel> 				 	
+
+
+  
+	
 
 	
 </b:panelGrid>

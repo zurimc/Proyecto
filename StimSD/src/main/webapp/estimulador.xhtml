@@ -65,14 +65,22 @@
     width:800px;
     margin-top:10px;
     }
+    /*zuri*/
       .tamana_ancho_5{
-    width:400px;
+    width:300px;
+    }
+    /*zuri*/
+     .tamana_ancho_5.1{
+    width:330px;
     }
      .tamana_ancho_6{
     width:600px;
     }
        .tamana_ancho_7{
     width:330px;
+     margin:auto;
+     padding: auto;
+    
     }
   
     .tamana_ancho_8{
@@ -312,13 +320,14 @@
 				 </p:dialog>	
      </b:panelGrid>
      </c:if>
+     <!-- zuri -->
      <c:if  test="#{controlestimuladores.tipos_vistas == 2}">
      <h:form id="form_m1">
      <h1 style="text-align: center">
 	 	<b:label id = "equi_m" style="margin-bottom:10px" text="Equipo: #{controlestimuladores.serie} G : #{controlestimuladores.generacion}" severity="primary"/> 
 	 </h1>
 	 <b:panelGrid  columns="3" >
-	 	<b:panel title="Equipo" look="info" class = "alineacion tamana_ancho_5">
+	 	<b:panel title="Equipo" look="info" class = "alineacion tamana_ancho_5.1">
 	 		<b:container fluid="true"  >
 							<b:row  style="margin-bottom:10px" >
 								<b:column span="2">
@@ -353,11 +362,9 @@
 							</b:row>
 						</b:container>
 	 	</b:panel>
-	 	<b:panel title="Fecha Material" look="info" class = "alineacion tamana_ancho_5">
+	 	<b:panel title="Fecha Material" look="info" class = "alineacion tamana_ancho_5.1">
 		 	 	 		<b:container fluid="true"  >
-		 	 	 				<b:row style="margin-bottom:10px">
-		 	 	 					<p:calendar id="fecha_m" class = "texto_centro" value="#{controlestimuladores.fecha1}" showOn="button"  placeholder="Fecha"/>
-		 	 	 				</b:row>
+		 	 	 				
 		 	 	 				<b:row style="margin-bottom:10px">
 		 	 	 					<h3>Material Utilizado</h3>
 		 	 	 				</b:row>
@@ -399,7 +406,7 @@
                					 	
 		 	 	 		</b:container>
 		 	 	 	</b:panel>
-		 	 	 	<b:panel title="Falla Actualización" look="info" class = "alineacion tamana_ancho_5">
+		 	 	 	<b:panel title="Falla Actualización" look="info" class = "alineacion tamana_ancho_5.1">
 		 	 	 		<b:container fluid="true"  >
 		 	 	 			<b:row>
 		 	 	 				<h3>Actualización</h3>
@@ -476,6 +483,7 @@
 								</p:dialog>
      </h:form>
      </c:if>
+     
      <c:if  test="#{controlestimuladores.tipos_vistas == 3}">
      <b:panelGrid  columns="2" >
 	 	<h:form id="form_mc">	
@@ -534,6 +542,7 @@
             							onclick="PF('statusDialog').show()" update=":form_g:form_tm:material_e" oncomplete="PF('statusDialog').hide()" ></b:commandButton>
 								</b:column>
 							</b:row>
+							
 					</b:container>
 				</b:panel> 	
 			</p:fragment>  
@@ -584,12 +593,12 @@
 	 </b:panelGrid>
 	 </c:if>
 	<c:if  test="#{controlestimuladores.tipos_vistas == 4}">	
-	 <b:panelGrid  columns="4"  class = "alineacion"> 
+	 <b:panelGrid  columns="6" col-spans="2,2,2,2,2,2" > 
 		
-			<h:form id="form_his_b">
-				<p:fragment>
-					<b:panel title="Equipo" look="info" class = "alineacion tamana_ancho_7">
+					<b:panel title="Equipo" look="info" class = "alineacion tamana_ancho_5">
 						<b:container fluid="true"  >
+						<h:form id="form_his_b">
+				
 							<b:row  style="margin-bottom:10px" >
 								<b:column span="2">
 									<b:commandButton look="info" id="caragar_equh" value="Cargar" actionListener="#{controlestimuladores.cargar_equipoh}" 
@@ -597,7 +606,7 @@
 	            					></b:commandButton> 
 								</b:column>
 								<b:column span="3" offset="1">
-									<p:inputText id="serie_bh"  value="#{controlestimuladores.serie_bh}"  placeholder="Serie">
+									<p:inputText id="serie_bh"  value="#{controlestimuladores.serie_bh}"  placeholder="Serie" style="margin-left:10px">
 				     				 	<p:ajax event="keyup" update="equiposh" listener="#{controlestimuladores.buscar_equipoh}" />
 				        			</p:inputText>
 								</b:column>
@@ -623,33 +632,31 @@
 							    	</p:column>
 								</p:dataTable>
 							</b:row>
+							</h:form>
 						</b:container>
 					</b:panel>
-				</p:fragment>
-			</h:form>
-			
-			<h:form id="form_his_m">
-				<p:fragment>
-					<b:panel title="Histórico" look="info" class = "alineacion tamana_ancho_1"> 
-						<b:container fluid="true"  >
+				
+					<b:panel title="Histórico" look="info" class = "alineacion tamana_ancho_5" style="margin-left:100px"> 
+					
+						<b:container fluid="true" >
+						<h:form id="form_his_m" >
 							<b:row  style="margin-bottom:10px" >
 								<h:outputLabel id = "hist_equipo" value="Equipo: #{controlestimuladores.serieh} G : #{controlestimuladores.generacionh}" />
 							</b:row>
 							<b:row  style="margin-bottom:10px" >
 								<h:outputLabel id = "hist_equipo1" value="#{controlestimuladores.selecion_esth.estado}" />
 							</b:row>
-							 <b:row style="margin-bottom:10px">
-		 	 	 					
+							 <b:row style="margin-bottom:10px;  margin-left:15px;">
 		 	 	 					<p:calendar id="fecha1" showOn="button"  placeholder="Fecha Inicial" value="#{controlestimuladores.fechaI}"
 		 	 	 					pattern="dd/MM/yy" locale="es">
-		 	 	 					<p:ajax event="dateSelect" listener="#{controlestimuladores.actualizar_fecha}"/>
+		 	 	 					<p:ajax event="dateSelect" update="fecha2" listener="#{controlestimuladores.seleccionarFechaInicial}"/>
 		 	 	 					</p:calendar>
 		 	 	 					
 		 	 	 			</b:row>
-		 	 	 			<b:row style="margin-bottom:10px">
+		 	 	 			<b:row style="margin-bottom:10px;  margin-left:15px;">
 		 	 	 					<p:calendar id="fecha2" showOn="button"  placeholder="Fecha Final" value="#{controlestimuladores.fechaF}"
 		 	 	 					pattern="dd/MM/yy" locale="es">
-		 	 	 					<p:ajax event="dateSelect" listener="#{controlestimuladores.seleccionarFechaInicial}"/>
+		 	 	 					
 		 	 	 					</p:calendar>
 		 	 	 			</b:row> 
 		 	 	 			<b:row style="margin-bottom:10px">
@@ -665,77 +672,92 @@
 								
 								<p:ajax event="rowSelect" listener="#{controlestimuladores.elige_mant}"
 					      		update=":form_g:form_his_mx, :form_g:emapa1" />
-					      		<p:column headerText="id">
-					      			<h:outputText value="#{hist.idmantenimiento}" />
+					      		<p:column headerText="Fecha">
+					      			<h:outputText  value="#{controlestimuladores.convertirFecha(hist.fechamantenimiento)}" />
 					      		</p:column>
-									<p:column headerText="Fecha">
-										<h:outputText value="#{controlestimuladores.convertirFecha(hist.fechamantenimiento)}" />
+									<p:column headerText="Hora">
+										<h:outputText value="#{controlestimuladores.convertirHora(hist.fechamantenimiento)}" />
 					    			</p:column>
 					    			
 								</p:dataTable>
 							</b:row>
+							</h:form>
 						</b:container>
 						
+						<p:commandButton value="Buscar" styleClass="btn btn-success form-control" style="width:100%;"
+						actionListener="#{controlestimuladores.guarda_actualiza_datos}"  update = ":form_g:form_his_m:mantenimientosh"
+						onstart="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"/>
 					</b:panel>
 					
-				</p:fragment>
-			</h:form>
-			
-			<p:commandButton value="Buscar" styleClass="btn btn-success form-control" style="width:100%;"
-												actionListener="#{controlestimuladores.guarda_actualiza_datos}"  update = ":form_g:form_his_m:mantenimientosh"
-												onstart="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"/>
-			<h:form id="form_his_mx">
-				<p:fragment>
-					<b:panel title="Detalles" look="info" class = "alineacion tamana_ancho_7"> 
-						<b:container fluid="true"  >
-							<b:row  style="margin-bottom:10px" >
-								<b:column span="3">
-									<h:outputLabel  value="Técnico:" />
-								</b:column>
-								<b:column span="6" offset="1">
-									<h:outputLabel  value="#{controlestimuladores.tecnico_m}" />
-								</b:column>
-							</b:row>
-							<b:row  style="margin-bottom:10px" >
-							
-									<h:outputLabel  value="#{controlestimuladores.fallas_hist}" />
-								
-							</b:row>
-							<b:row  style="margin-bottom:10px" >
-								<h:outputLabel  value="Material Utilizado" />
-							</b:row>
-							<b:row  style="margin-bottom:10px" >
-								<p:dataTable id = "material_utilizado"  paginator="true" rows="5" 
-										paginatorTemplate="{PageLinks} {RowsPerPageDropdown}" class ="tamana_ancho_1"
-										rowsPerPageTemplate="3,6,9"
-										paginatorPosition="bottom" value="#{controlestimuladores.materiales_utlizados}"
-										var="mat_equ_m_uti_h"  reflow="true" selectionMode="single"  
-										selection="#{controlestimuladores.selecion_mat_utlizados}"   rowKey="#{mat_equ_m_uti_h.material}" >
-									
-												
-										<p:column headerText="nombre">
-											<h:outputText value="#{mat_equ_m_uti_h.material}" />
-										</p:column>
-										
-										<p:column headerText="Serie" style="width:25%;">
-											<h:outputText value="#{mat_equ_m_uti_h.nSerie}" />
-										</p:column>
-										
-									
-										<p:column headerText="Can." style="width:20%;">
-											<h:outputText value="#{mat_equ_m_uti_h.cantidad}" />
-										</p:column>
-									</p:dataTable>
-							</b:row>
-							<b:row  style="margin-bottom:10px" >
-							
-								<b:commandButton look="primary" value="Ver"  type="button"  onclick="PF('edetalles').show();"/> 
+			<!-- zuri -->
 						
-							</b:row>
-							
-						</b:container>
-					</b:panel>
-				</p:fragment>
+                        <b:panel title="Detalles" look="info" class = "alineacion tamana_ancho_7" > 
+                        <b:container fluid="true"  >
+                        <h:form id="form_his_mx">
+                        
+                            <b:row  style="margin-bottom:10px" >
+                                <b:column span="3">
+                                    <h:outputLabel  value="Técnico:" />
+                                </b:column>
+                                <b:column span="6" offset="1">
+                                    <h:outputLabel  value="#{controlestimuladores.tecnico_m}" />
+                                </b:column>
+                            </b:row>
+                            <b:row  style="margin-bottom:10px" >
+                                    <h:outputLabel  value="#{controlestimuladores.fallas_hist}" />
+                            </b:row>
+                            <b:row  style="margin-bottom:10px" >
+                                <h:outputLabel  value="Material Utilizado" />
+                            </b:row>
+                            <b:row  style="margin-bottom:10px" >
+                                <p:dataTable id = "material_utilizado"  paginator="true" rows="5" 
+                                        paginatorTemplate="{PageLinks} {RowsPerPageDropdown}" class ="tamana_ancho_1"
+                                        rowsPerPageTemplate="3,6,9"
+                                        paginatorPosition="bottom" value="#{controlestimuladores.materiales_utlizados}"
+                                        var="mat_equ_m_uti_h"  reflow="true" selectionMode="single"  
+                                        selection="#{controlestimuladores.selecion_mat_utlizados}"   rowKey="#{mat_equ_m_uti_h.material}" >
+                                    
+                                        <p:column headerText="nombre">
+                                            <h:outputText value="#{mat_equ_m_uti_h.material}" />
+                                        </p:column>
+                                        
+                                        <p:column headerText="Serie" style="width:25%;">
+                                            <h:outputText value="#{mat_equ_m_uti_h.nSerie}" />
+                                        </p:column>
+                                        
+                                    
+                                        <p:column headerText="Can." style="width:20%;">
+                                            <h:outputText value="#{mat_equ_m_uti_h.cantidad}" />
+                                        </p:column>
+                                    </p:dataTable>
+                            </b:row>
+                            
+                            </h:form>
+                            <b:row  style="margin-bottom:10px" >
+                                <b:commandButton look="primary" value="Ver"  type="button"  onclick="PF('edetalles').show();"/> 
+                        
+                            </b:row>
+                            <b:column>
+							<b:commandButton value="PDF" look="danger" size="lg" style="margin-left:75px"></b:commandButton>
+							</b:column>
+                        </b:container>
+                        
+                    </b:panel>
+				<b:panel title="Lugar del evento" look="info" class = "alineacion tamana_ancho_5" style="margin-left:130px">
+				<b:container fluid="true"  >
+					<b:openStreetMap id = "emapa1" width="100%" height="300px"
+        				center="#{controlestimuladores.elat},#{controlestimuladores.elog}" marker="#{controlestimuladores.elat},#{controlestimuladores.elog}"
+       					popupMsg="#{controlestimuladores.elat},#{controlestimuladores.elog}"
+        				zoom="14"
+        				dragging= "true"
+        				zoomGlobal = "true"
+        				urlTemplate="https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png" />
+        		</b:container>		
+				</b:panel>
+				
+	</b:panelGrid>
+	</c:if>		
+	
 				 <p:dialog header="Detalles" widgetVar="edetalles" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
 					 <b:container fluid="true"  >
 					 <b:row  style="margin-bottom:10px" >
@@ -766,19 +788,6 @@
 					 
 					 </b:row>
 				 </p:dialog>
-			</h:form>
-				<b:panel title="Lugar del evento" look="info" class = "alineacion tamana_ancho_7">
-					<b:openStreetMap id = "emapa1" width="100%" height="300px"
-        				center="#{controlestimuladores.elat},#{controlestimuladores.elog}" marker="#{controlestimuladores.elat},#{controlestimuladores.elog}"
-       					popupMsg="#{controlestimuladores.elat},#{controlestimuladores.elog}"
-        				zoom="14"
-        				dragging= "true"
-        				zoomGlobal = "true"
-        				urlTemplate="https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png" />
-				</b:panel>
-	</b:panelGrid>
-	</c:if>		
-
 </h:form>
 
 </h:body>

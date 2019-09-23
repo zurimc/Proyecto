@@ -168,7 +168,22 @@
 					</b:container>
 					<b:container fluid="true"  >
 						<b:panel title="Fechas de Estimulación" look="info" id  ="estim_espe_fecha" >
-							<b:row  style="margin-bottom:10px;" >
+							 <b:row style="margin-bottom:10px; margin-left:55px">
+		 	 	 					<p:calendar id="fechas1" showOn="button"  placeholder="Fecha Inicial" 
+		 	 	 					pattern="dd/MM/yy" locale="es" value="#{pacienteView.fechaInicio}">
+		 	 	 					<p:ajax event="dateSelect" listener="#{pacienteView.actualizar_fecha}"/>
+		 	 	 					</p:calendar>
+		 	 	 			</b:row>
+		 	 	 			<b:row style="margin-bottom:10px; margin-left:55px; margin-bottom:10px">
+		 	 	 					<p:calendar id="fechas2" showOn="button"  placeholder="Fecha Final" 
+		 	 	 					pattern="dd/MM/yy" locale="es" value="#{pacienteView.fechaFin}">
+		 	 	 					<p:ajax event="dateSelect" listener="#{pacienteView.actualizar_fecha}"/>
+		 	 	 					</p:calendar>
+		 	 	 			</b:row>
+		 	 	 			<b:row style="margin-botton:20px; margin-left:30px">
+		 	 	 			<b:commandButton value="buscar"  styleClass="btn btn-success form-control" style="width:80%; text-aling:center"></b:commandButton>
+		 	 	 			</b:row> 
+							<b:row  style="margin-bottom:10px; margin-top:10px" >
 								<p:dataTable  id = "expe_estim_his"  paginator="true" rows="5" 
 								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
 								rowsPerPageTemplate="5,10,15,20"
@@ -252,7 +267,7 @@
 					 			/>
 					 		</b:row>
 					 		<b:row  style="margin-bottom:10px" >
-					 			<b:commandButton look="primary" id="pmedicob" type="button" value="Medico"
+					 			<b:commandButton look="primary" id="pmedicob" type="button" value="Médico"
 					 			actionListener="#{pacienteView.muestra_medicos}"
 					 			onclick="PF('ptablamedico').show();"
 					 				update=":form_g_p:pusuariosm"
@@ -310,10 +325,28 @@
 					 			</b:row>
 					 			<b:row  style="margin-bottom:10px" >
 					 				<b:column span="2">
-					 					<h:outputLabel  value="Medico: "/>
+					 					<h:outputLabel  value="Médico: "/>
 					 				</b:column>
 					 				<b:column span="6" offset="2">
 					 					<h:outputLabel   value="#{pacienteView.pnombremedicov}" />
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+		
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Sexo: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<p:inputText id="psexo" style="text-align: center; "   placeholder="Sexo" value="#{pacienteView.psexo}"/>
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+		
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Edad: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<p:inputText id="pedad" style="text-align: center; "   placeholder="Edad" value="#{pacienteView.pedad}"/>
 					 				</b:column>
 					 			</b:row>
 					 			</b:container>
@@ -336,7 +369,7 @@
 					 			</b:row>
 					 			<b:row  style="margin-bottom:10px" >
 					 				<b:column span="2">
-					 					<h:outputLabel  value="Parametro: "/>
+					 					<h:outputLabel  value="Parámetro: "/>
 					 				</b:column>
 					 				<b:column span="6" offset="2">
 					 					<h:outputLabel   value="#{pacienteView.parametrosstring}" />
@@ -413,7 +446,7 @@
 						</b:container> 			
 					</p:dialog>
 <!-- Selecciona medico -->
-					<p:dialog header="Seleccione Mequico" widgetVar="ptablamedico" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+					<p:dialog header="Seleccione Médico" widgetVar="ptablamedico" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
 			 			<b:container fluid="true"  >
 			 				<b:row  style="margin-bottom:10px" >
 				 				<b:column span="2">
