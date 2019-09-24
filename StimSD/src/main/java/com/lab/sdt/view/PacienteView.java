@@ -186,12 +186,15 @@ public class PacienteView implements Serializable {
 	 
 	 private int dosis_anterior = 0;
 	 private boolean termino_dosis =  false;
-		/*zuri*/
-		private String sexo;
-		/*zuri*/
-		private String edad;
-		/*zuri*/
 		
+		private String sexo;
+		
+		private String edad;
+		
+		/*zuri inicio*/
+		
+		
+		/*zuri final*/	
 	@PostConstruct
 	public void init(){
 		valores = new double[300];

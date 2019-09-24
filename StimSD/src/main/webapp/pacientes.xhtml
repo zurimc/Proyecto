@@ -116,6 +116,11 @@
 
 <h:body style= "background-color: #ecf2f5">
 <h:form   id = "form_g_p" class = "tamana_ancho_8" >
+<!-- zuri inicio -->
+<c:if  test="#{pacienteView.tipos_vistas == 3}">
+
+</c:if>
+<!-- zuri final -->
 <c:if  test="#{pacienteView.tipos_vistas == 0}">
 				<b:panelGrid  columns="3" colSpans="4,4,4"   >
 					<b:container fluid="true"  >
