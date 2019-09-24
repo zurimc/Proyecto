@@ -109,6 +109,8 @@ public class PacienteView implements Serializable {
 
 	private  double[] valores;
 	
+	private  double[] valores_paciente;
+	
 	@ManagedProperty("#{hospitalService}")
 	public HospitalService hospitalService;
 	
@@ -182,10 +184,18 @@ public class PacienteView implements Serializable {
 	   
 	 private String estimulos_empreados;
 	 
-
+	 private int dosis_anterior = 0;
+	 private boolean termino_dosis =  false;
+		/*zuri*/
+		private String sexo;
+		/*zuri*/
+		private String edad;
+		/*zuri*/
+		
 	@PostConstruct
 	public void init(){
 		valores = new double[300];
+		valores_paciente = new double[300];
 		valores_g_p = new ArrayList<Double>();
 		cuentas = new ArrayList<Usuario>();
 		enfermedadesitem = new ArrayList<SelectItem>();
@@ -201,13 +211,13 @@ public class PacienteView implements Serializable {
 		seleccion_expeestim = new ExpeEstim();
 		
 
-		//tipos_vistas = 0;
+		tipos_vistas = 3;
 		carga_user_todo();
 		
 		//carga_valores1(1) ;
 		 //agrega_valores(5);
 		//muestra_pacientes();
-		createLineModels(5);
+		createLineModels(5,"",1);
 	}
 public String conviertetipouser(String partes) {
 	String regresa_tipo = "";
@@ -301,6 +311,9 @@ public String conviertetipouser(String partes) {
 		setPfoliov(getPfoliov());
 		setExestatus(isExestatus());
 		setPdosisexp(getPdosisexp());
+		setSexo(getSexo());
+		setEdad(getEdad());
+		
 	}
 	public void selecion_de_paciente() {
 		try {
@@ -383,8 +396,14 @@ public String conviertetipouser(String partes) {
 		setPafrecueciaj_p(Double.parseDouble(ubicaex.getFrecuencia()));
 		setPatiempoj_p(Double.parseDouble(ubicaex.getTiempo()));
 		setPaamplitudj_p(Double.parseDouble(ubicaex.getAmplitud()));
-		//conviertetipouser(seleccion_expeestim.getClinica());
+		conviertetipouser(seleccion_expeestim.getClinica());
+		
 		try {	
+			int tipo_Es = 1;
+			String serie_ubica =  estimuladorService.encuentra_por_id(idequipoex).getNoserie();
+			String[] gene_tipo = serie_ubica.split(";");
+			tipo_Es = Integer.parseInt(gene_tipo[1]);
+			createLineModels(Double.parseDouble(ubicaex.getAmplitud()),ubicaex.getOndaP1(),tipo_Es);
 			setNombre_onda_ubica(u_pacientesService.regresa_onda_nombre(Integer.parseInt(ubicaex.getOndaP2())).getNombre());
 		}catch(Exception e) {}
 		
@@ -394,6 +413,8 @@ public String conviertetipouser(String partes) {
 
 			seleccion_paciente = consultaUsuarios.encontra_porid(seleccion_expediente.getIdusuario());
 			idpacienteex = seleccion_paciente.getIdusuario();
+			sexo = seleccion_paciente.getSexo();
+			edad = seleccion_paciente.getEdad();
 			seleccion_enfermedad = u_pacientesService.encuentra_por_id(seleccion_expediente.getIdenfermedad());
 			idenfermedadex = seleccion_enfermedad.getIdenfermedad();
 			seleccion_medico = consultaUsuarios.encontra_porid(seleccion_expediente.getIdmedico());
@@ -410,7 +431,7 @@ public String conviertetipouser(String partes) {
 				carga_valores1(seleccion_parametro.getIdonda()) ;
 				setNombre_onda(seleccion_parametro.getNombre());
 				 agrega_valores(Double.parseDouble(seleccion_parametro.getAmplitud()));
-				 createLineModels(Double.parseDouble(seleccion_parametro.getAmplitud()));
+				 createLineModels(Double.parseDouble(seleccion_parametro.getAmplitud()),"",1);
 			}catch(Exception e) {MensajeG.mostrar("Error al cargar expediente: "+e.toString(), FacesMessage.SEVERITY_ERROR);}
 			
 			try {
@@ -433,7 +454,7 @@ public String conviertetipouser(String partes) {
 			setParametrosstring(seleccion_parametro.getNombre());
 			try {
 				setPdosisexp(seleccion_expediente.getDosis());
-				
+				dosis_anterior = seleccion_expediente.getDosis();
 			}catch(Exception e) {setPdosisexp(0);}
 			
 			
@@ -606,9 +627,16 @@ public String conviertetipouser(String partes) {
 							// MensajeG.mostrar(listex.size()+";"+seleccion_paciente.getIdusuario(), FacesMessage.SEVERITY_WARN);
 							u_pacientesService.insertaExpediente(expediente_g);
 							Equipo cambiae =  estimuladorService.encuentra_por_id(expediente_g.getIdequipo());
+						
 							int resta_e = Integer.parseInt(cambiae.getTipo()) - expediente_g.getDosis(); 
 							cambiae.setTipo(resta_e+"");
 							estimuladorService.actualizarequipo(cambiae);
+							Usuario paciente_mod = new Usuario();
+							paciente_mod = consultaUsuarios.encontra_porid(expediente_g.getIdusuario());
+							paciente_mod.setEdad(edad);
+							paciente_mod.setSexo(sexo);
+							consultaUsuarios.actualizaUsuario(paciente_mod);
+							termino_dosis = false;
 							MensajeG.mostrar("Expedinte: "+expediente_g.getNombre()+ " con folio "+expediente_g.getNoexpediente() +" Registrado", FacesMessage.SEVERITY_INFO);
 						 }
 
@@ -623,9 +651,26 @@ public String conviertetipouser(String partes) {
 					u_pacientesService.modificaExpediente(expediente_g);
 					seleccion_expediente = expediente_g;
 					Equipo cambiae =  estimuladorService.encuentra_por_id(expediente_g.getIdequipo());
-					int resta_e = Integer.parseInt(cambiae.getTipo()) - expediente_g.getDosis(); 
-					cambiae.setTipo(resta_e+"");
-					estimuladorService.actualizarequipo(cambiae);
+					
+					if(dosis_anterior == expediente_g.getDosis()) {
+						
+					}else {
+						int resta_e1 = Integer.parseInt(cambiae.getTipo());
+						int resta_e2 = expediente_g.getDosis(); 
+						int resta_e = resta_e1 - resta_e2; 
+						cambiae.setTipo(resta_e+"");
+						estimuladorService.actualizarequipo(cambiae);
+					}
+					if(dosis_anterior<=0) {
+						termino_dosis = true;
+					}else {
+						termino_dosis = false;
+					}
+					Usuario paciente_mod = new Usuario();
+					paciente_mod = consultaUsuarios.encontra_porid(expediente_g.getIdusuario());
+					paciente_mod.setEdad(edad);
+					paciente_mod.setSexo(sexo);
+					consultaUsuarios.actualizaUsuario(paciente_mod);
 					MensajeG.mostrar("Expedeitne: "+expediente_g.getNombre()+ " con folio "+expediente_g.getNoexpediente() +" Modificado", FacesMessage.SEVERITY_INFO);
 				}catch(Exception e) {
 					MensajeG.mostrar(e.toString()+" id: "+expediente_g.getIdexpediente(),FacesMessage.SEVERITY_INFO);
@@ -748,8 +793,8 @@ public String conviertetipouser(String partes) {
 		return tipos_vistas;
 	}
 
-	private void createLineModels(double ampli) {
-	        lineModel1 = initLinearModel(ampli);
+	private void createLineModels(double ampli,String datos_paciente,int tipo_esti) {
+	        lineModel1 = initLinearModel(ampli,datos_paciente,tipo_esti);
 	        lineModel1.setTitle("Señal de estimulación");
 	        lineModel1.setLegendPosition("e");
 	        Axis yAxis = lineModel1.getAxis(AxisType.Y);
@@ -757,7 +802,7 @@ public String conviertetipouser(String partes) {
 	        yAxis.setMax(5);
 
 	 
-	        zoomModel = initLinearModel(ampli);
+	        zoomModel = initLinearModel(ampli,datos_paciente,tipo_esti);
 	        zoomModel.setTitle("Zoom");
 	        zoomModel.setZoom(true);
 	        zoomModel.setLegendPosition("e");
@@ -766,15 +811,32 @@ public String conviertetipouser(String partes) {
 	        yAxis.setMax(5);
 	    }
 	 
-	 private LineChartModel initLinearModel(double ampli) {
+	 private LineChartModel initLinearModel(double ampli, String datos_paciente,int tipo_esti) {
 		 LineChartModel model = new LineChartModel();
 		 
 	        LineChartSeries series1 = new LineChartSeries();
-	        series1.setLabel("Señal oriogina");
+	        LineChartSeries series2 = new LineChartSeries();
+	        series1.setLabel("Señal orioginal");
+	        series2.setLabel("Series de estimulo");
+	        String[] datos_onda = datos_paciente.split(":");
+	        
+	        
 	      	 for(int ii =0; ii<= 260; ii++) {
 	      		series1.set(ii,ampli*((valores[ii]-130)/29)/5);
+	      		try {
+	      			if(tipo_esti== 1 || tipo_esti ==2)//generaciones de estimulacion 
+	      			{
+	      				series2.set(ii,ampli*((valores[ii]-130)/29)/5);
+	      			}else {
+	      				valores_paciente[ii] = 8*((Double.parseDouble(datos_onda[ii])-127)/255);
+	      				series2.set(ii,valores_paciente[ii]);
+	      			}
+	      		}catch(Exception e){
+	      			series2.set(ii, 0);
+	      		}
+
 	       	 }
-	        
+	      	
 	      	/*LineChartSeries series2 = new LineChartSeries();
 	        series2.setLabel("Series de estimulo");
 	 
@@ -786,13 +848,31 @@ public String conviertetipouser(String partes) {
 	        series2.set(5, 1);
 	 
 	 		model.addSeries(series2);*/
-	       
+	      	model.addSeries(series2);
 	        model.addSeries(series1);
 	        
 	 
 	        return model;
 	    }
-	 
+	 public void prueba_user() {
+		 expediente_g = new Expediente();
+		 		if(empaquetada_expediente()){
+		 			desactivar_exs_porusurio(expediente_g.getIdusuario());
+
+		 try {
+		 Usuario paciente_mod = new Usuario();
+		 							paciente_mod = consultaUsuarios.encontra_porid(expediente_g.getIdusuario());
+		 							paciente_mod.setEdad("10");
+		 							paciente_mod.setSexo("masculinos");
+		 							paciente_mod.setApellido1("hola");
+		 							consultaUsuarios.actualizaUsuario(paciente_mod);
+		 							 MensajeG.mostrar(":) id:"+paciente_mod.getIdusuario(), FacesMessage.SEVERITY_INFO);
+		 							}catch(Exception e){
+		 					    MensajeG.mostrar(e.toString()+" id: "+expediente_g.getIdexpediente()+"usuario"+ expediente_g.getIdusuario(), FacesMessage.SEVERITY_INFO);
+		 								 //MensajeG.mostrar("zuri", FacesMessage.SEVERITY_INFO);
+		 							}
+		 			}
+		 			}
 	public void setTipos_vistas(int tipos_vistas) {
 		this.tipos_vistas = tipos_vistas;
 	}
@@ -1196,6 +1276,24 @@ public String conviertetipouser(String partes) {
 		}
 		public void setEstimulos_empreados(String estimulos_empreados) {
 			this.estimulos_empreados = estimulos_empreados;
+		}
+		public String getEdad() {
+			return edad;
+		}
+		public void setEdad(String edad) {
+			this.edad = edad;
+		}
+		public String getSexo() {
+			return sexo;
+		}
+		public void setSexo(String sexo) {
+			this.sexo = sexo;
+		}
+		public boolean isTermino_dosis() {
+			return termino_dosis;
+		}
+		public void setTermino_dosis(boolean termino_dosis) {
+			this.termino_dosis = termino_dosis;
 		}
 
 }

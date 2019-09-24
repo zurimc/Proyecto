@@ -331,23 +331,11 @@
 					 					<h:outputLabel   value="#{pacienteView.pnombremedicov}" />
 					 				</b:column>
 					 			</b:row>
-					 			<b:row  style="margin-bottom:10px" >
-		
-					 				<b:column span="2">
-					 					<h:outputLabel  value="Sexo: "/>
-					 				</b:column>
-					 				<b:column span="6" offset="2">
-					 					<p:inputText id="psexo" style="text-align: center; "   placeholder="Sexo" value="#{pacienteView.psexo}"/>
-					 				</b:column>
-					 			</b:row>
-					 			<b:row  style="margin-bottom:10px" >
-		
-					 				<b:column span="2">
-					 					<h:outputLabel  value="Edad: "/>
-					 				</b:column>
-					 				<b:column span="6" offset="2">
-					 					<p:inputText id="pedad" style="text-align: center; "   placeholder="Edad" value="#{pacienteView.pedad}"/>
-					 				</b:column>
+					 			<b:row>
+					 			<b:column>
+					 			<b:commandButton value="guardar" look="info" id="guardar" actionListener="#{pacienteView.prueba_user}"
+					 			onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></b:commandButton>
+					 			</b:column>
 					 			</b:row>
 					 			</b:container>
 					 			<b:container fluid="true"  >

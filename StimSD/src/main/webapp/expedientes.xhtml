@@ -115,7 +115,7 @@
 
 <h:body style= "background-color: #ecf2f5">
 <h:form   id = "form_g_p" class = "tamana_ancho_8" >
-<c:if  test="#{pacienteView.tipos_vistas == 0}">
+<c:if  test="#{pacienteView.tipos_vistas == 1}">
 				<b:panelGrid  columns="3" colSpans="4,4,4"   >
 					<b:container fluid="true"  >
 						<b:panel title="Expediente" look="info" id  ="estim_espe" >
@@ -338,8 +338,7 @@
 								paginatorPosition="bottom"  value="#{consultaView.exp_id}"
 								 var="expe_t" reflow="true" selectionMode="single"  
 								selection="#{consultaView.seleccion_expediente}" rowKey="#{expe_t.noexpediente}">
-									<p:ajax event="rowSelect" listener="#{consultaView.asignacion_expediente}"
-								update=":form_g_p:consulta_datos" />
+									
 								<p:column headerText="Folio">
 							        	<h:outputText value="#{expe_t.noexpediente}" />
 							    	</p:column>

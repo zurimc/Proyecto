@@ -92,7 +92,7 @@ public class ConsultaUsuarios {
 		list_user = usuarioMapper.selectByExample(user_ex);
 		return list_user.get(list_user.size()-1).getIdusuario();
 	}
-	public int actualizaUsuario(Usuario usuario)throws Exception{
+	public int actualizaUsuario(Usuario usuario){
 		usuarioMapper.updateByPrimaryKey(usuario);
 
 		return usuario.getIdusuario();

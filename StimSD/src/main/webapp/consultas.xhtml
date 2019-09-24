@@ -115,7 +115,7 @@
 
 <h:body style= "background-color: #ecf2f5">
 <h:form   id = "form_g_p"   >
-<c:if  test="#{pacienteView.tipos_vistas == 0}">
+
 					<b:panelGrid  columns="4" col-spans="3,3,3,3">
 					<b:container fluid="true"  >
 						<b:panel title="Expediente" look="info" id  ="estim_espe" class = "tamana_ancho_1" style="margin-left:10px">
@@ -201,8 +201,7 @@
 					</b:container>
 				
 				</b:panelGrid>
-				
-</c:if>
+
 <!-- Cargar estudios -->	
  			<p:dialog header="Estudios" widgetVar="paParametrosver" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
  				<b:panelGrid  columns="2" >
