@@ -10,17 +10,14 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
+
 
 import org.primefaces.context.RequestContext;
-import org.primefaces.event.FlowEvent;
-import org.primefaces.event.SelectEvent;
+
 
 import com.lab.sdt.model.Expediente;
 import com.lab.sdt.model.ExpedienteConsulta;
-import com.lab.sdt.model.Material;
+
 import com.lab.sdt.model.Presionintraocular;
 import com.lab.sdt.service.ConsultaService;
 import com.lab.sdt.util.MensajeG;
@@ -51,8 +48,8 @@ public class ConsultaView implements Serializable {
 	public Date fechaConsulta;
 	private String expe_m;
 	private String expediente;
-	
-	private int idExpediente;
+
+	public int idExpediente;
 	private int idexp=0;
 	private List<Expediente> exp_id;
 	private Expediente seleccion_expediente;
@@ -62,20 +59,7 @@ public class ConsultaView implements Serializable {
 		exp_id = new ArrayList<Expediente>();
 		seleccion_expediente = new Expediente();
 	}
-	public void muestra() {
 
-		try {
-
-		
-		MensajeG.mostrar("", FacesMessage.SEVERITY_WARN);
-		}catch(Exception e) {
-			MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
-		}
-		
-		//setResultado("Prueba base de datos");
-		
-		
-	}
 	
 //insertar datos de hospital
 	
@@ -90,7 +74,7 @@ public class ConsultaView implements Serializable {
         pruebac.setMasaCorp(masa_corp);
         pruebac.setGrasaCorp(grasa_corp);
         pruebac.setDescripcion(descripcion);
-        pruebac.setFechaconsulta(fechaConsulta);
+        pruebac.setFechaconsulta(new Date());
         try {
     		if(consultaService.registro_consulta(getFechaConsulta()) == null){
     			MensajeG.mostrar("Registro exitoso", FacesMessage.SEVERITY_INFO);
@@ -119,7 +103,7 @@ public class ConsultaView implements Serializable {
       
       pres.setpIzq(presionI);
       pres.setpDer(presionD);
-      pres.setFecha(fechapresion);
+      pres.setFecha(new Date());
       
       try {
   		if(consultaService.registro_presion(getFechapresion()) == null){
@@ -152,13 +136,14 @@ public class ConsultaView implements Serializable {
  setMasa_corp(getMasa_corp());
  setGrasa_corp(getGrasa_corp());
  setDescripcion(getDescripcion());
- setFechaConsulta(getFechaConsulta());
+ setFechaConsulta(new Date());
   }
   
   public void guarda_presion() {
  
  setPresionI(getPresionI());
  setPresionD(getPresionD());
+ setFechapresion(getFechapresion());
   }
   public void cargar_expedientes() {
 	exp_id = consultaService.lista_exp();
