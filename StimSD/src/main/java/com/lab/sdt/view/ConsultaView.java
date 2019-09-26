@@ -52,10 +52,21 @@ public class ConsultaView implements Serializable {
 	/*ZURI INICIO*/
 	private int idexp=0;
 	private int idexpedienteC;
+	private ExpedienteConsulta exp_Consul;
+	
+	public ExpedienteConsulta getExp_Consul() {
+		return exp_Consul;
+	}
+
+
+	public void setExp_Consul(ExpedienteConsulta exp_Consul) {
+		this.exp_Consul = exp_Consul;
+	}
+
+
 	/*ZURI fIN*/
 	private List<Expediente> exp_id;
 	private Expediente seleccion_expediente;
-	private ExpedienteConsulta ex_con;
 	
 	@PostConstruct
 	public void init(){
@@ -200,16 +211,16 @@ public class ConsultaView implements Serializable {
 			
 				 try {
 					
-					 ex_con.setFechaconsulta(fechaConsulta);
-					 ex_con.setDescripcion(String.valueOf(getDescripcion()));
-					 ex_con.setPeso(peso);
-					 ex_con.setpMayor(p_mayor);
-					 ex_con.setpMenor(p_menor);
-					 ex_con.setTemperatura(temperatura);
-					 ex_con.setAltura(altura);
-					 ex_con.setMasaCorp(masa_corp);
-					 ex_con.setGrasaCorp(grasa_corp);
-					 ex_con.setIdexpediente(idexp);
+					 exp_Consul.setFechaconsulta(fechaConsulta);
+					 exp_Consul.setDescripcion(String.valueOf(getDescripcion()));
+					 exp_Consul.setPeso(peso);
+					 exp_Consul.setpMayor(p_mayor);
+					 exp_Consul.setpMenor(p_menor);
+					 exp_Consul.setTemperatura(temperatura);
+					 exp_Consul.setAltura(altura);
+					 exp_Consul.setMasaCorp(masa_corp);
+					 exp_Consul.setGrasaCorp(grasa_corp);
+					 exp_Consul.setIdexpediente(idexp);
 					
 					 
 				 }catch(Exception e) {
@@ -360,16 +371,6 @@ public int getIdexp() {
 }
 public void setIdexp(int idexp) {
 	this.idexp = idexp;
-}
-
-
-public ExpedienteConsulta getEx_con() {
-	return ex_con;
-}
-
-
-public void setEx_con(ExpedienteConsulta ex_con) {
-	this.ex_con = ex_con;
 }
 
 
