@@ -11,9 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-
 import org.primefaces.context.RequestContext;
-
 
 import com.lab.sdt.model.Expediente;
 import com.lab.sdt.model.ExpedienteConsulta;
@@ -50,9 +48,14 @@ public class ConsultaView implements Serializable {
 	private String expediente;
 
 	public int idExpediente;
+	private int idExpeConsul;
+	/*ZURI INICIO*/
 	private int idexp=0;
+	private int idexpedienteC;
+	/*ZURI fIN*/
 	private List<Expediente> exp_id;
 	private Expediente seleccion_expediente;
+	private ExpedienteConsulta ex_con;
 	
 	@PostConstruct
 	public void init(){
@@ -166,9 +169,59 @@ public class ConsultaView implements Serializable {
 	@SuppressWarnings("deprecation")
 	public void asignacion_expediente() {
 		idexp = seleccion_expediente.getIdexpediente();
-		setNoexpediente((seleccion_expediente.getNoexpediente()));
+		setIdexpedienteC((seleccion_expediente.getIdexpediente()));
+		
 			RequestContext.getCurrentInstance().execute("PF('patablaexpediente').hide();");
 
+	}
+	
+	/*insertar en la base y modificar*/
+	@SuppressWarnings("deprecation")
+	public void crea_modica_consulta() {
+		if(empaqueta_consulta()) {
+			try {
+				 if(idExpeConsul>0) { // modifica expediente 
+					 ex_con.setIdexpeconsul(idExpeConsul);
+					 consultaService.actulizar_consulta(ex_con);
+					 MensajeG.mostrar("Se Modico: "+ seleccion_expediente.getIdexpediente() +" a: "+ex_con.getIdexpediente(), FacesMessage.SEVERITY_INFO);
+				 }else { // crea expediente
+					 consultaService.insertarConsulta(ex_con);
+					 MensajeG.mostrar("Se guardo: "+ex_con.getIdexpediente(), FacesMessage.SEVERITY_INFO);
+				 } 
+			}catch(Exception e) {
+				 MensajeG.mostrar("Error: "+e.toString(), FacesMessage.SEVERITY_ERROR);
+			}
+		}
+		RequestContext.getCurrentInstance().execute("PF('paParametros').hide();");
+	}
+	public boolean empaqueta_consulta() {
+		boolean ok = false;
+		 if(idexp>0) {
+			
+				 try {
+					
+					 ex_con.setFechaconsulta(fechaConsulta);
+					 ex_con.setDescripcion(String.valueOf(getDescripcion()));
+					 ex_con.setPeso(peso);
+					 ex_con.setpMayor(p_mayor);
+					 ex_con.setpMenor(p_menor);
+					 ex_con.setTemperatura(temperatura);
+					 ex_con.setAltura(altura);
+					 ex_con.setMasaCorp(masa_corp);
+					 ex_con.setGrasaCorp(grasa_corp);
+					 ex_con.setIdexpediente(idexp);
+					
+					 
+				 }catch(Exception e) {
+					 MensajeG.mostrar(" Error: "+e.toString(), FacesMessage.SEVERITY_ERROR); 
+				 }
+				 
+				 ok = true;
+			 
+		 }else {
+			 MensajeG.mostrar("Seleccione Equipo", FacesMessage.SEVERITY_ERROR);
+		 }
+		return ok;
 	}
 
 public String getPeso() {
@@ -307,6 +360,36 @@ public int getIdexp() {
 }
 public void setIdexp(int idexp) {
 	this.idexp = idexp;
+}
+
+
+public ExpedienteConsulta getEx_con() {
+	return ex_con;
+}
+
+
+public void setEx_con(ExpedienteConsulta ex_con) {
+	this.ex_con = ex_con;
+}
+
+
+public int getIdExpeConsul() {
+	return idExpeConsul;
+}
+
+
+public void setIdExpeConsul(int idExpeConsul) {
+	this.idExpeConsul = idExpeConsul;
+}
+
+
+public int getIdexpedienteC() {
+	return idexpedienteC;
+}
+
+
+public void setIdexpedienteC(int idexpedienteC) {
+	this.idexpedienteC = idexpedienteC;
 }
         
  

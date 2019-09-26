@@ -15,9 +15,8 @@ import com.lab.sdt.model.Expediente;
 import com.lab.sdt.model.ExpedienteConsulta;
 
 import com.lab.sdt.model.ExpedienteExample;
+import com.lab.sdt.model.Parametro;
 import com.lab.sdt.model.Presionintraocular;
-
-
 
 
 @Service
@@ -29,7 +28,6 @@ public class ConsultaService {
 
 	@Autowired
 	private PresionintraocularMapper presionintraocularMapper;
-	
 	
 	@Autowired
 	private ExpedienteMapper expedienteMapper;
@@ -43,6 +41,9 @@ public void registroPresion(Presionintraocular presI) throws Exception{
 		
 		insertarPresion(presI);
 	}
+public void actulizar_consulta(ExpedienteConsulta ec) {
+	expedienteConsultaMapper.updateByPrimaryKey(ec);
+}
 	
 
 	//REGISTRAR UN HOSPITAL
