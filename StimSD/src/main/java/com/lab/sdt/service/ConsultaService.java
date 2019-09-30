@@ -32,6 +32,13 @@ public class ConsultaService {
 	@Autowired
 	private ExpedienteMapper expedienteMapper;
 	
+	//ZURI INICIOI
+	public void actulizar_consulta(ExpedienteConsulta ec) {
+		expedienteConsultaMapper.updateByPrimaryKey(ec);
+	}
+		
+
+	
 	public void registroConsulta(ExpedienteConsulta EXPC) throws Exception{
 		
 		insertarConsulta(EXPC);
@@ -41,10 +48,7 @@ public void registroPresion(Presionintraocular presI) throws Exception{
 		
 		insertarPresion(presI);
 	}
-public void actulizar_consulta(ExpedienteConsulta ec) {
-	expedienteConsultaMapper.updateByPrimaryKey(ec);
-}
-	
+
 
 	//REGISTRAR UN HOSPITAL
 

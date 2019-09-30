@@ -23,8 +23,10 @@ import com.lab.sdt.model.Enfermedad;
 import com.lab.sdt.model.Equipo;
 import com.lab.sdt.model.ExpeEstim;
 import com.lab.sdt.model.Expediente;
+import com.lab.sdt.model.ExpedienteConsulta;
 import com.lab.sdt.model.Hospital;
 import com.lab.sdt.model.Parametro;
+import com.lab.sdt.model.Presionintraocular;
 import com.lab.sdt.model.Ubicacion;
 import com.lab.sdt.model.Usuario;
 import com.lab.sdt.service.ConsultaOnda;
@@ -186,15 +188,419 @@ public class PacienteView implements Serializable {
 	 
 	 private int dosis_anterior = 0;
 	 private boolean termino_dosis =  false;
+	
+	 private String sexo;
 		
-		private String sexo;
-		
-		private String edad;
-		
-		/*zuri inicio*/
-		
-		
-		/*zuri final*/	
+	 private String edad;
+	 
+	 /*zuri inicio*/
+     public int idExpediente;
+     private int idExpeConsul;
+     public String peso;
+     public String p_mayor;
+     public String p_menor;
+     public String temperatura;
+     public String altura;
+     public String masa_corp;
+     public String grasa_corp;
+     public String descripcion;
+     public String presionI;
+     public String presionD;
+     public Date fechapresion;
+     private Date fechaI;
+ 	 private Date fechaF;
+     public Date fechaConsulta;
+     private String expe_m;
+     
+     private List<Expediente> exp_id;
+     private List<ExpedienteConsulta> fecha_exp;
+     private ExpedienteConsulta seleccion_consulta;
+
+     private int idexp=0;
+     private int idexpedienteC;
+     private ExpedienteConsulta exp_Consul;
+     
+     public void setIdexpedienteC(int idexpedienteC) {
+         this.idexpedienteC = idexpedienteC;
+     }
+     public void seleccionar_doctor() {
+    	 try {
+    		 exp_id.clear();
+    		exp_id = u_pacientesService.expediente_por_doc(seleccion_medico.getIdusuario());
+ 		}catch(Exception e) {}
+     }
+     @SuppressWarnings("deprecation")
+     public void buscar_fechas() {
+    	 //MensajeG.mostrar(":D", FacesMessage.SEVERITY_ERROR);
+    	 try {
+    		 fecha_exp.clear();
+	    	 fecha_exp = u_pacientesService.consulta_fechas(fechaI,fechaF, idexp);
+	    	 MensajeG.mostrar(" hola ", FacesMessage.SEVERITY_ERROR);
+	    	 RequestContext.getCurrentInstance().execute("PF('m_consulta').hide();");
+    	 } catch(Exception e) {
+    		 MensajeG.mostrar("Error: "+e.toString(), FacesMessage.SEVERITY_ERROR);
+    	 }
+     }
+    
+
+      //asignacion de expediente
+         @SuppressWarnings("deprecation")
+         public void asignacion_expedienteC() {
+             idexp = seleccion_expediente.getIdexpediente();
+            // setIdexpedienteC((seleccion_expediente.getIdexpediente()));
+             asignacion_expediente(); 
+                 RequestContext.getCurrentInstance().execute("PF('patablaexpediente').hide();");
+
+         }
+         public void seleccionar_consulta() {
+        	 
+         }
+     	
+     	public void cargar_expedientesConsulta() {
+     		exp_id = new ArrayList<Expediente>();
+     		exp_id.clear();
+     		try {
+     			exp_id = u_pacientesService.entrega_expedientes();
+     		}catch(Exception e) {
+     			
+     		}
+     		
+     	}
+     	
+         /*insertar en la base y modificar*/
+     	 @SuppressWarnings("deprecation")
+     	public void modificar_consulta() {
+     		if(idexp>0) {
+     			 //MensajeG.mostrar("ok", FacesMessage.SEVERITY_INFO);
+     			 RequestContext.getCurrentInstance().execute("PF('m_consulta').show();");
+     			
+     		}else {
+     			 MensajeG.mostrar("Debes seleccionar un expediente", FacesMessage.SEVERITY_ERROR);
+     		}
+     		
+     	}
+     	
+     	 @SuppressWarnings("deprecation")
+         public void crea_modi_consulta1() {
+     		
+     		  try {
+     			 exp_Consul = new ExpedienteConsulta();
+     			exp_Consul.setFechaconsulta(new Date());
+                exp_Consul.setDescripcion(getDescripcion());
+                exp_Consul.setPeso(getPeso());
+                exp_Consul.setpMayor(getP_mayor());
+                exp_Consul.setpMenor(getP_menor());
+                exp_Consul.setTemperatura(getTemperatura());
+                exp_Consul.setAltura(getAltura());
+                exp_Consul.setMasaCorp(getMasa_corp());
+                exp_Consul.setGrasaCorp(getGrasa_corp());
+                exp_Consul.setIdexpediente(idexp);
+                  u_pacientesService.insertarConsulta(exp_Consul);
+                  MensajeG.mostrar("Registrado", FacesMessage.SEVERITY_INFO);
+             }catch(Exception e) {
+                  MensajeG.mostrar("Error: "+e.toString(), FacesMessage.SEVERITY_ERROR);
+             }
+
+     		  RequestContext.getCurrentInstance().execute("PF('patablaexpediente').hide();");
+     	 }
+         @SuppressWarnings("deprecation")
+         public void crea_modi_consulta() {
+        	 exp_Consul = new ExpedienteConsulta();
+             if(empaqueta_consulta()) {
+                 try {
+                	 
+                      u_pacientesService.insertarConsulta(exp_Consul);
+                      MensajeG.mostrar("Registrado", FacesMessage.SEVERITY_INFO);
+                 }catch(Exception e) {
+                      MensajeG.mostrar("Error: "+e.toString(), FacesMessage.SEVERITY_ERROR);
+                 }
+             }
+             RequestContext.getCurrentInstance().execute("PF('patablaexpediente').hide();");
+         }
+         public boolean empaqueta_consulta() {
+             boolean ok = false;
+              if(idexp>0) {
+                 
+                      try {
+                         
+                          exp_Consul.setFechaconsulta(new Date());
+                          exp_Consul.setDescripcion(getDescripcion());
+                          exp_Consul.setPeso(getPeso());
+                          exp_Consul.setpMayor(getP_mayor());
+                          exp_Consul.setpMenor(getP_menor());
+                          exp_Consul.setTemperatura(getTemperatura());
+                          exp_Consul.setAltura(getAltura());
+                          exp_Consul.setMasaCorp(getMasa_corp());
+                          exp_Consul.setGrasaCorp(getGrasa_corp());
+                          exp_Consul.setIdexpediente(idexp);
+                         
+                          
+                      }catch(Exception e) {
+                          MensajeG.mostrar(" Error: "+e.toString(), FacesMessage.SEVERITY_ERROR); 
+                      }
+                      
+                     
+                  
+              }else {
+                  MensajeG.mostrar("Seleccione Expediente", FacesMessage.SEVERITY_ERROR);
+              }
+             return ok;
+         }           
+      
+ 
+     
+   public void registroConsulta() {
+         
+         ExpedienteConsulta pruebac = new ExpedienteConsulta();
+         pruebac.setPeso(peso);
+         pruebac.setpMayor(p_mayor);
+         pruebac.setpMenor(p_menor);
+         pruebac.setTemperatura(temperatura);
+         pruebac.setAltura(altura);
+         pruebac.setMasaCorp(masa_corp);
+         pruebac.setGrasaCorp(grasa_corp);
+         pruebac.setDescripcion(descripcion);
+         pruebac.setFechaconsulta(new Date());
+        
+         
+         try {
+             if(u_pacientesService.registro_consulta(getFechaConsulta()) == null){
+                 MensajeG.mostrar("Registro exitoso", FacesMessage.SEVERITY_INFO);
+                 u_pacientesService.registroConsulta(pruebac);
+             
+                 
+
+             }else {
+                  MensajeG.mostrar("ya existe un usuario con esta cuenta: "+u_pacientesService.registro_consulta(getFechaConsulta()), FacesMessage.SEVERITY_WARN);
+             }
+             
+             
+         } catch (Exception e) {
+             // TODO Auto-generated catch block
+             e.printStackTrace();
+             MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_ERROR);
+         }
+   
+       
+         
+     }
+   public void registroPresionO() {
+       
+       Presionintraocular pres = new Presionintraocular();
+       
+       
+       pres.setpIzq(presionI);
+       pres.setpDer(presionD);
+       pres.setFecha(new Date());
+       
+       try {
+         if(u_pacientesService.registro_presion(getFechapresion()) == null){
+             MensajeG.mostrar("Registro exitoso", FacesMessage.SEVERITY_INFO);
+             u_pacientesService.registroPresion(pres);
+         
+             
+
+         }else {
+              MensajeG.mostrar("ya existe el registro: "+u_pacientesService.registro_presion(getFechapresion()), FacesMessage.SEVERITY_WARN);
+         }
+         
+         
+     } catch (Exception e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+         MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_ERROR);
+     }
+
+       
+       
+   }
+     
+   public void guarda_actualiza_datos() {
+  setPeso(getPeso());
+  setP_mayor(getP_mayor());
+  setP_menor(getP_menor());
+  setTemperatura(getTemperatura());
+  setAltura(getAltura());
+  setMasa_corp(getMasa_corp());
+  setGrasa_corp(getGrasa_corp());
+  setDescripcion(getDescripcion());
+  setFechaConsulta(new Date());
+ 
+  
+   }
+   
+   public void guarda_presion() {
+  
+  setPresionI(getPresionI());
+  setPresionD(getPresionD());
+  setFechapresion(getFechapresion());
+   }
+  
+ //buscador del expediente
+
+   public void buscar_expediente() {
+         if(expe_m.trim().length()>0) {
+             try {
+             	Expediente ex_consulta = new Expediente();
+                 exp_id.clear();
+                 ex_consulta = u_pacientesService.encuentra_expediente(expe_m);
+                  if(ex_consulta!=null) {
+						 
+						 exp_id.add(ex_consulta);
+					 
+				 }
+             }catch(Exception e) {
+                 MensajeG.mostrar("Sin resultados", FacesMessage.SEVERITY_INFO);
+             }
+         }else {
+             MensajeG.mostrar("Sin resultados", FacesMessage.SEVERITY_INFO);
+         }
+     }
+ 
+ public String getPeso() {
+     return peso;
+ }
+ public void setPeso(String peso) {
+     this.peso = peso;
+ }
+ public String getP_mayor() {
+     return p_mayor;
+ }
+ public void setP_mayor(String p_mayor) {
+     this.p_mayor = p_mayor;
+ }
+ public String getP_menor() {
+     return p_menor;
+ }
+ public void setP_menor(String p_menor) {
+     this.p_menor = p_menor;
+ }
+ public String getTemperatura() {
+     return temperatura;
+ }
+ public void setTemperatura(String temperatura) {
+     this.temperatura = temperatura;
+ }
+ public String getAltura() {
+     return altura;
+ }
+ public void setAltura(String altura) {
+     this.altura = altura;
+ }
+ public String getMasa_corp() {
+     return masa_corp;
+ }
+ public void setMasa_corp(String masa_corp) {
+     this.masa_corp = masa_corp;
+ }
+ public String getGrasa_corp() {
+     return grasa_corp;
+ }
+ public void setGrasa_corp(String grasa_corp) {
+     this.grasa_corp = grasa_corp;
+ }
+ public String getDescripcion() {
+     return descripcion;
+ }
+ public void setDescripcion(String descripcion) {
+     this.descripcion = descripcion;
+ }
+ public String getPresionI() {
+     return presionI;
+ }
+ public void setPresionI(String presionI) {
+     this.presionI = presionI;
+ }
+ public String getPresionD() {
+     return presionD;
+ }
+ public void setPresionD(String presionD) {
+     this.presionD = presionD;
+ }
+ public Date getFechapresion() {
+     return fechapresion;
+ }
+ public void setFechapresion(Date fechapresion) {
+     this.fechapresion = fechapresion;
+ }
+
+ public Date getFechaConsulta() {
+     return fechaConsulta;
+ }
+ public void setFechaConsulta(Date fechaConsulta) {
+     this.fechaConsulta = fechaConsulta;
+ }
+
+
+public String getExpe_m() {
+	return expe_m;
+}
+public void setExpe_m(String expe_m) {
+	this.expe_m = expe_m;
+}
+public int getIdExpediente() {
+     return idExpediente;
+ }
+ public void setIdExpediente(int idExpediente) {
+     this.idExpediente = idExpediente;
+ }
+ public int getIdExpeConsul() {
+     return idExpeConsul;
+ }
+ public void setIdExpeConsul(int idExpeConsul) {
+     this.idExpeConsul = idExpeConsul;
+ }
+ public List<Expediente> getExp_id() {
+     return exp_id;
+ }
+ public void setExp_id(List<Expediente> exp_id) {
+     this.exp_id = exp_id;
+ }
+ 
+ public int getIdexp() {
+     return idexp;
+ }
+ public void setIdexp(int idexp) {
+     this.idexp = idexp;
+ }
+ public ExpedienteConsulta getExp_Consul() {
+     return exp_Consul;
+ }
+ public void setExp_Consul(ExpedienteConsulta exp_Consul) {
+     this.exp_Consul = exp_Consul;
+ }
+ public int getIdexpedienteC() {
+     return idexpedienteC;
+ }
+ public Date getFechaI() {
+		return fechaI;
+	}
+	public void setFechaI(Date fechaI) {
+		this.fechaI = fechaI;
+	}
+	public Date getFechaF() {
+		return fechaF;
+	}
+	public void setFechaF(Date fechaF) {
+		this.fechaF = fechaF;
+	}
+	public ExpedienteConsulta getSeleccion_consulta() {
+		return seleccion_consulta;
+	}
+	public void setSeleccion_consulta(ExpedienteConsulta seleccion_consulta) {
+		this.seleccion_consulta = seleccion_consulta;
+	}
+	
+	public List<ExpedienteConsulta> getFecha_exp() {
+		return fecha_exp;
+	}
+	public void setFecha_exp(List<ExpedienteConsulta> fecha_exp) {
+		this.fecha_exp = fecha_exp;
+	}
+     /*zuri final*/  
+
+	
+
 	@PostConstruct
 	public void init(){
 		valores = new double[300];
@@ -221,6 +627,10 @@ public class PacienteView implements Serializable {
 		 //agrega_valores(5);
 		//muestra_pacientes();
 		createLineModels(5,"",1);
+		/*zuri inicio */
+		 fecha_exp = new ArrayList<ExpedienteConsulta>();
+		cargar_expedientesConsulta();
+		/*zuri final*/
 	}
 public String conviertetipouser(String partes) {
 	String regresa_tipo = "";
@@ -240,7 +650,8 @@ public String conviertetipouser(String partes) {
 		medicos = cuentas;
 		cargar_hospital();
 		cargar_equipos();
-		cargar_enfermedad(); 
+		cargar_enfermedad();
+		
 		//cargar_parametros();
 		//cargar_expedientes();
 	}
@@ -250,9 +661,7 @@ public String conviertetipouser(String partes) {
 			enfermedadesitem = estadoUnidad.getLista_enfermedades();
 		}catch(Exception e) {}
 	}
-	public void cargar_expedientes() {
-		 u_pacientesService.todosExpedientes();
-	}
+	
 	public void cargar_hospital() {
 		hospitales = new ArrayList<Hospital>();
 		hospitales.clear();
@@ -857,25 +1266,7 @@ public String conviertetipouser(String partes) {
 	 
 	        return model;
 	    }
-	 public void prueba_user() {
-		 expediente_g = new Expediente();
-		 		if(empaquetada_expediente()){
-		 			desactivar_exs_porusurio(expediente_g.getIdusuario());
-
-		 try {
-		 Usuario paciente_mod = new Usuario();
-		 							paciente_mod = consultaUsuarios.encontra_porid(expediente_g.getIdusuario());
-		 							paciente_mod.setEdad("10");
-		 							paciente_mod.setSexo("masculinos");
-		 							paciente_mod.setApellido1("hola");
-		 							consultaUsuarios.actualizaUsuario(paciente_mod);
-		 							 MensajeG.mostrar(":) id:"+paciente_mod.getIdusuario(), FacesMessage.SEVERITY_INFO);
-		 							}catch(Exception e){
-		 					    MensajeG.mostrar(e.toString()+" id: "+expediente_g.getIdexpediente()+"usuario"+ expediente_g.getIdusuario(), FacesMessage.SEVERITY_INFO);
-		 								 //MensajeG.mostrar("zuri", FacesMessage.SEVERITY_INFO);
-		 							}
-		 			}
-		 			}
+	 
 	public void setTipos_vistas(int tipos_vistas) {
 		this.tipos_vistas = tipos_vistas;
 	}

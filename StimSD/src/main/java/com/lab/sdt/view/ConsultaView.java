@@ -30,7 +30,8 @@ public class ConsultaView implements Serializable {
 	public ConsultaService consultaService;
 	
 	
-	
+	public int idExpediente;
+	private int idExpeConsul;
 	public String peso;
 	public String p_mayor;
 	public String p_menor;
@@ -42,38 +43,80 @@ public class ConsultaView implements Serializable {
 	public String presionI;
 	public String presionD;
 	public Date fechapresion;
-	private String noexpediente;
+	
 	public Date fechaConsulta;
 	private String expe_m;
-	private String expediente;
+	
+	private List<Expediente> exp_id;
+	private Expediente seleccion_expediente;
 
-	public int idExpediente;
-	private int idExpeConsul;
-	/*ZURI INICIO*/
 	private int idexp=0;
 	private int idexpedienteC;
 	private ExpedienteConsulta exp_Consul;
 	
-	public ExpedienteConsulta getExp_Consul() {
-		return exp_Consul;
+	public void setIdexpedienteC(int idexpedienteC) {
+		this.idexpedienteC = idexpedienteC;
 	}
+	 //asignacion de expediente
+		@SuppressWarnings("deprecation")
+		public void asignacion_expediente() {
+			idexp = seleccion_expediente.getIdexpediente();
+			setIdexpedienteC((seleccion_expediente.getIdexpediente()));
+			
+				RequestContext.getCurrentInstance().execute("PF('patablaexpediente').hide();");
 
-
-	public void setExp_Consul(ExpedienteConsulta exp_Consul) {
-		this.exp_Consul = exp_Consul;
-	}
-
-
-	/*ZURI fIN*/
-	private List<Expediente> exp_id;
-	private Expediente seleccion_expediente;
-	
-	@PostConstruct
-	public void init(){
-		exp_id = new ArrayList<Expediente>();
-		seleccion_expediente = new Expediente();
-	}
-
+		}
+		
+		/*insertar en la base y modificar*/
+		@SuppressWarnings("deprecation")
+		public void crea_modi_consulta() {
+			if(empaqueta_consulta()) {
+				try {
+					 if(idExpeConsul>0) { // modifica expediente 
+						 exp_Consul.setIdexpeconsul(idExpeConsul);
+						 consultaService.actulizar_consulta(exp_Consul);
+						 MensajeG.mostrar("Se Modico: "+ seleccion_expediente.getIdexpediente() +" a: "+exp_Consul.getIdexpediente(), FacesMessage.SEVERITY_INFO);
+					 }else { // crea expediente
+						 consultaService.insertarConsulta(exp_Consul);
+						 MensajeG.mostrar("Se guardo: "+exp_Consul.getIdexpediente(), FacesMessage.SEVERITY_INFO);
+					 } 
+				}catch(Exception e) {
+					 MensajeG.mostrar("Error: "+e.toString(), FacesMessage.SEVERITY_ERROR);
+				}
+			}
+			RequestContext.getCurrentInstance().execute("PF('paParametros').hide();");
+		}
+		public boolean empaqueta_consulta() {
+			boolean ok = false;
+			 if(idexp>0) {
+				
+					 try {
+						
+						 exp_Consul.setFechaconsulta(fechaConsulta);
+						 exp_Consul.setDescripcion(String.valueOf(getDescripcion()));
+						 exp_Consul.setPeso(peso);
+						 exp_Consul.setpMayor(p_mayor);
+						 exp_Consul.setpMenor(p_menor);
+						 exp_Consul.setTemperatura(temperatura);
+						 exp_Consul.setAltura(altura);
+						 exp_Consul.setMasaCorp(masa_corp);
+						 exp_Consul.setGrasaCorp(grasa_corp);
+						 exp_Consul.setIdexpediente(idexp);
+						
+						 
+					 }catch(Exception e) {
+						 MensajeG.mostrar(" Error: "+e.toString(), FacesMessage.SEVERITY_ERROR); 
+					 }
+					 
+					 ok = true;
+				 
+			 }else {
+				 MensajeG.mostrar("Seleccione Equipo", FacesMessage.SEVERITY_ERROR);
+			 }
+			return ok;
+		}	        
+	 
+//ZURI FIN
 	
 //insertar datos de hospital
 	
@@ -176,79 +219,17 @@ public class ConsultaView implements Serializable {
 			MensajeG.mostrar("Sin resultados", FacesMessage.SEVERITY_INFO);
 		}
 	}
-  //asignacion de expediente
-	@SuppressWarnings("deprecation")
-	public void asignacion_expediente() {
-		idexp = seleccion_expediente.getIdexpediente();
-		setIdexpedienteC((seleccion_expediente.getIdexpediente()));
-		
-			RequestContext.getCurrentInstance().execute("PF('patablaexpediente').hide();");
-
-	}
-	
-	/*insertar en la base y modificar*/
-	@SuppressWarnings("deprecation")
-	public void crea_modica_consulta() {
-		if(empaqueta_consulta()) {
-			try {
-				 if(idExpeConsul>0) { // modifica expediente 
-					 ex_con.setIdexpeconsul(idExpeConsul);
-					 consultaService.actulizar_consulta(ex_con);
-					 MensajeG.mostrar("Se Modico: "+ seleccion_expediente.getIdexpediente() +" a: "+ex_con.getIdexpediente(), FacesMessage.SEVERITY_INFO);
-				 }else { // crea expediente
-					 consultaService.insertarConsulta(ex_con);
-					 MensajeG.mostrar("Se guardo: "+ex_con.getIdexpediente(), FacesMessage.SEVERITY_INFO);
-				 } 
-			}catch(Exception e) {
-				 MensajeG.mostrar("Error: "+e.toString(), FacesMessage.SEVERITY_ERROR);
-			}
-		}
-		RequestContext.getCurrentInstance().execute("PF('paParametros').hide();");
-	}
-	public boolean empaqueta_consulta() {
-		boolean ok = false;
-		 if(idexp>0) {
-			
-				 try {
-					
-					 exp_Consul.setFechaconsulta(fechaConsulta);
-					 exp_Consul.setDescripcion(String.valueOf(getDescripcion()));
-					 exp_Consul.setPeso(peso);
-					 exp_Consul.setpMayor(p_mayor);
-					 exp_Consul.setpMenor(p_menor);
-					 exp_Consul.setTemperatura(temperatura);
-					 exp_Consul.setAltura(altura);
-					 exp_Consul.setMasaCorp(masa_corp);
-					 exp_Consul.setGrasaCorp(grasa_corp);
-					 exp_Consul.setIdexpediente(idexp);
-					
-					 
-				 }catch(Exception e) {
-					 MensajeG.mostrar(" Error: "+e.toString(), FacesMessage.SEVERITY_ERROR); 
-				 }
-				 
-				 ok = true;
-			 
-		 }else {
-			 MensajeG.mostrar("Seleccione Equipo", FacesMessage.SEVERITY_ERROR);
-		 }
-		return ok;
-	}
-
-public String getPeso() {
-	return peso;
-}
-
-public void setPeso(String peso) {
-	this.peso = peso;
-}
-
-
 public ConsultaService getConsultaService() {
 	return consultaService;
 }
 public void setConsultaService(ConsultaService consultaService) {
 	this.consultaService = consultaService;
+}
+public String getPeso() {
+	return peso;
+}
+public void setPeso(String peso) {
+	this.peso = peso;
 }
 public String getP_mayor() {
 	return p_mayor;
@@ -265,89 +246,33 @@ public void setP_menor(String p_menor) {
 public String getTemperatura() {
 	return temperatura;
 }
-
 public void setTemperatura(String temperatura) {
 	this.temperatura = temperatura;
 }
-
 public String getAltura() {
 	return altura;
 }
-
 public void setAltura(String altura) {
 	this.altura = altura;
 }
-
 public String getMasa_corp() {
 	return masa_corp;
 }
-
 public void setMasa_corp(String masa_corp) {
 	this.masa_corp = masa_corp;
 }
-
 public String getGrasa_corp() {
 	return grasa_corp;
 }
-
 public void setGrasa_corp(String grasa_corp) {
 	this.grasa_corp = grasa_corp;
 }
-
 public String getDescripcion() {
 	return descripcion;
 }
-
 public void setDescripcion(String descripcion) {
 	this.descripcion = descripcion;
 }
-
-public Date getFechaConsulta() {
-	return fechaConsulta;
-}
-
-public void setFechaConsulta(Date fechaConsulta) {
-	this.fechaConsulta = fechaConsulta;
-}
-public List<Expediente> getExp_id() {
-	return exp_id;
-}
-public void setExp_id(List<Expediente> exp_id) {
-	this.exp_id = exp_id;
-}
-public String getExpe_m() {
-	return expe_m;
-}
-public void setExpe_m(String expe_m) {
-	this.expe_m = expe_m;
-}
-public Expediente getSeleccion_expediente() {
-	return seleccion_expediente;
-}
-public void setSeleccion_expediente(Expediente seleccion_expediente) {
-	this.seleccion_expediente = seleccion_expediente;
-}
-
-public String getNoexpediente() {
-	return noexpediente;
-}
-public void setNoexpediente(String noexpediente) {
-	this.noexpediente = noexpediente;
-}
-public String getExpediente() {
-	return expediente;
-}
-public void setExpediente(String expediente) {
-	this.expediente = expediente;
-}
-public int getIdExpediente() {
-	return idExpediente;
-}
-public void setIdExpediente(int idExpediente) {
-	this.idExpediente = idExpediente;
-}
-
-
 public String getPresionI() {
 	return presionI;
 }
@@ -366,33 +291,61 @@ public Date getFechapresion() {
 public void setFechapresion(Date fechapresion) {
 	this.fechapresion = fechapresion;
 }
+
+public Date getFechaConsulta() {
+	return fechaConsulta;
+}
+public void setFechaConsulta(Date fechaConsulta) {
+	this.fechaConsulta = fechaConsulta;
+}
+public String getExpe_m() {
+	return expe_m;
+}
+public void setExpe_m(String expe_m) {
+	this.expe_m = expe_m;
+}
+
+public int getIdExpediente() {
+	return idExpediente;
+}
+public void setIdExpediente(int idExpediente) {
+	this.idExpediente = idExpediente;
+}
+public int getIdExpeConsul() {
+	return idExpeConsul;
+}
+public void setIdExpeConsul(int idExpeConsul) {
+	this.idExpeConsul = idExpeConsul;
+}
+public List<Expediente> getExp_id() {
+	return exp_id;
+}
+public void setExp_id(List<Expediente> exp_id) {
+	this.exp_id = exp_id;
+}
+public Expediente getSeleccion_expediente() {
+	return seleccion_expediente;
+}
+public void setSeleccion_expediente(Expediente seleccion_expediente) {
+	this.seleccion_expediente = seleccion_expediente;
+}
 public int getIdexp() {
 	return idexp;
 }
 public void setIdexp(int idexp) {
 	this.idexp = idexp;
 }
-
-
-public int getIdExpeConsul() {
-	return idExpeConsul;
+public ExpedienteConsulta getExp_Consul() {
+	return exp_Consul;
 }
-
-
-public void setIdExpeConsul(int idExpeConsul) {
-	this.idExpeConsul = idExpeConsul;
+public void setExp_Consul(ExpedienteConsulta exp_Consul) {
+	this.exp_Consul = exp_Consul;
 }
-
-
 public int getIdexpedienteC() {
 	return idexpedienteC;
 }
+  
 
 
-public void setIdexpedienteC(int idexpedienteC) {
-	this.idexpedienteC = idexpedienteC;
-}
-        
- 
 
 }

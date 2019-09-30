@@ -31,9 +31,6 @@ import com.lab.sdt.model.MantenimientoExample.Criteria;
 @Transactional
 
 public class EstimuladorService {
-	/*zuri*/
-	private final int FECHA_INICIO = 1;
-	private final int FECHA_FIN = 2;
 	
 	@Autowired
 	private EquipoMapper equipoMapper;
@@ -59,7 +56,11 @@ public class EstimuladorService {
 	public void insertaMaterial(Material mat) {
 		materialMapper.insert(mat);
 	}
-	/*zuri*/
+	/*zuri inicio*/
+	private final int FECHA_INICIO = 1;
+	private final int FECHA_FIN = 2;
+	
+	
 	public List<Mantenimiento> por_fecha(int idequipo, Date fecha_I, Date fecha_F){
 		List<Mantenimiento> res = new ArrayList<Mantenimiento>();
 		List<EquipoManten> lista_man = lista_mante_equi(idequipo);
@@ -71,22 +72,16 @@ public class EstimuladorService {
 			criteria.andIdmantenimientoEqualTo(lista_man.get(i).getIdmantenimiento());
 			List<Mantenimiento> man = new ArrayList<Mantenimiento>();
 			man = mantenimientoMapper.selectByExample(exMan);
-			res.add(man.get(0));
+			res.add(man.get(man.size() -1));
 			}catch(Exception e) {
 				
 			}
-		//if(generarFecha(fecha_I, FECHA_INICIO).after(man.getFechamantenimiento())) {
-			//	if(fecha_F.before(man.getFechamantenimiento())) {
-			//man.setFechamantenimiento(fecha_I);
-			//		res.add(man);
-			//	}
-			//}
-			
+	
 		}
-		//res.add(mantenimientoMapper.selectByPrimaryKey(1));
-		return res;
 		
+		return res;
 	}
+	/*zuri fin */
 	public List<Mantenimiento> ver_historico(int idequipo){
 		List<Mantenimiento> res = new ArrayList<Mantenimiento>();
 		List<EquipoManten> lista_man = lista_mante_equi(idequipo);

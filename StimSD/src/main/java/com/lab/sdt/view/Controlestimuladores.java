@@ -147,27 +147,80 @@ public class Controlestimuladores implements Serializable {
 	private String hora_his;
     
 	private String fech_his;
-	/*zuri*/
-	private Date fechaI;
-	/*zuri*/
-	private Date fechaF;
-	private String prueba; 
-	/*zuri*/
-	private int registro;
 
-	public String getPrueba() {
-		return prueba;
-	}
-
-	public void setPrueba(String prueba) {
-		this.prueba = prueba;
-	}
 
 	@ManagedProperty("#{estimuladorService}")
 	public EstimuladorService estimuladorService;
+	/*zuri inicio*/
+	private Date fechaI;
+	private Date fechaF;
+	 
+	private int registro;
+
+	/*zuri*/
+	@SuppressWarnings("deprecation")
+	public void guarda_actualiza_datos() {
+		if(fechaI.after(fechaF)){
+			MensajeG.mostrar("La fecha final no puede ser anterior a la fecha inicial", FacesMessage.SEVERITY_ERROR);
+			return;
+		}
+		his_man = new ArrayList<Mantenimiento>();
+		
+		try {
+			his_man.clear();
+			his_man = estimuladorService.por_fecha(selecion_esth.getIdequipo(),getFechaI(),getFechaF());	
+			registro = his_man.size();
+			if(registro == 0){
+				MensajeG.mostrar("No se encontraron registros en esa fecha", FacesMessage.SEVERITY_WARN);
+			}
+		}catch(Exception e) {
+			MensajeG.mostrar("Ocurrió una excepción al recuperar el historial", FacesMessage.SEVERITY_FATAL);
+		}
+		RequestContext.getCurrentInstance().execute("PF('bFecha').hide();");
+	}
+	
+	   public void seleccionarFechaInicial(){
+			if(fechaI.after(fechaF)){
+				MensajeG.mostrar("La fecha final no puede ser anterior a la fecha inicial", FacesMessage.SEVERITY_ERROR);
+				return;
+				
+			}
+			
+		}
+	   
+		
+		public void actualizar_fecha() {
+			setFechaI(getFechaI());
+			setFechaF(getFechaF());
+		}
+	
+	
 	
 
+	public Date getFechaI() {
+		return fechaI;
+	}
 
+	public void setFechaI(Date fechaI) {
+		this.fechaI = fechaI;
+	}
+
+	public Date getFechaF() {
+		return fechaF;
+	}
+
+	public void setFechaF(Date fechaF) {
+		this.fechaF = fechaF;
+	}
+
+	public int getRegistro() {
+		return registro;
+	}
+
+	public void setRegistro(int registro) {
+		this.registro = registro;
+	}
+/*zuri fin*/
 	@PostConstruct
 	public void init(){
 		actualiza_e(); 	
@@ -736,39 +789,7 @@ public class Controlestimuladores implements Serializable {
 	   }
 	  
 	 
-		/*zuri*/
-		public void guarda_actualiza_datos() {
-			if(fechaI.after(fechaF)){
-				MensajeG.mostrar("La fecha final no puede ser anterior a la fecha inicial", FacesMessage.SEVERITY_ERROR);
-				return;
-			}
-			his_man = new ArrayList<Mantenimiento>();
-			
-			try {
-				his_man.clear();
-				his_man = estimuladorService.por_fecha(selecion_esth.getIdequipo(),getFechaI(),getFechaF());	
-				registro = his_man.size();
-				if(registro == 0){
-					MensajeG.mostrar("No se encontraron registros en esa fecha", FacesMessage.SEVERITY_WARN);
-				}
-			}catch(Exception e) {
-				MensajeG.mostrar("Ocurrió una excepción al recuperar el historial", FacesMessage.SEVERITY_FATAL);
-			}
-		}
-		 /*zuri*/
-		   public void seleccionarFechaInicial(){
-				if(fechaI.after(fechaF)){
-					fechaF = fechaI;
-					
-				}
-				
-			}
-		   
-			/*zuri*/
-			public void actualizar_fecha() {
-				setFechaI(getFechaI());
-				setFechaF(getFechaF());
-			}
+		
 	public String getIdEstadoe() {
 		return idEstadoe;
 	}
@@ -1180,29 +1201,5 @@ public class Controlestimuladores implements Serializable {
 		this.epotencial = epotencial;
 	}
 
-	public Date getFechaI() {
-		return fechaI;
-	}
-
-	public void setFechaI(Date fechaI) {
-		this.fechaI = fechaI;
-	}
-
-	public Date getFechaF() {
-		return fechaF;
-	}
-
-	public void setFechaF(Date fechaF) {
-		this.fechaF = fechaF;
-	}
-	/*zuri*/
-
-	public int getRegistro() {
-		return registro;
-	}
-
-	public void setRegistro(int registro) {
-		this.registro = registro;
-	}
 	
 }
