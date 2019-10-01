@@ -90,6 +90,9 @@
       .tamana_ancho_11{
    	width:900px;
     }
+          .tamana_ancho_12{
+   	width:650px;
+    }
     .div_contenedor{
     	display:block;
 	display:flex;
@@ -120,14 +123,14 @@
 </h:head>
 
 <h:body style= "background-color: #ecf2f5">
-<h:form   id = "form_g_p" class = "tamana_ancho_8" >
-
+<h:form   id = "form_g_p">
  <!-- zuri inicio -->
 <c:if  test="#{pacienteView.tipos_vistas == 3}">
 
-                    <b:panelGrid  columns="4" col-spans="3,3,3,3">
-                    <b:container fluid="true"  >
-                        <b:panel title="Expediente" look="info" id  ="estim_espe" class = "tamana_ancho_5" style="margin-left:10px">
+                    <b:panelGrid  columns="2" >
+                   
+                        <b:panel title="Expediente folio: #{pacienteView.pfoliov}" look="info" id  ="estim_espe" class = "alineacion tamana_ancho_5" >
+                         <b:container fluid="true" >
                             <b:row  style="margin-bottom:10px;" >
                                 <b:column span="4" >
                                         <h:outputLabel  value="Paciente:"/>
@@ -169,63 +172,58 @@
                                 </b:column>
                             </b:row>
                             <b:row  style="margin-bottom:10px;" >
-                                
+                                <h3>Otros datos</h3>
                             </b:row>
+                            <b:row style="margin-bottom:10px">
+                        		<b:column style="display: #{pacienteView.hay_presionintraocular?'block':'none'}" >
+                        			<b:badge value="PIO:  Izq = #{pacienteView.presionI} mmg  Der = #{pacienteView.presionD} mmg"  />
+                        		</b:column>
+                        		<b:column style="display:#{pacienteView.hay_peso?'block':'none'}" >
+                        			<b:badge value="Peso: #{pacienteView.peso} kg"  />
+                        		</b:column>
+                        		<b:column style="display: #{pacienteView.hay_pa?'block':'none'}" >
+                        			<b:badge value="PA: alta = #{pacienteView.p_mayor} mmg  baja = #{pacienteView.p_menor} mmg"  />
+                        		</b:column>
+                        		<b:column style="display: #{pacienteView.hay_altura?'block':'none'}" >
+                        			<b:badge value="Altura: #{pacienteView.altura} cm"/>
+                        		</b:column>
+                        		<b:column style="display: #{pacienteView.hay_temp?'block':'none'}" >
+                        			<b:badge value="Temperatura: #{pacienteView.temperatura} ºC "/>
+                        		</b:column>
+                        		<b:column style="display: #{pacienteView.hay_masa?'block':'none'}" >
+                        			<b:badge value="Masa: #{pacienteView.masa_corp} kg"/>
+                        		</b:column>
+                        		<b:column style="display: #{pacienteView.hay_grasa?'block':'none'}" >
+                        			<b:badge value="Grasa: #{pacienteView.grasa_corp} % "/>
+                        		</b:column>
+                        	</b:row>
+                             </b:container>
                         </b:panel>
-                    <b:column>
+                   
                     
-                    </b:column>
-                    </b:container>
-                    <b:container fluid="true"  >
-                        <b:panel title="Descripcion" look="info" id  ="descripcion" class = "tamana_ancho_6" style="margin-left:180px" >
-                             <p:editor id="editor" widgetVar="editorWidget" value="#{pacienteView.descripcion}" width="565" >
+                        <b:panel title="Descripción" look="info" id  ="descripcion" class = "alineacion tamana_ancho_12"  >
+                        <b:container fluid="true" >
+                        	
+                        	
+                             <p:editor  widgetVar="editorWidget" value="#{pacienteView.descripcionedit}" width="565" >
                              
                              </p:editor>
                              <b:row>
                              
                             <b:column offset="1" span="2" style="margin-top:20px">
-                            <b:dropButton look="success" value="Agregar" icon="plus">
-                                  <b:row  style="margin-bottom:15px; margin-left:10px" >
-				                     	<b:commandButton look="info" id="estudios_exp" value="Estudios" type="button" 
-				                            onclick="PF('paParametrosver').show();" ></b:commandButton>
-				                    </b:row>
-                    <b:row  style="margin-bottom:15px; margin-left:10px" >
-                        <b:commandButton  look="primary" value="Peso" type="button"
-                                
-                                onclick="PF('dpeso').show();"/>
-                     </b:row>
-                     <b:row  style="margin-bottom:15px ;margin-left:10px" >
-                        <b:commandButton value="Presion" look="info" type="button"
-                                
-                                onclick="PF('dpresion').show();"/>
-                    </b:row>
-                    <b:row  style="margin-bottom:15px; margin-left:10px" >  
-                        <b:commandButton value="Altura" look="success" type="button"
-                                
-                                onclick="PF('daltura').show();"/>
-                    </b:row>
-                    <b:row  style="margin-bottom:15px; margin-left:10px" >  
-                        
-                        <b:commandButton value="Temperatura" look="danger" type="button"
-                                
-                                onclick="PF('dtemperatura').show();"/>
-                    </b:row>
-                    <b:row  style="margin-bottom:15px; margin-left:10px" >  
-                        <b:commandButton value="Masa Corporal" look="warning" type="button"
-                                
-                                onclick="PF('dmasa').show();"/>
-                    </b:row>
-                    <b:row  style="margin-bottom:15px; margin-left:10px" >  
-                        <b:commandButton value="Grasa Corporal" look="info" type="button"
-                                
-                                onclick="PF('dgrasa').show();"/>
-                    </b:row>    
-              
-                    </b:dropButton>
+							<b:dropButton look="success" value="Agregar" icon="plus">
+								<b:navCommandLink icon="plus" value = "Estudios"     onclick="PF('paParametrosver').show();"></b:navCommandLink>	
+								<b:navCommandLink iconAwesome="dashboard" value = "Peso"    onclick="PF('dpeso').show();"></b:navCommandLink>
+								<b:navCommandLink iconAwesome="heartbeat" value = "Presion"      onclick="PF('dpresion').show();"></b:navCommandLink>	
+								<b:navCommandLink iconAwesome="child" value = "Altura"    onclick="PF('daltura').show();"></b:navCommandLink>
+								<b:navCommandLink iconAwesome="stethoscope" value = "Temperatura"     onclick="PF('dtemperatura').show();"></b:navCommandLink>
+								<b:navCommandLink iconAwesome="cutlery" value = "Masa"    onclick="PF('dmasa').show();"></b:navCommandLink>
+								<b:navCommandLink iconAwesome="medkit" value = "Grasa"     onclick="PF('dgrasa').show();"></b:navCommandLink>	
+                    		</b:dropButton>
                            
                             </b:column>
                             <b:column offset="1" span="2" style="margin-top:20px"> 
-							<b:commandButton look="info" id="modificar_con" value="Modificar"  actionListener="#{pacienteView.modificar_consulta}"
+							<b:commandButton look="info"  value="Encontrar"  actionListener="#{pacienteView.modificar_consulta}"
 								onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></b:commandButton>
 							</b:column> 
                               <b:column offset="1" span="2" style="margin-top:20px"> 
@@ -236,12 +234,13 @@
                             <b:column span="1"  style="margin-top:20px">
                                 <b:commandButton look="info" value="E" type="button" id="pconsutlta"
                                 actionListener="#{pacienteView.cargar_expedientesConsulta}"
-                                onclick="PF('patablaexpediente').show();"
+                                onclick="PF('pexpedientemodi').show();"
                                  />
                             </b:column>
                             </b:row>
+                              </b:container>
                         </b:panel>
-                    </b:container>
+                  
                 
                 </b:panelGrid>
 </c:if>
@@ -252,12 +251,12 @@
 					
 								<b:row style="margin-bottom:10px;  margin-left:15px;">
 									<b:column span="5" >
-		 	 	 						<p:calendar id="fecha1" showOn="button"  placeholder="Fecha Inicial" 
+		 	 	 						<p:calendar id="fecha1" showOn="button"  placeholder="Fecha Inicial"  value="#{pacienteView.fechaI}"
 		 	 	 						pattern="dd/MM/yy" locale="es">
 		 	 	 						</p:calendar>
 		 	 	 					</b:column>
 		 	 	 					<b:column  span="5" >
-		 	 	 						<p:calendar id="fecha2" showOn="button"  placeholder="Fecha Final" 
+		 	 	 						<p:calendar id="fecha2" showOn="button"  placeholder="Fecha Final" value="#{pacienteView.fechaF}"
 		 	 	 						pattern="dd/MM/yy" locale="es">
 		 	 	 						</p:calendar>
 		 	 	 					</b:column>
@@ -265,7 +264,8 @@
                         		</b:row>
                         		<b:row style="margin-bottom:10px;">
 		 	 	 			  		<b:column offset="4" span="1" >
-                        				<b:commandButton look="success"  value="Buscar" action="#{pacienteView.buscar_fechas}" update="modicar_t"></b:commandButton>
+                        			<b:commandButton look="primary" value="Buscar"  actionListener="#{pacienteView.buscar_fechas}"
+									update="modicar_t" ></b:commandButton>
                         			</b:column>
                         			</b:row>
                         	
@@ -276,14 +276,16 @@
                                 paginatorTemplate="{PageLinks} {RowsPerPageDropdown}" 
                                 rowsPerPageTemplate="5,10,15,20" 
                                 paginatorPosition="bottom" value="#{pacienteView.fecha_exp}"
+                                
+                                var="fecha_con" reflow="true" selectionMode="single" 
                                 selection="#{pacienteView.seleccion_consulta}"
-                                var="fecha_con" reflow="true" selectionMode="single" rowKey="#{fecha_con.fechaconsulta}">
-                                <p:ajax event="rowSelect" listener="#{pacienteView.seleccionar_consulta}" ></p:ajax>
-                            <p:column headerText="Fecha">
-                                <h:outputText value="#{fecha_exp.idexpediente}"/>
+                                rowKey="#{fecha_con.idexpeconsul}">
+                                <p:ajax event="rowSelect" listener="#{pacienteView.seleccionar_consulta}" update=":form_g_p:estim_espe, :form_g_p:descripcion, :form_g_p:presionD, :form_g_p:presionI"></p:ajax>
+                            <p:column headerText="Fecha"  style="text-align: center">
+                                <h:outputText value="#{pacienteView.convertirFecha(fecha_con.fechaconsulta )}"/>
                             </p:column>
-                            <p:column headerText="Hora">
-                                <h:outputText value="#{fecha_exp.descripcion}"/>
+                            <p:column headerText="Hora" style="text-align: center">
+                                <h:outputText value="#{pacienteView.convertirHora(fecha_con.fechaconsulta )}" />
                             </p:column>
                          </p:dataTable>	
                          </b:column>
@@ -293,28 +295,15 @@
 </p:dialog>
 
  <!-- Cargar estudios -->   
-            <p:dialog header="Estudios" widgetVar="paParametrosver" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+            <p:dialog header="Estudios" widgetVar="paParametrosver" showEffect="explode" hideEffect="bounce" height="150"  width="250px" modal="true" >
                 <b:panelGrid  columns="2" >
                 <b:container fluid="true">
                         <b:row>
-                        <p:dataTable class = "tamana_ancho_5" id="paraequi" paginator="true" rows="5" 
-                                paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
-                                rowsPerPageTemplate="5,10,15,20" 
-                                paginatorPosition="bottom" 
-                                var="parametroe" reflow="true" selectionMode="single"  
-                                >
-                                
-                            <p:column headerText="Serie">
-                                <h:outputText value="1" />
-                            </p:column>
-                            <p:column headerText="Equipo">
-                                <h:outputText value="Presion Ocular" />
-                            </p:column>
-                            </p:dataTable>
-                        </b:row>
-                            <b:column offset="8" span="8" style="margin-top:20px">
-                            <b:commandButton look="warning" id="presionO" value="PresionIntraocular" type="button" onclick="PF('presionI').show();" ></b:commandButton>
+                   			<b:column offset="3">
+                            	<b:commandButton look="warning" id="presionO" value="PresionIntraocular" type="button" onclick="PF('presionI').show();" ></b:commandButton>
                             </b:column>
+                        </b:row>
+                            
                     </b:container>
             
                     
@@ -360,70 +349,7 @@
                     
                     </b:panelGrid>
             </p:dialog>
-<!-- SELECCIONAR EXPEDIENTE -->                               
-<p:dialog header="Seleccione Expediente" widgetVar="patablaexpediente" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
-                        <b:panelGrid  columns="2" >
-                         <b:container fluid="true"  >
-                            <b:row  style="margin-bottom:10px" >
-                                <b:column span="4">
-                                    <b:commandButton look="primary" value="cargar" actionListener="#{pacienteView.cargar_expedientesConsulta}"
-                                    update="busca_doctor, doctor_exp" ></b:commandButton>
-                                </b:column>
-                                <b:column span="6" offset= "2">
-                                    <p:inputText id="busca_doctor"  placeholder="Buscar Doctor" style=" text-aling: center;" value="#{pacienteView.expe_m}">
-                                    <p:ajax event="keyup" update="" listener="#{pacienteView.buscar_doctor}" />  
-                                    </p:inputText>      
-                                </b:column>
-                            </b:row>
-                            <b:row  style="margin-bottom:10px" >
-                                <p:dataTable class = "tamana_ancho_5" id="doctor_exp" paginator="true" rows="5" 
-                                paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
-                                rowsPerPageTemplate="5,10,15,20" 
-                                paginatorPosition="bottom"  value="#{pacienteView.medicos}"
-                                 var="exp_doctor" reflow="true" selectionMode="single"  
-                                selection="#{pacienteView.seleccion_medico}" rowKey="#{exp_doctor.idusuario}">
-                                <p:ajax event="rowSelect" listener="#{pacienteView.seleccionar_doctor}" update=":form_g_p:expedientet"></p:ajax>
-                                <p:column headerText="Doctor">
-                                        <h:outputText value="#{exp_doctor.nombre} #{exp_doctor.apellido1} #{exp_doctor.apellido2}" />
-                                    </p:column>
-                                   
-                                </p:dataTable>
-                            </b:row>
-                        </b:container>
-                        <b:container fluid="true"  >
-                            <b:row  style="margin-bottom:10px" >
-                                <b:column span="4">
-                                    <b:commandButton look="primary" value="cargar" actionListener="#{pacienteView.cargar_expedientesConsulta}"
-                                    update="expedientet, exbuscador" ></b:commandButton>
-                                </b:column>
-                                <b:column span="6" offset= "2">
-                                    <p:inputText id="exbuscador"  placeholder="Buscar Expediente" style=" text-aling: center;" value="#{pacienteView.expe_m}">
-                                    <p:ajax event="keyup" update="expedientet" listener="#{pacienteView.buscar_expediente}" />  
-                                    </p:inputText>      
-                                </b:column>
-                            </b:row>
-                            <b:row  style="margin-bottom:10px" >
-                                <p:dataTable class = "tamana_ancho_5" id="expedientet" paginator="true" rows="5" 
-                                paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
-                                rowsPerPageTemplate="5,10,15,20" 
-                                paginatorPosition="bottom"  value="#{pacienteView.exp_id}"
-                                 var="expe_t" reflow="true" selectionMode="single"  
-                                selection="#{pacienteView.seleccion_expediente}" rowKey="#{expe_t.noexpediente}">
-                                <p:ajax event="rowSelect" listener="#{pacienteView.asignacion_expedienteC}" update=":form_g_p:estim_espe"></p:ajax>
-                                <p:column headerText="Folio">
-                                        <h:outputText value="#{expe_t.idexpediente}" />
-                                    </p:column>
-                                    <p:column headerText="Nombre">
-                                        <h:outputText value="#{expe_t.nombre}"  />
-                                    </p:column>
-                                    
-                                </p:dataTable>
-                            </b:row>
-                        </b:container>
-                        
-                       
-                        </b:panelGrid>           
-                    </p:dialog>
+
  <!-- Guardar Peso -->  
             <p:dialog header="Ingrese Peso" widgetVar="dpeso" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
                 <b:panelGrid  columns="1" >
@@ -436,19 +362,19 @@
                         </b:column>
                         <b:column span="8" offset="2">  
                             <b:inputText  style="text-align: center;"  id="peso_exp"   placeholder="Ingrese Peso" value="#{pacienteView.peso}">
-                            <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos()}"></p:ajax> 
+                            <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos}"></p:ajax> 
                             </b:inputText>                  
                         </b:column>
                         </b:row>
                         <b:column offset="4" span="8" style="margin-top:20px">
-                        <b:commandButton look="success" id="guardar_pe"  value="ok" href="pacientes.xhtml" ></b:commandButton>
+                        <b:commandButton look="success" id="guardar_pe"  value="ok" action="#{pacienteView.guarda_actualiza_datos}" ></b:commandButton>
                         </b:column>
                         
                     </b:container>
                 </b:panelGrid>
             </p:dialog>
 <!-- Guardar Presion -->            
-    <p:dialog header="Ingrese Presion" widgetVar="dpresion" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+    <p:dialog header="Ingrese Presion" widgetVar="dpresion" showEffect="explode" hideEffect="bounce" height="400"  modal="true" >
                 <b:panelGrid  columns="1" >
                 <b:container fluid="true">
                 <b:iconAwesome  size="4x" style="margin-bottom:20px"  col-md="10" offset="4" value="heartbeat"/><br/>
@@ -474,7 +400,7 @@
                         </b:column>
                         </b:row>
                         <b:column offset="4" span="8" style="margin-top:20px">
-                        <b:commandButton look="success" id="guardar_presion" value="ok" href="pacientes.xhtml"></b:commandButton>
+                        <b:commandButton look="success" id="guardar_presion" value="ok" action="#{pacienteView.guarda_actualiza_datos}"></b:commandButton>
                         </b:column>
                     </b:container>
             
@@ -497,7 +423,7 @@
                         </b:column>
                         </b:row>
                         <b:column offset="4" span="8" style="margin-top:20px">
-                        <b:commandButton look="success" id="guardar_tem"  value="ok" href="pacientes.xhtml"></b:commandButton>
+                        <b:commandButton look="success" id="guardar_tem"  value="ok" action="#{pacienteView.guarda_actualiza_datos}"></b:commandButton>
                         </b:column>
                         
                     </b:container>
@@ -521,7 +447,7 @@
                         </b:column>
                         </b:row>
                         <b:column offset="4" span="8" style="margin-top:20px">
-                        <b:commandButton look="success" id="guardar_alt"  value="ok" href="pacientes.xhtml"></b:commandButton>
+                        <b:commandButton look="success" id="guardar_alt"  value="ok" action="#{pacienteView.guarda_actualiza_datos}"></b:commandButton>
                         </b:column>
                         
                 </b:container>
@@ -545,7 +471,7 @@
                         </b:column>
                         </b:row>
                         <b:column offset="4" span="8" style="margin-top:20px">
-                        <b:commandButton look="success" id="guardar_ma"  value="ok" href="pacientes.xhtml" ></b:commandButton>
+                        <b:commandButton look="success" id="guardar_ma"  value="ok" action="#{pacienteView.guarda_actualiza_datos}" ></b:commandButton>
                         </b:column>
                     </b:container>
             
@@ -568,7 +494,7 @@
                         </b:column>
                         </b:row>
                         <b:column offset="4" span="8" style="margin-top:20px">
-                        <b:commandButton look="success" id="guardar_gra"  value="ok" href="pacientes.xhtml" ></b:commandButton>
+                        <b:commandButton look="success" id="guardar_gra"  value="ok" action="#{pacienteView.guarda_actualiza_datos}" ></b:commandButton>
                         </b:column>
                         
                 </b:container>
@@ -576,7 +502,7 @@
                 </b:panelGrid>
             </p:dialog>                                                                                                                     
  <!-- ZURI FIN -->          
-<!-- zuri final -->
+
 <c:if  test="#{pacienteView.tipos_vistas == 0}">
 				<b:panelGrid  columns="3" colSpans="4,4,4"   >
 					<b:container fluid="true"  >
@@ -653,37 +579,6 @@
 									</p:column>
 								</p:dataTable>
 							</b:row>
-							<!-- zuri inicio -->
-						<b:commandButton look="info" value="Buscar" type="button" id="bfechamantenimiento" style="margin-left:130px"
-								
-					 			onclick="PF('bFecha').show();"/>
-					 	<!-- Buscar Fecha -->	
- 			<p:dialog header="Buscar Fecha" widgetVar="bFecha" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
- 				<b:panelGrid  columns="1" >
- 				<b:container fluid="true">
- 				<b:iconAwesome  size="4x" style="margin-bottom:20px"  col-md="10" offset="4" value="dashboard"/><br/>
- 				<h3 style="text-align: center;">Fecha</h3>
- 						<b:row style="margin-bottom:10px;  margin-left:15px;">
-		 	 	 					<p:calendar id="fecha1" showOn="button"  placeholder="Fecha Inicial" value="#{controlestimuladores.fechaI}"
-		 	 	 					pattern="dd/MM/yy" locale="es">
-		 	 	 					
-		 	 	 					</p:calendar>
-		 	 	 					
-		 	 	 			</b:row>
-		 	 	 			<b:row style="margin-bottom:10px;  margin-left:15px;">
-		 	 	 					<p:calendar id="fecha2" showOn="button"  placeholder="Fecha Final" value="#{controlestimuladores.fechaF}"
-		 	 	 					pattern="dd/MM/yy" locale="es">
-		 	 	 					</p:calendar>
-		 	 	 			</b:row> 
-						<b:column offset="4" span="8" style="margin-top:20px">
- 						<b:commandButton look="success" id="Buscar_F"  value="ok" action="#{controlestimuladores.guarda_actualiza_datos}"
- 						onstart="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></b:commandButton>
- 						</b:column>
-						
- 					</b:container>
- 				</b:panelGrid>
- 			</p:dialog>		
-					 	<!-- zuri fin -->		
 						</b:panel>
 					</b:container>
 					
@@ -1182,14 +1077,21 @@
 							</p:dataTable>
  						</b:row>
  						<b:row  style="margin-bottom:10px" >
-	 						<b:column span="5" offset= "1">
-	 							<b:commandButton icon-spin="true" icon="cd" look="success" id="pmodifica" value="Modificar" actionListener="#{pacienteView.vista_modifica_expedeinte}"/>
-	 						</b:column>
-	 						<c:if  test="#{gestiondeSeccionView.userDTO.idtipo == 1}">
-	 						<b:column span="2" offset= "1">
+ 							 <c:if  test="#{gestiondeSeccionView.userDTO.idtipo == 1}">
+	 						<b:column span="2" >
 	 							<b:commandButton icon-spin="true" icon="cd" look="info" id="pver" value="Ver" actionListener="#{pacienteView.vista_ver_expedeinte}"/>
 	 						</b:column>
 	 						</c:if>
+	 						
+	 						<b:column span="2" offset= "1">
+	 							<b:commandButton icon-spin="true" icon="cd" look="success" id="pmodifica" value="Modificar" actionListener="#{pacienteView.vista_modifica_expedeinte}"/>
+	 						</b:column>
+
+	 						
+	 						<b:column span="2" offset= "2">
+	 							<b:commandButton icon-spin="true" icon="cd" look="success" id="pconsulta" value="Consulta" actionListener="#{pacienteView.asignacion_expedienteC}"/>
+	 						</b:column>
+	 					
 				 	 	</b:row>
  					</b:container>
  				</b:panelGrid>

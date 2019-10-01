@@ -16,31 +16,25 @@ import com.lab.sdt.dao.ExpeEstimMapper;
 import com.lab.sdt.dao.ExpedienteConsultaMapper;
 import com.lab.sdt.dao.ExpedienteMapper;
 import com.lab.sdt.dao.NumOndaMapper;
-import com.lab.sdt.dao.OndaMapper;
+
 import com.lab.sdt.dao.PresionintraocularMapper;
 import com.lab.sdt.dao.UbicacionMapper;
 import com.lab.sdt.model.Enfermedad;
 import com.lab.sdt.model.EnfermedadExample;
-
 import com.lab.sdt.model.ExpeEstim;
-import com.lab.sdt.model.ExpedienteConsultaExample.Criteria;
 import com.lab.sdt.model.Expediente;
 import com.lab.sdt.model.ExpedienteConsulta;
 import com.lab.sdt.model.ExpedienteConsultaExample;
+import com.lab.sdt.model.ExpedienteConsultaExample.Criteria;
 import com.lab.sdt.model.ExpedienteExample;
-import com.lab.sdt.model.Hospital;
-import com.lab.sdt.model.HospitalExample;
 import com.lab.sdt.model.NumOnda;
-import com.lab.sdt.model.Onda;
+
 import com.lab.sdt.model.Presionintraocular;
+import com.lab.sdt.model.PresionintraocularExample;
 import com.lab.sdt.model.Ubicacion;
-
-
 @Service
 @Transactional
 public class U_pacientesService {
-	
-	
 
 	@Autowired
 	private EnfermedadMapper enfermedadMapper;
@@ -54,12 +48,86 @@ public class U_pacientesService {
 	@Autowired
 	private UbicacionMapper ubicacionMapper;
 	
-	@Autowired
-	private OndaMapper ondaMapper;
+
 	
 	@Autowired
 	private NumOndaMapper numOndaMapper;
 	
+	@Autowired
+	private ExpedienteConsultaMapper expedienteConsultaMapper;
+
+	@Autowired
+	private PresionintraocularMapper presionintraocularMapper;
+	
+	private final int FECHA_INICIO = 1;
+	private final int FECHA_FIN = 2;
+	
+	public void actulizar_consulta(ExpedienteConsulta ec) {
+		expedienteConsultaMapper.updateByPrimaryKey(ec);
+	}
+		
+
+
+	public List<ExpedienteConsulta> consulta_fechas(Date inicio_f, Date fin_f, int idexp) {
+		ExpedienteConsultaExample exp_ex = new ExpedienteConsultaExample();
+			Criteria critexp = exp_ex.createCriteria();
+		critexp.andFechaconsultaBetween(generarFecha(inicio_f, FECHA_INICIO), generarFecha(fin_f, FECHA_FIN));
+		critexp.andIdexpedienteEqualTo(idexp);
+		
+		return expedienteConsultaMapper.selectByExample(exp_ex);
+	}
+	
+	
+	public void registroConsulta(ExpedienteConsulta EXPC) throws Exception{
+		
+		insertarConsulta(EXPC);
+	}
+	
+public void registroPresion(Presionintraocular presI) throws Exception{
+		
+		insertarPresion(presI);
+	}
+
+	public int insertarConsulta(ExpedienteConsulta expedienteConsulta)throws Exception{
+		expedienteConsultaMapper.insert(expedienteConsulta);
+		ExpedienteConsultaExample exp_ex = new ExpedienteConsultaExample();
+		Criteria critexp = exp_ex.createCriteria();
+		critexp.andIdexpedienteEqualTo(expedienteConsulta.getIdexpediente());
+		List<ExpedienteConsulta> expconl =  expedienteConsultaMapper.selectByExample(exp_ex);
+		return expconl.get(expconl.size() -1).getIdexpeconsul();
+	}
+	public void insertarPresion(Presionintraocular presionintraocular)throws Exception{
+		presionintraocularMapper.insert(presionintraocular);
+	}
+	public void modificarPresion(Presionintraocular presionintraocular)throws Exception{
+		presionintraocularMapper.updateByPrimaryKey(presionintraocular);
+	}
+	public void modificarExpedienteConsulta(ExpedienteConsulta expedienteConsulta)throws Exception{
+		expedienteConsultaMapper.updateByPrimaryKey(expedienteConsulta);
+	}
+	
+public Presionintraocular encuentrap (int idexpC) {
+	PresionintraocularExample ex_pre = new PresionintraocularExample();
+	com.lab.sdt.model.PresionintraocularExample.Criteria criPre = ex_pre.createCriteria();
+	criPre.andIdexpConsultaEqualTo(idexpC);
+	List<Presionintraocular> exp_presion = presionintraocularMapper.selectByExample(ex_pre);
+	return exp_presion.get(exp_presion.size()-1);
+}
+//buscador de expedient
+public List<Expediente> lista_exp(){
+	
+	List<Expediente> list_expediente =  new ArrayList<Expediente>();
+	ExpedienteExample expedienteEx =  new ExpedienteExample();
+	list_expediente = expedienteMapper.selectByExample(expedienteEx);
+	return list_expediente;
+}
+
+public List<Expediente> entrega_expedientes(){
+	ExpedienteExample exC = new ExpedienteExample();
+	return expedienteMapper.selectByExample(exC);
+}
+
+
 	public List<Enfermedad> lista_enfermedad(){
 		  List<Enfermedad> list_en = new ArrayList<Enfermedad>();
 		  EnfermedadExample exen = new EnfermedadExample();
@@ -93,22 +161,8 @@ public class U_pacientesService {
 	public NumOnda regresa_onda_nombre(int idkey) {
 		return numOndaMapper.selectByidOnda(idkey).get(0);
 	}
-	
-	/*zuri inicio*/
-	private final int FECHA_INICIO = 1;
-	private final int FECHA_FIN = 2;
-	@Autowired
-	private ExpedienteConsultaMapper expedienteConsultaMapper;
-
-	@Autowired
-	private PresionintraocularMapper presionintraocularMapper;
-	
-	public List<ExpedienteConsulta> consulta_fechas(Date inicio_f, Date fin_f, int idexp) {
-		ExpedienteConsultaExample exp_ex = new ExpedienteConsultaExample();
-			//Criteria critexp = exp_ex.createCriteria();
-		//critexp.andFechaconsultaBetween(generarFecha(inicio_f, FECHA_INICIO), generarFecha(fin_f, FECHA_FIN));
-		//critexp.andIdexpedienteEqualTo(idexp);
-		return  expedienteConsultaMapper.selectByExample(exp_ex);
+	public List<Expediente> expediente_por_doc (int idmedico) {
+		return expedienteMapper.selectByidDoctor(idmedico);
 	}
 	private Date generarFecha(Date fecha, int tipoFecha){
 		Calendar cal = Calendar.getInstance();
@@ -126,82 +180,4 @@ public class U_pacientesService {
 		}
 		return cal.getTime();
 	}
-	
-	public void actulizar_consulta(ExpedienteConsulta ec) {
-		expedienteConsultaMapper.updateByPrimaryKey(ec);
-	}
-		
-
-	
-	public void registroConsulta(ExpedienteConsulta EXPC) throws Exception{
-		
-		insertarConsulta(EXPC);
-	}
-	
-public void registroPresion(Presionintraocular presI) throws Exception{
-		
-		insertarPresion(presI);
-	}
-
-	public void insertarConsulta(ExpedienteConsulta expedienteConsulta)throws Exception{
-		expedienteConsultaMapper.insert(expedienteConsulta);
-	}
-	public void insertarPresion(Presionintraocular presionintraocular)throws Exception{
-		presionintraocularMapper.insert(presionintraocular);
-	}
-	
-	public ExpedienteConsulta obtenerConsulta(Date fconsulta) {
-		List<ExpedienteConsulta> contenedor_consulta = expedienteConsultaMapper.selectByFechaConsulta(fconsulta);
-		return contenedor_consulta.get(0);
-	}
-	
-	public Presionintraocular obtenerPresion(Date fpresion) {
-		List<Presionintraocular> contenedor_presion = presionintraocularMapper.selectByFechaPresion(fpresion);
-		return contenedor_presion.get(0);
-	}
-	
-public Date registro_consulta(Date fconsulta) {
-	Date res= null;
-	try {
-	res= obtenerConsulta(fconsulta).getFechaconsulta();
-	}catch(Exception e) {
-		res=null;
-	}
-	return res;
-}
-
-public Date registro_presion(Date fpresion) {
-	Date resp= null;
-	try {
-	resp= obtenerPresion(fpresion).getFecha();
-	}catch(Exception e) {
-		resp=null;
-	}
-	return resp;
-}
-//buscador de expedient
-public List<Expediente> lista_exp(){
-	
-	List<Expediente> list_expediente =  new ArrayList<Expediente>();
-	ExpedienteExample expedienteEx =  new ExpedienteExample();
-	list_expediente = expedienteMapper.selectByExample(expedienteEx);
-	return list_expediente;
-}
-public Expediente encuentra_expediente (String serie) {
-	/*List<Expediente> exped= new ArrayList<Expediente>();
-	exped= expedienteMapper.selectByNoSerie(noExpediente);
-	return exped;*/
-
-	Expediente expedienteS = new Expediente();
-	expedienteS = expedienteMapper.selectByNoSerie(serie).get(0);
-	return expedienteS;
-}
-public List<Expediente> entrega_expedientes(){
-	ExpedienteExample exC = new ExpedienteExample();
-	return expedienteMapper.selectByExample(exC);
-}
-public List<Expediente> expediente_por_doc (int idmedico) {
-	return expedienteMapper.selectByidDoctor(idmedico);
-}
-	/*zuri fin*/
 }
