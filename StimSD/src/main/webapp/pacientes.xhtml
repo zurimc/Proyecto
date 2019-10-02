@@ -280,7 +280,7 @@
                                 var="fecha_con" reflow="true" selectionMode="single" 
                                 selection="#{pacienteView.seleccion_consulta}"
                                 rowKey="#{fecha_con.idexpeconsul}">
-                                <p:ajax event="rowSelect" listener="#{pacienteView.seleccionar_consulta}" update=":form_g_p:estim_espe, :form_g_p:descripcion, :form_g_p:presionD, :form_g_p:presionI"></p:ajax>
+                                <p:ajax event="rowSelect" listener="#{pacienteView.seleccionar_consulta}" ></p:ajax>
                             <p:column headerText="Fecha"  style="text-align: center">
                                 <h:outputText value="#{pacienteView.convertirFecha(fecha_con.fechaconsulta )}"/>
                             </p:column>
@@ -641,6 +641,10 @@
 									</p:column>
 								</p:dataTable>
 							</b:row>
+							<b:column offset="3" span="4" style="margin-top:20px"> 
+							<b:commandButton look="info"  value="Buscar Fechas"  actionListener="#{pacienteView.buscar_fechasExp}"
+								onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></b:commandButton>
+							</b:column> 
 						</b:panel>
 					</b:container>
 					
@@ -1209,7 +1213,36 @@
 					</b:container>
 				</b:panelGrid>
  			</p:dialog>
- 				
+<!-- zuri inicio -->
+<!-- Buscar Fecha -->	
+ 			<p:dialog header="Buscar Fecha Expediente" widgetVar="bFechaex" showEffect="explode" hideEffect="bounce" height="200"  modal="true" >
+ 				<b:panelGrid  columns="1" >
+ 				<b:container fluid="true">
+ 				<b:iconAwesome  size="4x" style="margin-bottom:40px"  col-md="10" offset="4" value="dashboard"/><br/>
+ 				    <h3 style="text-align: center">Buscar Por Fechas</h3>
+                         <b:row style="margin-bottom:10px;  margin-left:15px;">
+									<b:column span="6" >
+		 	 	 						<p:calendar id="fecha1ex" showOn="button"  placeholder="Fecha Inicial" 
+		 	 	 						pattern="dd/MM/yy" locale="es">
+		 	 	 						
+		 	 	 						</p:calendar>
+		 	 	 					</b:column>
+		 	 	 					<b:column  span="6" >
+		 	 	 						<p:calendar id="fecha2ex" showOn="button"  placeholder="Fecha Final" 
+		 	 	 						pattern="dd/MM/yy" locale="es">
+		 	 	 						</p:calendar>
+		 	 	 					</b:column>
+                        	</b:row>
+                      		<b:row style="margin-bottom:10px;">
+		 	 	 			  		<b:column offset="4" span="1" >
+                        			<b:commandButton look="primary" value="Buscar"  actionListener="#{pacienteView.encontrar_fechaEx}"
+									 ></b:commandButton>
+                        			</b:column>
+                        	</b:row>
+ 					</b:container>
+ 				</b:panelGrid>
+ 			</p:dialog>		
+<!-- zuri fin --> 				
 </h:form>
 </h:body>
 </html>

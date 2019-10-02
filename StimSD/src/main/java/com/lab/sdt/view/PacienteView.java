@@ -333,7 +333,13 @@ public class PacienteView implements Serializable {
 	    		 MensajeG.mostrar("Error: "+e.toString(), FacesMessage.SEVERITY_ERROR);
 	    	 }
 	     }
-	    
+	     @SuppressWarnings("deprecation")
+	    public void buscar_fechasExp() {
+	    	 RequestContext.getCurrentInstance().execute("PF('bFechaex').show();");
+	    }
+	    public void encontrar_fechaEx() {
+	    	MensajeG.mostrar(":D", FacesMessage.SEVERITY_ERROR);
+	    } 
 
 	      //asignacion de expediente
 	         @SuppressWarnings("deprecation")

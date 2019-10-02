@@ -671,12 +671,10 @@
 							</b:row>
 							</h:form>
 						</b:container>
-						<b:row style="margin-bottom:40px;">
-		 	 	 			 <b:column offset="4" span="1" >
-								<b:commandButton look="info" id="buscar_f" value="Buscar"  type="button" 
-								onclick="PF('bFecha').show();"></b:commandButton>
-							</b:column>
-						</b:row>				
+						 <b:column offset="2" span="4" style="margin-top:20px"> 
+							<b:commandButton look="info"  value="Buscar Fechas"  actionListener="#{controlestimuladores.buscar_fechasC}"
+								onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></b:commandButton>
+							</b:column> 		
 					</b:panel>
 					
 			<!-- zuri -->
@@ -798,11 +796,12 @@
 		 	 	 						</p:calendar>
 		 	 	 					</b:column>
                         	</b:row>
-                      		<b:row style="margin-bottom:20px;">
+                      		<b:row style="margin-bottom:10px;">
 		 	 	 			  		<b:column offset="5" span="1" >
-		 	 	 			  		<b:commandButton look="success" id="guardar_Fecha" value="Guardar"  actionListener="#{controlestimuladores.buscar_fechasC}"></b:commandButton>
+                        			<b:commandButton look="primary" value="Buscar"  actionListener="#{controlestimuladores.encontrar_fechaEx}"
+									></b:commandButton>
                         			</b:column>
-                        	</b:row>
+                        			</b:row>
  					</b:container>
  				</b:panelGrid>
  			</p:dialog>		

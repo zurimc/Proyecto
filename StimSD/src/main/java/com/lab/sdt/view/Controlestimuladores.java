@@ -162,10 +162,12 @@ public class Controlestimuladores implements Serializable {
 	public void buscar_fechasC() {
 	
 			// MensajeG.mostrar("ok", FacesMessage.SEVERITY_INFO);
-		RequestContext.getCurrentInstance().execute("PF('bFecha').hide();");
+		RequestContext.getCurrentInstance().execute("PF('bFecha').show();");
 	
 		}
-	@SuppressWarnings("deprecation")
+	 public void encontrar_fechaEx() {
+	    	MensajeG.mostrar(":D", FacesMessage.SEVERITY_ERROR);
+	    } 
 	public void guarda_actualiza_datos() {
 		/*if(fechaI.after(fechaF)){
 			MensajeG.mostrar("La fecha final no puede ser anterior a la fecha inicial", FacesMessage.SEVERITY_ERROR);
@@ -183,7 +185,8 @@ public class Controlestimuladores implements Serializable {
 		}catch(Exception e) {
 			MensajeG.mostrar("Ocurrió una excepción al recuperar el historial", FacesMessage.SEVERITY_FATAL);
 		}*/
-		RequestContext.getCurrentInstance().execute("PF('bFecha').hide();");
+		MensajeG.mostrar(":D", FacesMessage.SEVERITY_ERROR);
+		
 		
 		
 	}
