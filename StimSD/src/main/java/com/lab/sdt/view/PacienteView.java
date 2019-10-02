@@ -229,11 +229,60 @@ public class PacienteView implements Serializable {
 	     private boolean hay_temp= false;
 	     private boolean hay_masa= false;
 	     private boolean hay_grasa = false;
-		private int presionMuestra = 0;
+	     private int presionMuestra = 0;
 	     private int id_consultaM = 0;
+	     
+	     public int aizq;
+	     public int ader;
+	     public int bizq;
+	     public int bder;
+	     public Date fechaE;
+	     
+	     
 	
 
 	
+	public int getAizq() {
+			return aizq;
+		}
+
+		public void setAizq(int aizq) {
+			this.aizq = aizq;
+		}
+
+		public int getAder() {
+			return ader;
+		}
+
+		public void setAder(int ader) {
+			this.ader = ader;
+		}
+
+		public int getBizq() {
+			return bizq;
+		}
+
+		public void setBizq(int bizq) {
+			this.bizq = bizq;
+		}
+
+		public int getBder() {
+			return bder;
+		}
+
+		public void setBder(int bder) {
+			this.bder = bder;
+		}
+		
+
+	public Date getFechaE() {
+			return fechaE;
+		}
+
+		public void setFechaE(Date fechaE) {
+			this.fechaE = fechaE;
+		}
+
 	@PostConstruct
 	public void init(){
 		valores = new double[300];
@@ -263,7 +312,9 @@ public class PacienteView implements Serializable {
 	}
 	
 ///----------- zuri ----------------
-	  
+	  public void guardar_electro() {
+		  
+	  }
 	   public void seleccionar_doctor() {
 	    	 try {
 	    		 exp_id.clear();

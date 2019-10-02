@@ -303,17 +303,79 @@
                             	<b:commandButton look="warning" id="presionO" value="PresionIntraocular" type="button" onclick="PF('presionI').show();" ></b:commandButton>
                             </b:column>
                         </b:row>
+                        <!-- VISTA DE ELECTRORETINOGRAFIA ZURI INICIO -->
+                        <b:row>
+                   			<b:column offset="3" style="margin-top:20px">
+                            	<b:commandButton look="warning" id="electro" value="Electroretinografía" type="button" onclick="PF('electro').show();" ></b:commandButton>
+                            </b:column>
+                        </b:row>
+                        <!-- VISTA DE ELECTRORETINOGRAFIA ZURI FIN -->
                             
                     </b:container>
             
                     
                     </b:panelGrid>
             </p:dialog>
+<!-- DIALOG DE ELECTRORETINOGRAFIA ZURI INICIO -->
+    <p:dialog header="Ingrese Datos" widgetVar="electro" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+                <b:panelGrid  columns="1" >
+                <b:container fluid="true">
+                <b:iconAwesome  size="4x" style="margin-bottom:20px; margin-left:30px"  col-md="10" offset="4" value="eye"/><br/>
+                <h3 style="text-align: center;">Electroretinografía</h3>
+                        <b:row style="margin-bottom:10px">
+                        <b:column offset="1" span="4" style="margin-top:20px">
+                         <h:outputLabel value="Izquierda: " />
+                        </b:column>
+                        
+                        <b:column offset="2" span="4" style="margin-top:20px">
+                         <h:outputLabel value="Derecha: " />
+                        </b:column>
+                        
+                        </b:row>
+                        <b:row style="margin-bottom:10px">
+                        <b:column offset="1" span="4" style="margin-top:20px">
+                        <b:inputText  id="ai"  style="text-align: center;"  placeholder="AIzquierdo" value="#{pacienteView.aizq}">
+                        
+                        </b:inputText>
+                        </b:column>
+                        
+                        <b:column offset="2" span="4" style="margin-top:20px">
+                        <b:inputText  id="ad"  style="text-align: center;"  placeholder="ADerecho" value="#{pacienteView.ader}">
+                        
+                        </b:inputText>
+                        </b:column>
+                        
+                        </b:row>
+                           <b:row style="margin-bottom:10px">
+                        <b:column offset="1" span="4" style="margin-top:20px">
+                        <b:inputText  id="bi"  style="text-align: center;"  placeholder="BIzquierdo" value="#{pacienteView.bizq}" >
+                        
+                        </b:inputText>
+                        </b:column>
+                        
+                        <b:column offset="2" span="4" style="margin-top:20px">
+                        <b:inputText  id="bd"  style="text-align: center;"  placeholder="BDerecho" value="#{pacienteView.bder}">
+                        
+                        </b:inputText>
+                        </b:column>
+                        
+                        </b:row>
+                        
+                        <b:column offset="4" span="8" style="margin-top:20px">
+                        <b:commandButton look="success" id="guardar_ab" value="Guardar"  actionListener="#{pacienteView.guardar_electro}"></b:commandButton>
+                        </b:column>
+                    </b:container>
+            
+                    
+                    </b:panelGrid>
+            </p:dialog>
+  
+<!-- DIALOG DE ELECTRORETINOGRAFIA ZURI FIN -->             
  <!-- Cargar estudios -->   
             <p:dialog header="Ingrese Datos" widgetVar="presionI" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
                 <b:panelGrid  columns="1" >
                 <b:container fluid="true">
-                <b:iconAwesome  size="4x" style="margin-bottom:20px"  col-md="10" offset="4" value="eye"/><br/>
+                <b:iconAwesome  size="4x"  style="margin-bottom:20px; margin-left:30px"  col-md="10" offset="4" value="eye"/><br/>
                 <h3 style="text-align: center;">Presión Intraocular</h3>
                         <b:row style="margin-bottom:10px">
                         <b:column offset="1" span="4" style="margin-top:20px">
@@ -361,7 +423,7 @@
                          <h:outputLabel value="kg: " />
                         </b:column>
                         <b:column span="8" offset="2">  
-                            <b:inputText  style="text-align: center;"  id="peso_exp"   placeholder="Ingrese Peso" value="#{pacienteView.peso}">
+                            <b:inputText  style="text-align: center;"  id="peso_exp"   placeholder="Ingrese Peso" value="#{pacienteView.peso}" mask="numeric">
                             <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos}"></p:ajax> 
                             </b:inputText>                  
                         </b:column>
@@ -384,7 +446,7 @@
                         <h:outputLabel value="Presion Mayor: " />
                         </b:column>
                         <b:column span="8" offset="2">
-                            <b:inputText  id="presion_exp1"  style="text-align: center;"  placeholder="Ingrese presión mayor" value="#{pacienteView.p_mayor}">
+                            <b:inputText  id="presion_exp1"  style="text-align: center;"  placeholder="Ingrese presión mayor" value="#{pacienteView.p_mayor}" mask="numeric">
                             <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos}"></p:ajax>
                             </b:inputText>                      
                         </b:column>
@@ -394,7 +456,7 @@
                          <h:outputLabel value="Presión Menor: " />
                         </b:column>
                         <b:column span="8" offset="2">
-                            <b:inputText  id="presion_exp2"  style="text-align: center;"  placeholder="Ingrese presión menor" value="#{pacienteView.p_menor}">
+                            <b:inputText  id="presion_exp2"  style="text-align: center;"  placeholder="Ingrese presión menor" value="#{pacienteView.p_menor}" mask="numeric">
                             <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos}"></p:ajax>
                             </b:inputText>                      
                         </b:column>
@@ -417,7 +479,7 @@
                          <h:outputLabel value="°C: " />
                         </b:column>
                         <b:column span="8" offset="2">  
-                            <b:inputText  id="temp_exp"  style="text-align: center;"  placeholder="Ingrese temperatura" value="#{pacienteView.temperatura}" >
+                            <b:inputText  id="temp_exp"  style="text-align: center;"  placeholder="Ingrese temperatura" value="#{pacienteView.temperatura}" mask="numeric">
                             <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos}"></p:ajax>   
                             </b:inputText>                  
                         </b:column>
@@ -441,7 +503,7 @@
                          <h:outputLabel value="cm: " />
                         </b:column>
                         <b:column span="8" offset="2">
-                            <b:inputText  id="altura"  style="text-align: center;"  placeholder="Ingrese altura" value="#{pacienteView.altura}">
+                            <b:inputText  id="altura"  style="text-align: center;"  placeholder="Ingrese altura" value="#{pacienteView.altura}" mask="numeric">
                             <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos}"></p:ajax>   
                             </b:inputText>                      
                         </b:column>
@@ -465,7 +527,7 @@
                          <h:outputLabel value="kg: " />
                         </b:column>
                         <b:column span="8" offset="2">      
-                            <b:inputText  id="masa_exp"  style="text-align: center;"  placeholder="Ingrese masa" value="#{pacienteView.masa_corp}">
+                            <b:inputText  id="masa_exp"  style="text-align: center;"  placeholder="Ingrese masa" value="#{pacienteView.masa_corp}" mask="numeric">
                             <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos}"></p:ajax>   
                             </b:inputText>              
                         </b:column>
@@ -488,7 +550,7 @@
                          <h:outputLabel value="kg: " />
                         </b:column>
                         <b:column span="8" offset="2">  
-                            <b:inputText  id="grasa"  style="text-align: center;"  placeholder="Ingrese grasa" value="#{pacienteView.grasa_corp}">
+                            <b:inputText  id="grasa"  style="text-align: center;"  placeholder="Ingrese grasa" value="#{pacienteView.grasa_corp}" mask="numeric">
                             <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos}"></p:ajax>       
                             </b:inputText>                  
                         </b:column>
