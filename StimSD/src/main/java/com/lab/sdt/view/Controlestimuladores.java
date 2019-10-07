@@ -1,6 +1,8 @@
 package com.lab.sdt.view;
 
 
+import java.awt.Color;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
@@ -29,6 +31,12 @@ import com.lab.sdt.model.Usuario;
 import com.lab.sdt.service.EstimuladorService;
 
 import com.lab.sdt.util.MensajeG;
+import com.lowagie.text.Document;
+import com.lowagie.text.FontFactory;
+
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+
 
 
 
@@ -154,9 +162,44 @@ public class Controlestimuladores implements Serializable {
 	/*zuri inicio*/
 	private Date fechaI;
 	private Date fechaF;
-	 
+	private String tituloPDF;
 	private int registro;
+	
+	
+public String getTituloPDF() {
+		return tituloPDF;
+	}
 
+	public void setTituloPDF(String tituloPDF) {
+		this.tituloPDF = tituloPDF;
+	}
+
+	/*zuri pdf inicio*/
+	public void procesarPDF(Object documento){
+		Document pdf = (Document)documento;
+		pdf.open();
+		/*try{
+			Document pdf = (Document)documento;
+			pdf.open();
+			pdf.setPageSize(PageSize.LETTER);
+			
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	       
+	         
+			
+		    //Add to document
+		   
+			pdf.add(new Paragraph("REPORTE DEL ", FontFactory.getFont(FontFactory.TIMES_BOLD,16,Color.DARK_GRAY)));
+			pdf.add(new Paragraph("TOTAL CODIGOS: ", FontFactory.getFont(FontFactory.TIMES_BOLD,12,Color.DARK_GRAY)));
+			pdf.add(new Paragraph("CORRECTOS: ", FontFactory.getFont(FontFactory.TIMES_BOLD,12,Color.DARK_GRAY)));
+			pdf.add(new Paragraph("FALLIDOS: ", FontFactory.getFont(FontFactory.TIMES_BOLD,12,Color.DARK_GRAY)));
+			pdf.add(new Paragraph(" "));
+		}catch(Exception ex){
+			MensajeG.mostrar("Error al generar el reporte", FacesMessage.SEVERITY_FATAL);
+		}*/
+	}
+	
+/*zuri pdf fin*/
 	/*zuri*/
 	@SuppressWarnings("deprecation")
 	public void buscar_fechasC() {

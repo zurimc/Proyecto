@@ -682,7 +682,12 @@
                         <b:panel title="Detalles" look="info" class = "alineacion tamana_ancho_7" > 
                         <b:container fluid="true"  >
                         <h:form id="form_his_mx">
-                        
+                        <b:column>
+					            <b:commandLink look="success" value="PDF">
+                    			
+                    			<p:dataExporter type="pdf" target=":form_g:form_his_mx:material_utilizado" fileName="#{controlestimuladores.tituloPDF}" preProcessor="#{controlestimuladores.procesarPDF}"/>
+                				</b:commandLink>
+							</b:column>
                             <b:row  style="margin-bottom:10px" >
                                 <b:column span="3">
                                     <h:outputLabel  value="Técnico:" />
@@ -721,13 +726,11 @@
                             </b:row>
                             
                             </h:form>
-                            <b:row  style="margin-bottom:10px" >
+                            <b:row  style="margin-bottom:10px; margin-left:105px" >
                                 <b:commandButton look="primary" value="Ver"  type="button"  onclick="PF('edetalles').show();"/> 
                         
                             </b:row>
-                            <b:column>
-							<b:commandButton value="PDF" look="danger" size="lg" style="margin-left:75px"></b:commandButton>
-							</b:column>
+                            
                         </b:container>
                         
                     </b:panel>

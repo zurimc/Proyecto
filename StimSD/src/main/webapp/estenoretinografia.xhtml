@@ -177,10 +177,7 @@
 		 <b:panel title="Estudios" look="info" id = "grafica_estudios" class =  "alineacion tamana_ancho_4">
 		    <b:container fluid="true"  >
 		    	<b:row style="margin-bottom:10px">
-		    		<hf:chart type="line" id = "TEstudios" value="#{retina.valores_Electo}" 
-		    		    title="Grafica de Estudios: #{retina.TEstudio}" xaxisLabel=" Amplitud: #{retina.amplitudE} " yaxisLabel="Fecha"
-		    		    >
-		     			</hf:chart>
+		    		<p:chart id = "verondas" type="line" model="#{pacienteView.lineModel1}" style="height:230px;" responsive="true"/>
 		    	</b:row>
 		    </b:container>
 		</b:panel>

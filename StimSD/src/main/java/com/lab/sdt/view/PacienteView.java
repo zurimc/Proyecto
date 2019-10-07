@@ -302,7 +302,7 @@ public class PacienteView implements Serializable {
 		seleccion_expeestim = new ExpeEstim();
 		
 
-		tipos_vistas = 3;
+		tipos_vistas = 4;
 		carga_user_todo();
 		
 		//carga_valores1(1) ;
