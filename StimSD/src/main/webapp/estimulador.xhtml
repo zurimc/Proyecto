@@ -683,10 +683,7 @@
                         <b:container fluid="true"  >
                         <h:form id="form_his_mx">
                         <b:column>
-					            <b:commandLink look="success" value="PDF">
-                    			
-                    			<p:dataExporter type="pdf" target=":form_g:form_his_mx:material_utilizado" fileName="#{controlestimuladores.tituloPDF}" preProcessor="#{controlestimuladores.procesarPDF}"/>
-                				</b:commandLink>
+					           
 							</b:column>
                             <b:row  style="margin-bottom:10px" >
                                 <b:column span="3">
@@ -810,6 +807,9 @@
  			</p:dialog>		
 					 	<!-- zuri fin -->		
 </h:form>
-
+ <b:commandLink look="success" value="PDF">
+                    			
+                    			<p:dataExporter type="pdf" target=":form_g:form_his_mx:material_utilizado" fileName="#{controlestimuladores.tituloPDF}" preProcessor="#{controlestimuladores.procesarPDF}"/>
+                				</b:commandLink>
 </h:body>
 </html>

@@ -176,16 +176,11 @@ public String getTituloPDF() {
 
 	/*zuri pdf inicio*/
 	public void procesarPDF(Object documento){
-		Document pdf = (Document)documento;
-		pdf.open();
-		/*try{
+		try{
 			Document pdf = (Document)documento;
 			pdf.open();
 			pdf.setPageSize(PageSize.LETTER);
 			
-			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-	       
-	         
 			
 		    //Add to document
 		   
@@ -196,9 +191,8 @@ public String getTituloPDF() {
 			pdf.add(new Paragraph(" "));
 		}catch(Exception ex){
 			MensajeG.mostrar("Error al generar el reporte", FacesMessage.SEVERITY_FATAL);
-		}*/
+		}
 	}
-	
 /*zuri pdf fin*/
 	/*zuri*/
 	@SuppressWarnings("deprecation")
