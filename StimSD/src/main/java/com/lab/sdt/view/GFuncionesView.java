@@ -1,30 +1,12 @@
 package com.lab.sdt.view;
 
 
-
-
-import java.awt.BasicStroke;
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.MouseInfo;
-import java.io.Serializable;
-
-import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
+
 
 import net.bootsfaces.component.canvas.Drawing;
-
-
-
-
 
 @ManagedBean
 @ViewScoped
@@ -36,16 +18,16 @@ public class GFuncionesView extends Drawing {
 	public boolean recta;
 	public boolean seno;
 	public boolean senoinverso;
-	private UploadedFile cargaImagen;
-
 	
-	public void dibujar () {
+	
+	 {
 		
-		//g.setColor(Color.red);
-		//g.fillRect(25, 25, 100, 30);
+		 line(800-450, 450, 800+450, 450);
 		
-	}
-	    
+
+		
+	
+	}    
 	   
 	 
 	  

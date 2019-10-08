@@ -9,6 +9,7 @@
 	xmlns:hf="http://highfaces.org">
 
 <h:head>
+
 <b:tabLinks  look="primary" title="Stim SD" icon="globe" iconAlign="right">
 	    <b:navLink href="VistaOndas.xhtml" value="Potenciales"/>
 	    <b:navLink href="TipoCuentas.xhtml" value="Usuarios"/>
@@ -53,6 +54,7 @@
     }
         .tamana_ancho_4{
     width:1100px;
+    height:400px;
     
     }
       .tamana_ancho_5{
@@ -99,16 +101,18 @@
     {
      text-align: center;
     }
-   div.scroll {
+   .scroll {
       position: relative;
-      height:200px;
-      overflow:scroll;
-      width: 98%;
+      left: auto;
+      height:330px;
+      overflow:auto;
+      width: 100%;
+      scrollbar-color: #2a6693 #e1ecf2;
     }  
 </style>
 
 </h:head>
-<h:body style= "background-color: #ecf2f5">
+<h:body style= "background-color: #ecf2f5" onload="imagen_1()">
 <b:container>
 <h:form id = "form_G">
 <p:growl id="mensajes" showDetail="true" life="2000" />
@@ -146,14 +150,29 @@
 </b:panelGrid>
 	<b:panelGrid  columns="2"  colSpans="6,6" >
 		 <b:panel title="Generador de funciones" look="info" id = "grafica_para" class =  "alineacion tamana_ancho_4">
-		 <b:container id="scrollable" styleClass="scroll">
+		 <b:container  class="scroll">
 		   
 		    	<b:row style="margin-bottom:10px">
-		    		<b:canvas style="width:100%"
-         				width="1600"
-         				height="600"
-         				drawing="#{gFuncionesView.dibujar}" />
+		    		<canvas style="width:100%"
+         				width="550"
+         				height="390" id="box" />
+         				<script type="application/x-javascript">
+							var canvas = document.getElementById("box");
+							var ctx = canvas.getContext("2d");
+							var img = new Image();
+							img.src = "1.png";
+							// Importante el onload
+							img.onload = function(){
+							ctx.drawImage(img, 0, 0,500,400);
+							img.style.display = 'none';
+						    ctx.moveTo(10,0);
+						    ctx.lineTo(500,0);
+						    ctx.strokeStyle = "#f00";
+						    ctx.stroke();
+							}
+						</script>
 		    	</b:row>
+		    	
 		    </b:container>
 		</b:panel>
 	
@@ -164,9 +183,10 @@
     <b:radiobutton value="#{gFuncionesView.recta}" itemLabel="Recta" itemValue="3" />
     <b:radiobutton value="#{gFuncionesView.seno}" itemLabel="Seno" itemValue="4" />
     <b:radiobutton value="#{gFuncionesView.senoinverso}" itemLabel="Seno + 180" itemValue="5" />
-     <p:fileUpload value="#{gFuncionesView.cargaImagen}" mode="simple" skinSimple="true"/>
+     <p:fileUpload  mode="simple" skinSimple="true"/>
      <b:row style="margin-bottom:10px; margin-left:500px">
-     <b:commandButton value="Guardar" action="#{gFuncionesView.upload}" look="success"/>
+     <b:commandButton value="Guardar"  look="success"  id="cargar"/>
+      
      </b:row>
   	</b:panelGrid>		  
   </h:form>
