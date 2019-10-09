@@ -2,7 +2,7 @@ package com.lab.sdt.view;
 
 
 import java.awt.Color;
-import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
@@ -36,6 +36,7 @@ import com.lowagie.text.FontFactory;
 
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfWriter;
 
 
 
@@ -175,22 +176,17 @@ public String getTituloPDF() {
 	}
 
 	/*zuri pdf inicio*/
-	public void procesarPDF(Object documento){
-		try{
-			Document pdf = (Document)documento;
-			pdf.open();
-			pdf.setPageSize(PageSize.LETTER);
-			
-			
-		    //Add to document
-		   
-			pdf.add(new Paragraph("REPORTE DEL ", FontFactory.getFont(FontFactory.TIMES_BOLD,16,Color.DARK_GRAY)));
-			pdf.add(new Paragraph("TOTAL CODIGOS: ", FontFactory.getFont(FontFactory.TIMES_BOLD,12,Color.DARK_GRAY)));
-			pdf.add(new Paragraph("CORRECTOS: ", FontFactory.getFont(FontFactory.TIMES_BOLD,12,Color.DARK_GRAY)));
-			pdf.add(new Paragraph("FALLIDOS: ", FontFactory.getFont(FontFactory.TIMES_BOLD,12,Color.DARK_GRAY)));
-			pdf.add(new Paragraph(" "));
-		}catch(Exception ex){
-			MensajeG.mostrar("Error al generar el reporte", FacesMessage.SEVERITY_FATAL);
+	public void procesarPDF(){
+		Document documento = new Document();
+		try {
+			PdfWriter.getInstance(documento, new FileOutputStream("mi primer pdf"));
+			documento.open();
+			Paragraph parrafo= new Paragraph("este es un ejemplo basico");
+			documento.add(parrafo);
+			documento.close();
+			 MensajeG.mostrar("se creo con exito!!!", FacesMessage.SEVERITY_INFO);
+		}catch(Exception e) {
+			 MensajeG.mostrar("no se pudo crear el documento", FacesMessage.SEVERITY_INFO);
 		}
 	}
 /*zuri pdf fin*/

@@ -143,7 +143,13 @@
 								</p:dataTable>
 							
 						</b:row>
-						
+						<b:column style="margin-left:110px">			
+						<p:commandLink id="reporte" styleClass="btn btn-warning "
+											value="pdf">					
+							<p:dataExporter type="pdf" target=":form_g:form_buscar:hospital2"  fileName="#{hospitalView.hospital}"
+									preProcessor="#{hospitalView.procesarPDF}"/>
+						</p:commandLink>
+						</b:column>	
 					</b:container>			
 				</b:panel> 	
 </h:form>
@@ -228,6 +234,7 @@
 					</b:row>
 					</h:form>
 					</b:container>
+					
 		<b:column style="margin-left:110px">			
 		<b:commandButton  look="success" value="Guardar/Actualizar"  actionListener="#{hospitalView.actualizar}" update=":form_g:form_registro" 
         onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" styleClass="ui-priority-primary"></b:commandButton>	

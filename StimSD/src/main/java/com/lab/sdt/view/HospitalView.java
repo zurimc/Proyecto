@@ -1,5 +1,6 @@
 package com.lab.sdt.view;
 
+import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,9 @@ import com.lab.sdt.model.Hospital;
 import com.lab.sdt.service.EstadoUnidad;
 import com.lab.sdt.service.HospitalService;
 import com.lab.sdt.util.MensajeG;
+import com.lowagie.text.Document;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfWriter;
 
 @ManagedBean
 @ViewScoped
@@ -73,7 +77,20 @@ public class HospitalView implements Serializable {
 		}
 
 }
-
+	public void procesarPDF(){
+		Document documento = new Document();
+		try {
+			PdfWriter.getInstance(documento, new FileOutputStream("mi primer pdf"));
+			documento.open();
+			Paragraph parrafo= new Paragraph("este es un ejemplo basico");
+			documento.add(parrafo);
+			
+			documento.close();
+			 MensajeG.mostrar("se creo con exito!!!", FacesMessage.SEVERITY_INFO);
+		}catch(Exception e) {
+			 MensajeG.mostrar("no se pudo crear el documento", FacesMessage.SEVERITY_INFO);
+		}
+	}
 	public void buscar_hospitales() {
 		 if(hospital_b.trim().length() > 0) {
 			 try {
