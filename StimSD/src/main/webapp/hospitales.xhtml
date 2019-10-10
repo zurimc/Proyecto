@@ -144,11 +144,11 @@
 							
 						</b:row>
 						<b:column style="margin-left:110px">			
-						<p:commandLink id="reporte" styleClass="btn btn-warning "
-											value="pdf">					
-							<p:dataExporter type="pdf" target=":form_g:form_buscar:hospital2"  fileName="#{hospitalView.hospital}"
-									preProcessor="#{hospitalView.procesarPDF}"/>
-						</p:commandLink>
+	
+						<h:commandLink id="reportpdf">
+						<h:graphicImage value="/images/pdf.png" width="44"/> 
+						<p:dataExporter type="pdf" target="hospital2" fileName="#{hospitalView.hospital}" preProcessor="#{adminController.preProcessPDF}"  />
+						</h:commandLink>
 						</b:column>	
 					</b:container>			
 				</b:panel> 	
