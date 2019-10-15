@@ -1,6 +1,10 @@
 package com.lab.sdt.view;
 
+
+import java.awt.Color;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +26,16 @@ import com.lab.sdt.model.Hospital;
 import com.lab.sdt.service.EstadoUnidad;
 import com.lab.sdt.service.HospitalService;
 import com.lab.sdt.util.MensajeG;
+import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
+
+
 
 @ManagedBean
 @ViewScoped
@@ -77,20 +88,34 @@ public class HospitalView implements Serializable {
 		}
 
 }
-	public void procesarPDF(){
-		Document documento = new Document();
-		try {
-			PdfWriter.getInstance(documento, new FileOutputStream("mi primer pdf"));
-			documento.open();
-			Paragraph parrafo= new Paragraph("este es un ejemplo basico");
-			documento.add(parrafo);
+	public void procesarPDF(Object documento){
+		try{
+			Document pdf = (Document)documento;
+			pdf.open();
+			pdf.setPageSize(PageSize.LETTER);
 			
-			documento.close();
-			 MensajeG.mostrar("se creo con exito!!!", FacesMessage.SEVERITY_INFO);
-		}catch(Exception e) {
-			 MensajeG.mostrar("no se pudo crear el documento", FacesMessage.SEVERITY_INFO);
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	        String logo = externalContext.getRealPath("") + File.separator + 
+	        		"images" + File.separator + "sd_v1.png";
+	         
+			//Add Image
+	        Image image1 = Image.getInstance(logo);
+		    //Fixed Positioning
+		    image1.setAbsolutePosition(350f, 725f); //100 550 //150 650
+		    //Scale to new height and new width of image
+		    image1.scaleAbsolute(50, 75);
+		    //Add to document
+		    pdf.add(image1);
+	       
+		    //Add to document
+	        pdf.add(new Paragraph("REPORTE DEL EXPEDIENTE", FontFactory.getFont(FontFactory.TIMES_BOLD,16,Color.DARK_GRAY)));
+			
+		}catch(Exception ex){
+			MensajeG.mostrar("Error al generar el reporte", FacesMessage.SEVERITY_FATAL);
 		}
 	}
+	
+	
 	public void buscar_hospitales() {
 		 if(hospital_b.trim().length() > 0) {
 			 try {

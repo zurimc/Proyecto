@@ -233,10 +233,11 @@
 		<b:commandButton  look="success" value="Guardar/Actualizar"  actionListener="#{hospitalView.actualizar}" update=":form_g:form_registro" 
         onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" styleClass="ui-priority-primary"></b:commandButton>	
 		</b:column>
-		<b:column style="margin-left:110px">
+		<b:column style="margin-left:150px">
 			<p:commandLink id="reportpdf" ajax="false">
 			<h:graphicImage value="/images/pdf.png" width="44"/> 
-			<p:dataExporter type="pdf" target=":form_g:form_buscar:hospital2" fileName="listahospitales"  />
+			<p:dataExporter type="pdf" target=":form_g:form_buscar:hospital2" fileName="listahospitales" 
+			preProcessor="#{hospitalView.procesarPDF}"/>
 			</p:commandLink>
 		</b:column>		
 </b:panel> 				 	
