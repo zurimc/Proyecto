@@ -78,7 +78,7 @@
    	width:350px;
     }
      .tamana_ancho_10{
-   	width:450px;
+   	width:550px;
     }
     .div_contenedor{
     	display:block;
@@ -147,9 +147,35 @@
 					</b:container>			
 				</b:panel> 	
 </h:form>
-
-	
-<b:panel title="Datos Hospital" look="info" class = "alineacion tamana_ancho_6">				
+<b:panel title="Datos Hospital" look="info" class = "alineacion tamana_ancho_10">				
+					<b:container fluid="true"  >
+					<h:form id="form_grafica">
+					<b:row style="margin-bottom:10px">
+						<p:chart type="line" model="#{chartView.lineModel1}" style="width:500px;height:300px" widgetVar="chart"/>
+	 
+						 <h:commandButton id="descargar" styleClass="btn btn-primary"
+                         value="Exportar a PDF"
+                         onclick="return downloadImage();"
+                         type="Submit" />
+					</b:row>
+					</h:form>
+					</b:container>
+					</b:panel>
+<script type="application/javascript">
+       function downloadImage(){
+       var image = PF('chart').exportAsImage();
+       var imageSrc = $(image).attr('src');
+       var url = imageSrc.replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
+       var link = document.createElement('a');
+       link.download = "chart.png";
+       link.href = url;
+       document.body.appendChild(link);
+       link.click();
+       document.body.removeChild(link);
+       return false;
+    }
+    </script>
+<b:panel title="Datos Hospital" look="info" class = "alineacion tamana_ancho_6" id="datoshospital">				
 					<b:container fluid="true"  >
 					<h:form id="form_registro">
 					<b:row style="margin-bottom:10px">
