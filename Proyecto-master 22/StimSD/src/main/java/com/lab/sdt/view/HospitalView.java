@@ -29,6 +29,8 @@ import com.lab.sdt.util.MensajeG;
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
+import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
 import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
@@ -101,15 +103,27 @@ public class HospitalView implements Serializable {
 			//Add Image
 	        Image image1 = Image.getInstance(logo);
 		    //Fixed Positioning
-		    image1.setAbsolutePosition(350f, 725f); //100 550 //150 650
+		    image1.setAbsolutePosition(500f, 760f); //100 550 //150 650
 		    //Scale to new height and new width of image
-		    image1.scaleAbsolute(50, 75);
+		    image1.scaleAbsolute(80, 55);
 		    //Add to document
 		    pdf.add(image1);
-	       
+		   
 		    //Add to document
+		    pdf.add(new Paragraph(" "));
+	        pdf.add(new Paragraph(" "));
+		    
 	        pdf.add(new Paragraph("REPORTE DEL EXPEDIENTE", FontFactory.getFont(FontFactory.TIMES_BOLD,16,Color.DARK_GRAY)));
-			
+	        pdf.addTitle(getNom_hospital());
+	        pdf.add(new Paragraph(" "));
+	        pdf.add(new Paragraph(" "));
+	        pdf.add(new Paragraph(" "));
+	        pdf.add(new Paragraph(" "));
+	        pdf.add(new Paragraph(" "));
+	        pdf.add(new Paragraph(" "));
+	       
+	       
+	        
 		}catch(Exception ex){
 			MensajeG.mostrar("Error al generar el reporte", FacesMessage.SEVERITY_FATAL);
 		}
@@ -433,3 +447,4 @@ public class HospitalView implements Serializable {
 	
 	
 }
+
