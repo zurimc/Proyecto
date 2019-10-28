@@ -6,7 +6,25 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:b="http://bootsfaces.net/ui">
+<script src="js/jspdf.min.js"></script>
+<script>
+function pdf(){
+	ar doc = new jsPDF();
+	var elementHTML = $('#content').html();
+	var specialElementHandlers = {
+	    '#elementH': function (element, renderer) {
+	        return true;
+	    }
+	};
+	doc.fromHTML(elementHTML, 15, 15, {
+	    'width': 170,
+	    'elementHandlers': specialElementHandlers
+	});
 
+	// Save the PDF
+	doc.save('sample-document.pdf');
+	
+</script>
 <h:head>
 <b:tabLinks  look="primary" title="Stim SD" icon="globe" iconAlign="right">
 	    <b:navLink href="VistaOndas.xhtml" value="Potenciales"/>
@@ -150,32 +168,25 @@
 <b:panel title="Datos Hospital" look="info" class = "alineacion tamana_ancho_10">				
 					<b:container fluid="true"  >
 					<h:form id="form_grafica">
-					<b:row style="margin-bottom:10px">
-						<p:chart type="line" model="#{chartView.lineModel1}" style="width:500px;height:300px" widgetVar="chart"/>
-	 
-						
+					
+					<div id="content">
+    				<!-- el contenido HTML va aqui -->
+    					
+    					<h1>  
+        Esto es un DIV impreso en PDF
+    </h1>
                          <h:commandButton id="descargar" styleClass="btn btn-primary"
                          value="Exportar a PDF"
-                         onclick="return downloadImage();"
+                         onclick="pdf();"
                          type="Submit" />
-					</b:row>
+                        
+					</div>
+
+					<div id="elementH"></div>
 					</h:form>
 					</b:container>
 					</b:panel>
-<script type="application/javascript">
-       function downloadImage(){
-       var image = PF('chart').exportAsImage();
-       var imageSrc = $(image).attr('src');
-       var url = imageSrc.replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
-       var link = document.createElement('a');
-       link.download = "chart.png";
-       link.href = url;
-       document.body.appendChild(link);
-       link.click();
-       document.body.removeChild(link);
-       return false;
-    }
-    </script>
+
 <b:panel title="Datos Hospital" look="info" class = "alineacion tamana_ancho_6" id="datoshospital">				
 					<b:container fluid="true"  >
 					<h:form id="form_registro">
