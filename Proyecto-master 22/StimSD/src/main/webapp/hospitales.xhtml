@@ -6,25 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:b="http://bootsfaces.net/ui">
-<script src="js/jspdf.min.js"></script>
-<script>
-function pdf(){
-	ar doc = new jsPDF();
-	var elementHTML = $('#content').html();
-	var specialElementHandlers = {
-	    '#elementH': function (element, renderer) {
-	        return true;
-	    }
-	};
-	doc.fromHTML(elementHTML, 15, 15, {
-	    'width': 170,
-	    'elementHandlers': specialElementHandlers
-	});
 
-	// Save the PDF
-	doc.save('sample-document.pdf');
-	
-</script>
 <h:head>
 <b:tabLinks  look="primary" title="Stim SD" icon="globe" iconAlign="right">
 	    <b:navLink href="VistaOndas.xhtml" value="Potenciales"/>
@@ -125,6 +107,8 @@ function pdf(){
     }
     
 </style>
+
+<script src="js/jspdf.min.js"></script>
 </h:head>
 
 <h:body style= "background-color: #ecf2f5">
@@ -165,28 +149,49 @@ function pdf(){
 					</b:container>			
 				</b:panel> 	
 </h:form>
-<b:panel title="Datos Hospital" look="info" class = "alineacion tamana_ancho_10">				
+<b:panel title="Datos Grafica" look="info" class = "alineacion tamana_ancho_10">				
 					<b:container fluid="true"  >
 					<h:form id="form_grafica">
-					
-					<div id="content">
-    				<!-- el contenido HTML va aqui -->
-    					
-    					<h1>  
-        Esto es un DIV impreso en PDF
-    </h1>
-                         <h:commandButton id="descargar" styleClass="btn btn-primary"
-                         value="Exportar a PDF"
-                         onclick="pdf();"
-                         type="Submit" />
-                        
-					</div>
-
-					<div id="elementH"></div>
+					<b:row style="margin-bottom:10px">
+						<p:chart type="line" model="#{chartView.lineModel1}" style="width:500px;height:300px" widgetVar="lineWV" id="grafica"/>
+	 
+                         <p:commandLink onclick="exportChartInPDF()" styleClass="btn btn-primary">
+										<i class="fa fa-file-pdf-o m-r-5" aria-hidden="true"></i>
+										Exportar Grafica
+						 </p:commandLink>
+					</b:row>
 					</h:form>
 					</b:container>
 					</b:panel>
 
+    <script src="js/pdfmake.min.js" />
+	<script src="js/vfs_fonts.js" />
+   <script type="application/javascript">
+			function exportChartInPDF() {
+				var docDefinition = {
+					content: [
+						{
+							text: 'HISTORICO.\n\n',
+							style: 'header',
+							alignment: 'center'
+						},
+						{
+							image: $(PF('lineWV').exportAsImage()).attr('src'),
+							width: 520
+						},
+						
+					],
+					styles: {
+						header: {
+							fontSize: 18,
+							bold: true
+						},
+					}
+				}
+				pdfMake.createPdf(docDefinition).open();
+				pdfMake.createPdf(docDefinition).download('HistorialGrafica.pdf');
+			}
+		</script>
 <b:panel title="Datos Hospital" look="info" class = "alineacion tamana_ancho_6" id="datoshospital">				
 					<b:container fluid="true"  >
 					<h:form id="form_registro">
