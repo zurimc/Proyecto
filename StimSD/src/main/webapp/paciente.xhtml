@@ -391,6 +391,17 @@ background-size: 100%;
                         			<b:badge value="Grasa: #{pacienteView.grasa_corp} % "/>
                         		</b:column>
                         	</b:row>
+                        	
+                            <b:column span="1"  style="margin-top:20px">
+                                <b:commandButton look="success" value="Dosis" type="button" 
+                                
+                                 />
+                            </b:column>
+                            <b:column offset="2" span="2" style="margin-top:20px">
+                                <b:commandButton look="warning" value="Equipo" type="button" 
+                                
+                                 />
+                            </b:column>
                              </b:container>
                         </b:panel>
                    
@@ -416,6 +427,7 @@ background-size: 100%;
 								<b:dropMenu value="ESTUDIOS" iconAwesome="archive">
             					<b:navLink value="OCT" href="#" iconAwesome="area-chart"></b:navLink>
             					<b:navLink value="CAMPOS VISUALES" href="#" iconAwesome="bullseye "></b:navLink>
+            					<b:navLink value="FLOURANGIOGRAFÍA" href="#" iconAwesome="bullseye "></b:navLink>
           						</b:dropMenu>
           						<b:dropMenu value="SOMATOMETRIA" iconAwesome="ambulance">
             					<b:navLink value="KG" onclick="PF('dpeso').show();" iconAwesome="dashboard"></b:navLink>
@@ -432,6 +444,10 @@ background-size: 100%;
                             <b:dropButton look="info" value="Consultas" icon="plus">
                                 	<b:navCommandLink iconAwesome="medkit" value = "Encuentra"   actionListener="#{pacienteView.modificar_consulta}" ></b:navCommandLink>
                                 	<b:navCommandLink iconAwesome="stethoscope" value = "Histórico"   actionListener="#{pacienteView.historico_consulta}" ></b:navCommandLink>
+                            		<b:dropMenu value="ESTUDIOS" iconAwesome="archive">
+            					<b:navLink value="OCT" href="#" iconAwesome="area-chart"></b:navLink>
+            					<b:navLink value="CAMPOS VISUALES" href="#" iconAwesome="bullseye "></b:navLink>
+          						</b:dropMenu>
                             </b:dropButton>
 						
 							</b:column> 
@@ -441,7 +457,7 @@ background-size: 100%;
 							</b:column> 
                             
                             <b:column span="1"  style="margin-top:20px">
-                                <b:commandButton look="info" value="E" type="button" id="pconsutlta"
+                                <b:commandButton look="info" value="Expediente" type="button" id="pconsutlta"
                                 actionListener="#{pacienteView.cargar_expedientesConsulta}"
                                 onclick="PF('pexpedientemodi').show();"
                                  />
