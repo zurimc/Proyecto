@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+<title>Login</title>
+	<meta charset="utf-8"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+	
+	<link rel="stylesheet" href="css/font-awesome.css" />
+	<link href="css/style.css" rel='stylesheet' type='text/css' />
+
+	<b:tabLinks  look="primary" title="Stim SD" icon="globe" iconAlign="right">
+	    <b:navLink href="VistaOnda.xhtml" value="Potenciales"/>
+	    <b:navLink href="TipoCuenta.xhtml" value="Usuarios"/>
+	    <b:navLink href="hospitales.xhtml" value="Hospital"/>
+	   	<b:navLink href="estimuladores.xhtml" value="Equipos"/>
+	   	<b:navLink href="paciente.xhtml" value="Paciente"/>
+	   	
+	   	<h:form styleClass="navbar-form navbar-right" ></h:form>
+	   		<h:form styleClass="navbar-form navbar-right" >
+	     	<b:commandButton look="danger" icon="power-off"  value = "Cerrar" actionListener="#{gestiondeSeccionView.cerrarSesionUsuario}"  />
+	    </h:form>
+	    
+	    <ui:insert name = "linsk_b"> </ui:insert>
+
+	</b:tabLinks>
+
+<b:messages />
+<div style="text-align: center">
+ <ui:insert name = "muestra"> NO CONTENT</ui:insert>
+</div>
+  </h:head>
+  
+
+<!-- <p:sidebar widgetVar="sidebar1" baseZIndex="10000">
+    <h1 style="font-weight:normal">Left Sidebar</h1>
+  
+</p:sidebar>-->
+
+<style type="text/css">
+    .ui-stack {
+        z-index: 1000;
+    }
+</style>
+
+<!-- 
+<p:stack icon="/images/stack.png" expanded="true">
+ 
+    <p:menuitem value="Inicio" icon="images/home.png" url="#"/>
+    <p:menuitem value="Registros" icon="/images/portfolio.png" url="#"/>
+</p:stack>-->
+</html>

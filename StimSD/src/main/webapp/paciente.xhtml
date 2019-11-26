@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui">
+	
+<h:head>
+<b:navBar inverse="true" look="info" >
+	<b:navbarLinks  styleClass="navbar-form navbar-left">
+	    <c:if  test="#{gestiondeSeccionView.userDTO.idtipo == 1}">
+	    	<b:navLink href="VistaOnda.xhtml" value="Potenciales"/>
+	    	 <b:navLink href="TipoCuenta.xhtml" value="Usuarios"/>
+	    </c:if>
+	    <c:if  test="#{gestiondeSeccionView.userDTO.idtipo != 1}">
+	   		 <b:navLink href="TipoCuenta.xhtml" value="Cuenta"/>
+	    </c:if>
+	    <b:navLink href="hospitales.xhtml" value="Hospital"/>
+	    <c:if  test="#{gestiondeSeccionView.userDTO.idtipo == 1}">
+	    	 <b:navLink href="estimuladores.xhtml" value="Equipos"/>
+	    </c:if>
+	   
+	   	<b:navLink href="paciente.xhtml" value="Paciente" active="true" icon="tag"/>
+	   	
+	   	</b:navbarLinks>
+	   	
+	   	<h:form styleClass="navbar-form navbar-right" ></h:form>
+	   		<h:form styleClass="navbar-form navbar-right" >
+	     	<b:commandButton look="danger" value = "Cerrar " actionListener="#{gestiondeSeccionView.cerrarSesionUsuario}"  />
+	    </h:form>
+	   <h:form styleClass="navbar-form navbar-right" >
+ 		<b:dropButton value="Expediente"  inverse="true" look="info" >
+		<b:navCommandLink icon-spin="true" icon="cd" value = "Ver"    onclick="PF('pexpedientemodi').show();"></b:navCommandLink>	
+		<b:navCommandLink icon="cog" spin="true" value = "Crear"    onclick="PF('pexpediente').show();"></b:navCommandLink>
+			
+		</b:dropButton>
+		</h:form> 
+</b:navBar>
+<div style="text-align: center">
+ <br /> <br />
+</div>
+	<title>Paciente</title>
+<style type="text/css">
+    .alineacion{
+        margin:auto;
+		align-items:center;
+		padding: auto;
+		
+    }
+    .alineacion2{
+         margin:auto;
+		align-items:center;
+		padding: auto;
+    }
+      .tamana_ancho_0{
+    max-width:170px;    
+    }
+    .tamana_ancho_1{
+    max-width:300px;
+    
+    }
+    .tamana_ancho_2{
+    width:500px;
+    }
+    .tamana_ancho_3{
+    width:700px;
+    margin-top:10px;
+    }
+        .tamana_ancho_4{
+    width:800px;
+    margin-top:10px;
+    }
+      .tamana_ancho_5{
+    width:400px;
+    }
+     .tamana_ancho_6{
+    width:600px;
+    }
+       .tamana_ancho_7{
+    width:330px;
+    }
+  
+    .tamana_ancho_8{
+    min-width:100px;
+    }
+    .tamana_ancho_9{
+   	width:350px;
+    }
+     .tamana_ancho_10{
+   	width:450px;
+    }
+      .tamana_ancho_11{
+   	width:900px;
+    }
+          .tamana_ancho_12{
+   	width:650px;
+    }
+    .div_contenedor{
+    	display:block;
+	display:flex;
+	margin-left:auto;
+	margin-right:auto;
+	align-items:center;
+	padding: 10px;
+    }
+    .div_izquierdo{
+	margin-left:auto;
+	margin-right:5px;
+	display:block;
+	padding: 10px;
+	float:left;
+    }
+    .div_derecho{
+    margin-left:5px;
+	margin-right:auto;
+	padding: 10px;
+	float: right;      
+    }
+    .texto_centro
+    {
+     text-align: center;
+    }
+    
+</style> 
+</h:head>
+
+<h:body style= "background-image: url('images/fondo1.jpeg');
+background-size: 100%;
+        -moz-background-size:100%;
+        -webkit-background-size:100%;
+        -o-background-size:100%;">
+<h:form   id = "form_g_p">
+<b:growl id="growl" autoUpdate="true" showDetail="false"  animation-enter="animated bounceInDown" placement-from ="bottom"/>	 
+<!-- Historico consulta-->
+<c:if  test="#{pacienteView.tipos_vistas == 4}">
+	<b:panelGrid  columns="2"  colSpans="6,6" >
+		<b:panel title="Expediente Folio: #{pacienteView.pfoliov1}" id  = "expe_hist" look="info" class =  "alineacion tamana_ancho_10">
+			 <b:container fluid="true" >
+			 <b:row  style="margin-bottom:10px;" >
+			 	<b:column span="4" >
+                    	<h:outputLabel  value="Estudio:"/>
+                    </b:column>
+                    <b:column span="8" >
+                       <h:selectOneMenu  id="histo_conusl"  value="#{pacienteView.tipo_estudio}">		
+                       		 <f:selectItem itemLabel="Electroretinografía" itemValue="electroretinografia" />
+					         <f:selectItem itemLabel="Presion Intraocular" itemValue="presionintraocular" />
+					         <f:selectItem itemLabel="Peso" itemValue="peso" />
+					         <f:selectItem itemLabel="Presión Arterial" itemValue="presion" />
+					         <f:selectItem itemLabel="Temperatura" itemValue="temperatura" />
+					         <f:selectItem itemLabel="Masa Corporal" itemValue="masa" />
+					         <f:selectItem itemLabel="Grasa Corporal" itemValue="grasa" />
+					        <p:ajax event="change" listener="#{pacienteView.muestra_estudio}" update = "grafica_hist"/>
+		          		</h:selectOneMenu> 
+                    </b:column>
+			 </b:row>
+			 	<b:row  style="margin-bottom:10px;" >
+                	<b:column span="4" >
+                    	<h:outputLabel  value="Paciente:"/>
+                    </b:column>
+                    <b:column span="8" >
+                         <p:outputLabel  value="#{pacienteView.pnombrepacientev}"/>
+                         <p:inputText  value="#{pacienteView.pnombrepacientev}" widgetVar="hnombre" style="display:none"/>
+                    </b:column>
+                 </b:row>
+                 <b:row  style="margin-bottom:15px;" >
+                 	<b:column span="4">
+                    	<h:outputLabel  value="Padecimiento:"/>
+                    </b:column>
+                    <b:column span="8">
+                    	<p:outputLabel value="#{pacienteView.pnombreenfermedadav}"/>
+                    	<p:inputText value="#{pacienteView.pnombreenfermedadav}" widgetVar="hpadecimiento" style="display:none"/>
+                    </b:column>
+                 </b:row>
+                 <b:row  style="margin-bottom:15px;" >
+                 	<b:column span="4">
+                    	<h:outputLabel  value="Médico:"/>
+                    </b:column>
+                    <b:column span="8" >
+                    	<p:outputLabel  value="#{pacienteView.pnombremedicov}"/>
+                    	<p:inputText  value="#{pacienteView.pnombremedicov}" widgetVar="hmedico" style="display:none"/>
+                    </b:column>
+                 </b:row>
+                 <b:row  style="margin-bottom:15px;" >
+                 	<b:column span="4">
+                    	<h:outputLabel  value="Equipo:"/>
+                    	</b:column>
+                 <b:column span="8">
+                 	<p:outputLabel  value="#{pacienteView.pnombrequipov}"/>
+                 	<p:inputText  value="#{pacienteView.pnombrequipov}" widgetVar="hequipo" style="display:none"/>
+                 	</b:column>
+                 </b:row>
+                 <b:row  style="margin-bottom:15px;" >
+                 	<b:column span="4">
+                    	<h:outputLabel  value="Potencial:"/>
+                    </b:column>
+                    <b:column span="8">
+                    	<h:outputLabel  value="#{pacienteView.nombre_onda}"/>
+                    	<p:inputText  value="#{pacienteView.nombre_onda}" widgetVar="hpotencial" style="display:none"/>
+                    </b:column>
+                </b:row>
+                <b:row  style="margin-bottom:15px;" >
+                	<b:column span="4" offset ="4">
+                		<b:commandButton icon-spin="true" icon="cd" look="success" value="Consulta" actionListener="#{pacienteView.regresa_consul}"/>
+                	</b:column>
+                </b:row>
+                
+			</b:container>	
+		</b:panel>
+		<b:panel title="Gráfica" look="info" id = "grafica_hist" class =  "tamana_ancho_4">
+				<p:chart id = "hits_colsu_gra" type="line" model="#{pacienteView.dateModel}" widgetVar="lineWV" style="height:500px;" responsive="true"/>
+				 <p:commandLink onclick="exportChartInPDF()" styleClass="btn btn-primary">
+										<i class="fa fa-file-pdf-o m-r-5" aria-hidden="true"></i>
+										Exportar Gráfica
+						 </p:commandLink>
+						 
+						  
+						 
+		</b:panel>
+	</b:panelGrid>
+	<script src="js/pdfmake.min.js" />
+	<script src="js/vfs_fonts.js" />
+	   <script type="application/javascript">
+   function loadPlayer() {
+	    var  RR = [(PF('hnombre').jq.val()),(PF('hnombre').jq.val())];
+	    /*console.log(PF('hnombre').jq.val());
+	    console.log(PF('hcalle').jq.val());
+	    console.log(PF('hnumero').jq.val());
+	    console.log(PF('hcolonia').jq.val());
+	    console.log(PF('hcp').jq.val());
+	    console.log(PF('htelefono').jq.val());*/
+	    console.log(RR);
+	    
+	}
+			function exportChartInPDF() {
+				var  paciente = [(PF('hnombre').jq.val())];
+				var  fh = [(PF('hequipo').jq.val())];
+				var  pade = [(PF('hpadecimiento').jq.val())];
+				var  medico = [(PF('hmedico').jq.val())];
+				var potencia_e =  [(PF('hpotencial').jq.val())]; 
+				var docDefinition = {
+						header:function(currentPage,pageCount){
+								return{
+									text:currentPage.toString() + 'de' + pageCount,
+									alignment:'right',
+									}
+							},
+							
+					content: [
+						
+					    {
+					    	
+					      columns: [
+					        [
+					        	{
+									image: 'data:image/jpeg;base64,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AKACgAoAKACgAoAKAFVWdtq/MzUAbdjZrax/Ny7feNAFqgAoAKACgAoAKACgAoAKACgAoAKACgAoAKAGsiupVuQetAGNe2TWzbl+aJu/92gCpQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFACqrM2xE3M3agDZsrJbZdzfNI3/jtAFygAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAayq67WGRQBlXmnNF+8g+ZO6/3aAKFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFAD4YZJ5NsSbjQBtWdnHar/efu1AFmgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAo3enRzfPF8r/o1AGVJDJE22VNrUAMoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAt2unzT/O/wC7SgDXhhjgXZEm0UASUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUARzQxzrslTcKAMy40qRPmg+ZfTvQBRZWRtjptagBKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAnt7O4n+6ny+rfdoA07bTooPnb53/SgC5QAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUARzW8U67ZUDCgChNpH8UD/g1AFOa0ni+9E+3+9QBBQAUAFABQAUAFABQAUAFABQAqqzNsRNx/wBmgC5Fpk8n3/3Y/wBqgC7DptvEdzfvD/tUAXKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKAIJba3kOJIUJ9cYP6UAVbjTrdF3IXHtnI/WgDKoAKACgAoAKACgCe2gSb75YfQ0AasenWkfPl7j/tc0AWFREG1VAHsKAHUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAf/9k=',
+							        width: 70,
+							        alignment: 'left',
+							        opacity: 0.5,
+							        
+									},
+					        ],
+					        {
+					        	width: 300,
+								text: '\nReporte',
+								style: 'header',
+									
+							}
+					      ]
+					    },
+						
+						{
+							text:'\n\nPaciente: ' + paciente  + '.',
+							fontSize:10,
+							},
+							{
+									text:'Padecimiento: ' + pade  + '.',
+									fontSize:10,
+							},
+							{
+										text:'Médico: ' + medico  + '.',
+										fontSize:10,
+							},
+							{
+								text:'Equipo: ' + fh  + '.',
+								fontSize:10,
+							},
+							{
+								text:'Potencial: '+potencia_e+'.',
+								fontSize:10,
+							},
+						
+						{
+							image: $(PF('lineWV').exportAsImage()).attr('src'),
+							width: 520
+						},
+						
+					],
+					styles: {
+						header: {
+							fontSize: 18,
+							bold: true
+						},
+					}
+				}
+				pdfMake.createPdf(docDefinition).open();
+				pdfMake.createPdf(docDefinition).download('Reporte.pdf');
+				
+			}
+			
+		</script>
+</c:if>
+<!-- Consulta -->
+ <!-- zuri inicio -->
+<c:if  test="#{pacienteView.tipos_vistas == 3}">
+
+                    <b:panelGrid  columns="2" >
+                   
+                        <b:panel title="Expediente Folio: #{pacienteView.pfoliov1}" look="info" id  ="estim_espe" class = "alineacion tamana_ancho_5" >
+                         <b:container fluid="true" >
+                            <b:row  style="margin-bottom:10px;" >
+                                <b:column span="4" >
+                                        <h:outputLabel  value="Paciente:"/>
+                                </b:column>
+                                <b:column span="4" offset = "1">
+                                        <h:outputLabel id="verpacient" value="#{pacienteView.pnombrepacientev}"/>
+                                </b:column>
+                            </b:row>
+                            <b:row  style="margin-bottom:15px;" >
+                                <b:column span="4">
+                                        <h:outputLabel  value="Padecimiento:"/>
+                                </b:column>
+                                <b:column span="4" offset = "1">
+                                        <h:outputLabel  value="#{pacienteView.pnombreenfermedadav}"/>
+                                </b:column>
+                            </b:row>
+                            <b:row  style="margin-bottom:15px;" >
+                                <b:column span="4">
+                                    <h:outputLabel  value="Médico:"/>
+                                </b:column>
+                                <b:column span="4" offset = "1">
+                                    <h:outputLabel  value="#{pacienteView.pnombremedicov}"/>
+                                </b:column>
+                            </b:row>
+                            <b:row  style="margin-bottom:15px;" >
+                                <b:column span="4">
+                                    <h:outputLabel  value="Equipo:"/>
+                                </b:column>
+                                <b:column span="4" offset = "1">
+                                    <h:outputLabel  value="#{pacienteView.pnombrequipov}"/>
+                                </b:column>
+                            </b:row>
+                            <b:row  style="margin-bottom:15px;" >
+                                <b:column span="4">
+                                    <h:outputLabel  value="Potencial:"/>
+                                </b:column>
+                                <b:column span="4" offset = "1">
+                                    <h:outputLabel  value="#{pacienteView.nombre_onda}"/>
+                                </b:column>
+                            </b:row>
+                            <b:row  style="margin-bottom:10px;" >
+                                <h3>Otros datos</h3>
+                            </b:row>
+                            <b:row style="margin-bottom:10px">
+                            	<b:column style="display: #{pacienteView.cambio_fecha?'block':'none'}" >
+                        			<b:badge value="Cambio Fecha:  #{pacienteView.fechaE}"  />
+                        		</b:column>
+                             	<b:column style="display: #{pacienteView.hay_electroretinografia?'block':'none'}" >
+                        			<b:badge value="Electroretinografía:  Aizq = #{pacienteView.aizq} Ader = #{pacienteView.ader} Bizq = #{pacienteView.bizq} Bder = #{pacienteView.bder}"  />
+                        		</b:column>
+                        		<b:column style="display: #{pacienteView.hay_presionintraocular?'block':'none'}" >
+                        			<b:badge value="PIO:  Izq = #{pacienteView.presionI} mmg  Der = #{pacienteView.presionD} mmg"  />
+                        		</b:column>
+                        		<b:column style="display:#{pacienteView.hay_peso?'block':'none'}" >
+                        			<b:badge value="Peso: #{pacienteView.peso} kg"  />
+                        		</b:column>
+                        		<b:column style="display: #{pacienteView.hay_pa?'block':'none'}" >
+                        			<b:badge value="PA: alta = #{pacienteView.p_mayor} mmg  baja = #{pacienteView.p_menor} mmg"  />
+                        		</b:column>
+                        		<b:column style="display: #{pacienteView.hay_altura?'block':'none'}" >
+                        			<b:badge value="Altura: #{pacienteView.altura} cm"/>
+                        		</b:column>
+                        		<b:column style="display: #{pacienteView.hay_temp?'block':'none'}" >
+                        			<b:badge value="Temperatura: #{pacienteView.temperatura} ºC "/>
+                        		</b:column>
+                        		<b:column style="display: #{pacienteView.hay_masa?'block':'none'}" >
+                        			<b:badge value="Masa: #{pacienteView.masa_corp} kg"/>
+                        		</b:column>
+                        		<b:column style="display: #{pacienteView.hay_grasa?'block':'none'}" >
+                        			<b:badge value="Grasa: #{pacienteView.grasa_corp} % "/>
+                        		</b:column>
+                        	</b:row>
+                             </b:container>
+                        </b:panel>
+                   
+                    
+                        <b:panel title="Descripción" look="info" id  ="descripcion" class = "alineacion tamana_ancho_12"  >
+                        <b:container fluid="true" >
+
+                        	<b:row>
+	                             <p:editor  id  ="desc_consulta" widgetVar="editorWidget" value="#{pacienteView.descripcionedit}" width="565" >
+	                             	 	
+	                             </p:editor>
+                             </b:row>
+                             <b:row>
+                             
+                           <!-- zuri inicio -->
+                            <b:column  span="2" style="margin-top:20px; height:5px" >
+                            <b:commandButton  look="info" style="height: 35px">
+                            <b:navbarLinks >
+							<b:dropMenu value="Agregar"  style="margin-top:-8px; background-color: transparent !important;">
+									
+								<b:navCommandLink iconAwesome="dashboard" value = "PIO"    onclick="PF('presionI').show();" ></b:navCommandLink>
+								
+								<b:dropMenu value="ESTUDIOS" iconAwesome="archive">
+            					<b:navLink value="OCT" href="#" iconAwesome="area-chart"></b:navLink>
+            					<b:navLink value="CAMPOS VISUALES" href="#" iconAwesome="bullseye "></b:navLink>
+          						</b:dropMenu>
+          						<b:dropMenu value="SOMATOMETRIA" iconAwesome="ambulance">
+            					<b:navLink value="KG" onclick="PF('dpeso').show();" iconAwesome="dashboard"></b:navLink>
+            					<b:navLink value="ALTURA" onclick="PF('daltura').show();" iconAwesome="child"></b:navLink>
+            					<b:navLink value="IMC" onclick="PF('dmasa').show();" iconAwesome="cutlery"></b:navLink>
+          						</b:dropMenu>		
+									
+                    		</b:dropMenu>
+                    		 </b:navbarLinks>
+                    		 </b:commandButton>
+            				</b:column>
+            				<!-- zuri final -->
+                            <b:column offset="1" span="2" style="margin-top:20px"> 
+                            <b:dropButton look="info" value="Consultas" icon="plus">
+                                	<b:navCommandLink iconAwesome="medkit" value = "Encuentra"   actionListener="#{pacienteView.modificar_consulta}" ></b:navCommandLink>
+                                	<b:navCommandLink iconAwesome="stethoscope" value = "Histórico"   actionListener="#{pacienteView.historico_consulta}" ></b:navCommandLink>
+                            </b:dropButton>
+						
+							</b:column> 
+                              <b:column offset="1" span="2" style="margin-top:20px"> 
+							<b:commandButton look="success" id="guardar_exp" value="Guardar"  actionListener="#{pacienteView.crea_modi_consulta1}"
+								onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></b:commandButton>
+							</b:column> 
+                            
+                            <b:column span="1"  style="margin-top:20px">
+                                <b:commandButton look="info" value="E" type="button" id="pconsutlta"
+                                actionListener="#{pacienteView.cargar_expedientesConsulta}"
+                                onclick="PF('pexpedientemodi').show();"
+                                 />
+                            </b:column>
+                            </b:row>
+                              </b:container>
+                        </b:panel>
+                  
+                
+                </b:panelGrid>
+
+<!-- modificar consulta -->
+<p:dialog header="Consultas" widgetVar="m_consulta" showEffect="explode" hideEffect="bounce" width="650px" height="400"  modal="true" >
+ 				<b:panelGrid  columns="1" >
+					<b:container fluid="true">
+					
+								<b:row style="margin-bottom:10px;  margin-left:15px;">
+									<b:column span="5" >
+		 	 	 						<p:calendar id="fecha1" showOn="button"  placeholder="Fecha Inicial"  value="#{pacienteView.fechaI}"
+		 	 	 						pattern="dd/MM/yy" locale="es">
+		 	 	 						</p:calendar>
+		 	 	 					</b:column>
+		 	 	 					<b:column  span="5" >
+		 	 	 						<p:calendar id="fecha2" showOn="button"  placeholder="Fecha Final" value="#{pacienteView.fechaF}"
+		 	 	 						pattern="dd/MM/yy" locale="es"> 
+		 	 	 						<p:ajax event="mousemove" listener="#{pacienteView.buscar_fechas}" update="modicar_t"/>
+		 	 	 						</p:calendar>
+		 	 	 					</b:column>
+		 	 	 					
+                        		</b:row>
+                        		<b:row style="margin-bottom:10px;">
+		 	 	 			  		<b:column offset="4" span="1" >
+                        			<b:commandButton look="primary" value="Buscar"  actionListener="#{pacienteView.buscar_fechas}"
+									update="modicar_t" ></b:commandButton>
+                        			</b:column>
+                        			</b:row>
+		 	 	 	<b:row style="margin-bottom:10px;">
+		 	 	 	<b:column offset="1" >
+		 	 	 		 <p:dataTable class = "tamana_ancho_5" id="modicar_t" paginator="true" rows="5" 
+                                paginatorTemplate="{PageLinks} {RowsPerPageDropdown}" 
+                                rowsPerPageTemplate="5,10,15,20" 
+                                paginatorPosition="bottom" value="#{pacienteView.fecha_exp}"
+                                
+                                var="fecha_con" reflow="true" selectionMode="single" 
+                                selection="#{pacienteView.seleccion_consulta}"
+                                rowKey="#{fecha_con.idexpeconsul}">
+                                <p:ajax event="rowSelect" listener="#{pacienteView.seleccionar_consulta}"
+                                 update=":form_g_p:estim_espe, :form_g_p:desc_consulta, :form_g_p:presionD, :form_g_p:presionI"
+                               ></p:ajax>
+                            <p:column headerText="Fecha"  style="text-align: center">
+                                <h:outputText value="#{pacienteView.convertirFecha(fecha_con.fechaconsulta )}"/>
+                            </p:column>
+                            <p:column headerText="Hora" style="text-align: center">
+                                <h:outputText value="#{pacienteView.convertirHora(fecha_con.fechaconsulta )}" />
+                            </p:column>
+                         </p:dataTable>	
+                         </b:column>
+		 	 	 			 </b:row>
+		 	 	 			 <b:row style="margin-bottom:10px;">
+		 	 	 			 	<b:column offset="4" span="1" >
+		 	 	 			 		<b:commandButton look="success"  value="Ver" actionListener="#{pacienteView.seleccionar_consulta}"
+									onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" update=":form_g_p:estim_espe, :form_g_p:desc_consulta, :form_g_p:presionD, :form_g_p:presionI"></b:commandButton>
+		 	 	 			 	</b:column>
+		 	 	 			 </b:row>
+		 	 	 			 	
+					</b:container>
+				</b:panelGrid>
+</p:dialog>
+</c:if>
+<!-- cambio fecha -->  
+ <p:dialog header="Nueva Fecha" widgetVar="nueva_fecha" showEffect="explode" hideEffect="bounce" height="200"  width="250px" modal="true" >
+
+   <b:panelGrid  columns="1" >
+                <b:container fluid="true">
+                <b:iconAwesome  size="4x" style="margin-bottom:40px"  col-md="10" offset="3" value="dashboard"/><br/>
+                        <b:row>
+			 	 	 			<p:calendar showOn="button"  placeholder="Fecha nueva" value = "#{pacienteView.fechaE}"
+			 	 	 				pattern="dd/MM/yy" locale="es">
+			 	 	 			</p:calendar>
+
+                        </b:row>
+                                   
+                        <b:row>
+                   			<b:column offset="3" style="margin-top:20px">
+                   			<b:commandButton look="success" value="Cambiar"  actionListener="#{pacienteView.cambiar_fecha}"></b:commandButton>
+                            </b:column>
+                        </b:row>
+                    </b:container>
+			 </b:panelGrid>  
+ </p:dialog>
+ <!-- Cargar estudios -->   
+            <p:dialog header="Estudios" widgetVar="paParametrosver" showEffect="explode" hideEffect="bounce" height="150"  width="250px" modal="true" >
+                <b:panelGrid  columns="2" >
+                <b:container fluid="true">
+                        <b:row>
+                   			<b:column offset="3">
+                            	<b:commandButton look="warning" id="presionO" value="PresionIntraocular" type="button" onclick="PF('presionI').show();" ></b:commandButton>
+                            </b:column>
+                        </b:row>
+                                   <!-- VISTA DE ELECTRORETINOGRAFIA ZURI INICIO -->
+                        <b:row>
+                   			<b:column offset="3" style="margin-top:20px">
+                   			
+                            	<b:commandButton look="warning" id="electro" value="Electroretinografía" type="button" onclick="PF('electro').show();" ></b:commandButton>
+                            </b:column>
+                        </b:row>
+                        <!-- VISTA DE ELECTRORETINOGRAFIA ZURI FIN -->    
+                    </b:container>
+            
+                    
+                    </b:panelGrid>
+            </p:dialog>
+<!-- DIALOG DE ELECTRORETINOGRAFIA ZURI INICIO -->
+    <p:dialog header="Ingrese Datos" widgetVar="electro" showEffect="explode" hideEffect="bounce" height="400"  modal="true" >
+                <b:panelGrid  columns="1" >
+                <b:container fluid="true">
+                <b:iconAwesome  size="4x" style="margin-bottom:20px; margin-left:30px"  col-md="10" offset="4" value="eye"/><br/>
+                <h3 style="text-align: center;">Electroretinografía</h3>
+                        <b:row >
+                        
+                        <b:column offset="1" span="4" >
+                         <h:outputLabel value="1.- A Izquierda " />
+                        </b:column>
+                        
+                        <b:column offset="2" span="4" >
+                         <h:outputLabel value="1.- A Derecha: " />
+                        </b:column>
+                        
+                        </b:row>
+                        <b:row style="margin-bottom:10px">
+                        <b:column offset="1" span="4" style="margin-top:20px">
+                        <b:inputText  id="ai"  style="text-align: center;"  placeholder="AIzquierdo" value="#{pacienteView.aizq}">
+                        
+                        </b:inputText>
+                        </b:column>
+                        
+                        <b:column offset="2" span="4" style="margin-top:20px">
+                        <b:inputText  id="ad"  style="text-align: center;"  placeholder="ADerecho" value="#{pacienteView.ader}">
+                        
+                        </b:inputText>
+                        </b:column>
+                        
+                        </b:row>
+                        
+                            <b:row >
+                        
+                        <b:column offset="1" span="4" >
+                         <h:outputLabel value="2.- B Izquierda " />
+                        </b:column>
+                        
+                        <b:column offset="2" span="4" >
+                         <h:outputLabel value="2.- B Derecha: " />
+                        </b:column>
+                        
+                        </b:row>
+                        
+                           <b:row style="margin-bottom:10px">
+                        <b:column offset="1" span="4" style="margin-top:20px">
+                        <b:inputText  id="bi"  style="text-align: center;"  placeholder="BIzquierdo" value="#{pacienteView.bizq}" >
+                        
+                        </b:inputText>
+                        </b:column>
+                        
+                        <b:column offset="2" span="4" style="margin-top:20px">
+                        <b:inputText  id="bd"  style="text-align: center;"  placeholder="BDerecho" value="#{pacienteView.bder}">
+                        
+                        </b:inputText>
+                        </b:column>
+                        
+                        </b:row>
+                        
+                        <b:column offset="4" span="8" style="margin-top:20px">
+                        <b:commandButton look="success" id="guardar_ab" value="Guardar"  actionListener="#{pacienteView.guardar_electro}"></b:commandButton>
+                        </b:column>
+                    </b:container>
+            
+                    
+                    </b:panelGrid>
+            </p:dialog>
+  
+<!-- DIALOG DE ELECTRORETINOGRAFIA ZURI FIN -->  
+ <!-- Cargar estudios -->   
+            <p:dialog header="Ingrese Datos" widgetVar="presionI" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+                <b:panelGrid  columns="1" >
+                <b:container fluid="true">
+                <b:iconAwesome  size="4x" style="margin-bottom:20px"  col-md="10" offset="4" value="eye"/><br/>
+                <h3 style="text-align: center;">Presión Intraocular</h3>
+                        <b:row style="margin-bottom:10px">
+                        <b:column offset="1" span="4" style="margin-top:20px">
+                         <h:outputLabel value="Presión Izq: " />
+                        </b:column>
+                        
+                        <b:column offset="2" span="4" style="margin-top:20px">
+                         <h:outputLabel value="Presión Der: " />
+                        </b:column>
+                        
+                        </b:row>
+                        <b:row style="margin-bottom:10px">
+                        <b:column offset="1" span="4" style="margin-top:20px">
+                        <b:inputText  id="presionD"  style="text-align: center;"  placeholder="Ingrese Izquierdo" value="#{pacienteView.presionI}">
+                        <p:ajax event="keyup" listener="#{pacienteView.guarda_presion}"></p:ajax>
+                        </b:inputText>
+                        </b:column>
+                        
+                        <b:column offset="2" span="4" style="margin-top:20px">
+                        <b:inputText  id="presionI"  style="text-align: center;"  placeholder="Ingrese Derecho" value="#{pacienteView.presionD}">
+                        <p:ajax event="keyup" listener="#{pacienteView.guarda_presion}"></p:ajax>
+                        </b:inputText>
+                        </b:column>
+                        
+                        </b:row>
+                        
+                        <b:column offset="4" span="8" style="margin-top:20px">
+                        <b:commandButton look="success" id="guardar_pre" value="Guardar"  actionListener="#{pacienteView.registroPresionO}"
+                        onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()"></b:commandButton>
+                        </b:column>
+                    </b:container>
+            
+                    
+                    </b:panelGrid>
+            </p:dialog>
+
+ <!-- Guardar Peso -->  
+            <p:dialog header="Ingrese Peso" widgetVar="dpeso" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+                <b:panelGrid  columns="1" >
+                <b:container fluid="true">
+                <b:iconAwesome  size="4x" style="margin-bottom:20px"  col-md="10" offset="4" value="dashboard"/><br/>
+                <h3 style="text-align: center;">Peso</h3>
+                        <b:row style="margin-bottom:10px">
+                        <b:column offset="1" span="4" style="margin-top:20px">
+                         <h:outputLabel value="kg: " />
+                        </b:column>
+                        <b:column span="8" offset="2">  
+                            <b:inputText  style="text-align: center;"  id="peso_exp"   placeholder="Ingrese Peso" value="#{pacienteView.peso}">
+                            <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos}"></p:ajax> 
+                            </b:inputText>                  
+                        </b:column>
+                        </b:row>
+                        <b:column offset="4" span="8" style="margin-top:20px">
+                        <b:commandButton look="success" id="guardar_pe"  value="ok" action="#{pacienteView.guarda_actualiza_datos}" ></b:commandButton>
+                        </b:column>
+                        
+                    </b:container>
+                </b:panelGrid>
+            </p:dialog>
+<!-- Guardar Presion -->            
+    <p:dialog header="Ingrese Presion" widgetVar="dpresion" showEffect="explode" hideEffect="bounce" height="400"  modal="true" >
+                <b:panelGrid  columns="1" >
+                <b:container fluid="true">
+                <b:iconAwesome  size="4x" style="margin-bottom:20px"  col-md="10" offset="4" value="heartbeat"/><br/>
+                <h3 style="text-align: center;">Presion</h3>
+                        <b:row style="margin-bottom:10px">
+                        <b:column offset="1" span="4" style="margin-top:20px">
+                        <h:outputLabel value="Presion Mayor: " />
+                        </b:column>
+                        <b:column span="8" offset="2">
+                            <b:inputText  id="presion_exp1"  style="text-align: center;"  placeholder="Ingrese presión mayor" value="#{pacienteView.p_mayor}">
+                            <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos}"></p:ajax>
+                            </b:inputText>                      
+                        </b:column>
+                        </b:row>
+                        <b:row style="margin-bottom:10px">
+                        <b:column offset="1" span="4" style="margin-top:20px">
+                         <h:outputLabel value="Presión Menor: " />
+                        </b:column>
+                        <b:column span="8" offset="2">
+                            <b:inputText  id="presion_exp2"  style="text-align: center;"  placeholder="Ingrese presión menor" value="#{pacienteView.p_menor}">
+                            <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos}"></p:ajax>
+                            </b:inputText>                      
+                        </b:column>
+                        </b:row>
+                        <b:column offset="4" span="8" style="margin-top:20px">
+                        <b:commandButton look="success" id="guardar_presion" value="ok" action="#{pacienteView.guarda_actualiza_datos}"></b:commandButton>
+                        </b:column>
+                    </b:container>
+            
+                    </b:panelGrid>
+            </p:dialog>
+<!-- Guardar Temperatura -->            
+    <p:dialog header="Ingrese Temperatura" widgetVar="dtemperatura" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+                <b:panelGrid  columns="1" >
+                <b:container fluid="true">
+                <b:iconAwesome  size="4x" style="margin-bottom:20px"  col-md="10" offset="4" value="stethoscope"/><br/>
+                <h3 style="text-align: center;">Temperatura</h3>
+                        <b:row style="margin-bottom:10px">
+                        <b:column offset="1" span="4" style="margin-top:20px">
+                         <h:outputLabel value="°C: " />
+                        </b:column>
+                        <b:column span="8" offset="2">  
+                            <b:inputText  id="temp_exp"  style="text-align: center;"  placeholder="Ingrese temperatura" value="#{pacienteView.temperatura}" >
+                            <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos}"></p:ajax>   
+                            </b:inputText>                  
+                        </b:column>
+                        </b:row>
+                        <b:column offset="4" span="8" style="margin-top:20px">
+                        <b:commandButton look="success" id="guardar_tem"  value="ok" action="#{pacienteView.guarda_actualiza_datos}"></b:commandButton>
+                        </b:column>
+                        
+                    </b:container>
+            
+                    </b:panelGrid>
+            </p:dialog>
+<!-- Guardar altura -->             
+    <p:dialog header="Ingrese Altura" widgetVar="daltura" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+                <b:panelGrid  columns="1" >
+                <b:container fluid="true">
+                <b:iconAwesome  size="4x" style="margin-bottom:20px"  col-md="10" offset="4" value="child"/><br/>
+                <h3 style="text-align: center;">Altura</h3>
+                        <b:row style="margin-bottom:10px">
+                        <b:column offset="1" span="4" style="margin-top:20px">
+                         <h:outputLabel value="cm: " />
+                        </b:column>
+                        <b:column span="8" offset="2">
+                            <b:inputText  id="altura"  style="text-align: center;"  placeholder="Ingrese altura" value="#{pacienteView.altura}">
+                            <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos}"></p:ajax>   
+                            </b:inputText>                      
+                        </b:column>
+                        </b:row>
+                        <b:column offset="4" span="8" style="margin-top:20px">
+                        <b:commandButton look="success" id="guardar_alt"  value="ok" action="#{pacienteView.guarda_actualiza_datos}"></b:commandButton>
+                        </b:column>
+                        
+                </b:container>
+            
+                </b:panelGrid>
+            </p:dialog>
+<!-- Guardar Masa -->           
+    <p:dialog header="Ingrese Masa" widgetVar="dmasa" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+                <b:panelGrid  columns="1" >
+                <b:container fluid="true">
+                <b:iconAwesome  size="4x" style="margin-bottom:20px"  col-md="10" offset="4" value="medkit"/><br/>
+                <h3 style="text-align: center;">Masa</h3>
+                        <b:row style="margin-bottom:10px">
+                        <b:column offset="1" span="4" style="margin-top:20px">
+                         <h:outputLabel value="kg: " />
+                        </b:column>
+                        <b:column span="8" offset="2">      
+                            <b:inputText  id="masa_exp"  style="text-align: center;"  placeholder="Ingrese masa" value="#{pacienteView.masa_corp}">
+                            <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos}"></p:ajax>   
+                            </b:inputText>              
+                        </b:column>
+                        </b:row>
+                        <b:column offset="4" span="8" style="margin-top:20px">
+                        <b:commandButton look="success" id="guardar_ma"  value="ok" action="#{pacienteView.guarda_actualiza_datos}" ></b:commandButton>
+                        </b:column>
+                    </b:container>
+            
+                    </b:panelGrid>
+            </p:dialog>
+<!-- Guardar Grasa -->          
+    <p:dialog header="Ingrese Grasa" widgetVar="dgrasa" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+                <b:panelGrid  columns="1" >
+                <b:container fluid="true">
+                <b:iconAwesome  size="4x" style="margin-bottom:20px"  col-md="10" offset="4" value="cutlery"/><br/>
+                <h3 style="text-align: center;">Grasa</h3>
+                        <b:row style="margin-bottom:10px">
+                        <b:column offset="1" span="4" style="margin-top:20px">
+                         <h:outputLabel value="kg: " />
+                        </b:column>
+                        <b:column span="8" offset="2">  
+                            <b:inputText  id="grasa"  style="text-align: center;"  placeholder="Ingrese grasa" value="#{pacienteView.grasa_corp}">
+                            <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos}"></p:ajax>       
+                            </b:inputText>                  
+                        </b:column>
+                        </b:row>
+                        <b:column offset="4" span="8" style="margin-top:20px">
+                        <b:commandButton look="success" id="guardar_gra"  value="ok" action="#{pacienteView.guarda_actualiza_datos}" ></b:commandButton>
+                        </b:column>
+                        
+                </b:container>
+            
+                </b:panelGrid>
+            </p:dialog>                                                                                                                     
+ <!-- ZURI FIN -->          
+
+<c:if  test="#{pacienteView.tipos_vistas == 0}">
+				<b:panelGrid  columns="3" colSpans="4,4,4"   >
+					<b:container fluid="true"  >
+						<b:panel title="Expediente" look="info" id  ="estim_espe" >
+							<b:row  style="margin-bottom:10px;" >
+								<b:column span="2" >
+					 					<h:outputLabel  value="Paciente:"/>
+					 			</b:column>
+					 			<b:column span="7" offset = "1">
+					 					<h:outputLabel id="verpacient" value="#{pacienteView.pnombrepacientev}"/>
+					 			</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:15px;" >
+								<b:column span="2">
+					 					<h:outputLabel  value="Enfermedad:"/>
+					 			</b:column>
+					 			<b:column span="7" offset = "1">
+					 					<h:outputLabel  value="#{pacienteView.pnombreenfermedadav}"/>
+					 			</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:15px;" >
+								<b:column span="2">
+					 				<h:outputLabel  value="Médico:"/>
+					 			</b:column>
+					 			<b:column span="7" offset = "1">
+					 				<h:outputLabel  value="#{pacienteView.pnombremedicov}"/>
+					 			</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:15px;" >
+								<b:column span="2">
+					 				<h:outputLabel  value="Equipo:"/>
+					 			</b:column>
+					 			<b:column span="7" offset = "1">
+					 				<h:outputLabel  value="#{pacienteView.pnombrequipov}"/>
+					 			</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:15px;" >
+								<b:column span="2">
+					 				<h:outputLabel  value="Potencial:"/>
+					 			</b:column>
+					 			<b:column span="7" offset = "1">
+					 				<h:outputLabel  value="#{pacienteView.nombre_onda}"/>
+					 			</b:column>
+							</b:row>
+							<b:row  style="margin-bottom:10px;" >
+								
+							</b:row>
+						</b:panel>
+
+					</b:container>
+					<b:container fluid="true"  >
+						<b:panel title="Fechas de Estimulación" look="info" id  ="estim_espe_fecha" >
+							<b:row  style="margin-bottom:10px;" >
+								<p:dataTable  id = "expe_estim_his"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								paginatorPosition="bottom" value="#{pacienteView.expeestimes}"
+								var="espe"  reflow="true" selectionMode="single"  
+								selection="#{pacienteView.seleccion_expeestim}"  rowKey="#{espe.idestimulacion}" 
+								>
+								<p:ajax event="rowSelect" listener="#{pacienteView.asignar_ubicacion}"
+								update=":form_g_p:exmapa2, :form_g_p:verondas, :form_g_p:veramplitud, :form_g_p:verfrecuencia, :form_g_p:vertiempo, :form_g_p:versenal, :form_g_p:verestmin" />
+									<p:column headerText="Fecha">
+										<h:outputText value="#{pacienteView.convertirFecha(espe.fechaestimulacion)}" 
+										style="color:#{pacienteView.estado_ubicacion(espe.idestimulacion)?'blue':'red'}" />
+									</p:column>
+									<p:column headerText="Hora">
+										<h:outputText value="#{pacienteView.convertirHora(espe.fechaestimulacion)}"
+										style="color:#{pacienteView.estado_ubicacion(espe.idestimulacion)?'blue':'red'}" />
+									</p:column>
+									<p:column headerText="Tipo">
+									<h:outputText value="#{pacienteView.conviertetipouser(espe.clinica )}"
+									style="color:#{pacienteView.estado_ubicacion(espe.idestimulacion)?'blue':'red'}"/>
+									</p:column>
+								</p:dataTable>
+							</b:row>
+						</b:panel>
+					</b:container>
+					
+					<b:container fluid="true"  >
+						<b:panel  look="info" >
+						 <f:facet name="heading">
+						    <b:iconAwesome value="fa-location-arrow " style="padding-right:20px"/>
+						    <h:outputText value="Ubicación " />
+						  </f:facet>
+						<b:row  style="margin:10px;" >
+								<b:openStreetMap id = "exmapa2" width="100%" height="300px"
+		        				center="#{pacienteView.exlat},#{pacienteView.exlog}" marker="#{pacienteView.exlat},#{pacienteView.exlog}"
+		       					popupMsg="#{pacienteView.exlat},#{pacienteView.exlog}"
+		        				zoom="14"
+		        				dragging= "true"
+		        				zoomGlobal = "true"
+		        				urlTemplate="https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png" />
+		        				</b:row>
+							<b:row  style="margin-bottom:10px;" >
+							<b:column offset="4">
+								<b:commandButton icon-spin="true" icon="glyphicon-pencil" look="info" id="pverdetalles" value="Detalles" 
+								type="button" style="margin-left:30px"
+					 			onclick="PF('exdetallesubi').show();"/>
+					 			</b:column>
+							</b:row>
+						</b:panel>
+					</b:container>
+				</b:panelGrid>
+</c:if>
+<!-- ingresar o modificar expediente -->
+
+<c:if  test="#{pacienteView.tipos_vistas == 1 || pacienteView.tipos_vistas == 2}">
+				<b:panelGrid  columns="3"   >
+					 <b:panel title="Configuración" look="info" id  ="pagrega" class = "alineacion tamana_ancho_0">
+					 	<b:container fluid="true"  >
+					 	 <c:if  test="#{gestiondeSeccionView.userDTO.idtipo == 1}">
+					 		<b:row  style="margin-bottom:1px" >
+								<b:switch id  ="pswiex" value="#{pacienteView.exestatus}"  offColor="success" onColor="info" >
+								   <p:ajax listener="#{pacienteView.pdatosv}" />
+								 </b:switch>	
+								
+					 		</b:row>
+					 		</c:if>
+					 		<b:row  style="margin-bottom:10px;" >
+					 			<b:commandButton look="primary" id="penfermedadb" type="button" value="Enfermedad"
+					 			actionListener="#{pacienteView.cargar_enfermedad}"
+					 			onclick="PF('ptableenfermedad').show();"
+					 				update=":form_g_p:ptableenfermedades"
+					 			/>
+					 		</b:row>
+					 		<b:row  style="margin-bottom:10px" >
+					 			<b:commandButton look="primary" value="Paciente"  type="button" 
+					 			actionListener="#{pacienteView.muestra_pacientes}"
+					 			onclick="PF('ptablapaciente').show();"
+					 			update=":form_g_p:pusuariosp" >
+					 			</b:commandButton>
+					 		</b:row>
+					 		<b:row  style="margin-bottom:10px" >
+					 			<b:commandButton look="primary" id="phospitalb" type="button" value="Hospital"
+					 			actionListener="#{pacienteView.cargar_hospital}"
+					 			onclick="PF('ptablahospital').show();"
+					 				update=":form_g_p:ptablehosptial"
+					 			/>
+					 		</b:row>
+					 		<b:row  style="margin-bottom:10px" >
+					 			<b:commandButton look="primary" id="pmedicob" type="button" value="Médico"
+					 			actionListener="#{pacienteView.muestra_medicos}"
+					 			onclick="PF('ptablamedico').show();"
+					 				update=":form_g_p:pusuariosm"
+					 			/>
+					 		</b:row>
+
+					 		<b:row  style="margin-bottom:10px" >
+					 			<b:commandButton look="primary" id="pequipob" type="button" value="Equipo"
+					 			actionListener="#{pacienteView.cargar_equipos}"
+					 			onclick="PF('ptablaequipo').show();"
+					 				update=":form_g_p:ptableequipo"
+					 			/>
+					 		</b:row>
+					 	</b:container>
+					 </b:panel>
+					 <b:panel title="Detalles"  look="info" id  ="pdetalles" class = "alineacion tamana_ancho_11">
+					 	<b:panelGrid  columns="2"   >
+					 		<b:container fluid="true"  >
+					 			<b:row  style="margin-bottom:10px" >
+		
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Folio: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<p:inputText id="pfoliodex" style="text-align: center; " value="#{pacienteView.pfoliov1}"  placeholder="Folio">
+				     				 		<p:ajax event="keyup" listener="#{pacienteView.pdatosv}" update=""/>
+				        				</p:inputText>
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Nombre: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 				<p:inputText id="pnombredex" style="text-align: center;" value="#{pacienteView.pnombrev1}"  placeholder="Nombre">
+				     				 	<p:ajax event="keyup" listener="#{pacienteView.pdatosv}" />
+				        			</p:inputText>
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Paciente: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<h:outputLabel   value="#{pacienteView.pnombrepacientev}" />
+					 				</b:column>
+					 				<b:column span="1" >
+										<b:commandButton look="info"  value="P" type="button"
+					 					 onclick="PF('detapaciente_x').show();"></b:commandButton> 
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Enfermedad: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<h:outputLabel   value="#{pacienteView.pnombreenfermedadav}" />
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Medico: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<h:outputLabel   value="#{pacienteView.pnombremedicov}" />
+					 				</b:column>
+					 			</b:row>
+					 		<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Sexo: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 				 <h:selectOneMenu  id="psexo"  value="#{pacienteView.sexo}">
+					                    <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
+					                    <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+					                    <p:ajax event="change" listener="#{pacienteView.pdatosv}"/>
+		          					</h:selectOneMenu> 
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+		
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Edad: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<p:inputText id="pedad" style="text-align: center; "   placeholder="Edad" value="#{pacienteView.edad}">
+					 						<p:ajax event="keyup" listener="#{pacienteView.pdatosv}" />
+					 						<p:keyFilter regEx="/[\d\-\]/"/> 
+					 					</p:inputText>
+					 				</b:column>
+					 			</b:row>
+					 			</b:container>
+					 			<b:container fluid="true"  >
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Hospital: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<h:outputLabel   value="#{pacienteView.pnombrehospitalv}" />
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Equipo: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<h:outputLabel   value="#{pacienteView.pnombrequipov}" />
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Parametro: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<h:outputLabel   value="#{pacienteView.parametrosstring}" />
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Dosis: "/>
+					 				</b:column>
+					 				<b:column span="6" offset="2">
+					 					<p:inputText id="pdosisdex" style="text-align: center; " value="#{pacienteView.pdosisexp}"  placeholder="Dosis"
+					 					disabled="#{pacienteView.termino_dosis?'false':'true'}">
+				     				 		<p:ajax event="keyup" listener="#{pacienteView.pdatosv}" update=""/>
+				     				 		<p:keyFilter regEx="/[\d\-\]/"/> 
+				        				</p:inputText>
+					 				</b:column>
+					 			</b:row>
+					 			<b:row  style="margin-bottom:10px" >
+					 				<b:column span="2">
+					 					<h:outputLabel  value="Descripción: "/>
+					 				</b:column>
+					 				<b:column span="4" offset="2">
+					 					<p:inputTextarea id = "exdescripcion"  rows="2" cols="20" counter="cont_exdescripcion" maxlength="230" 
+											counterTemplate="{0} " autoResize="false" value="#{pacienteView.pdescripcionv}"    class = "texto_centro"/>
+											
+					 				</b:column>
+					 			</b:row>
+					 			<b:row >
+						 			<b:column span="5" offset="5">
+						 				<h:outputText id="cont_exdescripcion"/>
+						 			</b:column>
+					 			</b:row>
+					 				<b:row  style="margin-bottom:10px" >
+					 			<b:commandButton look="success" id="pcrearb" value="#{pacienteView.pbotoncrearv}"
+					 			actionListener="#{pacienteView.modifica_crea_ex}"
+					 			onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></b:commandButton> 
+					 		</b:row>
+					 		</b:container>
+					 		
+					 	</b:panelGrid>
+					 </b:panel>
+				</b:panelGrid>
+<!-- Selecciona paciente -->
+					<p:dialog header="Seleccioné Paciente" widgetVar="ptablapaciente" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+			 			<b:container fluid="true"  >
+			 				<b:row  style="margin-bottom:10px" >
+				 				<b:column span="2">
+									<b:commandButton look="primary" value="cargar"  actionListener="#{pacienteView.muestra_pacientes}" 
+									update="pusuariosp" ></b:commandButton>
+								</b:column>
+								<b:column span="4" offset= "2">
+									<p:inputText id="pbuscador" value="#{pacienteView.pbnombrepacientev}"   placeholder="Buscar paciente" style=" text-aling: center;">
+					     				<p:ajax event="keyup" update="pusuariosp" listener="#{pacienteView.buscar_paciente}" />
+					    			</p:inputText>			
+								</b:column>
+			 				</b:row>
+			 				<b:row  style="margin-bottom:10px" >
+			 					<p:dataTable class = "tamana_ancho_5" id = "pusuariosp"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								paginatorPosition="bottom" value="#{pacienteView.pacientes}"
+								var="paci"  reflow="true" selectionMode="single"  
+								selection="#{pacienteView.seleccion_paciente}"  rowKey="#{paci.nombre}" 
+								>
+								<p:ajax event="rowSelect" listener="#{pacienteView.asignacion_paciente}"
+								update=":form_g_p:pdetalles, :form_g_p:detalles_paciente" />
+									<p:column headerText="Nombre">
+										<h:outputText value="#{paci.nombre}" />
+									</p:column>
+									<p:column headerText="Apellidos">
+									<h:outputText value="#{paci.apellido1} #{paci.apellido2}" />
+									</p:column>
+								</p:dataTable>
+			 				</b:row>
+						</b:container> 			
+					</p:dialog>
+<!-- Selecciona medico -->
+					<p:dialog header="Seleccioné Médico" widgetVar="ptablamedico" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+			 			<b:container fluid="true"  >
+			 				<b:row  style="margin-bottom:10px" >
+				 				<b:column span="2">
+									<b:commandButton look="primary" value="cargar"  actionListener="#{pacienteView.muestra_medicos}" 
+									update="pusuariosp" ></b:commandButton>
+								</b:column>
+								<b:column span="4" offset= "2">
+									<p:inputText id="mbuscador" value="#{pacienteView.pbnombremedicov}"   placeholder="Buscar medico" style=" text-aling: center;">
+					     				<p:ajax event="keyup" update="pusuariosm" listener="#{pacienteView.buscar_medico}" />
+					    			</p:inputText>			
+								</b:column>
+			 				</b:row>
+			 				<b:row  style="margin-bottom:10px" >
+			 					<p:dataTable class = "tamana_ancho_5" id = "pusuariosm"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								paginatorPosition="bottom" value="#{pacienteView.medicos}"
+								var="medi"  reflow="true" selectionMode="single"  
+								selection="#{pacienteView.seleccion_medico}"  rowKey="#{medi.cuenta}" 
+								>
+								<p:ajax event="rowSelect" listener="#{pacienteView.asignacion_medico}"
+								update=":form_g_p:pdetalles" />
+									<p:column headerText="Medico">
+										<h:outputText value="#{medi.nombre} #{medi.apellido1} #{medi.apellido2}" />
+									</p:column>
+								</p:dataTable>
+			 				</b:row>
+						</b:container> 			
+					</p:dialog>
+<!-- Selecciona hospital -->
+					<p:dialog header="Seleccioné Hospital" widgetVar="ptablahospital" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+			 			<b:container fluid="true"  >
+			 				<b:row  style="margin-bottom:10px" >
+				 				<b:column span="2">
+									<b:commandButton look="primary" value="cargar"  actionListener="#{pacienteView.cargar_hospital}" 
+									update="ptablehosptial" ></b:commandButton>
+								</b:column>
+								<b:column span="4" offset= "2">
+									<p:inputText id="hbuscador" value="#{pacienteView.pbnombrehospitalv}"   placeholder="Buscar hospital" style=" text-aling: center;">
+					     				<p:ajax event="keyup" update="ptablehosptial" listener="#{pacienteView.buscar_hospital}" />
+					    			</p:inputText>		
+								</b:column>
+			 				</b:row>
+			 				<b:row  style="margin-bottom:10px" >
+			 					<p:dataTable class = "tamana_ancho_5" id = "ptablehosptial"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								paginatorPosition="bottom" value="#{pacienteView.hospitales}"
+								var="hosp"  reflow="true" selectionMode="single"  
+								selection="#{pacienteView.seleccion_hospital}"  rowKey="#{hosp.idhospital}" 
+								>
+								<p:ajax event="rowSelect" listener="#{pacienteView.asignacion_hospital}"
+								update=":form_g_p:pdetalles" />
+									<p:column headerText="ID">
+										<h:outputText value="#{hosp.idhospital}" />
+									</p:column>
+									<p:column headerText="Hospital">
+										<h:outputText value="#{hosp.hospital}" />
+									</p:column>
+									<p:column headerText="C.P">
+										<h:outputText value="#{hosp.codigopostal}" />
+									</p:column>
+								</p:dataTable>
+			 				</b:row>
+						</b:container> 			
+					</p:dialog>
+<!-- Selecciona equipo -->
+					<p:dialog header="Seleccioné Equipo" widgetVar="ptablaequipo" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+					<b:panelGrid  columns="2"   >
+			 			<b:container fluid="true"  >
+			 				<b:row  style="margin-bottom:10px" >
+				 				<b:column span="2">
+									<b:commandButton look="primary" value="cargar"  actionListener="#{pacienteView.cargar_equipos}" 
+									update="ptableequipo" ></b:commandButton>
+								</b:column>
+								<b:column span="4" offset= "2">
+									<p:inputText id="ebuscador" value="#{pacienteView.pbnombreequipov}"   placeholder="Buscar Equipo" style=" text-aling: center;">
+					     				<p:ajax event="keyup" update="ptableequipo" listener="#{pacienteView.buscar_equipo}" />
+					    			</p:inputText>		
+								</b:column>
+			 				</b:row>
+			 				<b:row  style="margin-bottom:10px" >
+			 					<p:dataTable class = "tamana_ancho_5" id = "ptableequipo"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								paginatorPosition="bottom" value="#{pacienteView.estimuladores}"
+								var="esti"  reflow="true" selectionMode="single"  
+								selection="#{pacienteView.selecion_estimulador}"  rowKey="#{esti.noserie}" 
+								>
+								<p:ajax event="rowSelect" listener="#{pacienteView.asignacion_equipo}"
+								update=":form_g_p:pdetalles, :form_g_p:ptableparametrosp" />
+								<p:column headerText="Serie">
+							        	<h:outputText value="#{pacienteView.convertirserie(esti.noserie)}" />
+							    	</p:column>
+							    	<p:column headerText="Generación">
+							    		<h:outputText value="#{pacienteView.convertirgeneracion(esti.noserie)}" />
+							    	</p:column>
+								</p:dataTable>
+			 				</b:row>
+						</b:container> 
+						<b:container fluid="true">
+						<b:row  style="margin-bottom:10px" >
+							<b:column span="2">
+								<b:commandButton look="primary" value="cargar"  actionListener="#{pacienteView.cargar_parametros_e}" 
+								 update="ptableparametrosp" ></b:commandButton>
+							</b:column>
+							<b:column span="4" offset= "2">
+							<p:inputText id="pabuscadorp" value="#{pacienteView.buscar_parametrosstring}"   placeholder="Buscar Pamatros" style=" text-aling: center;">
+						    	<p:ajax event="keyup" update="ptableparametrosp" listener="#{pacienteView.buscar_parametros}" />
+							</p:inputText>		
+						</b:column>
+						</b:row>
+							<b:row  style="margin-bottom:10px" >
+								<p:dataTable class = "tamana_ancho_5" id = "ptableparametrosp"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								paginatorPosition="bottom" value="#{pacienteView.parametros_list}"
+								var="para"  reflow="true" selectionMode="single"  
+								selection="#{pacienteView.seleccion_parametro}"  rowKey="#{para.idparametro}" 
+								>
+									<p:ajax event="rowSelect" listener="#{pacienteView.asignacion_parametros}"
+									update=":form_g_p:pdetalles" />
+								
+									<p:column headerText="ID">
+										<h:outputText value="#{para.idparametro}" />
+									</p:column>
+					    			<p:column headerText="Nombre">
+										<h:outputText value="#{para.nombre}" />
+									</p:column>
+							</p:dataTable>
+						</b:row>
+						</b:container>
+						</b:panelGrid>			
+					</p:dialog>
+<!-- Selecciona enfermedad -->
+				<p:dialog header="Seleccioné Enfermedad" widgetVar="ptableenfermedad" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+					<b:container fluid="true"  >
+						<b:row  style="margin-bottom:10px" >
+							<p:dataTable class = "tamana_ancho_5" id = "ptableenfermedades"  paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								paginatorPosition="bottom" value="#{pacienteView.enfermedades}"
+								var="enfer"  reflow="true" selectionMode="single"  
+								selection="#{pacienteView.seleccion_enfermedad}"  rowKey="#{enfer.enfermedad}" 
+								>
+								<p:ajax event="rowSelect" listener="#{pacienteView.asignacion_enfermedad}"
+								update=":form_g_p:pdetalles, :form_g_p:penfermedadb" />
+								<p:column headerText="ID">
+							        	<h:outputText value="#{enfer.idenfermedad}" />
+							    	</p:column>
+							    	<p:column headerText="Enfermedad">
+							    		<h:outputText value="#{enfer.enfermedad}" />
+							    	</p:column>
+								</p:dataTable>
+						</b:row>
+					</b:container>
+				</p:dialog>
+	</c:if>
+	<!-- Crea Expedietne -->
+			<p:dialog header="Expediente" widgetVar="pexpediente" showEffect="explode" hideEffect="bounce" height="100"  modal="true" >
+				 	 <b:container fluid="true"  >
+				 	 	<b:row  style="margin-bottom:25px" >
+				 	 		<b:column span="2">
+				 	 			<p:inputText id="pnombre" style="text-align: center;" value="#{pacienteView.pnombrev}"  placeholder="Nombre">
+				     				 	<p:ajax event="keyup" listener="#{pacienteView.pdatosv}" />
+				        			</p:inputText>
+				 	 		</b:column>
+				 	 		<b:column span="1" offset="4">
+				 	 				<p:inputText id="pfolio" style="text-align: center; " value="#{pacienteView.pfoliov}"  placeholder="Folio">
+				     				 	<p:ajax event="keyup" listener="#{pacienteView.pdatosv}" />
+				        			</p:inputText>
+				 	 		</b:column>
+				 	 		
+				 	 	</b:row>
+				 	 	<b:row  style="margin-bottom:10px" >
+				 	 	<b:column  offset="5">
+				 	 		<b:commandButton look="success" id="pcrea" value="OK" actionListener="#{pacienteView.vista_crear_expediente}"/>
+				 	 		</b:column>
+				 	 	</b:row>
+				 	 </b:container>
+			</p:dialog>
+<!-- Modifica Expedietne -->
+ 			<p:dialog header="Expedientes" widgetVar="pexpedientemodi" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+ 				<b:panelGrid  columns="2" >
+ 					<b:container fluid="true">
+ 							
+			 				<b:row  style="margin-bottom:10px" >
+				 				<b:column span="2">
+									<b:commandButton look="primary" value="cargar"  actionListener="#{pacienteView.muestra_pacientes}" 
+									update="pusuariospex" ></b:commandButton>
+								</b:column>
+								<b:column span="2" offset= "1">
+									<p:inputText id="pbuscadorex" value="#{pacienteView.pbnombrepacientev}"   placeholder="Buscar paciente" style=" text-aling: center;">
+					     				<p:ajax event="keyup" update="pusuariospex" listener="#{pacienteView.buscar_paciente}" />
+					    			</p:inputText>			
+								</b:column>
+			 				</b:row>
+			 				<b:row  style="margin-bottom:10px" >
+			 					<p:dataTable  id = "pusuariospex" class = "tamana_ancho_5" paginator="true" rows="5" 
+								paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+								rowsPerPageTemplate="5,10,15,20"
+								paginatorPosition="bottom" value="#{pacienteView.pacientes}"
+								var="paci"  reflow="true" selectionMode="single"  
+								selection="#{pacienteView.seleccion_paciente}"  rowKey="#{paci.cuenta}" 
+								>
+								<p:ajax event="rowSelect" listener="#{pacienteView.selecion_de_paciente}"
+								update=":form_g_p:pexpedietne, :form_g_p:enfermedadesex" />
+									<p:column headerText="Paciente">
+										<h:outputText value="#{paci.nombre} #{paci.apellido1} #{paci.apellido2}" />
+									</p:column>
+								</p:dataTable>
+			 				</b:row>
+ 					</b:container>
+ 					<b:container fluid="true">
+ 						<b:row  style="margin-bottom:11px" >
+ 							<b:column span="2">
+ 								<b:commandButton look="primary" value="cargar"  actionListener="#{pacienteView.selecion_de_paciente}" 
+									update="pexpedietne" ></b:commandButton>
+ 							</b:column>
+ 							<b:column span="2" offset= "1">
+ 									<h:selectOneMenu  id="enfermedadesex" value="#{pacienteView.idpaciente}">
+			                    		<f:selectItem itemLabel="Enfermedad" itemValue="" />
+			            				<f:selectItems value="#{pacienteView.enfermedadesitem}" />
+			            				<p:ajax event="change" listener="#{pacienteView.tipo_enfermedad_paciente}"
+			            				update=":form_g_p:pexpedietne" />
+			          				</h:selectOneMenu>			
+ 							</b:column>
+ 						</b:row>
+ 						<b:row  style="margin-bottom:10px" >
+ 							<p:dataTable  id = "pexpedietne" class = "tamana_ancho_5" paginator="true" rows="5" 
+							paginatorTemplate="{PageLinks} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10,15,20"
+							paginatorPosition="bottom" value="#{pacienteView.expedientes}"
+							var="expe"  reflow="true" selectionMode="single"  
+							selection="#{pacienteView.seleccion_expediente}"  rowKey="#{expe.noexpediente}" 
+							>
+						
+							<p:column headerText="Folio">
+								<h:outputText value="#{expe.noexpediente}" />
+							</p:column>
+							<p:column headerText="Nombre">
+								<h:outputText value="#{expe.nombre}" />
+							</p:column>
+							</p:dataTable>
+ 						</b:row>
+ 						<b:row  style="margin-bottom:10px" >
+ 							 <c:if  test="#{gestiondeSeccionView.userDTO.idtipo == 1}">
+	 						<b:column span="2" >
+	 							<b:commandButton icon-spin="true" icon="cd" look="info" id="pver" value="Ver" actionListener="#{pacienteView.vista_ver_expedeinte}"/>
+	 						</b:column>
+	 						</c:if>
+	 						
+	 						<b:column span="2" offset= "1">
+	 							<b:commandButton icon-spin="true" icon="cd" look="success" id="pmodifica" value="Modificar" actionListener="#{pacienteView.vista_modifica_expedeinte}"/>
+	 						</b:column>
+
+	 						
+	 						<b:column span="2" offset= "2">
+	 							<b:commandButton icon-spin="true" icon="cd" look="warning" id="pconsulta" value="Consulta" actionListener="#{pacienteView.asignacion_expedienteC}"/>
+	 						</b:column>
+	 					
+				 	 	</b:row>
+ 					</b:container>
+ 				</b:panelGrid>
+				 	
+			</p:dialog>
+<!-- ver detalles del paciente -->
+			<p:dialog header="Detalles del paciente" id = "detalles_paciente" widgetVar="detapaciente_x" showEffect="explode" hideEffect="bounce" width="500px" height="400"  modal="true" >
+					<b:container fluid="true">
+					 	<b:row  style="margin-bottom:10px" >
+					 		<b:column span="2" >
+					 			<h:outputLabel  value="Nombre: "/>
+					 		</b:column>
+					 		<b:column span="7" offset = "1">
+					 			<h:outputLabel  value="#{pacienteView.pnombrepacientev}"/>
+					 		</b:column>
+					 	</b:row>
+					 	<b:row  style="margin-bottom:10px" >
+					 		<b:column span="2" >
+					 			<h:outputLabel  value="Cuenta: "/>
+					 		</b:column>
+					 		<b:column span="7" offset = "1">
+					 			<h:outputLabel  value="#{pacienteView.cuenta_paciente}"/>
+					 		</b:column>
+					 	</b:row>
+					 	<b:row  style="margin-bottom:10px" >
+					 		<b:column span="2" >
+					 			<h:outputLabel  value="Contraseña: "/>
+					 		</b:column>
+					 		<b:column span="7" offset = "1">
+					 			<h:outputLabel  value="#{pacienteView.contrasena_paciente}"/>
+					 		</b:column>
+					 	</b:row>
+					 	<b:row  style="margin-bottom:10px" >
+					 		<b:column span="2" >
+					 			<h:outputLabel  value="Email: "/>
+					 		</b:column>
+					 		<b:column span="7" offset = "1">
+					 			<h:outputLabel  value="#{pacienteView.email_paciente}"/>
+					 		</b:column>
+					 	</b:row>
+					 	<b:row  style="margin-bottom:10px" >
+					 		<b:column span="2" >
+					 			<h:outputLabel  value="Teléfono: "/>
+					 		</b:column>
+					 		<b:column span="7" offset = "1">
+					 			<h:outputLabel  value="#{pacienteView.telefono_paciente}"/>
+					 		</b:column>
+					 	</b:row>
+					 	<b:row  style="margin-bottom:10px" >
+					 		<b:column span="2" >
+					 			<h:outputLabel  value="Dirección "/>
+					 		</b:column>
+					 		<b:column span="7" offset = "1">
+					 			<h:outputLabel  value="#{pacienteView.direccion_paciente}"/>
+					 		</b:column>
+					 	</b:row>
+					</b:container>
+			</p:dialog>
+<!-- ver parametros deestimulación  -->
+ 			<p:dialog header="Detalles de estimulación" widgetVar="exdetallesubi" showEffect="explode" hideEffect="bounce" width="500px" height="400"  modal="true" >
+ 				<b:panelGrid  columns="1" >
+					<b:container fluid="true">
+						<b:row  style="margin-bottom:10px" >
+							<b:column span="2" >
+					 				<h:outputLabel  value="Amplitud: "/>
+					 			</b:column>
+					 			<b:column span="7" offset = "1">
+					 					<h:outputLabel id="veramplitud" value="#{pacienteView.paamplitudj_p} V"/>
+					 			</b:column>
+						</b:row>
+						<b:row  style="margin-bottom:10px" >
+							<b:column span="2" >
+					 				<h:outputLabel  value="Frecuencia: "/>
+					 			</b:column>
+					 			<b:column span="7" offset = "1">
+					 					<h:outputLabel id="verfrecuencia" value="#{pacienteView.pafrecueciaj_p} Hz"/>
+					 			</b:column>
+						</b:row>
+						<b:row  style="margin-bottom:10px" >
+							<b:column span="2" >
+					 				<h:outputLabel  value="Tiempo: "/>
+					 			</b:column>
+					 			<b:column span="7" offset = "1">
+					 					<h:outputLabel id="vertiempo" value="#{pacienteView.patiempoj_p} min"/>
+					 			</b:column>
+						</b:row>
+						<b:row  style="margin-bottom:10px" >
+							<b:column span="2" >
+					 				<h:outputLabel  value="Señal: "/>
+					 			</b:column>
+					 			<b:column span="7" offset = "1">
+					 					<h:outputLabel id="versenal" value="#{pacienteView.nombre_onda_ubica}"/>
+					 			</b:column>
+						</b:row>
+						<b:row  style="margin-bottom:10px" >
+							<b:column span="2" >
+					 				<h:outputLabel  value="Estimulos: "/>
+					 			</b:column>
+					 			<b:column span="7" offset = "1">
+					 					<h:outputLabel id="verestmin" value="#{pacienteView.estimulos_empreados}"/>
+					 			</b:column>
+						</b:row>
+						<b:row  style="margin-bottom:10px" >
+							<p:chart id = "verondas" type="line" model="#{pacienteView.lineModel1}" style="height:230px;" responsive="true"/>
+						</b:row>
+					</b:container>
+				</b:panelGrid>
+ 			</p:dialog>
+ 				
+</h:form>
+</h:body>
+</html>

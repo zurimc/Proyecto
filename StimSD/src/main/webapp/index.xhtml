@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+<title>StimSD</title>
+	<meta charset="utf-8"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+
+	<link rel="stylesheet" href="css/font-awesome.css" />
+	<link href="css/style.css" rel='stylesheet' type='text/css' />
+	<link rel="stylesheet" href="css/font.css" type="text/css"/>
+	
+<!-- //font-awesome icons -->
+<script src="js/jquery2.0.3.min.js"></script>
+<script src="js/modernizr.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script src="js/screenfull.js"></script>
+<!-- charts -->
+<script src="js/raphael-min.js"></script>
+<script src="js/morris.js"></script>
+
+<!-- //charts -->
+<!--skycons-icons-->
+<script src="js/skycons.js"></script>
+<!--//skycons-icons-->		
+	
+</h:head>
+<h:body class="dashboard-page" >
+
+<p:growl id="mensajes" showDetail="true" life="2000" />
+<h:outputLabel id = "R" value="#{hello.resultado}" />
+<nav class="main-menu">
+		<ul>
+			<li>
+			<ui:insert name = "menu_inicio"></ui:insert>
+			</li>
+
+			<li class="has-subnav">
+				<ui:insert name = "menu_configuracion"></ui:insert>
+			</li>
+			<li class="has-subnav">
+			 <ui:insert name = "menu_usuario"> </ui:insert>
+			
+			</li>
+			<li class="has-subnav">
+			 <ui:insert name = "menu_historico">  </ui:insert>		
+			</li>
+		</ul>
+		<ul class="logout">
+			<li>
+			<a >
+			<!-- <i class="icon-off nav-icon"></i>-->
+				 <h:form>
+					<p:commandLink id="ajax" action="#{gestiondeSeccionView.cerrarSesionUsuario}" 
+             				class="nav-text icon-off nav-icon">
+             				
+							 <h:outputText value="  Salir  " />
+   					 </p:commandLink>
+				</h:form>
+			</a>
+			</li>
+		</ul>
+	</nav>
+	<section class="wrapper scrollable">
+		<nav class="user-menu">
+			<a href="javascript:;" class="main-menu-access">
+			<i class="icon-proton-logo"></i>
+			<i class="icon-reorder"></i>
+			</a>
+		</nav>
+		<section class="title-bar">
+			<div class="logo">
+				<ui:insert name = "top">
+
+				</ui:insert>
+			</div>
+			
+			<div class="clearfix"> </div>
+		</section>
+	      <ui:insert name = "content"> NO CONTENT</ui:insert>
+		<!-- footer -->
+		<div class="footer">
+
+
+		
+			<p>© Vision Artificial</p>
+		</div>
+		<!-- //footer -->
+	</section>
+<script src="js/bootstrap.js"></script>
+<script src="js/proton.js"></script>
+</h:body>
+</html>
