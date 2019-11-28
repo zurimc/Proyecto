@@ -121,7 +121,7 @@ public class HospitalView implements Serializable {
 		
 		setNom_hospital(seleccion_hosp.getHospital());
 		setCalle(seleccion_hosp.getCalle());
-		setNumero(seleccion_hosp.getNumero());
+		setNumero(seleccion_hosp.getNumero()+"");
 		setColonia(seleccion_hosp.getColonia());
 		setCodigoPostal(seleccion_hosp.getCodigopostal());
 		setIdEstado(seleccion_hosp.getIdestado());
@@ -176,7 +176,7 @@ public class HospitalView implements Serializable {
         Hospital hospital1 = new Hospital();
     	hospital1.setHospital(nom_hospital);
 		hospital1.setCalle(calle);
-		hospital1.setNumero(numero);
+		hospital1.setNumero(Integer.parseInt(numero));
 		hospital1.setColonia(colonia);
 		hospital1.setCodigopostal(codigoPostal);
 		hospital1.setIdestado(idEstado);
