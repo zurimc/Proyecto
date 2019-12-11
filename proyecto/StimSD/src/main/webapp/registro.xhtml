@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+
+	<title>REGISTRO</title>
+ <style type="text/css">
+    .alineacion{
+        margin:auto;
+		align-items:center;
+		padding: auto;
+		text-align: center;
+	
+    }
+    </style>
+</h:head>
+
+<h:body style= "background-image: url('images/fondo8.jpeg');background-size: 100%;
+        -moz-background-size:100%;
+        -webkit-background-size:100%;
+        -o-background-size:100%;">
+<c:if  test="#{login.tipo_vista == 0}">
+	<b:container>
+<h:form   id="loginForm" >
+   <br></br>
+   
+<b:container fluid="true">
+    <h:panelGrid column="1" size="lg" class="alineacion"> 
+            <p:graphicImage 
+							url="images/sd_v1.png" height="160px" 
+							width="160px"  style="margin-bottom:30px;"/>
+    <b:panel title="Inicio de Sesión" look="primary" style= "opacity:0.95;">
+      <b:row>
+        <b:column  offset="1" span="2">
+          <h:outputText value="Usuario:" for="usuario" />
+        </b:column>
+        <b:column span="8" offset="1" >
+          <b:inputText style="text-align: center;" placeholder="Usuario" id="usuario"  value="#{login.nombre}" required="false" >
+            <f:facet name="prepend">
+              <b:icon name="user" />
+            </f:facet>
+          </b:inputText>
+        </b:column>
+        
+      </b:row>
+      <b:row >
+        <b:column  offset="1" span="2">
+          <h:outputText value="Contaseña:" />
+        </b:column>
+        <b:column span="8" offset="1">
+          <b:inputSecret style="text-align: center;" placeholder="Contraseña" id="contrasenia" value="#{login.contrasenia}" required="false" >
+                        
+            <f:facet name="prepend">
+              <b:iconAwesome name="key" />
+            </f:facet>
+          </b:inputSecret>
+        </b:column>
+       
+
+        <b:column offset="1" span="4" style="margin-bottom:20px">
+        	 <b:commandButton value="Registro" look="danger" style="width:100%"
+          actionListener="#{login.ini_registro}" 
+       	  onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" />
+          
+        </b:column>
+          <b:column offset="1" span="4" style="margin-bottom:20px">
+         	<b:commandButton value="Login"  look="primary" style="width:100%" id="loginButton"
+             actionListener="#{login.ingresa}" update=":R"
+             onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" />
+        </b:column>
+      </b:row>
+    
+    
+      
+    </b:panel>
+    </h:panelGrid> 
+  </b:container>
+
+</h:form>
+</b:container>
+</c:if>
+<c:if  test="#{login.tipo_vista == 1}">
+<b:container>
+<h:form id="registro">
+<p:growl id="mensajes" showDetail="true" life="2000" sticky="true" />
+
+  <h2 style="text-align: center">Registro</h2>
+
+ <h:panelGrid column="1" size="lg" class="alineacion"> 
+  <b:carousel id="wizard" styleClass="wizardPseudoClass"
+              style="width:400px; padding-top:20px"
+              startAnimation="true"
+              showIndicators="false"
+              wrap="false">
+
+    <b:carouselItem  style="width:400px; height:330px; padding-top:20px">
+      <b:panel title="Personal" look="primary">
+       <b:inputText  id="cuenta"  value="#{login.cuenta}"
+                  required="true" label="Cuenta">
+                
+                <p:ajax update="c_cuenta" /> 
+              	</b:inputText>   
+
+               <b:inputSecret id="pwd1" value="#{login.contrasenia}" match="pwd2" label="Contraseña" required="true" />
+                 
+              <b:inputSecret id="pwd2" value="#{login.contrasenia}" label="Confirme Contraseña" required="true">
+              
+              </b:inputSecret>  
+
+      </b:panel>
+    </b:carouselItem>
+        <b:carouselItem style="width:400px;height:500px; padding-top:20px">
+      <b:panel title="Contacto" look="success">
+      
+      
+              <b:inputText  id="nombre" value="#{login.nombre}" required="true" label="Nombre(s)" >
+              <p:keyFilter regEx="/[a-z_]/i"/>
+              <p:ajax update="c_nombre" />  
+              </b:inputText>  
+        	  <b:inputText  id="apellido1"  value="#{login.apellido1}"  label="Apellido Paterno">
+              <p:keyFilter regEx="/[a-z_]/i"/>
+              <p:ajax update="c_apellido1" />   
+              </b:inputText>
+               <b:inputText  id="apellido2"  value="#{login.apellido2}"
+                  required="true" label="Apellido Materno">
+                 <p:keyFilter regEx="/[a-z_]/i"/>
+                 <p:ajax update="c_apellido2" />   
+              </b:inputText>
+              
+        		<b:inputText  id="telefono"  value="#{login.telefono}"
+                  required="true" label="Teléfono">
+                <p:keyFilter regEx="/[\d\-\.]/"/>  
+                <p:ajax update="c_telefono" /> 
+              	</b:inputText>   
+            
+              	<b:inputText  id="email"  value="#{login.email}"
+                required="true" label="Correo Electrónico">
+                <p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/>
+                <p:ajax update="c_email" />   
+              	</b:inputText>
+              
+                 </b:panel>
+    </b:carouselItem>
+    <b:carouselItem style="width:400px;height:455px; padding-top:20px">
+      <b:panel title="Dirección" look="danger">
+        		<b:inputText  id="calle"  value="#{login.calle}" required="true" label="Calle" >
+        		<p:ajax update="c_calle" /> 
+        		</b:inputText>
+        		<b:inputText  id="numero"  value="#{login.num}" required="true" label="Número">
+              	<p:keyFilter regEx="/[\d\-\.]/"/>
+              	<p:ajax update="c_numero" /> 
+              	</b:inputText> 
+              	<b:inputText  id="colonia"  value="#{login.colonia}"
+                required="true" label="Colonia" >
+                <p:ajax update="c_colonia" /> 
+                </b:inputText>
+                <b:inputText  id="cp"  value="#{login.codigoPostal}"
+                required="true" label="Código Postal">
+                <p:ajax update="c_cp" /> 
+                <p:keyFilter regEx="/[\d\-\.]/"/> 
+              	</b:inputText>
+                   <h:selectOneMenu  id="estado1" style="width:95%;"  value="#{login.idEstado}">
+                    <f:selectItem itemLabel="Estado" itemValue="" />
+                   	<p:ajax update="c_estado" /> 
+            <f:selectItems value="#{login.estados}" />
+          </h:selectOneMenu>
+      </b:panel>
+    </b:carouselItem>
+    <b:carouselItem style="width:400px; height:530px; padding-top:20px">
+      <b:panel title="Confirmacion" look="warning">
+        	 
+                    <h:panelGrid columns="2" >
+                    <b:column span="2">
+                      <h:outputLabel value="Nombre:" />
+					</b:column>
+                     <b:column span="2">
+                      	<h:outputLabel id = "c_nombre" value="#{login.nombre} " style="color:red" />
+					</b:column>
+					 <b:column span="2">
+                      <h:outputLabel value="Apellido Paterno:" />
+					</b:column>
+					<b:column span="2">
+								<h:outputLabel id = "c_apellido1" value=" #{login.apellido1}" style="color:red" />
+					</b:column>
+					 <b:column span="2">
+                      <h:outputLabel value="Apellido Materno:" />
+					</b:column>
+					<b:column span="2">
+								<h:outputLabel id = "c_apellido2" value=" #{login.apellido2}" style="color:red" />
+					</b:column>
+                    </h:panelGrid> 
+                    
+                    <h:panelGrid columns="2" >
+                    <b:column span="2">
+                    			<h:outputLabel value="Cuenta:" />
+					</b:column>
+                    <b:column span="2">
+								<h:outputLabel id = "c_cuenta" value="#{login.cuenta}" style="color:red" />
+					</b:column>
+					<b:column span="2">
+                    			<h:outputLabel value="Contraseña:" />
+					</b:column>
+						<b:column span="2">
+								<h:outputLabel id = "c_contraseña" value="#{login.contrasenia}" style="color:red" />
+						</b:column>
+						
+                      </h:panelGrid>
+                      <h:panelGrid columns="2" >
+                      <b:column span="2">
+                    			<h:outputLabel value="Calle:" />
+					  </b:column>
+                      <b:column span="2">
+								<h:outputLabel id = "c_calle" value="#{login.calle}" style="color:red" />
+					  </b:column>
+					  <b:column span="2">
+                    			<h:outputLabel value="Número:" />
+					  </b:column>
+						 <b:column span="2">
+								<h:outputLabel id = "c_numero" value=" #{login.num}" style="color:red" />
+						</b:column>
+						<b:column span="2">
+                    			<h:outputLabel value="Colonia:" />
+						</b:column>
+						<b:column span="2">
+								<h:outputLabel id = "c_colonia" value="#{login.colonia}" style="color:red" />
+						</b:column>
+						<b:column span="2">
+                    			<h:outputLabel value="Código Postal:" />
+						</b:column>
+						<b:column span="2">
+								<h:outputLabel id = "c_cp" value="#{login.codigoPostal}" style="color:red" />
+						</b:column>
+						<b:column span="2">
+                    			<h:outputLabel value="Estado:" />
+						</b:column>
+						<b:column span="2">
+								<h:outputLabel id = "c_estado"  value="#{login.estado}"/>
+						</b:column>
+                      </h:panelGrid> 
+                      <h:panelGrid columns="2" style="margin-bottom:20px">
+                      <b:column span="2">
+                    			<h:outputLabel value="Teléfono:" />
+					  </b:column>
+                      <b:column span="2" >
+								<h:outputLabel id = "c_telefono" value="#{login.telefono}" style="color:red"/>
+						</b:column>
+						<b:column span="2">
+                    			<h:outputLabel value="Correo:" />
+						</b:column>
+						<b:column span="2" >
+								<h:outputLabel id = "c_email" value="#{login.email}" style="color:red"/>
+						</b:column>
+						 
+                      </h:panelGrid>  
+                 
+ 			<b:column offset="1" span="4">
+           <b:commandButton id="submit" value="Login" actionListener="#{login.cambio_login_a_login}" 
+            onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" look="primary" ></b:commandButton>  
+            </b:column>
+            <b:column offset="1" span="4" >
+ 			<b:commandButton  value="Ok"  actionListener="#{login.registroUsuario_primero}" 
+            onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" look="success" style="width:80px"></b:commandButton>  
+      		</b:column>
+      </b:panel>
+    </b:carouselItem>
+      <b:carouselControl  direction="right" >
+      <b:button value="Anterior"
+                onclick="$('.wizardPseudoClass').carousel('prev');$('.wizardPseudoClass').carousel('pause');"
+                look="info" />
+    </b:carouselControl>
+    <b:carouselControl   direction="left">
+      <b:button value="Siguiente" style="position:absolute;right:0px"
+                onclick="$('.wizardPseudoClass').carousel('next');$('.wizardPseudoClass').carousel('pause');"
+                look="success" />
+    </b:carouselControl>
+  </b:carousel>
+  
+</h:panelGrid>  
+
+</h:form>
+
+
+</b:container> 
+</c:if>
+</h:body>
+</html>

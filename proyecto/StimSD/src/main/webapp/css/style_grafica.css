@@ -1,0 +1,30 @@
+
+.estilo1
+{
+	display:block;
+	display:flex;
+	margin-left:auto;
+	margin-right:auto;
+	width:800px;
+	align-items:center;
+	padding: 50px;
+}
+.estilo2{
+	margin-top:10px;
+	margin-bottom:10px;
+	margin-left:auto;
+	margin-right:5px;
+	display:block;
+	
+	float:left;
+	
+}
+.estilo3
+{
+	margin-left:5px;
+	margin-right:auto;
+	padding-right: 10px;
+	min-height:600px; 
+	min-width:100px;
+	float: right;                                                           
+}
