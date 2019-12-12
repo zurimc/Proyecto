@@ -29,15 +29,30 @@ private static final long serialVersionUID = 1L;
 	private String nombre_foto;
 	
 	private byte[] foto1;
+	private Imagen file;
 	
 	
-	//insertar datos en la tabla fotos
+	public Imagen getFile() {
+		return file;
+	}
+
+	public void setFile(Imagen file) {
+		this.file = file;
+	}
+
+//insertar datos en la tabla fotos
 	/*public void registroFotos() {
+	 try{
+	 
 		Fotos fotos1 = new Fotos();
 		fotos1.setNombreFoto(nombre_foto);
 		fotos1.setFoto1(foto1);
 		 FacesMessage message = new FacesMessage("Successful", nombre_foto.getBytes() + " is uploaded.");
          FacesContext.getCurrentInstance().addMessage(null, message);
+         } catch (Exception e){
+         FacesMessage message = new FacesMessage("error de conexion");
+         FacesContext.getCurrentInstance().addMessage(null, message);
+         }
 	}*/
 public String upload() {
 	return "success";

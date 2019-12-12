@@ -21,8 +21,9 @@
   <h3>Nombre de la Imagen</h3>
     <p:inputText style="text-align: center;"   placeholder="Ingrese Nombre" />
     <p:fileUpload  cancelLabel="Cancelar" label="Seleccionar"
-      update="messages" uploadLabel="Subir"/>
-      
+      update="messages" uploadLabel="Subir" value="#{imagen.file}"/>
+      <p:inputText ></p:inputText>
+      <p:commandButton value="Descargar"></p:commandButton>
             
 </h:form>
 </html>
