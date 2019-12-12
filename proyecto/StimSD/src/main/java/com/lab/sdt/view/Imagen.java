@@ -28,8 +28,6 @@ private static final long serialVersionUID = 1L;
 	private int idUsuario;
 	private String nombre_foto;
 	
-	@Lob
-	@Column(name = "foto1")  
 	private byte[] foto1;
 	
 	
@@ -41,11 +39,8 @@ private static final long serialVersionUID = 1L;
 		 FacesMessage message = new FacesMessage("Successful", nombre_foto.getBytes() + " is uploaded.");
          FacesContext.getCurrentInstance().addMessage(null, message);
 	}*/
-	public void handleFileUpload(FileUploadEvent event) {
-		
-		byte[] file = new byte[event.getFile().getContents().length];
-		System.arraycopy(event.getFile().getContents(),0,file,0,event.getFile().getContents().length);
-		myEntity.setAnyFile(file);		
+public String upload() {
+	return "success";
 	
 }
 	
