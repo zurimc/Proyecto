@@ -447,7 +447,7 @@ background-size: 100%;
 								<b:navCommandLink iconAwesome="dashboard" value = "PIO"    onclick="PF('presionI').show();" ></b:navCommandLink>
 								
 								<b:dropMenu value="ESTUDIOS" iconAwesome="archive">
-            					<b:navLink value="OCT" href="#" iconAwesome="area-chart"></b:navLink>
+            					<b:navLink value="OCT"  onclick="PF('estPIO').show();" iconAwesome="area-chart"></b:navLink>
             					<b:navLink value="CAMPOS VISUALES" href="#" iconAwesome="bullseye "></b:navLink>
           						</b:dropMenu>
           						<b:dropMenu value="SOMATOMETRIA" iconAwesome="ambulance">
@@ -1562,6 +1562,30 @@ background-size: 100%;
 					</b:container>
 				</b:panelGrid>
  			</p:dialog>
+<!-- zuri inicio de estudios --> 
+<!-- Guardar altura -->             
+    <p:dialog header="Subir Estudios PIO" widgetVar="estPIO" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >
+                <b:panelGrid  columns="1" >
+                <b:container fluid="true">
+                <b:iconAwesome  size="4x" style="margin-bottom:20px"  col-md="10" offset="4" value="child"/><br/>
+                <h3 style="text-align: center;">ESTUDIOS PIO</h3>
+                        <b:row style="margin-bottom:10px">
+                        
+                        <b:column span="8" offset="2">
+                            <b:inputText  id="estPIO"  style="text-align: center;"  placeholder="Inserte sus Estudios" value="#{pacienteView.altura}">
+                            <p:ajax event="keyup" listener="#{pacienteView.guarda_actualiza_datos}"></p:ajax>   
+                            </b:inputText>                      
+                        </b:column>
+                        </b:row>
+                        <b:column offset="4" span="8" style="margin-top:20px">
+                        <b:commandButton look="success" id="guardar_estPIO"  value="ok" action="#{pacienteView.guarda_actualiza_datos}"></b:commandButton>
+                        </b:column>
+                        
+                </b:container>
+            
+                </b:panelGrid>
+            </p:dialog>	
+<!-- zuri fin estudios -->		
  <!-- zuri inicio -->
 <!-- Selecciona equipo -->
 					<p:dialog header="Seleccioné Equipo" widgetVar="pequipo" showEffect="explode" hideEffect="bounce" height="300"  modal="true" >

@@ -32,6 +32,7 @@ private static final long serialVersionUID = 1L;
 		Fotos fotosn = new Fotos();
 		fotosn.setIdusuario(2);
 		fotosn.setNombreFoto(nombre_foto);
+		fotosn.setFoto1(foto1);
 		
 		  try {
 			  imagenService.insertarFoto(fotosn);
