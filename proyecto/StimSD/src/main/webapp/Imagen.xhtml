@@ -4,7 +4,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jsp/jstl/core">
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
 <title>Subir imagen</title>
@@ -21,9 +22,12 @@
   <h3>Nombre de la Imagen</h3>
     <p:inputText style="text-align: center;"   placeholder="Ingrese Nombre" />
     <p:fileUpload  cancelLabel="Cancelar" label="Seleccionar"
-      update="messages" uploadLabel="Subir" value="#{imagen.file}"/>
-      <p:inputText ></p:inputText>
-      <p:commandButton value="Descargar"></p:commandButton>
-            
+      update="messages" uploadLabel="Subir"/>
+<b:row style="margin-bottom:15px">
+						<b:column offset="4">	
+							<b:commandButton  look="success" value="Guardar/Actualizar"  actionListener="#{imagen.registroFotos}" 
+        				onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></b:commandButton>	
+						</b:column>
+					</b:row>      
 </h:form>
 </html>

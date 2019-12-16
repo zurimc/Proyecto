@@ -16,6 +16,7 @@ public class ImagenService {
 	
 	@Autowired
 	private FotosMapper fotosMapper;
+	public List<Fotos> fotos1;
 
 //INGRESAR INFORMACION EN LA BASE DE DATOS DE FOTO
 public void insertarFoto (Fotos fotos) throws Exception{

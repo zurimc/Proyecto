@@ -5,17 +5,11 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.context.FacesContext;
-
-import org.primefaces.event.FileUploadEvent;
 
 import com.lab.sdt.model.Fotos;
-import java.util.Calendar;
-import java.util.Objects;
-import java.util.logging.Logger;
-import java.util.Calendar;
-import java.util.Objects;
-import java.util.logging.Logger;
+import com.lab.sdt.service.ImagenService;
+import com.lab.sdt.util.MensajeG;
+
 
 
 @ManagedBean
@@ -23,54 +17,34 @@ public class Imagen implements Serializable{
 private static final long serialVersionUID = 1L;
 	
 	@ManagedProperty("#{imagenService}")
+	private ImagenService imagenService;
 
-	private int idFoto;
+	
 	private int idUsuario;
 	private String nombre_foto;
-	
+
 	private byte[] foto1;
-	private Imagen file;
 	
-	
-	public Imagen getFile() {
-		return file;
-	}
-
-	public void setFile(Imagen file) {
-		this.file = file;
-	}
-
-//insertar datos en la tabla fotos
-	/*public void registroFotos() {
-	 try{
-	 
+	//insertar datos en la tabla fotos
+	public void registroFotos() {
 		Fotos fotos1 = new Fotos();
-		fotos1.setNombreFoto(nombre_foto);
-		fotos1.setFoto1(foto1);
-		 FacesMessage message = new FacesMessage("Successful", nombre_foto.getBytes() + " is uploaded.");
-         FacesContext.getCurrentInstance().addMessage(null, message);
-         } catch (Exception e){
-         FacesMessage message = new FacesMessage("error de conexion");
-         FacesContext.getCurrentInstance().addMessage(null, message);
-         }
-	}*/
-public String upload() {
-	return "success";
+		
+		fotos1.setNombreFoto("hola");
+		
+		  try {
+	        	
+	                MensajeG.mostrar("Se guardo foto: " +nombre_foto, FacesMessage.SEVERITY_INFO);
+	                
+	        	
+	        	
+	            
+	        } catch (Exception e) {
+	            MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
+	        }
+	}
 	
-}
 	
-	public int getIdFoto() {
-		return idFoto;
-	}
-	public void setIdFoto(int idFoto) {
-		this.idFoto = idFoto;
-	}
-	public int getIdUsuario() {
-		return idUsuario;
-	}
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
-	}
+	
 	public String getNombre_foto() {
 		return nombre_foto;
 	}
@@ -82,6 +56,16 @@ public String upload() {
 	}
 	public void setFoto1(byte[] foto1) {
 		this.foto1 = foto1;
+	}
+
+
+	public ImagenService getImagenService() {
+		return imagenService;
+	}
+
+
+	public void setImagenService(ImagenService imagenService) {
+		this.imagenService = imagenService;
 	}
 	
 	
