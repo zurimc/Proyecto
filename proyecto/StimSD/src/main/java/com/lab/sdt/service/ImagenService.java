@@ -37,7 +37,7 @@ public String registroFoto(String fotos){
 	return respuesta;
 	
 }
-public Fotos encuenta_por_id (int idFoto){
-	return fotosMapper.selectByPrimaryKey(idFoto);
+public Fotos encuenta_por_id (int idkey){
+	return fotosMapper.selectByPrimaryKey(idkey);
 }
 }

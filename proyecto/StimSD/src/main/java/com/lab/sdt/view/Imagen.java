@@ -1,6 +1,7 @@
 package com.lab.sdt.view;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -24,19 +25,19 @@ private static final long serialVersionUID = 1L;
 	private String nombre_foto;
 
 	private byte[] foto1;
+	private List<Fotos> fotos1;
 	
 	//insertar datos en la tabla fotos
 	public void registroFotos() {
-		Fotos fotos1 = new Fotos();
-		
-		fotos1.setNombreFoto("hola");
+		Fotos fotosn = new Fotos();
+		fotosn.setIdusuario(2);
+		fotosn.setNombreFoto(nombre_foto);
 		
 		  try {
-	        	
-	                MensajeG.mostrar("Se guardo foto: " +nombre_foto, FacesMessage.SEVERITY_INFO);
-	                
-	        	
-	        	
+			  imagenService.insertarFoto(fotosn);
+			 
+	                MensajeG.mostrar("Se guardo foto: " + nombre_foto, FacesMessage.SEVERITY_INFO);
+	           
 	            
 	        } catch (Exception e) {
 	            MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
@@ -44,7 +45,14 @@ private static final long serialVersionUID = 1L;
 	}
 	
 	
-	
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
 	public String getNombre_foto() {
 		return nombre_foto;
 	}
@@ -58,14 +66,22 @@ private static final long serialVersionUID = 1L;
 		this.foto1 = foto1;
 	}
 
-
 	public ImagenService getImagenService() {
 		return imagenService;
 	}
 
-
 	public void setImagenService(ImagenService imagenService) {
 		this.imagenService = imagenService;
+	}
+
+
+	public List<Fotos> getFotos1() {
+		return fotos1;
+	}
+
+
+	public void setFotos1(List<Fotos> fotos1) {
+		this.fotos1 = fotos1;
 	}
 	
 	

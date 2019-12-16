@@ -20,7 +20,7 @@
 <h:form enctype="multipart/form-data">  
 <p:growl id="messages" showDetail="true" />
   <h3>Nombre de la Imagen</h3>
-    <p:inputText style="text-align: center;"   placeholder="Ingrese Nombre" />
+    <p:inputText style="text-align: center;"   placeholder="Ingrese Nombre" id="nombre_foto" value="#{imagen.nombre_foto}"/>
     <p:fileUpload  cancelLabel="Cancelar" label="Seleccionar"
       update="messages" uploadLabel="Subir"/>
 <b:row style="margin-bottom:15px">
@@ -28,6 +28,6 @@
 							<b:commandButton  look="success" value="Guardar/Actualizar"  actionListener="#{imagen.registroFotos}" 
         				onclick="PF('statusDialog').show()"  oncomplete="PF('statusDialog').hide()" ></b:commandButton>	
 						</b:column>
-					</b:row>      
+</b:row>      
 </h:form>
 </html>
