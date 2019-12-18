@@ -19,7 +19,7 @@ public class ImagenService {
 	public List<Fotos> fotos1;
 
 //INGRESAR INFORMACION EN LA BASE DE DATOS DE FOTO
-public void insertarFoto (Fotos fotos) throws Exception{
+public void insertarFoto (Fotos fotos) {
 	fotosMapper.insert(fotos);
 }
 public Fotos obtenerFoto (String fotos) {

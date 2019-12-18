@@ -6,6 +6,10 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 import com.lab.sdt.model.Fotos;
 import com.lab.sdt.service.ImagenService;
@@ -26,6 +30,8 @@ private static final long serialVersionUID = 1L;
 
 	private byte[] foto1;
 	private List<Fotos> fotos1;
+	private UploadedFile file;
+    
 	
 	//insertar datos en la tabla fotos
 	public void registroFotos() {
@@ -34,11 +40,14 @@ private static final long serialVersionUID = 1L;
 		fotosn.setNombreFoto(nombre_foto);
 		fotosn.setFoto1(foto1);
 		
+		
 		  try {
+			  if (file != null) {
 			  imagenService.insertarFoto(fotosn);
 			 
-	                MensajeG.mostrar("Se guardo foto: " + nombre_foto, FacesMessage.SEVERITY_INFO);
-	           
+			  FacesMessage message = new FacesMessage("Exitoso", file.getFileName() + " cargado.");
+	            FacesContext.getCurrentInstance().addMessage(null, message);
+			  }
 	            
 	        } catch (Exception e) {
 	            MensajeG.mostrar(e.toString(), FacesMessage.SEVERITY_WARN);
@@ -83,6 +92,12 @@ private static final long serialVersionUID = 1L;
 
 	public void setFotos1(List<Fotos> fotos1) {
 		this.fotos1 = fotos1;
+	}
+	public UploadedFile getFile() {
+		return file;
+	}
+	public void setFile(UploadedFile file) {
+		this.file = file;
 	}
 	
 	

@@ -20,9 +20,10 @@
 <h:form enctype="multipart/form-data">  
 <p:growl id="messages" showDetail="true" />
   <h3>Nombre de la Imagen</h3>
-    <p:inputText style="text-align: center;"   placeholder="Ingrese Nombre" id="nombre_foto" value="#{imagen.nombre_foto}"/>
-    <p:fileUpload  cancelLabel="Cancelar" label="Seleccionar"
-      update="messages" uploadLabel="Subir"/>
+    <p:inputText style="text-align: center;"  placeholder="Ingrese Nombre" id="nombre_foto" value="#{imagen.nombre_foto}"/>
+    <p:fileUpload value="#{imagen.file}" mode="simple" skinSimple="true"/>
+    <br />
+    <p:commandButton value="Submit" ajax="false" action="#{imagen.registroFotos}"  />
 <b:row style="margin-bottom:15px">
 						<b:column offset="4">	
 							<b:commandButton  look="success" value="Guardar/Actualizar"  actionListener="#{imagen.registroFotos}" 
