@@ -38,7 +38,7 @@
 		<lowagie.version>2.1.7</lowagie.version>
 		<apache.poi>3.13</apache.poi>
 		<apache-cxf.version>3.0.3</apache-cxf.version>
-		<apache-http.version>4.5</apache-http.version>
+		<apache-http.version>4.5.13</apache-http.version>
 	</properties>
 	
   <dependencies>
